@@ -1,9 +1,8 @@
-tidy_tb_dashboard <- function(data) {
+tidy_tb_dashboard <- function(data, time_series = TRUE) {
   data_sliced <- data |>
     dplyr::slice(3:32)
 
-  data_select_cols <-
-    data_sliced |>
+  data_select_cols <- data_sliced |>
     dplyr::select(
       country = Country,
       tb_incidence_per_100k_2015 = ...3,
@@ -69,8 +68,7 @@ tidy_tb_dashboard <- function(data) {
       labs_performing_dst_2020 = ...88
     )
 
-  data_format_population <-
-    data_select_cols |>
+  data_format_population <- data_select_cols |>
     dplyr::mutate(
       across(
         tidyselect::starts_with("population"),
@@ -79,9 +77,8 @@ tidy_tb_dashboard <- function(data) {
     )
 
   # The labs_performing_* cols store missing values as "-" which are coerced to
-  # NA's (hence the warning)
-  data_format_col_types <-
-    data_format_population |>
+  # NA's. This is the desired behaviour so the warnings are supressed.
+  data_format_col_types <- data_format_population |>
     dplyr::mutate(
       across(
         c(
@@ -99,10 +96,10 @@ tidy_tb_dashboard <- function(data) {
         ),
         as.double
       )
-    )
+    ) |>
+    suppressWarnings()
 
-  data_format_rates <-
-    data_format_col_types |>
+  data_format_rates <- data_format_col_types |>
     dplyr::mutate(
       across(
         tidyselect::starts_with("rate_tb_case_detection"),
@@ -110,10 +107,35 @@ tidy_tb_dashboard <- function(data) {
       )
     )
 
-  data_format_incorrect_cell_entries <-
-    data_format_rates |>
+  data_format_incorrect_cell_entries <- data_format_rates |>
     dplyr::mutate(
       smear_zn = dplyr::if_else(smear_zn == "Yess", "Yes", smear_zn),
       culture_solid = dplyr::if_else(culture_solid == "`Yes", "Yes", culture_solid)
     )
+
+  data_harmonise <- data_format_incorrect_cell_entries |>
+    dplyr::mutate(
+      dplyr::across(
+        tidyselect::starts_with("population_million"),
+        ~ .x * 10
+      )
+    ) |>
+    dplyr::rename_with(
+      ~ stringr::str_replace(.x, "million", "100k")
+    )
+
+  if (time_series) {
+    data_harmonise |>
+      dplyr::select(country, tidyselect::matches("\\d+$")) |>
+      tidyr::pivot_longer(
+        cols = !country,
+        names_to = c("indicator", "year"),
+        names_pattern = "(.*)_(\\d+)",
+        names_transform = list(year = as.integer),
+        values_to = "value"
+      )
+  } else {
+    data_harmonise |>
+      dplyr::select(country, !tidyselect::matches("\\d+$"))
+  }
 }
