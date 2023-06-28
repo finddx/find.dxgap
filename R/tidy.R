@@ -1,11 +1,11 @@
 #' Tidy the TB dashboard
 #' 
 #' `tidy_tb_dashboard()` tidies the messy TB dashboard read by
-#' `[read_tb_dashboard()]`. The messy data combines both time series and fixed
+#' [read_tb_dashboard()]. The messy data combines both time series and fixed
 #' data so a flag is provided to select the type of data that should be
 #' returned, with a shared 'country' primary key.
 #' 
-#' @param data Input data set. Must come from `[read_tb_dashboard()]`.
+#' @param data Input data set. Must come from [read_tb_dashboard()].
 #' @param type Flag to indicate whether time series or fixed data should be 
 #'    returned. Defaults to `time_series`.
 #' @returns A tibble

@@ -7,7 +7,7 @@
 tidy_tb_dashboard(data, type = c("time_series", "fixed"))
 }
 \arguments{
-\item{data}{Input data set. Must come from \verb{[read_tb_dashboard()]}.}
+\item{data}{Input data set. Must come from \code{\link[=read_tb_dashboard]{read_tb_dashboard()}}.}
 
 \item{type}{Flag to indicate whether time series or fixed data should be
 returned. Defaults to \code{time_series}.}
@@ -17,7 +17,7 @@ A tibble
 }
 \description{
 \code{tidy_tb_dashboard()} tidies the messy TB dashboard read by
-\verb{[read_tb_dashboard()]}. The messy data combines both time series and fixed
+\code{\link[=read_tb_dashboard]{read_tb_dashboard()}}. The messy data combines both time series and fixed
 data so a flag is provided to select the type of data that should be
 returned, with a shared 'country' primary key.
 }
