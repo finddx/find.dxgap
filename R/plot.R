@@ -23,9 +23,19 @@ plot_tb_ts <- function(metric = "tb_incidence_per_100k",
       year %in% years & country %in% countries & indicator == !!metric
     )
 
+  labels_df <-
+    first_last_df |>
+    dplyr::select(country, year, value) |>
+    dplyr::filter(year == max(year))
+
   first_last_df |>
     ggplot2::ggplot(ggplot2::aes(year, value, group = country)) +
     ggplot2::geom_line(ggplot2::aes(color = country), linewidth = 1.05) +
+    ggplot2::geom_text(
+      data = labels_df,
+      nudge_x = 0.2,
+      ggplot2::aes(year, value, label = country)
+    ) +
     ggplot2::labs(
       y = metric,
       x = "year",
