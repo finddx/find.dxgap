@@ -16,8 +16,9 @@ You can install the development version of findtb from
 devtools::install_github("cynkra/findtb")
 ```
 
-## find.data
+## findtb.data
 
-Data for the project are stored
+Data for the project are stored in a directory called `findtb.data`.
+Please, set its path as an environment variable.
 
 `FINDTB_DATADIR="~/path_to/findtb.data"`
