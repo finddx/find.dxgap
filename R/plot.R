@@ -27,19 +27,18 @@ plot_tb_ts <- function(metric = "tb_incidence_per_100k",
   first_last_df |>
     ggplot2::ggplot(ggplot2::aes(year, value, group = country)) +
     ggplot2::geom_line(ggplot2::aes(color = country), linewidth = 1.05) +
-    ggplot2::geom_point(ggplot2::aes(color = country), size = 1.25) +
-    ggplot2::theme_light() +
-    ggplot2::theme(
-      plot.title = ggplot2::element_text(hjust = 0.5),
-      legend.position = "top"
-    ) +
     ggplot2::labs(
       y = metric,
       x = "year",
-      title = sprintf(
-        "Change in `%s` from %s to %s", metric, years[[1]], years[[2]]
-      ),
+      title = sprintf("Trend of indicator `%s`", metric),
+      subtitle = sprintf("Time range: %d - %d", min(years), max(years)),
       caption = "Source: TB Spreadsheet"
+    ) +
+    ggplot2::theme_light() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(hjust = 0.5),
+      plot.subtitle = ggplot2::element_text(hjust = 0.5),
+      legend.position = "none"
     )
 }
 
