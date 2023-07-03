@@ -8,7 +8,7 @@ plot_tb_change <- function(metric = "tb_incidence_per_100k",
   years <- sort(years)
   stopifnot(length(years) == 2 && years[[2]] > years[[1]])
 
-  stopifnot(is.character(country))
+  stopifnot(is.character(countries))
   countries <- rlang::arg_match(
     countries,
     tb_constants$country,
