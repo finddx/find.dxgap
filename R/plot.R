@@ -1,12 +1,12 @@
-plot_tb_change <- function(metric = "tb_incidence_per_100k",
-                           years = c(2015, 2020),
-                           countries = c("Angola", "Brazil", "Zambia")) {
+plot_tb_ts <- function(metric = "tb_incidence_per_100k",
+                       years = seq(2015, 2020),
+                       countries = c("Angola", "Brazil", "Zambia")) {
 
   stopifnot(is.character(metric) && length(metric) == 1)
   metric <- rlang::arg_match(metric, values = tb_constants$indicator_ts)
 
   years <- sort(years)
-  stopifnot(length(years) == 2 && years[[2]] > years[[1]])
+  stopifnot(length(years) > 1)
 
   stopifnot(is.character(countries))
   countries <- rlang::arg_match(
