@@ -1,0 +1,44 @@
+plot_tb_change <- function(metric = "tb_incidence_per_100k",
+                           years = c(2015, 2020),
+                           countries = c("Angola", "Brazil", "Zambia")) {
+
+  stopifnot(is.character(metric) && length(metric) == 1)
+  metric <- rlang::arg_match(metric, values = tb_constants$indicator_ts)
+
+  years <- sort(years)
+  stopifnot(length(years) == 2 && years[[2]] > years[[1]])
+
+  stopifnot(is.character(country))
+  countries <- rlang::arg_match(
+    countries,
+    tb_constants$country,
+    multiple = TRUE
+  )
+
+  tb_df <- read_tidy_tb(type = "time_series")
+
+  first_last_df <-
+    tb_df |>
+    dplyr::filter(
+      year %in% years & country %in% countries & indicator == !!metric
+    ) |>
+    dplyr::arrange(country, year)
+
+  first_last_df |>
+    ggplot2::ggplot(ggplot2::aes(year, value, group = country)) +
+    ggplot2::geom_line(ggplot2::aes(color = country), linewidth = 1.05) +
+    ggplot2::geom_point(ggplot2::aes(color = country), size = 1.25) +
+    ggplot2::theme_light() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(hjust = 0.5),
+      legend.position = "top"
+    ) +
+    ggplot2::labs(
+      y = metric,
+      x = "year",
+      title = sprintf(
+        "Change in `%s` from %s to %s", metric, years[[1]], years[[2]]
+      ),
+      caption = "Source: TB"
+    )
+}
