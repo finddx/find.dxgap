@@ -25,8 +25,8 @@ plot_tb_ts <- function(metric = "tb_incidence_per_100k",
 
   labels_df <-
     first_last_df |>
-    dplyr::select(country, year, value) |>
-    dplyr::filter(year == max(year))
+    dplyr::filter(year == max(year)) |>
+    dplyr::select(country, year, value)
 
   first_last_df |>
     ggplot2::ggplot(ggplot2::aes(year, value, group = country)) +
