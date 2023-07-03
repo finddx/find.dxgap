@@ -39,6 +39,7 @@ plot_tb_change <- function(metric = "tb_incidence_per_100k",
       title = sprintf(
         "Change in `%s` from %s to %s", metric, years[[1]], years[[2]]
       ),
-      caption = "Source: TB"
+      caption = "Source: TB Spreadsheet"
     )
 }
+
