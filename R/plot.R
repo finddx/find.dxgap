@@ -21,8 +21,7 @@ plot_tb_ts <- function(metric = "tb_incidence_per_100k",
     tb_df |>
     dplyr::filter(
       year %in% years & country %in% countries & indicator == !!metric
-    ) |>
-    dplyr::arrange(country, year)
+    )
 
   first_last_df |>
     ggplot2::ggplot(ggplot2::aes(year, value, group = country)) +
