@@ -1,14 +1,16 @@
 #' Plot time series
 #'
 #' `plot_tb_ts()` renders a time series for given indicator, years and countries
-#' chosen by the user. Input data for the time series are read and tidied up by
-#' by `read_tb_dashboard()` and `tidy_tb_dashboard()`.
+#' chosen by the user. Input data for the time series are returned by
+#' `read_tb_dashboard()` and `tidy_tb_dashboard()`.
 #'
 #' @param metric A character of length one of the indicator to display.
 #' @param years A numeric vector for the years of the time series.
 #' @param countries A character vector with country names to display.
 #'
 #' @return A plot.
+#' @seealso [read_tb_dashboard()]
+#' @seealso [tidy_tb_dashboard()]
 #' @export
 #'
 #' @examples

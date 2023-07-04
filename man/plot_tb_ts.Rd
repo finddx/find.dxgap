@@ -22,11 +22,16 @@ A plot.
 }
 \description{
 \code{plot_tb_ts()} renders a time series for given indicator, years and countries
-chosen by the user. Input data for the time series are read and tidied up by
-by \code{read_tb_dashboard()} and \code{tidy_tb_dashboard()}.
+chosen by the user. Input data for the time series are returned by
+\code{read_tb_dashboard()} and \code{tidy_tb_dashboard()}.
 }
 \examples{
 \dontrun{
 plot_tb_ts()
 }
+}
+\seealso{
+\code{\link[=read_tb_dashboard]{read_tb_dashboard()}}
+
+\code{\link[=tidy_tb_dashboard]{tidy_tb_dashboard()}}
 }
