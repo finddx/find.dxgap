@@ -38,9 +38,7 @@ plot_tb_ts <- function(metric = "tb_incidence_per_100k",
 
   first_last_df <-
     tb_df |>
-    dplyr::filter(
-      year %in% years & country %in% countries & indicator == !!metric
-    )
+    dplyr::filter(year %in% years & country %in% countries & indicator == metric)
 
   labels_df <-
     first_last_df |>
