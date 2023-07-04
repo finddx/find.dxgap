@@ -3,6 +3,14 @@
 #' `read_tb_dashboard()` reads the raw Excel TB dashboard into R, keeping all
 #' the information in an untidied format.
 #'
+#' @param file_name Either an absolute or relative path to the raw Excel TB
+#'   dashboard. If a relative path is provided, data is read from the
+#'   findtb.data. Instead, if an absolute path is provided, data is read from
+#'   any other location.
+#' @param data_dir An absolute path pointing to the findtb.data folder. By
+#'   default, the path is returned by the `FINDTB_DATADIR` environment
+#'   variable.
+#'
 #' @returns A tibble
 #' @seealso [tidy_tb_dashboard()] to tidy this dashboard.
 #' @examples

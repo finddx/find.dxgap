@@ -4,7 +4,17 @@
 \alias{read_tb_dashboard}
 \title{Read the TB dashboard}
 \usage{
-read_tb_dashboard()
+read_tb_dashboard(file_name, data_dir = Sys.getenv("FINDTB_DATADIR"))
+}
+\arguments{
+\item{file_name}{Either an absolute or relative path to the raw Excel TB
+dashboard. If a relative path is provided, data is read from the
+findtb.data. Instead, if an absolute path is provided, data is read from
+any other location.}
+
+\item{data_dir}{An absolute path pointing to the findtb.data folder. By
+default, the path is returned by the \code{FINDTB_DATADIR} environment
+variable.}
 }
 \value{
 A tibble
