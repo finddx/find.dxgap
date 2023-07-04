@@ -13,10 +13,13 @@ RoxygenNote: 7.2.3
 Imports: 
     dplyr,
     fs,
+    ggplot2,
     readxl,
+    rlang,
     stringr,
     tidyr,
     tidyselect
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    vdiffr
 Config/testthat/edition: 3
