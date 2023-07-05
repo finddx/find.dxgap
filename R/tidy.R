@@ -112,7 +112,7 @@ tidy_tb_dashboard <- function(data, type = c("time_series", "fixed")) {
           labs_performing_smear_tests_2015,
           labs_performing_xpert_tests_2015,
           labs_performing_xpert_tests_2020,
-          labs_performing_culutre_tests_liquid_2015,
+          labs_performing_culture_tests_liquid_2015,
           labs_performing_dst_2015,
           labs_performing_dst_2017,
           labs_performing_dst_2019,
