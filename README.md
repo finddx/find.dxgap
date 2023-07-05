@@ -97,7 +97,7 @@ or the spine. A person with TB can die if they do not get treatment.
 WHO developed a global strategy for TB prevention (*End TB Strategy*)
 with goals to meet.
 
-## Metrics
+### Metrics
 
 - point prevalence
 
