@@ -97,6 +97,20 @@ or the spine. A person with TB can die if they do not get treatment.
 WHO developed a global strategy for TB prevention (*End TB Strategy*)
 with goals to meet.
 
+## Metrics
+
+- point prevalence
+
+- period prevalence
+
+- incidence rate (or, *cumulative incidence rate*) = (numb. of new cases
+  arising from a definined pop. in a specified time period) / (numb. in
+  defined at-risk pop. over the same time period)
+
+- incidence density
+
+- illness duration
+
 ### Glossary
 
 **POC: Point-of-care diagnostic tests for tuberculosis disease**
@@ -137,6 +151,18 @@ Example:
 
 ![](https://tbksp.org/sites/default/files/inline-images/Fig4-2.gif)
 
+**WHO HBC**
+
+WHO render a list of High burden countries (HBCs) for TB, TB/HIV, etc.
+
+**Prevention**
+
+- primary
+
+- secondary
+
+- tertiary
+
 ### Source:
 
 - [WHO operational handbook on TB - Dignosis
@@ -144,3 +170,6 @@ Example:
 
 - [WHO Global TB
   report](https://www.who.int/teams/global-tuberculosis-programme/data#gtbr)
+
+- [Global Epidemiology of
+  Tuberculosis](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4315920/)
