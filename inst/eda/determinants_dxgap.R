@@ -176,8 +176,8 @@ df_2019_labs_normalised <- df_2019_labs_normalised |>
       ),
       na.rm = TRUE
     )
-  ) |> 
-  ungroup() |> 
+  ) |>
+  ungroup() |>
   mutate(labs_all_tests_per_100k = labs_all_tests / population_100k)
 
 df_2019_labs_correlations <-
@@ -206,3 +206,42 @@ model <- lm(
 )
 
 summary(model)
+
+# ---- Non-lab variables ----
+# - Question -
+# How do the non-labatory based variables correlate with "Dx Gap"?
+
+# It is assumed NR = "No record" below
+df_2019_non_lab_continuous_vars <- df_2019_all |>
+  select(
+    country,
+    tb_incidence_per_100k,
+    rate_tb_case_detection,
+    rate_tested_with_rapid_dx,
+    rate_dx_gap
+  ) |>
+  mutate(
+    rate_tested_with_rapid_dx = if_else(
+      rate_tested_with_rapid_dx == "NR",
+      NA_character_,
+      rate_tested_with_rapid_dx
+    ),
+    rate_tested_with_rapid_dx = as.double(rate_tested_with_rapid_dx)
+  )
+
+# - Insight -
+# - TB incidence and the rate of TB case detection are strongly correlated with
+#   "Dx Gap". But, this is presumably because the calculation for "Dx Gap" uses
+#   these or related variables. An understanding of how "Dx Gap" was calculated
+#   is required.
+df_2019_non_lab_continuous_vars |>
+  correlate() |>
+  select(term, rate_dx_gap) |>
+  arrange(desc(rate_dx_gap))
+
+df_2019_non_lab_continuous_vars |> 
+pivot_longer(!c(country, rate_dx_gap)) |>
+  ggplot(aes(value, rate_dx_gap)) +
+  geom_point(colour = "steelblue", alpha = .8) +
+  facet_wrap(vars(name), scales = "free") +
+  theme_minimal()
