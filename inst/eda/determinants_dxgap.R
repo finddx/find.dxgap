@@ -16,6 +16,28 @@ df_2019 <-
 df_2019_all <- df_2019 |>
   left_join(df_fixed)
 
+# ---- Dx Gap ----
+# - Question - 
+# How is rate_dx_gap, the 'outcome' variable we are interested in, distributed?
+df_2019_all |> 
+  ggplot(aes(rate_dx_gap)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  theme_minimal()
+
+# - Insight - 
+# With the exception of the Russian Federation, with a "Dx Gap" rate of 1.25,
+# the remaining values appear normally distributed.
+df_2019_all |> 
+  select(country, rate_dx_gap) |> 
+  arrange(desc(rate_dx_gap))
+
+# - Reflections -
+# - Is the value for the Russian Federation a data entry error? How can the rate
+#   be over 1 (i.e., 100%). Understanding how "Dx Gap" was calculated should
+#   help answer this.
+# - Consider how other variables, examined below, are distrbitued, and what
+#   transformations may need to be performed.
+
 # ---- Labs ----
 df_2019_labs <- df_2019_all |>
   select(country, population_100k, rate_dx_gap, starts_with("labs_"))
