@@ -17,18 +17,18 @@ df_2019_all <- df_2019 |>
   left_join(df_fixed)
 
 # ---- Dx Gap ----
-# - Question - 
+# - Question -
 # How is rate_dx_gap, the 'outcome' variable we are interested in, distributed?
-df_2019_all |> 
+df_2019_all |>
   ggplot(aes(rate_dx_gap)) +
   geom_density(fill = "steelblue", alpha = .5) +
   theme_minimal()
 
-# - Insight - 
+# - Insight -
 # With the exception of the Russian Federation, with a "Dx Gap" rate of 1.25,
 # the remaining values appear normally distributed.
-df_2019_all |> 
-  select(country, rate_dx_gap) |> 
+df_2019_all |>
+  select(country, rate_dx_gap) |>
   arrange(desc(rate_dx_gap))
 
 # - Reflections -
@@ -158,15 +158,37 @@ df_2019_labs_normalised |>
 #   what other demographic factors could be influencing the no. of tests a
 #   country performs (e.g., income, rurality)? How does this relate to the
 #   "Dx Gap"?
+# - Do the distributions need transforming to normal (e.g., by applying log
+#   tansform)
 
 # - Question -
-# How does the type and count of lab tests correlate with "Dx Gap"?
+# How does the type and count of lab tests correlate with "Dx Gap"? How about
+# the total number of lab tests performed across any type of test?
+df_2019_labs_normalised <- df_2019_labs_normalised |>
+  rowwise() |>
+  mutate(
+    labs_all_tests = sum(
+      c(
+        labs_performing_smear_tests,
+        labs_performing_xpert_tests,
+        labs_performing_culture_tests_liquid,
+        labs_performing_dst
+      ),
+      na.rm = TRUE
+    )
+  ) |> 
+  ungroup() |> 
+  mutate(labs_all_tests_per_100k = labs_all_tests / population_100k)
+
 df_2019_labs_correlations <-
   df_2019_labs_normalised |>
   correlate() |>
   select(term, rate_dx_gap) |>
   arrange(desc(rate_dx_gap))
 
+# - Insight -
+# The total number of lab tests performed does not correlate strongly with
+# "Dx Gap"
 df_2019_labs_normalised |>
   pivot_longer(!c(country, rate_dx_gap)) |>
   ggplot(aes(value, rate_dx_gap)) +
