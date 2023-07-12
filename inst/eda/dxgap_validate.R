@@ -40,8 +40,8 @@ who_variables |>
 # 1. The estimated total number of TB cases expected each year
 # 2. The total number of actual reported cases by health systems
 
-# The variables we are interested in, appear to be in the "Estimates"
-# - `e_inc_100k` captures no.1 above
+# The variables we are interested in:
+# - `e_inc_num` captures no.1 above
 # - `c_newinc` captures no.2 above
 who_variables |>
   filter(variable_name == "e_inc_num" | variable_name == "c_newinc") |>
