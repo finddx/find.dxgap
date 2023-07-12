@@ -1,0 +1,500 @@
+---
+title: "TB Diagnostic Gap Report"
+subtitle: "The validation and determinants of Finddx's diagnostic gap measure"
+author: "cynkra"
+date: 2023-07-12
+toc: true
+format: 
+   html:
+     code-tools: true
+     code-fold: true
+     df-print: paged
+execute: 
+  warning: false
+  cache: true
+editor:
+  render-on-save: true
+---
+
+```{r}
+library(readr)
+library(dplyr)
+library(corrr)
+library(ggplot2)
+library(tidyr)
+library(broom)
+
+pkgload::load_all(".")
+
+finddx_ts <- read_tidy_tb(type = "time_series")
+finddx_fixed <- read_tidy_tb(type = "fixed")
+```
+
+# Validating the diagnostic gap
+In order to verify the validity of the "Diagnostic Gap" measure, also referred to as "Dx Gap", provided by Finddx, we computed an alternative diagnostic gap using [data](https://www.who.int/teams/global-tuberculosis-programme/data) from the World Health Organization (WHO).
+
+## Defining the diagnostic gap
+The TB diagnostic gap is the _"the proportion of the population with the
+condition who are undiagnosed"_ [^1]. In other words, we can define the
+diagnostic gap as the gap between the estimated number of people who fall ill
+with TB each year and the number of people who are officially reported as
+having been diagnosed. This means that the diagnostic gap represents people
+who have TB but are not officially diagnosed, due to limitations or challenges
+in the healthcare system.
+
+[^1]: [The Lancet Commission on diagnostics: transforming access to diagnostics](https://doi.org/10.1016/S0140-6736(21)00673-5)
+
+## Data Acquisition
+The data required to calculate a new measure of diagnostic gap from the WHO can
+be found in two separate data sets. The estimated total number of TB cases
+expected each year can be found in the 'e_inc_num' variable in the 'WHO TB
+burden estimates [>1Mb]' dataset:
+
+```{r}
+who_estimates <- read_csv(
+  "https://extranet.who.int/tme/generateCSV.asp?ds=estimates"
+)
+
+who_estimates <- who_estimates |>
+  select(
+    country,
+    year,
+    tb_estimated_cases = e_inc_num
+  )
+
+who_estimates
+```
+
+The total number of actual reported cases by health systems can be found in the
+'c_newinc' variable in the 'Case notifications [>2Mb]' dataset:
+
+```{r}
+who_notifications <- read_csv(
+  "https://extranet.who.int/tme/generateCSV.asp?ds=notifications"
+)
+
+who_notifications <- who_notifications |>
+  select(
+    country,
+    year,
+    tb_notified_cases = c_newinc
+  )
+
+who_notifications
+```
+
+## Calculating the diagnostic gap
+For each country and year in the WHO datasets, the diagnostic gap can be computed as follows:
+
+- diagnostic gap = (estimated cases - notified cases) / estimated cases
+
+```{r}
+who_dx_gap <- who_estimates |>
+  inner_join(who_notifications, by = c("year", "country")) |>
+  mutate(
+    who_dx_gap = (tb_estimated_cases - tb_notified_cases) / tb_estimated_cases
+  ) |>
+  select(country, year, who_dx_gap)
+
+who_dx_gap
+```
+
+## Examining Finddx's diagnostic gap measure
+Before we can use the newly calculated diagnostic gap measure from WHO to validate Finddx's gap measure, we must first analyse the distribution of Finddx's diagnostic gap measure.
+
+```{r}
+#| fig-cap: "Finddx's diagnostic gap measure demonstrates a normal distribtuion with the exception of an outlier at 1.25"
+finddx_fixed |>
+  ggplot(aes(rate_dx_gap)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  theme_minimal() +
+  labs(x = "Finddx's diagnostic gap")
+```
+
+An outlier, with a diagnsoptic gap rate of 1.25, appears to be causing the data
+to be positively skewed. Further inspection reveals this outlier comes from data
+for the Russian Federation:
+
+```{r}
+finddx_fixed |>
+  select(country, rate_dx_gap) |>
+  arrange(desc(rate_dx_gap)) |>
+  slice(1)
+```
+
+This value for the Russian Federation, with a diagnostic gap above 1, implies
+that there were a negative number of TB cases notified. It is reasoned that this
+is therefore a data entry or calculation error, and will be removed from the
+analyses.
+
+```{r}
+finddx_fixed <- finddx_fixed |>
+  filter(country != "Russian Federation")
+```
+
+::: {.callout-tip}
+## Question for Finddx
+
+Is the diagnostic gap value for the Russian Federation a mistake, or is there
+an alternative reason for why it may be above 1?
+:::
+
+
+## Validating Finddx's diagnostic gap measure
+Finddx's diagnostic gap measure can now be validated against the measure we
+have just calculated from the WHO data. The Pearson's correlation coefficient
+between the two measures of -0.986 indicates a very strong relationship,
+validating the measure used by Finddx:
+
+```{r}
+who_dx_gap_2020 <- who_dx_gap |>
+  filter(year == 2020) |>
+  mutate(
+    country = if_else(
+      country == "Democratic Republic of the Congo",
+      "DRC",
+      country
+    )
+  )
+
+dx_gaps_joined <- finddx_fixed |>
+  select(country, finddx_dx_gap = rate_dx_gap) |>
+  left_join(who_dx_gap_2020) |>
+  select(
+    country,
+    `Finddx diagnostic gap` = finddx_dx_gap,
+    `WHO diagnostic gap` = who_dx_gap
+  )
+
+dx_gaps_joined |>
+  correlate() |>
+  slice(1) |>
+  select(-`Finddx diagnostic gap`)
+```
+
+This strong relationship can also be seen on the following scatter plot:
+
+```{r}
+#| fig-cap: Finddx's measure of diagnostic gap strongly negatively correlates with an alternative measure calculated from WHO data
+dx_gaps_joined |>
+  ggplot(aes(`Finddx diagnostic gap`, `WHO diagnostic gap`)) +
+  geom_point(colour = "steelblue", size = 5, alpha = .5) +
+  theme_minimal()
+```
+
+::: {.callout-tip}
+## Question for Finddx
+
+Why is the correlation between the WHO calculated measure and Finddx's measure
+negative, implying the inverse of the diagnostic gap has been calculated?
+:::
+
+# Exploring the determinants of the diagnostic gap
+An exploxatory analysis on the 'TB Policy' Excel dashboard supplied by Finddx
+was conducted.
+
+## Data selection
+To intiate the explatory analysis, it was decided that a cross-sectional
+analysis, looking at a single time point, would first be conducted. It was
+decided that data for 2019 would be used for two reasons:
+
+1. The data supplied by Finddx contains many missing values, especially for the
+   labatory variables, for 2020.
+2. The global effects of the Covid-19 pandemic began to take effect in
+   2020 [^2] and the effects on the TB data presented in the supplied data set
+   are unkown.
+
+[^2]: [Timeline: WHO's COVID-19 response](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/interactive-timeline#!)
+
+The supplied data only included a measure of diagnositc gap for 2020, so the
+value calculated from the 2019 WHO data is used from this point forward.
+
+```{r}
+who_dx_gap_2019 <- who_dx_gap |>
+  filter(year == 2019) |>
+  mutate(
+    country = if_else(
+      country == "Democratic Republic of the Congo",
+      "DRC",
+      country
+    )
+  )
+
+finddx_2019 <- finddx_ts |>
+  filter(year == 2019) |>
+  pivot_wider(names_from = indicator, values_from = value) |>
+  left_join(finddx_fixed) |>
+  select(-year, -rate_dx_gap)
+
+data_2019 <- finddx_2019 |>
+  left_join(who_dx_gap_2019)
+```
+
+## Laboratory variables
+
+### Distributions
+First, the relationship between laboratory tests and diagnostic gap were
+explored, as Finddx expressed this as a key area of interest.
+
+```{r}
+labs_2019 <- data_2019 |>
+  select(country, population_100k, who_dx_gap, starts_with("labs_"))
+```
+
+The distribution of the laboratory test variables was inspected:
+
+```{r}
+#| fig-cap: "Distributions for different TB laboratory test counts"
+labs_2019 |>
+  select(-population_100k, -who_dx_gap) |>
+  rename(
+    `Labs performing smear tests` = labs_performing_smear_tests,
+    `Labs performing xpert tests` = labs_performing_xpert_tests,
+    `Labs performing culture liquid tests` = labs_performing_culture_tests_liquid,
+    `Labs performing DST` = labs_performing_dst
+  ) |>
+  pivot_longer(!country) |>
+  ggplot(aes(value)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  facet_wrap(vars(name), scales = "free") +
+  theme_minimal()
+```
+
+A clear outlier with a value of 23,822 for laboratories performing culture
+liquid tests can be observed in the distribtuion for labs performing culture 
+liquid tests. This value comes from China and is ~10-fold higher than previous 
+years:
+
+```{r}
+finddx_ts |>
+  filter(
+    country == "China",
+    indicator == "labs_performing_culture_tests_liquid"
+  )
+```
+
+The mean of previous years shall be used for this outlier from this point
+forward.
+
+```{r}
+china_culture_tests_average <- finddx_ts |>
+  filter(
+    country == "China",
+    indicator == "labs_performing_culture_tests_liquid"
+  ) |>
+  filter(year < 2019) |>
+  summarise(mean = mean(value)) |>
+  pull(mean)
+
+labs_2019 <-
+  labs_2019 |>
+  mutate(
+    labs_performing_culture_tests_liquid = if_else(
+      country == "China",
+      china_culture_tests_average,
+      labs_performing_culture_tests_liquid
+    )
+  )
+```
+
+All of the laboratory variables demonstrated a positive skew. Given the
+difference in population sizes between India and China and the rest of the
+countries listed, this distribution is unsurprising. Indeed, a similar
+distribution can be observed for population:
+
+```{r}
+#| fig-cap: "The distribution of populations demonstrates a positive skew"
+labs_2019 |>
+  ggplot(aes(population_100k)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  theme_minimal() +
+  labs(x = "Population (100k)")
+```
+
+Given the diagnostic gap provides a relative measure (i.e., per capita),
+the laboratory variables will now be normalised by population from this point
+forwards.
+
+```{r}
+labs_2019_normalised <- labs_2019 |>
+  mutate(
+    across(
+      starts_with("labs_"),
+      ~ .x / population_100k,
+      .names = "{.col}_per_100k"
+    )
+  ) |>
+  select(country, who_dx_gap, ends_with("per_100k"))
+```
+
+The population normalised distributions can then be inspected:
+
+```{r}
+#| fig-cap: "The distribution of population normalised variables still demonstrate a positive skew"
+labs_2019_normalised |>
+  select(-who_dx_gap) |>
+  rename(
+    `Labs performing smear tests per 100k` = labs_performing_smear_tests_per_100k,
+    `Labs performing xpert tests per 100k` = labs_performing_xpert_tests_per_100k,
+    `Labs performing culture liquid tests per 100k` = labs_performing_culture_tests_liquid_per_100k,
+    `Labs performing DST per 100k` = labs_performing_dst_per_100k
+  ) |>
+  pivot_longer(!country) |>
+  ggplot(aes(value)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  facet_wrap(vars(name), scales = "free") +
+  theme_minimal()
+```
+
+::: {.callout-note}
+# Consideration for future analyses
+
+Should the labatory variable distributions be transformed to a normal
+distribubtion? (e.g., by applying a log transform)
+:::
+
+### Relationship to diagnostic gap
+The correlation between the population normalised laboratory variables and the
+calculated WHO diagnostic gap can be seen in table and plots below:
+
+```{r}
+labs_2019_normalised |>
+  rename(
+    `WHO Diagnostic Gap` = who_dx_gap,
+    `Labs performing smear tests per 100k` = labs_performing_smear_tests_per_100k,
+    `Labs performing xpert tests per 100k` = labs_performing_xpert_tests_per_100k,
+    `Labs performing culture liquid tests per 100k` = labs_performing_culture_tests_liquid_per_100k,
+    `Labs performing DST per 100k` = labs_performing_dst_per_100k
+  ) |>
+  correlate() |>
+  select(term, `WHO Diagnostic Gap`) |>
+  arrange(`WHO Diagnostic Gap`) |>
+  filter(term != `WHO Diagnostic Gap`)
+```
+
+```{r}
+#| fig-cap: "The correlation between laboratory tests and diagnostic gap varies"
+labs_2019_normalised |>
+  rename(
+    `WHO Diagnostic Gap` = who_dx_gap,
+    `Labs performing smear tests per 100k` = labs_performing_smear_tests_per_100k,
+    `Labs performing xpert tests per 100k` = labs_performing_xpert_tests_per_100k,
+    `Labs performing culture liquid tests per 100k` = labs_performing_culture_tests_liquid_per_100k,
+    `Labs performing DST per 100k` = labs_performing_dst_per_100k
+  ) |>
+  pivot_longer(!c(country, `WHO Diagnostic Gap`)) |>
+  ggplot(aes(value, `WHO Diagnostic Gap`)) +
+  geom_point(colour = "steelblue", alpha = .8) +
+  facet_wrap(vars(name), scales = "free") +
+  theme_minimal()
+```
+
+```{r}
+labs_2019_normalised_model <- lm(
+  who_dx_gap ~ labs_performing_culture_tests_liquid_per_100k,
+  data = labs_2019_normalised,
+)
+
+tidy(labs_2019_normalised_model)
+```
+
+Collectively, these data indicate that the number of labs performing culture
+smear liquid tests might be a significant determinant of a countires diagnostic
+gap, explaining up to 27.5% of the variance. The model suggests an inverse
+relationship between the number of labs performing liquid culture tests per
+100k population and the TB diagnostic gap.
+
+::: {.callout-tip}
+## Question for Finddx
+
+Are you able to expand your data set beyond the listed 30 countries to improve
+the strength of the models?
+:::
+
+## Other testing variables
+
+### Distributions
+
+Two other test variables, the rate of people tested bacteriologically, and the
+rate of people tested with rapid diagnostics, can be found in the data supplied
+from Finddx.
+
+```{r}
+other_tests_2019 <- data_2019 |>
+  select(
+    country,
+    who_dx_gap,
+    rate_bacteriologically_tested,
+    rate_tested_with_rapid_dx
+  ) |>
+  mutate(
+    rate_tested_with_rapid_dx = if_else(
+      rate_tested_with_rapid_dx == "NR", # It is assumed that NR = "No record"
+      NA_character_,
+      rate_tested_with_rapid_dx
+    ),
+    rate_tested_with_rapid_dx = as.double(rate_tested_with_rapid_dx)
+  )
+```
+
+The distribution of these other two test variables were inspected:
+
+```{r}
+#| fig-cap: "Distributions for other TB laboratory tests"
+other_tests_2019 |>
+  select(-who_dx_gap) |>
+  rename(
+    `Tested bacteriologically` = rate_bacteriologically_tested,
+    `Tested with rapid diagnostic` = rate_tested_with_rapid_dx
+  ) |>
+  pivot_longer(!country) |>
+  ggplot(aes(value)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  facet_wrap(vars(name), scales = "free") +
+  theme_minimal() +
+  labs(x = "Percentage (%)")
+```
+
+### Relationship to diagnostic gap
+The correlations between the other laboratory variables and the calculated WHO
+diagnostic gap can be seen in table and plots below:
+
+```{r}
+other_tests_2019 |>
+  rename(
+    `WHO Diagnostic Gap` = who_dx_gap,
+    `Tested bacteriologically` = rate_bacteriologically_tested,
+    `Tested with rapid diagnostic` = rate_tested_with_rapid_dx
+  ) |>
+  correlate() |>
+  select(term, `WHO Diagnostic Gap`) |>
+  arrange(desc(`WHO Diagnostic Gap`)) |>
+  filter(term != `WHO Diagnostic Gap`)
+```
+
+```{r}
+#| fig-cap: "The percentage of people bacteriologically tested  positively correlates with diagnostic gap, whereas those tested with rapid diagnositcs show no trend"
+other_tests_2019 |>
+  rename(
+    `WHO Diagnostic Gap` = who_dx_gap,
+    `Tested bacteriologically` = rate_bacteriologically_tested,
+    `Tested with rapid diagnostic` = rate_tested_with_rapid_dx
+  ) |>
+  pivot_longer(!c(country, `WHO Diagnostic Gap`)) |>
+  ggplot(aes(value, `WHO Diagnostic Gap`)) +
+  geom_point(colour = "steelblue", alpha = .8) +
+  facet_wrap(vars(name), scales = "free") +
+  theme_minimal() +
+  labs(x = "Percentage (%)")
+```
+
+```{r}
+other_tests_2019_normalised_model <- lm(
+  who_dx_gap ~ rate_bacteriologically_tested,
+  data = other_tests_2019
+)
+
+tidy(other_tests_2019_normalised_model)
+```
+
+Neither variable appears to be a significant determinant of the diagnostic gap.
