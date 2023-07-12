@@ -99,8 +99,6 @@ who_dx_gap_2019 <- who_dx_gap_2019 |>
     )
   )
 
-# Findtb's measure of "Dx Gap" does not correlate strongly with the calculated
-# version:
 findtb_dx_gap_2019 |>
   left_join(who_dx_gap_2019) |>
   correlate()
