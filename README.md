@@ -173,3 +173,6 @@ WHO render a list of High burden countries (HBCs) for TB, TB/HIV, etc.
 
 - [Global Epidemiology of
   Tuberculosis](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4315920/)
+
+- [Diagnosing the diagnostic
+  gaps](https://www.youtube.com/watch?v=pvp7HiHOU2Q)
