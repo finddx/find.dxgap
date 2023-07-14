@@ -19,9 +19,18 @@ devtools::install_github("cynkra/findtb")
 ## findtb.data
 
 Data for the project are stored in a directory called `findtb.data`.
-Please, set its path as an environment variable.
+Please, create such folder and set its path as an environment variable
+(call `usethis::edit_r_environ(scope = "project")` to open .Renviron
+file).
 
 `FINDTB_DATADIR="~/path_to/findtb.data"`
+
+Then store the following files in findtb.data:
+
+- `tb_policy_dashboard_final_v1_14Nov22.xlsx`
+- …
+
+More data might be added in the future.
 
 ## Objectives of the project
 
