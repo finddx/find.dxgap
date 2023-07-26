@@ -173,3 +173,42 @@ tidy_hbc <- function(data) {
       share_global_tb_incidence = c(rep(84, 20), rep(3, 10))
     )
 }
+
+tidy_gf_procurement <- function(data) {
+  data |>
+    dplyr::rename_with(.fn = stringr::str_to_lower) |>
+    dplyr::select(
+      country = `country/teritorry`,
+      grant_name = `grant name`,
+      supplier_agent_manufacturer_intermediary = `supplier/agent/manufacturer/intermediatry`,
+      manufacturer,
+      product_category = `product category`,
+      product,
+      description,
+      product_pack = `product pack`,
+      pack_quantity = `pack quantity`,
+      product_pack_unit_price_usd = `product pack (usd)`,
+      total_product_cost_usd = `total product cost (usd)`,
+      purchase_order_date = `purchase order date`,
+      scheduled_delivery_date = `scheduled delivery date`,
+      actual_delivery_date = `actual delivery date`,
+      number_of_suom_in_pack = `nb of suom in pack`,
+      some_or_all_of_goods_prepaid = `some or all of goods prepaid`,
+      freight_cost = `freight cost`,
+      supplier_invoice_number = `supplier invoice number`,
+      purchase_order_number = `purchase order number`,
+      invoice_currency_name = `invoice currency name`,
+      primary_key = `primary key`,
+      status
+    ) |>
+    dplyr::transmute(
+      dplyr::across(tidyselect::ends_with("usd"),
+        ~ as.numeric(stringr::str_remove_all(.x, "^\\$|\\,"))
+      ),
+      dplyr::across(
+        tidyselect::ends_with("date"),
+        ~ lubridate::as_date(.x, format = "%d.%m.%y")
+      )
+    )
+
+}
