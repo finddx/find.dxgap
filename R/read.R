@@ -34,5 +34,4 @@ read_hbc <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
   officer::read_docx(path = file_path) |>
     officer::docx_summary() |>
     tibble::as_tibble()
-
 }
