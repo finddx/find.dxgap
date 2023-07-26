@@ -165,16 +165,12 @@ tidy_tb_dashboard <- function(data, type = c("time_series", "fixed")) {
 }
 
 tidy_hbc <- function(data) {
-
-  raw_data <- data |>
-    dplyr::select(text)
-
-  tidy_data <- raw_data |>
+  raw_data |>
     dplyr::slice(1:30) |>
     dplyr::transmute(
       country = text,
       year = 2021,
-      is_84 = c(rep(1, 20), rep(0, 10))
+      share_global_tb_incidence = c(rep(84, 20), rep(3, 10))
     )
 
 }
