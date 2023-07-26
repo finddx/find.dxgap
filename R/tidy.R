@@ -165,7 +165,7 @@ tidy_tb_dashboard <- function(data, type = c("time_series", "fixed")) {
 }
 
 tidy_hbc <- function(data) {
-  raw_data |>
+  data |>
     dplyr::slice(1:30) |>
     dplyr::transmute(
       country = text,
