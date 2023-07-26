@@ -30,7 +30,9 @@ read_tb_dashboard <- function(file_name,
 
 read_hbc <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
   file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
+  # TODO: extract table from pdf pdftools::pdf_text(file_path)[[8]]
   officer::read_docx(path = file_path) |>
     officer::docx_summary() |>
     tibble::as_tibble()
+
 }
