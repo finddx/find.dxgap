@@ -28,7 +28,7 @@ read_tb_dashboard <- function(file_name,
   )
 }
 
-read_high_risk <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
+read_hbc <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
   file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
   officer::read_docx(path = file_path) |>
     officer::docx_summary() |>
