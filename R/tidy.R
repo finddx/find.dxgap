@@ -163,3 +163,13 @@ tidy_tb_dashboard <- function(data, type = c("time_series", "fixed")) {
       dplyr::select(country, !tidyselect::matches("\\d+$"))
   }
 }
+
+tidy_hbc <- function(data) {
+  data |>
+    dplyr::slice(1:30) |>
+    dplyr::transmute(
+      country = text,
+      year = 2021,
+      share_global_tb_incidence = c(rep(84, 20), rep(3, 10))
+    )
+}
