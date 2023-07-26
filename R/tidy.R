@@ -203,10 +203,9 @@ tidy_gf_procurement <- function(data) {
         tidyselect::ends_with("usd"),
         ~ as.numeric(stringr::str_remove_all(.x, "^\\$|\\,"))
       ),
-      # FIXME: 185 failed to parse.
       dplyr::across(
         tidyselect::matches("purchase_order_date|actual_delivery_date"),
-        ~ lubridate::as_date(.x, format = "%d-%b-%y")
+        ~ lubridate::as_date(.x, format = "%d-%m-%y")
       ),
       scheduled_delivery_date = lubridate::as_date(
         scheduled_delivery_date,
