@@ -38,5 +38,9 @@ read_hbc <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
 
 read_gf_procurement <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
   file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
-  readr::read_tsv(file_path, locale = readr::locale(encoding = "UTF-16LE"))
+  readr::read_tsv(
+    file_path,
+    locale = readr::locale(encoding = "UTF-16LE"),
+    show_col_types = FALSE
+  )
 }
