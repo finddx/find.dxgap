@@ -11,10 +11,7 @@ download_hbc <- function(file_name = tempfile("who_hbc_list", fileext = ".pdf"),
 }
 
 
-download_who <- function(file_name = tempfile(
-                                        compose_file_name("who", download_date, dataset),
-                                        fileext = ".csv"
-                                      ),
+download_who <- function(file_name = tempfile(compose_file_name("who", download_date, dataset), fileext = ".csv"),
                          dataset = "notification",
                          download_date = as.character(Sys.Date()),
                          data_dir = Sys.getenv("FINDTB_DATADIR")) {
