@@ -14,10 +14,10 @@ set_findtb_datadir <- function(path) {
   }
 
   if (flag_ev_exists == "n") {
-    return(invisible(NULL))
+    return(invisible(sys_findtb_data))
   }
 
-  dir_name <- "findtb_data"
+  dir_name <- "findtb-data"
   path_to_datadir <- fs::path(path, dir_name)
   if (fs::dir_exists(path_to_datadir)) {
     flag_dir_exists <- readline(
@@ -37,6 +37,10 @@ set_findtb_datadir <- function(path) {
   tree <- fs::path(path_to_datadir, dirs)
 
   findtb_data_path <- fs::dir_create(tree)
+
+  # TODO: what if run outside of the project? inst/exdata might not work
+  fs::dir_copy("inst/extdata", path_to_datadir, overwrite = TRUE)
+
   create_readme(fs::path(path_to_datadir))
 
   if (fs::dir_exists(path_to_datadir)) {
