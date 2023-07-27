@@ -30,6 +30,7 @@ download_who <- function(file_name = tempfile(
   data <- readr::read_csv(url_topic)
   subset_cols <-
     findtb_master_list |>
+    dplyr::filter(data_source == "who") |>
     dplyr::filter(dataset == !!dataset) |>
     dplyr::pull(variable_name)
   relevant_cols <- c("country", "year", subset_cols)
