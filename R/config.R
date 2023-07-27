@@ -30,10 +30,9 @@ set_findtb_datadir <- function(path = fs::path_dir(getwd()),
         "Do you want to overwrite it [y/n]? "
       )
     )
-  }
-
-  if (flag_ev_exists == "n") {
-    return(invisible(sys_findtb_data))
+    if (flag_ev_exists == "n") {
+      return(invisible(sys_findtb_data))
+    }
   }
 
   dir_name <- "findtb-data"
