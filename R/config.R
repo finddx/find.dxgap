@@ -1,6 +1,9 @@
-set_findtb_datadir <- function(path) {
+set_findtb_datadir <- function(path, dirs = c("who", "global-fund", "world-bank", "meta")) {
   if (!rlang::is_character(path) && length(path) != 1) {
     rlang::abort("Not a valid character path.")
+  }
+  if (!rlang::is_character(dirs)) {
+    rlang::abort("Not a valid character vector.")
   }
 
   sys_findtb_data <- Sys.getenv("FINDTB_DATADIR")
@@ -33,7 +36,6 @@ set_findtb_datadir <- function(path) {
 
   Sys.setenv("FINDTB_DATADIR" = path_to_datadir)
 
-  dirs <- c("who", "global-fund", "world-bank", "meta")
   tree <- fs::path(path_to_datadir, dirs)
 
   findtb_data_path <- fs::dir_create(tree)
