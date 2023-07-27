@@ -5,7 +5,17 @@ skip_if_no_data <- function(file_name,
   skip_if(!file.exists(path))
 }
 
-compose_file_name <- function(..., sep = "_") {
+compose_date_dataset_file_name <- function(...,
+                                           download_date = as.character(Sys.Date()),
+                                           dataset = "notifications") {
+  compose_file_name(..., download_date, dataset)
+}
+
+compose_file_name <- function(..., sep = "_", file_ext = NULL) {
   dots <- rlang::dots_list(...)
-  paste(dots, collapse = sep)
+  if (is.null(file_ext) && is.null(date)) {
+    file_name <- paste(dots, collapse = sep)
+    return(file_name)
+  }
+  paste0(paste(dots, collapse = sep), file_ext)
 }
