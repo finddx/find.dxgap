@@ -1,3 +1,4 @@
+skip_if(Sys.getenv("FINDTB_DATADIR") == "")
 file_name <- "high_tb_burden_countries_2021.docx"
 data <- read_hbc(file_name)
 test_that("a tibble is returned", {
