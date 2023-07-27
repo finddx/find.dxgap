@@ -29,16 +29,16 @@ download_who <- function(file_name = tempfile(
 
   data <- readr::read_csv(url_topic)
   subset_cols <-
-    read_masterlist("tb_find_variable_masterlist.csv", data_dir = data_dir) |>
-    tidy_masterlist() |>
+    findtb_master_list |>
     dplyr::filter(dataset == !!dataset) |>
     dplyr::pull(variable_name)
   relevant_cols <- c("country", "year", subset_cols)
   data_subset <-
-    dplyr::select(data, tidyselect::all_of(relevant_cols)) |>
+    data |>
+    dplyr::select(tidyselect::all_of(relevant_cols)) |>
     dplyr::mutate(download_date = download_date)
 
-  readr::write_csv(file_path, file_path)
+  readr::write_csv(data_subset, file_path)
   invisible(normalizePath(file_path))
 }
 
