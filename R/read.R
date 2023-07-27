@@ -50,5 +50,6 @@ read_masterlist <- function(...) {
 }
 
 read_who <- function(...) {
-  findtb_read_csv(...)
+  findtb_read_csv(..., col_types = readr::cols("download_date" = "c")) |>
+    tibble::as_tibble()
 }
