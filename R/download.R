@@ -38,9 +38,7 @@ download_who <- function(file_name = tempfile(
     dplyr::select(data, tidyselect::all_of(relevant_cols)) |>
     dplyr::mutate(download_date = download_date)
 
-  out_dir_findtb <- file.path("inst/extdata", file_name)
-  final_paths <- c(out_dir_findtb, file_path)
-  purrr::walk(paste0(final_paths, ".csv"), ~ readr::write_csv(data_subset, .x))
+  readr::write_csv(file_path, file_path)
   invisible(normalizePath(file_path))
 }
 
