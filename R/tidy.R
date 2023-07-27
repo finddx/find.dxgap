@@ -225,9 +225,12 @@ tidy_gf_procurement <- function(data) {
 tidy_masterlist <- function(data, data_source = "who") {
   data_source <- rlang::arg_match(data_source, c("who", "world_bank", "global_fund"))
   data |>
-    rename(url = `...5`) |>
-    mutate(
+    dplyr::mutate(
       data_source = stringr::str_to_lower(data_source),
-      data_source = stringr::str_replace(data_source, "\\s", "_"),
-    )
+      data_source = stringr::str_replace(data_source, "\\s|\\\\", "_"),
+      variable_name = stringr::str_to_lower(variable_name),
+      variable_name = stringr::str_remove_all(variable_name, "\\(|\\)"),
+      variable_name = stringr::str_replace_all(variable_name, "\\s|\\/", "_"),
+    ) |>
+    dplyr::filter(data_source == !!data_source)
 }
