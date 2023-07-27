@@ -44,7 +44,7 @@ Global Fund,Description,,,,
 Global Fund,Test Procured,,,,
 Global Fund,Total Product Cost (USD), ,,,
 Global Fund,Actual Delivery Date,,,,year = 2021
-Global Fund,Country/Teritorry,,,,
+Global Fund,Country/Territory,,,,
 World Bank,Urban population,,,https://databank.worldbank.org/reports.aspx?source=2&series=SP.URB.TOTL.IN.ZS&country=year=2020,
 World Bank,Population density,,,https://databank.worldbank.org/reports.aspx?source=2&series=EN.POP.DNST&country=year=2020,
 World Bank,Statistical Capacity Indicators,,,,year = 2020
