@@ -2,7 +2,7 @@ test_that("WHO notifications data is downloaded, read and tidied correctly", {
   skip_if(Sys.getenv("FINDTB_DATADIR") == "")
   skip_if_offline()
   skip_if_not_available("https://extranet.who.int/tme/generateCSV.asp?ds=notifications")
-  path <- download_who(dataset = "notifications")
+  path <- download_who(dataset = "notification")
   expect_true(file.exists(path))
   on.exit(file.remove(path))
   expect_snapshot({
