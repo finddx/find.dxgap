@@ -240,5 +240,27 @@ tidy_masterlist <- function(data, data_source = "who") {
       dplyr::join_by(dataset)
     ) |>
     dplyr::relocate(url_endpoint, .after = dataset)
+}
 
+tidy_who <- function(data) {
+  browser()
+  cond_notifications <- is_ptype(data, ptype_who_notifications)
+  # TODO:
+  # cond_community <- is_ptype(data, ptype_who_community)
+  # cond_budget <- is_ptype(data, ptype_who_budget)
+  # cond_estimates <- is_ptype(data, ptype_who_estimates)
+  # cond_expenditure <- is_ptype(data, ptype_who_expenditure)
+  # cond_labs <- is_ptype(data, ptype_who_labs)
+
+  if (cond_notifications) {
+    tidy_who_notifications(data)
+  } else {
+    rlang::abort("Unknown ptype.")
+  }
+}
+
+
+tidy_who_notifications <- function(data) {
+  data |>
+    dplyr::select(-download_date)
 }
