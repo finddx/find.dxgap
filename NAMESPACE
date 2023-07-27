@@ -2,4 +2,5 @@
 
 export(plot_tb_ts)
 export(read_tb_dashboard)
+export(set_findtb_datadir)
 export(tidy_tb_dashboard)

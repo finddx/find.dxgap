@@ -1,3 +1,17 @@
+#' Create folder containing data for the project.
+#'
+#' This function has side effects. It creates a folder storing data for the
+#' project. In addition it sets the `FINDTB_DATADIR` environment variable which
+#' is needed for the `read_*()` family of functions to work properly, in
+#' particular when running tests.
+#'
+#' @param path a path where the folder should be created.
+#' @param dirs a character vector with subfolders' names.
+#'
+#' @return the path to the folder, invisibly.
+#' @export
+#'
+#' @examples path_findtb <- set_findtb_datadir("~/Documents/my_projects")
 set_findtb_datadir <- function(path, dirs = c("who", "global-fund", "world-bank", "meta")) {
   if (!rlang::is_character(path) && length(path) != 1) {
     rlang::abort("Not a valid character path.")
