@@ -3,6 +3,20 @@ set_findtb_datadir <- function(path) {
     rlang::abort("Not a valid character path.")
   }
 
+  sys_findtb_data <- Sys.getenv("FINDTB_DATADIR")
+  if (sys_findtb_data != "") {
+    flag_ev_exists <- readline(
+      prompt = paste(
+        "The env. var. FINDTB_DATADIR already exists.",
+        "Do you want to overwrite it [y/n]? "
+      )
+    )
+  }
+
+  if (flag_ev_exists == "n") {
+    return(invisible(NULL))
+  }
+
   dir_name <- "findtb_data"
   path_to_datadir <- fs::path(path, dir_name)
   if (fs::dir_exists(path_to_datadir)) {
@@ -12,24 +26,9 @@ set_findtb_datadir <- function(path) {
         path_to_datadir
       )
     )
-  }
-
-  if (flag_dir_exists == "n") {
-    return(invisible(path_to_datadir))
-  }
-
-  sys_findtb_data <- Sys.getenv("FINDTB_DATADIR")
-  if (sys_findtb_data != "") {
-    user_input <- readline(
-      prompt = paste(
-        "The env. var. FINDTB_DATADIR already exists.",
-        "Do you want to overwrite it [y/n]? "
-      )
-    )
-  }
-
-  if (user_input == "n") {
-    return(invisible(NULL))
+    if (flag_dir_exists == "n") {
+      return(invisible(path_to_datadir))
+    }
   }
 
   Sys.setenv("FINDTB_DATADIR" = path_to_datadir)
@@ -43,15 +42,15 @@ set_findtb_datadir <- function(path) {
   if (fs::dir_exists(path_to_datadir)) {
     rlang::inform(sprintf("`%s` created successfully.", dir_name))
   }
+
   invisible(fs::path(path))
 }
 
 create_readme <- function(path) {
-  browser()
   readme <- c(
-    "In `who` insert...",
+    "In `who` store...",
     "\n",
-    "In `world-bank`...",
+    "In `world-bank` store...",
     "\n",
     "In `global-fund` store...",
     "\n",
