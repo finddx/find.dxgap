@@ -234,5 +234,11 @@ tidy_masterlist <- function(data, data_source = "who") {
       variable_name = stringr::str_remove_all(variable_name, "\\(|\\)"),
       variable_name = stringr::str_replace_all(variable_name, "\\s|\\/", "_"),
     ) |>
-    dplyr::filter(data_source == !!data_source)
+    dplyr::filter(data_source == !!data_source) |>
+    dplyr::left_join(
+      who_url_endpoints,
+      dplyr::join_by(dataset)
+    ) |>
+    dplyr::relocate(url_endpoint, .after = dataset)
+
 }
