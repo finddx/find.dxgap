@@ -4,3 +4,8 @@ skip_if_no_data <- function(file_name,
   path <- file.path(data_dir, file_name)
   skip_if(!file.exists(path))
 }
+
+compose_file_name <- function(..., sep = "_") {
+  dots <- rlang::dots_list(...)
+  paste(dots, collapse = sep)
+}
