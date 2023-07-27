@@ -5,14 +5,16 @@
 #' is needed for the `read_*()` family of functions to work properly, in
 #' particular when running tests.
 #'
-#' @param path a path where the folder should be created.
+#' @param path a path where the folder should be created. By defeult, it is
+#'   created at the same level of where the findtb project lives.
 #' @param dirs a character vector with subfolders' names.
 #'
 #' @return the path to the folder, invisibly.
 #' @export
 #'
 #' @examples path_findtb <- set_findtb_datadir("~/Documents/my_projects")
-set_findtb_datadir <- function(path, dirs = c("who", "global-fund", "world-bank", "meta")) {
+set_findtb_datadir <- function(path = fs::path_dir(getwd()),
+                               dirs = c("who", "global-fund", "world-bank", "meta")) {
   if (!rlang::is_character(path) && length(path) != 1) {
     rlang::abort("Not a valid character path.")
   }

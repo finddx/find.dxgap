@@ -4,10 +4,14 @@
 \alias{set_findtb_datadir}
 \title{Create folder containing data for the project.}
 \usage{
-set_findtb_datadir(path, dirs = c("who", "global-fund", "world-bank", "meta"))
+set_findtb_datadir(
+  path = fs::path_dir(getwd()),
+  dirs = c("who", "global-fund", "world-bank", "meta")
+)
 }
 \arguments{
-\item{path}{a path where the folder should be created.}
+\item{path}{a path where the folder should be created. By defeult, it is
+created at the same level of where the findtb project lives.}
 
 \item{dirs}{a character vector with subfolders' names.}
 }
