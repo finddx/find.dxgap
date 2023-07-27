@@ -220,5 +220,17 @@ tidy_gf_procurement <- function(data) {
       ),
       total_numb_device = pack_quantity * number_of_suom_in_pack
     )
+}
 
+tidy_masterlist <- function(data, data_source = "who") {
+  data_source <- rlang::arg_match(data_source, c("who", "world_bank", "global_fund"))
+  data |>
+    dplyr::mutate(
+      data_source = stringr::str_to_lower(data_source),
+      data_source = stringr::str_replace(data_source, "\\s|\\\\", "_"),
+      variable_name = stringr::str_to_lower(variable_name),
+      variable_name = stringr::str_remove_all(variable_name, "\\(|\\)"),
+      variable_name = stringr::str_replace_all(variable_name, "\\s|\\/", "_"),
+    ) |>
+    dplyr::filter(data_source == !!data_source)
 }

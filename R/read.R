@@ -44,3 +44,8 @@ read_gf_procurement <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR
     show_col_types = FALSE
   )
 }
+
+read_masterlist <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
+  file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
+  readr::read_csv(file_path, show_col_types = FALSE)
+}
