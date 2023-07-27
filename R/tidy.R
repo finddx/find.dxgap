@@ -243,7 +243,6 @@ tidy_masterlist <- function(data, data_source = "who") {
 }
 
 tidy_who <- function(data) {
-  browser()
   cond_notifications <- is_ptype(data, ptype_who_notifications)
   # TODO:
   # cond_community <- is_ptype(data, ptype_who_community)
