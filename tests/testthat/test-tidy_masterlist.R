@@ -9,7 +9,7 @@ test_that("a tibble is returned", {
 test_that("the tibble dimensions are as expected", {
   skip_if_no_data(file_name)
   expect_equal(nrow(tidy_masterlist(data)), 40)
-  expect_equal(ncol(tidy_masterlist(data)), 6)
+  expect_equal(ncol(tidy_masterlist(data)), 7)
 })
 
 test_that("primary keys match across time series and fixed data", {
