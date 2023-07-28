@@ -24,7 +24,7 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
   url_topic <- paste0(url, endpoint)
   file_path <- compose_file_path(file_name, data_dir)
 
-  data <- readr::read_csv(url_topic)
+  data <- readr::read_csv(url_topic, show_col_types = FALSE)
   subset_cols <-
     findtb_master_list |>
     dplyr::filter(data_source == "who") |>
