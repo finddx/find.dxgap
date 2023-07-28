@@ -13,7 +13,7 @@ compose_date_dataset_file_name <- function(...,
 
 compose_file_name <- function(..., sep = "_", file_ext = NULL) {
   dots <- rlang::dots_list(...)
-  if (is.null(file_ext) && is.null(date)) {
+  if (is.null(file_ext)) {
     file_name <- paste(dots, collapse = sep)
     return(file_name)
   }
