@@ -247,7 +247,7 @@ tidy_who <- function(data) {
   cond_community <- is_ptype(data, ptype_who_community)
   cond_budget <- is_ptype(data, ptype_who_budget)
   cond_estimates <- is_ptype(data, ptype_who_estimates)
-  cond_expenditure <- is_ptype(data, ptype_who_expenditure)
+  cond_expenditure <- is_ptype(data, ptype_who_expenditures)
   cond_labs <- is_ptype(data, ptype_who_labs)
 
   if (cond_notifications) {
