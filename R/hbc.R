@@ -24,6 +24,11 @@ tidy_hbc <- function(data) {
     dplyr::transmute(
       country = text,
       year = 2021,
-      share_global_tb_incidence = c(rep(84, 20), rep(3, 10))
+      share_global_tb_incidence = c(rep(84, 20), rep(3, 10)),
+      country_code = countrycode::countrycode(
+        country,
+        origin = "country.name",
+        dest = "iso3c"
+      )
     )
 }
