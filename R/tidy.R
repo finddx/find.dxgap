@@ -265,3 +265,8 @@ tidy_who_notifications <- function(data) {
   data |>
     dplyr::select(-download_date)
 }
+
+tidy_who_budget <- function(data) {
+  data |>
+    dplyr::select(-download_date)
+}
