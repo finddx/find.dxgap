@@ -70,7 +70,9 @@ download_wb <- function(file_name = tempfile(compose_file_name("wb", download_da
     )
 
   out <-
-    unnest_wb_resp(nested_out) |>
+    nested_out |>
+    dplyr::select(page, json) |>
+    unnest_wb_resp() |>
     dplyr::mutate(download_date = download_date)
 
   file_path <- compose_file_path(file_name, data_dir)
@@ -80,10 +82,10 @@ download_wb <- function(file_name = tempfile(compose_file_name("wb", download_da
 
 unnest_wb_resp <- function(data) {
   data |>
-    tidyr::unnest_wider(data, names_sep = "_") |>
-    select(page, data_2) |>
-    tidyr::unnest_longer(data_2) |>
-    tidyr::unnest_wider(data_2) |>
+    tidyr::unnest_wider(json, names_sep = "_") |>
+    select(page, json_2) |>
+    tidyr::unnest_longer(json_2) |>
+    tidyr::unnest_wider(json_2) |>
     tidyr::unnest_wider(country, names_sep = "_") |>
     tidyr::unnest_wider(indicator, names_sep = "_")
 }
