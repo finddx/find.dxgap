@@ -52,5 +52,14 @@ tidy_gf_procurement <- function(data) {
         stringr::str_extract(product_pack, "[^0-9]*$" )
       ),
       total_numb_device = pack_quantity * number_of_suom_in_pack
+    ) |>
+    dplyr::mutate(
+      country_code = suppressWarnings(
+        countrycode::countrycode(
+        country_territory,
+        origin = "country.name",
+        dest = "iso3c"
+      )
     )
+  )
 }
