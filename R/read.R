@@ -45,7 +45,11 @@ read_gf_procurement <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR
   )
 }
 
-read_masterlist <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
-  file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
-  readr::read_csv(file_path, show_col_types = FALSE)
+read_masterlist <- function(...) {
+  findtb_read_csv(...)
+}
+
+read_who <- function(...) {
+  findtb_read_csv(..., col_types = readr::cols("download_date" = "c")) |>
+    tibble::as_tibble()
 }

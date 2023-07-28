@@ -22,3 +22,11 @@ get_distinct <- function(col,
     dplyr::distinct({{ col }}) |>
     dplyr::pull()
 }
+
+skip_if_not_available <- function(url) {
+  req <- httr2::req_perform(httr2::request(url))
+  is_error <- httr2::resp_is_error(req)
+  if (is_error) {
+    testthat::skip("Cannot reach online resource.")
+  }
+}

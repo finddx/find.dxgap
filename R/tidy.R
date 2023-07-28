@@ -226,11 +226,76 @@ tidy_masterlist <- function(data, data_source = "who") {
   data_source <- rlang::arg_match(data_source, c("who", "world_bank", "global_fund"))
   data |>
     dplyr::mutate(
+      dataset = stringr::str_to_lower(dataset),
+      dataset = stringr::str_replace_all(dataset, "\\s", "_"),
       data_source = stringr::str_to_lower(data_source),
       data_source = stringr::str_replace(data_source, "\\s|\\\\", "_"),
       variable_name = stringr::str_to_lower(variable_name),
       variable_name = stringr::str_remove_all(variable_name, "\\(|\\)"),
       variable_name = stringr::str_replace_all(variable_name, "\\s|\\/", "_"),
     ) |>
-    dplyr::filter(data_source == !!data_source)
+    dplyr::filter(data_source == !!data_source) |>
+    dplyr::left_join(
+      who_url_endpoints,
+      dplyr::join_by(dataset)
+    ) |>
+    dplyr::relocate(url_endpoint, .after = dataset)
+}
+
+tidy_who <- function(data) {
+  cond_notifications <- is_ptype(data, ptype_who_notifications)
+  cond_community <- is_ptype(data, ptype_who_community)
+  cond_budget <- is_ptype(data, ptype_who_budget)
+  cond_estimates <- is_ptype(data, ptype_who_estimates)
+  cond_expenditure <- is_ptype(data, ptype_who_expenditures)
+  cond_labs <- is_ptype(data, ptype_who_labs)
+
+  if (cond_notifications) {
+    tidy_who_notifications(data)
+  } else if (cond_budget) {
+    tidy_who_budget(data)
+  } else if (cond_community) {
+    tidy_who_community(data)
+  } else if (cond_estimates) {
+    tidy_who_estimates(data)
+  } else if (cond_expenditure) {
+    tidy_who_expenditures(data)
+  } else if (cond_labs) {
+    tidy_who_labs(data)
+  } else {
+    rlang::abort(
+      c("Cannot find a footprint for this data.", i = "Is this a new dataset?")
+    )
+  }
+}
+
+# TODO: understandable renaming
+tidy_who_notifications <- function(data) {
+  data |>
+    dplyr::select(-download_date)
+}
+
+tidy_who_budget <- function(data) {
+  data |>
+    dplyr::select(-download_date)
+}
+
+tidy_who_community <- function(data) {
+  data |>
+    dplyr::select(-download_date)
+}
+
+tidy_who_estimates <- function(data) {
+  data |>
+    dplyr::select(-download_date)
+}
+
+tidy_who_expenditures <- function(data) {
+  data |>
+    dplyr::select(-download_date)
+}
+
+tidy_who_labs <- function(data) {
+  data |>
+    dplyr::select(-download_date)
 }
