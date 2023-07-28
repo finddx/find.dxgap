@@ -24,3 +24,9 @@ findtb_read_csv <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR"), 
   file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
   readr::read_csv(file_path, show_col_types = FALSE, ...)
 }
+
+req_perform_lazy <- function(req) {
+  stopifnot(inherits(req, "httr2_request"))
+  Sys.sleep(3)
+  httr2::req_perform(req = req)
+}

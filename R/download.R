@@ -39,7 +39,3 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
   readr::write_csv(data_subset, file_path)
   invisible(normalizePath(file_path))
 }
-
-
-
-
