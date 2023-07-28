@@ -83,7 +83,7 @@ download_wb <- function(file_name = tempfile(compose_file_name("wb", download_da
 unnest_wb_resp <- function(data) {
   data |>
     tidyr::unnest_wider(json, names_sep = "_") |>
-    select(page, json_2) |>
+    dplyr::select(page, json_2) |>
     tidyr::unnest_longer(json_2) |>
     tidyr::unnest_wider(json_2) |>
     tidyr::unnest_wider(country, names_sep = "_") |>
