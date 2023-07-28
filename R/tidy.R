@@ -263,7 +263,9 @@ tidy_who <- function(data) {
   } else if (cond_labs) {
     tidy_who_labs(data)
   } else {
-    rlang::abort("Unknown ptype.")
+    rlang::abort(
+      c("Cannot find a footprint for this data.", i = "Is this a new dataset?")
+    )
   }
 }
 
