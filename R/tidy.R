@@ -244,12 +244,11 @@ tidy_masterlist <- function(data, data_source = "who") {
 
 tidy_who <- function(data) {
   cond_notifications <- is_ptype(data, ptype_who_notifications)
-  # TODO:
   cond_community <- is_ptype(data, ptype_who_community)
   cond_budget <- is_ptype(data, ptype_who_budget)
   cond_estimates <- is_ptype(data, ptype_who_estimates)
-  # cond_expenditure <- is_ptype(data, ptype_who_expenditure)
-  # cond_labs <- is_ptype(data, ptype_who_labs)
+  cond_expenditure <- is_ptype(data, ptype_who_expenditure)
+  cond_labs <- is_ptype(data, ptype_who_labs)
 
   if (cond_notifications) {
     tidy_who_notifications(data)
@@ -259,6 +258,10 @@ tidy_who <- function(data) {
     tidy_who_community(data)
   } else if (cond_estimates) {
     tidy_who_estimates(data)
+  } else if (cond_expenditure) {
+    tidy_who_expenditures(data)
+  } else if (cond_labs) {
+    tidy_who_labs(data)
   } else {
     rlang::abort("Unknown ptype.")
   }
@@ -281,6 +284,16 @@ tidy_who_community <- function(data) {
 }
 
 tidy_who_estimates <- function(data) {
+  data |>
+    dplyr::select(-download_date)
+}
+
+tidy_who_expenditures <- function(data) {
+  data |>
+    dplyr::select(-download_date)
+}
+
+tidy_who_labs <- function(data) {
   data |>
     dplyr::select(-download_date)
 }
