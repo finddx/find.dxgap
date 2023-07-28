@@ -27,29 +27,3 @@ read_tb_dashboard <- function(file_name,
     sheet = "Sheet1"
   )
 }
-
-read_hbc <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
-  file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
-  # TODO: extract table from pdf pdftools::pdf_text(file_path)[[8]]
-  officer::read_docx(path = file_path) |>
-    officer::docx_summary() |>
-    tibble::as_tibble()
-}
-
-read_gf_procurement <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
-  file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
-  readr::read_tsv(
-    file_path,
-    locale = readr::locale(encoding = "UTF-16LE"),
-    show_col_types = FALSE
-  )
-}
-
-read_masterlist <- function(...) {
-  findtb_read_csv(...)
-}
-
-read_who <- function(...) {
-  findtb_read_csv(..., col_types = readr::cols("download_date" = "c")) |>
-    tibble::as_tibble()
-}
