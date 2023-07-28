@@ -222,8 +222,7 @@ tidy_gf_procurement <- function(data) {
     )
 }
 
-tidy_masterlist <- function(data, data_source = "who") {
-  data_source <- rlang::arg_match(data_source, c("who", "world_bank", "global_fund"))
+tidy_masterlist <- function(data) {
   data |>
     dplyr::mutate(
       dataset = stringr::str_to_lower(dataset),
@@ -234,7 +233,6 @@ tidy_masterlist <- function(data, data_source = "who") {
       variable_name = stringr::str_remove_all(variable_name, "\\(|\\)"),
       variable_name = stringr::str_replace_all(variable_name, "\\s|\\/", "_"),
     ) |>
-    dplyr::filter(data_source == !!data_source) |>
     dplyr::left_join(
       who_url_endpoints,
       dplyr::join_by(dataset)
