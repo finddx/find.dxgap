@@ -8,6 +8,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         c_newinc = numeric(0),
         new_labconf = numeric(0),
@@ -21,6 +23,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         c_newinc = numeric(0),
         new_labconf = numeric(0),
@@ -36,6 +40,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         c_cdr = numeric(0),
         c_newinc_100k = numeric(0),
@@ -53,6 +59,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         c_cdr = numeric(0),
         c_newinc_100k = numeric(0),
@@ -72,6 +80,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         budget_lab = numeric(0),
         budget_oth = numeric(0),
@@ -93,6 +103,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         budget_lab = numeric(0),
         budget_oth = numeric(0),
@@ -116,6 +128,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         bmu = numeric(0),
         bmu_community_impl = numeric(0),
@@ -134,6 +148,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         bmu = numeric(0),
         bmu_community_impl = numeric(0),
@@ -154,6 +170,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         rcvd_lab = numeric(0),
         rcvd_staff = numeric(0),
@@ -172,6 +190,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         rcvd_lab = numeric(0),
         rcvd_staff = numeric(0),
@@ -192,6 +212,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         culture = numeric(0),
         lab_cul = numeric(0),
@@ -211,6 +233,8 @@
     Output
       tibble::tibble(
         country = character(0),
+        iso3 = character(0),
+        g_whoregion = character(0),
         year = numeric(0),
         culture = numeric(0),
         lab_cul = numeric(0),
