@@ -70,3 +70,16 @@ ptype_who_laboratories <- tibble::tibble(
   xpert = numeric(0),
   download_date = character(0),
 )
+
+ptype_who_expenditures <- tibble::tibble(
+  country = character(0),
+  year = numeric(0),
+  rcvd_lab = numeric(0),
+  rcvd_staff = numeric(0),
+  rcvd_tot_domestic = numeric(0),
+  rcvd_tot_gf = numeric(0),
+  rcvd_tot_grnt = numeric(0),
+  rcvd_tot_sources = numeric(0),
+  rcvd_tot_usaid = numeric(0),
+  download_date = character(0),
+)
