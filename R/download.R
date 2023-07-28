@@ -41,29 +41,40 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
 }
 
 # https://datahelpdesk.worldbank.org/knowledgebase/articles/898581
-download_wb <- function(file_name = tempfile(compose_file_name("wb", download_date, dataset), fileext = ".csv"),
+download_wb <- function(file_name = tempfile(compose_file_name("wb", download_date, indicator), fileext = ".csv"),
                         indicator = "SP.URB.TOTL.IN.ZS", # TODO: use me
+                        range_years = "2020:2023",
                         download_date = as.character(Sys.Date()),
                         data_dir = Sys.getenv("FINDTB_DATADIR")) {
-  url = "https://api.worldbank.org/v2/country/all/indicator/SP.URB.TOTL.IN.ZS?format=json&date=2015:2023"
-  req <- httr2::request(url)
+  base_url <- "https://api.worldbank.org/v2/country/all/indicator"
+  req <-
+    httr2::request(base_url) |>
+    httr2::req_url_path_append(indicator) |>
+    httr2::req_url_query(format = "json", date = range_years)
+
   resp <- httr2::req_perform(req)
   page_one <- httr2::resp_body_json(resp)
   total_numb_pages <- page_one[[1]]$pages
 
-  per_page_query <- purrr::map(
-    seq_len(total_numb_pages),
-    ~ httr2::req_url_query(req, page = .x)
+  page_df <- tibble::tibble(
+    page = seq_len(total_numb_pages),
+    req = list(req)
   )
 
-  resp <- purrr::map(per_page_query, ~ req_perform_lazy(.x))
-  json <- purrr::map(resp, httr2::resp_body_json)
-  json_names <- purrr::set_names(json, nm = seq_len(total_numb_pages))
-  df <- tibble::tibble(data = json_names, page = names(json_names))
-  out <- unnest_wb_resp(df)
+  nested_out <-
+    page_df |>
+    dplyr:::mutate(
+      req_mod = purrr::map2(req, page, ~ httr2::req_url_query(.x, page = .y)),
+      resp = purrr::map(req_mod, ~ req_perform_lazy(.x)),
+      json = purrr::map(resp, ~ httr2::resp_body_json(.x)),
+    )
+
+  out <-
+    unnest_wb_resp(nested_out) |>
+    dplyr::mutate(download_date = download_date)
 
   file_path <- compose_file_path(file_name, data_dir)
-  readr::write_csv(data_subset, file_path)
+  readr::write_csv(out, file_path)
   invisible(normalizePath(file_path))
 }
 
