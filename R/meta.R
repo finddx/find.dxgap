@@ -44,3 +44,15 @@ ptype_who_community <- tibble::tibble(
   notified_ref_community = numeric(0),
   download_date = character(0),
 )
+
+ptype_who_estimates <- tibble::tibble(
+  country = character(0),
+  year = numeric(0),
+  c_cdr = numeric(0),
+  c_newinc_100k = numeric(0),
+  e_inc_100k = numeric(0),
+  e_inc_num = numeric(0),
+  e_mort_100k = numeric(0),
+  e_pop_num = numeric(0),
+  download_date = character(0),
+)
