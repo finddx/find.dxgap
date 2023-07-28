@@ -1,24 +1,54 @@
+#' Read the TB dashboard
+#'
+#' `read_tb_dashboard()` reads the raw Excel TB dashboard into R, keeping all
+#' the information in an untidied format.
+#'
+#' @param file_name Either an absolute or relative path to the raw Excel TB
+#'   dashboard. If a relative path is provided, data is read from the
+#'   findtb.data. Instead, if an absolute path is provided, data is read from
+#'   any other location.
+#' @param data_dir An absolute path pointing to the findtb.data folder. By
+#'   default, the path is returned by the `FINDTB_DATADIR` environment
+#'   variable.
+#'
+#' @returns A tibble
+#' @seealso [tidy_tb_dashboard()] to tidy this dashboard.
+#' @examples
+#' \dontrun{
+#' read_tb_dashboard()
+#' }
+#' @export
+read_tb_dashboard <- function(file_name,
+                              data_dir = Sys.getenv("FINDTB_DATADIR")) {
+  file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
+
+  readxl::read_xlsx(
+    path = file_path,
+    sheet = "Sheet1"
+  )
+}
+
 #' Tidy the TB dashboard
-#' 
+#'
 #' `tidy_tb_dashboard()` tidies the messy TB dashboard read by
 #' [read_tb_dashboard()]. The messy data combines both time series and fixed
 #' data so a flag is provided to select the type of data that should be
 #' returned, with a shared 'country' primary key.
-#' 
+#'
 #' @param data Input data set. Must come from [read_tb_dashboard()].
-#' @param type Flag to indicate whether time series or fixed data should be 
+#' @param type Flag to indicate whether time series or fixed data should be
 #'    returned. Defaults to `time_series`.
 #' @returns A tibble
 #' @seealso [read_tb_dashboard()]
-#' @examples 
+#' @examples
 #' \dontrun{
 #' # Returns the time series data by default
 #' tidy_tb_dashboard()
-#' 
+#'
 #' # Return fixed data
 #' # tidy_tb_dashboard(time_series = FALSE)
 #' }
-#' @export 
+#' @export
 tidy_tb_dashboard <- function(data, type = c("time_series", "fixed")) {
 
   type <- match.arg(type)
@@ -162,4 +192,74 @@ tidy_tb_dashboard <- function(data, type = c("time_series", "fixed")) {
     data_harmonise |>
       dplyr::select(country, !tidyselect::matches("\\d+$"))
   }
+}
+
+#' Plot time series
+#'
+#' `plot_tb_ts()` renders a time series for given indicator, years and countries
+#' chosen by the user. Input data for the time series are returned by
+#' `read_tb_dashboard()` and `tidy_tb_dashboard()`.
+#'
+#' @param metric A character of length one of the indicator to display.
+#' @param years A numeric vector for the years of the time series.
+#' @param countries A character vector with country names to display.
+#'
+#' @return A plot.
+#' @seealso [read_tb_dashboard()]
+#' @seealso [tidy_tb_dashboard()]
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' plot_tb_ts()
+#' }
+plot_tb_ts <- function(metric = "tb_incidence_per_100k",
+                       years = seq(2015, 2020),
+                       countries = c("Angola", "Brazil", "Zambia")) {
+
+  stopifnot(is.character(metric) && length(metric) == 1)
+  metric <- rlang::arg_match(metric, values = tb_constants$indicator_ts)
+
+  years <- sort(years)
+  stopifnot(length(years) > 1)
+
+  stopifnot(is.character(countries))
+  countries <- rlang::arg_match(
+    countries,
+    tb_constants$country,
+    multiple = TRUE
+  )
+
+  tb_df <- read_tidy_tb(type = "time_series")
+
+  first_last_df <-
+    tb_df |>
+    dplyr::filter(year %in% years & country %in% countries & indicator == metric)
+
+  labels_df <-
+    first_last_df |>
+    dplyr::filter(year == max(year)) |>
+    dplyr::select(country, year, value)
+
+  first_last_df |>
+    ggplot2::ggplot(ggplot2::aes(year, value, group = country)) +
+    ggplot2::geom_line(ggplot2::aes(color = country), linewidth = 1.05) +
+    ggplot2::geom_text(
+      data = labels_df,
+      nudge_x = 0.2,
+      ggplot2::aes(year, value, label = country)
+    ) +
+    ggplot2::labs(
+      y = metric,
+      x = "year",
+      title = sprintf("Trend of indicator `%s`", metric),
+      subtitle = sprintf("Time range: %d - %d", min(years), max(years)),
+      caption = "Source: TB Spreadsheet"
+    ) +
+    ggplot2::theme_light() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(hjust = 0.5),
+      plot.subtitle = ggplot2::element_text(hjust = 0.5),
+      legend.position = "none"
+    )
 }
