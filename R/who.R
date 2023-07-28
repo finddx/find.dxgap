@@ -17,7 +17,7 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
     dplyr::filter(data_source == "who") |>
     dplyr::filter(dataset == !!dataset) |>
     dplyr::pull(variable_name)
-  relevant_cols <- c("country", "year", subset_cols)
+  relevant_cols <- c("country", "iso3", "g_whoregion", "year", subset_cols)
   data_subset <-
     data |>
     dplyr::select(tidyselect::all_of(relevant_cols)) |>
