@@ -31,3 +31,16 @@ ptype_who_budget <- tibble::tibble(
   cf_tot_usaid = numeric(0),
   download_date = character(0),
 )
+
+ptype_who_community <- tibble::tibble(
+  country = character(0),
+  year = numeric(0),
+  bmu = numeric(0),
+  bmu_community_impl = numeric(0),
+  bmu_ref_data = numeric(0),
+  bmu_rxsupport_data = numeric(0),
+  bmu_rxsupport_data_coh = numeric(0),
+  notified_ref = numeric(0),
+  notified_ref_community = numeric(0),
+  download_date = character(0),
+)
