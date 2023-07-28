@@ -56,3 +56,17 @@ ptype_who_estimates <- tibble::tibble(
   e_pop_num = numeric(0),
   download_date = character(0),
 )
+
+ptype_who_laboratories <- tibble::tibble(
+  country = character(0),
+  year = numeric(0),
+  culture = numeric(0),
+  lab_cul = numeric(0),
+  lab_sm = numeric(0),
+  lab_xpert = numeric(0),
+  m_wrd = numeric(0),
+  m_wrd_tests_performed = numeric(0),
+  m_wrd_tests_positive = numeric(0),
+  xpert = numeric(0),
+  download_date = character(0),
+)
