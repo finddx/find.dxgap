@@ -57,7 +57,7 @@ ptype_who_estimates <- tibble::tibble(
   download_date = character(0),
 )
 
-ptype_who_laboratories <- tibble::tibble(
+ptype_who_labs <- tibble::tibble(
   country = character(0),
   year = numeric(0),
   culture = numeric(0),
