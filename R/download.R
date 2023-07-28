@@ -43,7 +43,7 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
 # https://datahelpdesk.worldbank.org/knowledgebase/articles/898581
 download_wb <- function(file_name = tempfile(compose_file_name("wb", download_date, indicator), fileext = ".csv"),
                         indicator = "SP.URB.TOTL.IN.ZS", # TODO: use me
-                        range_years = "2020:2023",
+                        range_years = "2015:2023",
                         download_date = as.character(Sys.Date()),
                         data_dir = Sys.getenv("FINDTB_DATADIR")) {
   base_url <- "https://api.worldbank.org/v2/country/all/indicator"
