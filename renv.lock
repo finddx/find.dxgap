@@ -396,6 +396,16 @@
       ],
       "Hash": "2fb521ffc0592c3c47d1d7e3b0cba2d0"
     },
+    "countrycode": {
+      "Package": "countrycode",
+      "Version": "1.5.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "bbc5ab5258e5ddf38f2cd2c5a7afa860"
+    },
     "cpp11": {
       "Package": "cpp11",
       "Version": "0.4.3",
