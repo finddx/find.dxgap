@@ -75,10 +75,10 @@ ptype_who_labs <- tibble::tibble(
   lab_sm = numeric(0),
   smear = numeric(0),
   lab_xpert = numeric(0),
+  xpert = numeric(0),
   m_wrd = numeric(0),
   m_wrd_tests_performed = numeric(0),
   m_wrd_tests_positive = numeric(0),
-  xpert = numeric(0),
   download_date = character(0),
 )
 
