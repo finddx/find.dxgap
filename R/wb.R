@@ -54,5 +54,6 @@ read_wb_pop_density <- function(...) {
 }
 
 tidy_wb_pop_density <- function(data) {
-  data
+  data |>
+    dplyr::rename(country_code = countryiso3code)
 }
