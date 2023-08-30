@@ -61,5 +61,7 @@ tidy_gf_procurement <- function(data) {
         dest = "iso3c"
       )
     )
-  )
+  ) |>
+    dplyr::mutate(year = lubridate::year(actual_delivery_date)) |>
+    dplyr::relocate(country_code, year)
 }
