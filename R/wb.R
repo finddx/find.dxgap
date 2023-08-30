@@ -56,7 +56,14 @@ read_wb_pop_density <- function(...) {
 tidy_wb_pop_density <- function(data, years = NULL) {
   df <-
     data |>
-    dplyr::rename(country_code = countryiso3code, year = date)
+    dplyr::transmute(
+      indicator_value,
+      country_code = countryiso3code,
+      country_id,
+      country_value,
+      year = date,
+      value
+    )
   if (!is.null(years)) {
     df_subset <-
       df |>
