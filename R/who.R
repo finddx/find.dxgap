@@ -60,62 +60,110 @@ tidy_who <- function(data) {
 }
 
 # TODO: understandable renaming
-tidy_who_notifications <- function(data) {
-  data |>
+tidy_who_notifications <- function(data, years = NULL) {
+  df <-
+    data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3) |>
     tidyr::pivot_longer(
       cols = -c(country, country_code, g_whoregion, year),
       names_to = "variable"
     )
+  if (!is.null(years)) {
+    df_subset <-
+      df |>
+      dplyr::filter(year %in% years)
+    return(df_subset)
+  }
+  df
 }
 
-tidy_who_budget <- function(data) {
-  data |>
+tidy_who_budget <- function(data, years = NULL) {
+  df <-
+    data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3) |>
     tidyr::pivot_longer(
       cols = -c(country, country_code, g_whoregion, year),
       names_to = "variable"
     )
+  if (!is.null(years)) {
+    df_subset <-
+      df |>
+      dplyr::filter(year %in% years)
+    return(df_subset)
+  }
+  df
 }
 
-tidy_who_community <- function(data) {
-  data |>
+tidy_who_community <- function(data, years = NULL) {
+  df <-
+    data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3) |>
     tidyr::pivot_longer(
       cols = -c(country, country_code, g_whoregion, year),
       names_to = "variable"
     )
+  if (!is.null(years)) {
+    df_subset <-
+      df |>
+      dplyr::filter(year %in% years)
+    return(df_subset)
+  }
+  df
 }
 
-tidy_who_estimates <- function(data) {
-  data |>
+tidy_who_estimates <- function(data, years = NULL) {
+  df <-
+    data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3) |>
     tidyr::pivot_longer(
       cols = -c(country, country_code, g_whoregion, year),
       names_to = "variable"
     )
+  if (!is.null(years)) {
+    df_subset <-
+      df |>
+      dplyr::filter(year %in% years)
+    return(df_subset)
+  }
+  df
 }
 
-tidy_who_expenditures <- function(data) {
-  data |>
+tidy_who_expenditures <- function(data, years = NULL) {
+  df <-
+    data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3) |>
     tidyr::pivot_longer(
       cols = -c(country, country_code, g_whoregion, year),
       names_to = "variable"
     )
+  if (!is.null(years)) {
+    df_subset <-
+      df |>
+      dplyr::filter(year %in% years)
+    return(df_subset)
+  }
+  df
 }
 
-tidy_who_labs <- function(data) {
-  data |>
+tidy_who_labs <- function(data, years = NULL) {
+  df <-
+    data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3) |>
     tidyr::pivot_longer(
       cols = -c(country, country_code, g_whoregion, year),
       names_to = "variable"
     )
+  if (!is.null(years)) {
+    df_subset <-
+      df |>
+      dplyr::filter(year %in% years)
+    return(df_subset)
+  }
+  df
 }
