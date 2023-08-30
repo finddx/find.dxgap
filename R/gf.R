@@ -7,8 +7,9 @@ read_gf_procurement <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR
   )
 }
 
-tidy_gf_procurement <- function(data) {
-  data |>
+tidy_gf_procurement <- function(data, years = NULL) {
+  df <-
+    data |>
     dplyr::rename_with(.fn = stringr::str_to_lower) |>
     dplyr::rename(
       country_territory = `country/teritorry`,
@@ -64,4 +65,12 @@ tidy_gf_procurement <- function(data) {
   ) |>
     dplyr::mutate(year = lubridate::year(actual_delivery_date)) |>
     dplyr::relocate(country_code, year)
+
+  if (!is.null(years)) {
+    df_subset <-
+      df |>
+      dplyr::filter(year %in% years)
+    return(df_subset)
+  }
+  df
 }

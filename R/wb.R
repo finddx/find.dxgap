@@ -53,8 +53,9 @@ read_wb_pop_density <- function(...) {
     tibble::as_tibble()
 }
 
-tidy_wb_pop_density <- function(data) {
-  data |>
+tidy_wb_pop_density <- function(data, years = NULL) {
+  df <-
+    data |>
     dplyr::transmute(
       indicator_value,
       country_code = countryiso3code,
@@ -63,4 +64,11 @@ tidy_wb_pop_density <- function(data) {
       year = date,
       value
     )
+  if (!is.null(years)) {
+    df_subset <-
+      df |>
+      dplyr::filter(year %in% years)
+    return(df_subset)
+  }
+  df
 }
