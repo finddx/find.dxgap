@@ -32,7 +32,7 @@ read_who <- function(...) {
     tibble::as_tibble()
 }
 
-tidy_who <- function(data) {
+tidy_who <- function(data, years = NULL) {
   cond_notifications <- is_ptype(data, ptype_who_notifications)
   cond_community <- is_ptype(data, ptype_who_community)
   cond_budget <- is_ptype(data, ptype_who_budget)
@@ -41,17 +41,17 @@ tidy_who <- function(data) {
   cond_labs <- is_ptype(data, ptype_who_labs)
 
   if (cond_notifications) {
-    tidy_who_notifications(data)
+    tidy_who_notifications(data, years = years)
   } else if (cond_budget) {
-    tidy_who_budget(data)
+    tidy_who_budget(data, years = years)
   } else if (cond_community) {
-    tidy_who_community(data)
+    tidy_who_community(data, years = years)
   } else if (cond_estimates) {
-    tidy_who_estimates(data)
+    tidy_who_estimates(data, years = years)
   } else if (cond_expenditure) {
-    tidy_who_expenditures(data)
+    tidy_who_expenditures(data, years = years)
   } else if (cond_labs) {
-    tidy_who_labs(data)
+    tidy_who_labs(data, years = years)
   } else {
     rlang::abort(
       c("Cannot find a footprint for this data.", i = "Is this a new dataset?")
