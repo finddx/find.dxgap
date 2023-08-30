@@ -62,30 +62,36 @@ tidy_who <- function(data) {
 # TODO: understandable renaming
 tidy_who_notifications <- function(data) {
   data |>
-    dplyr::select(-download_date)
+    dplyr::select(-download_date) |>
+    dplyr::rename(country_code = iso3)
 }
 
 tidy_who_budget <- function(data) {
   data |>
-    dplyr::select(-download_date)
+    dplyr::select(-download_date) |>
+    dplyr::rename(country_code = iso3)
 }
 
 tidy_who_community <- function(data) {
   data |>
-    dplyr::select(-download_date)
+    dplyr::select(-download_date) |>
+    dplyr::rename(country_code = iso3)
 }
 
 tidy_who_estimates <- function(data) {
   data |>
-    dplyr::select(-download_date)
+    dplyr::select(-download_date) |>
+    dplyr::rename(country_code = iso3)
 }
 
 tidy_who_expenditures <- function(data) {
   data |>
-    dplyr::select(-download_date)
+    dplyr::select(-download_date) |>
+    dplyr::rename(country_code = iso3)
 }
 
 tidy_who_labs <- function(data) {
   data |>
-    dplyr::select(-download_date)
+    dplyr::select(-download_date) |>
+    dplyr::rename(country_code = iso3)
 }
