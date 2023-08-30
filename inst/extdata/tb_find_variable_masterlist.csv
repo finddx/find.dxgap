@@ -32,11 +32,12 @@ WHO,rcvd_tot_usaid,Expenditure and utilisation,Funding received from USAID (US D
 WHO,culture,Laboratories,Number of sites providing TB diagnostic services using culture at the end of the reporting year,,
 WHO,lab_cul,Laboratories,Number of laboratories providing TB diagnostic services using culture,,
 WHO,lab_sm,Laboratories,Number of laboratories providing TB diagnostic services using smear microscopy,,
+WHO,smear,Laboratories,Number of sites providing TB diagnostic services using smear microscopy (including fluorescent) at the end of the reporting year,,
 WHO,lab_xpert,Laboratories,Number of laboratories providing TB diagnostic services using xpert MTB/RIF,,
+WHO,xpert,Laboratories,Number of sites providing TB diagnostic services using Xpert MTB/RIF at the end of the reporting year,,
 WHO,m_wrd,Laboratories,Number of sites providing TB diagnostic services using molecular WHO-recommended rapid diagnostics at the end of the reporting year,,
 WHO,m_wrd_tests_performed,Laboratories,Total number of diagnostic tests performed using molecular WHO-recommended rapid diagnostics,,
 WHO,m_wrd_tests_positive,Laboratories,Number of positive results among the diagnostic tests performed using molecular WHO-recommended rapid diagnostics,,
-WHO,xpert,Laboratories,Number of sites providing TB diagnostic services using Xpert MTB/RIF at the end of the reporting year,,
 WHO,c_newinc,Notification,Total of new and relapse cases and cases with unknown previous TB treatment history,,
 WHO,new_labconf,Notification,New pulmonary bacteriologically confirmed TB cases (smear positive or culture positive or positive by WHO-recommended rapid diagnostics such as Xpert MTB/RIF). As of 2013 this also includes pulmonary bacteriologically confirmed cases with unknown previous TB treatment history.,,
 Global Fund,Product,,,,TB molecular diagnostics
