@@ -48,12 +48,12 @@ unnest_wb_resp <- function(data) {
     tidyr::unnest_wider(indicator, names_sep = "_")
 }
 
-read_wb_urban_pop <- function(...) {
+read_wb <- function(...) {
   findtb_read_csv(...) |>
     tibble::as_tibble()
 }
 
-tidy_wb_urban_pop <- function(data, years = NULL) {
+tidy_wb <- function(data, years = NULL) {
   df <-
     data |>
     dplyr::transmute(
