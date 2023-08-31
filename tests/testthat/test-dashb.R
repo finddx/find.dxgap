@@ -21,9 +21,9 @@ test_that("a tibble is returned", {
 test_that("the tibble dimensions are as expected", {
   skip_if_no_data(file_name)
   expect_equal(nrow(tidy_tb_dashboard(data, type = "time_series")), 1440)
-  expect_equal(ncol(tidy_tb_dashboard(data, type = "time_series")), 4)
+  expect_equal(ncol(tidy_tb_dashboard(data, type = "time_series")), 5)
   expect_equal(nrow(tidy_tb_dashboard(data, type = "fixed")), 30)
-  expect_equal(ncol(tidy_tb_dashboard(data, type = "fixed")), 14)
+  expect_equal(ncol(tidy_tb_dashboard(data, type = "fixed")), 15)
 })
 
 test_that("primary keys match across time series and fixed data", {
