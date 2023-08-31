@@ -178,18 +178,31 @@ tidy_tb_dashboard <- function(data, type = c("time_series", "fixed")) {
       ~ stringr::str_replace(.x, "million", "100k")
     )
 
+  data_country_code <- data_harmonise |>
+    dplyr::mutate(
+      country_code = countrycode::countrycode(
+        country,
+        origin = "country.name",
+        dest = "iso3c"
+      ),
+      .after = country
+    )
+
   if (type == "time_series") {
-    data_harmonise |>
-      dplyr::select(country, tidyselect::matches("\\d+$")) |>
+    data_country_code |>
+      dplyr::select(
+        tidyselect::starts_with("country"),
+        tidyselect::matches("\\d+$")
+      ) |>
       tidyr::pivot_longer(
-        cols = !country,
+        cols = -tidyselect::starts_with("country"),
         names_to = c("indicator", "year"),
         names_pattern = "(.*)_(\\d+)",
         names_transform = list(year = as.integer),
         values_to = "value"
       )
   } else {
-    data_harmonise |>
+    data_country_code |>
       dplyr::select(country, !tidyselect::matches("\\d+$"))
   }
 }
