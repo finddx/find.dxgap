@@ -28,3 +28,7 @@ laboratories <- download_who(
   file_name = compose_date_dataset_file_name("who", dataset = "laboratories", file_ext = ".csv"),
   dataset = "laboratories"
 )
+Sys.sleep(3)
+pop_urban <- download_wb(indicator = "SP.URB.TOTL.IN.ZS")
+Sys.sleep(3)
+pop_density <- download_wb(indicator = "EN.POP.DNST")
