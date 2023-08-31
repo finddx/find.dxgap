@@ -53,7 +53,7 @@ read_wb <- function(...) {
     tibble::as_tibble()
 }
 
-tidy_wb_urban_pop <- function(data, years = NULL) {
+tidy_wb <- function(data, years = NULL) {
   df <-
     data |>
     dplyr::transmute(
