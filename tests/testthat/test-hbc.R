@@ -30,3 +30,12 @@ test_that("primary keys match across time series and fixed data", {
     unique(tidy_hbc(data)$country)
   )
 })
+
+test_that("`country_code` entries are not missing", {
+  skip_if_no_data(file_name)
+  expect_snapshot(
+    tidy_hbc(data) |>
+      dplyr::distinct(country_code, country) |>
+      dplyr::filter(is.na(country_code))
+  )
+})
