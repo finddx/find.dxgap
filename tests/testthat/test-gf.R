@@ -20,7 +20,7 @@ test_that("a tibble is returned", {
 test_that("the tibble dimensions are as expected", {
   skip_if_no_data(file_name)
   expect_equal(nrow(tidy_gf_procurement(data)), 1677)
-  expect_equal(ncol(tidy_gf_procurement(data)), 26)
+  expect_equal(ncol(tidy_gf_procurement(data)), 27)
 })
 
 test_that("primary keys match across time series and fixed data", {
