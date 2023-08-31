@@ -1,14 +1,17 @@
-test_that("WHO expenditures data is downloaded, read and tidied correctly", {
-  skip_if(Sys.getenv("FINDTB_DATADIR") == "")
-  skip_if_offline()
-  skip_if_not_available("https://extranet.who.int/tme/generateCSV.asp?ds=expenditure_utilisation")
-  path <- download_who(dataset = "expenditure_and_utilisation")
+skip_if(Sys.getenv("FINDTB_DATADIR") == "")
+skip_if_offline()
+skip_if_not_available("https://extranet.who.int/tme/generateCSV.asp?ds=expenditure_utilisation")
+path <- download_who(dataset = "expenditure_and_utilisation")
+on.exit(file.remove(path), add = TRUE)
+raw <- read_who(path)
+tidy <- tidy_who(raw)
+test_that("WHO expenditures data is downloaded correctly", {
   expect_true(file.exists(path))
-  on.exit(file.remove(path))
+})
+
+test_that("WHO expenditures data is read and tidied correctly", {
   expect_snapshot({
-    raw <- read_who(path)
     constructive::construct(vctrs::vec_ptype(raw))
-    tidy <- tidy_who(raw)
     constructive::construct(vctrs::vec_ptype(tidy))
   })
 })
