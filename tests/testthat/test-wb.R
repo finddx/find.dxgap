@@ -3,7 +3,7 @@ skip_if_offline()
 skip_if_not_available("https://api.worldbank.org/v2/country/all/indicator")
 path <- download_wb(range_years = "2021:2022")
 on.exit(file.remove(path))
-raw <- read_wb_urban_pop(path)
+raw <- read_wb(path)
 tidy <- tidy_wb_urban_pop(raw)
 test_that("World Bank data is downloaded correctly", {
   expect_true(file.exists(path))
