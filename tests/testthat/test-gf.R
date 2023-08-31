@@ -30,3 +30,12 @@ test_that("primary keys match across time series and fixed data", {
     unique(tidy_gf_procurement(data)$country_territory)
   )
 })
+
+test_that("`country_code` entries are not missing", {
+  skip_if_no_data(file_name)
+  expect_snapshot(
+    tidy_gf_procurement(data) |>
+      dplyr::distinct(country_code, country_territory) |>
+      dplyr::filter(is.na(country_code))
+  )
+})
