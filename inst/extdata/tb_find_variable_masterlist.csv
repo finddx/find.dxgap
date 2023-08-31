@@ -48,6 +48,7 @@ Global Fund,Actual Delivery Date,,,,year = 2021
 Global Fund,Country/Territory,,,,
 World Bank,Urban population,,,https://databank.worldbank.org/reports.aspx?source=2&series=SP.URB.TOTL.IN.ZS&country=year=2020,
 World Bank,Population density,,,https://databank.worldbank.org/reports.aspx?source=2&series=EN.POP.DNST&country=year=2020,
+World Bank,Total population,,,https://databank.worldbank.org/reports.aspx?source=2&series=SP.POP.TOTL&country=year=2020,
 World Bank,Statistical Capacity Indicators,,,,year = 2020
 World Bank,National Poverty Line - Subnational Poverty,,,,year = 2020
 ,,Subnational Population,,,year = 2020
