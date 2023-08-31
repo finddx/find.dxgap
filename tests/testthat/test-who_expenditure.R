@@ -15,3 +15,11 @@ test_that("WHO expenditures data is read and tidied correctly", {
     constructive::construct(vctrs::vec_ptype(tidy))
   })
 })
+
+test_that("`country_code` entries are not missing", {
+  expect_snapshot(
+    tidy |>
+      dplyr::distinct(country_code, country) |>
+      dplyr::filter(is.na(country_code))
+  )
+})
