@@ -48,7 +48,7 @@ unnest_wb_resp <- function(data) {
     tidyr::unnest_wider(indicator, names_sep = "_")
 }
 
-read_wb_pop_density <- function(...) {
+read_wb_urban_pop <- function(...) {
   findtb_read_csv(...) |>
     tibble::as_tibble()
 }
