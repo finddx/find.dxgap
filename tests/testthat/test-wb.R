@@ -1,7 +1,7 @@
 skip_if(Sys.getenv("FINDTB_DATADIR") == "")
 skip_if_offline()
 skip_if_not_available("https://api.worldbank.org/v2/country/all/indicator")
-path <- download_wb(range_years = "2021:2022")
+path <- download_wb(indicator = "SP.URB.TOTL.IN.ZS", range_years = "2021:2022")
 on.exit(file.remove(path))
 raw <- read_wb(path)
 tidy <- tidy_wb(raw)
