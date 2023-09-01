@@ -1,4 +1,4 @@
-findtb_load <- function(years = 2019) {
+findtb_load <- function(.years = 2019) {
 
   # HBC countries --------------------------------------------------------------
 
@@ -17,7 +17,7 @@ findtb_load <- function(years = 2019) {
 
   wb_tot_pop_df <-
     read_wb("wb_2023-08-31_SP.POP.TOTL.csv") |>
-    tidy_wb(years = 2019) |>
+    tidy_wb(!!.years) |>
     # dplyr::mutate(value = value / 1e5) |>
     # dplyr::select(country_code, country_value, year, pop_100k = value) |>
     dplyr::semi_join(hbc_df, by = join_by(country_code))
@@ -26,7 +26,7 @@ findtb_load <- function(years = 2019) {
 
   wb_urb_pop_df <-
     read_wb("wb_2023-07-28_SP.URB.TOTL.IN.ZS.csv") |>
-    tidy_wb(years = 2019) |>
+    tidy_wb(!!.years) |>
     dplyr::select(country_code, year, pop_urban_perc = value) |>
     dplyr::semi_join(hbc_df, by = join_by(country_code))
 
@@ -34,7 +34,7 @@ findtb_load <- function(years = 2019) {
 
   wb_density_pop_df <-
     read_wb("wb_2023-08-31_EN.POP.DNST.csv") |>
-    tidy_wb(years = 2019) |>
+    tidy_wb(!!.years) |>
     dplyr::select(country_code, year, pop_density = value) |>
     dplyr::semi_join(hbc_df, by = join_by(country_code))
 
@@ -42,7 +42,7 @@ findtb_load <- function(years = 2019) {
 
   who_notifications_df <-
     read_who("who_2023-07-28_notifications.csv") |>
-    tidy_who(years = 2019) |>
+    tidy_who(!!.years) |>
     dplyr::semi_join(hbc_df, by = join_by(country_code)) |>
     dplyr::filter(variable == "c_newinc") |>
     dplyr::select(country_code, year, tb_notified_cases = value)
@@ -51,7 +51,7 @@ findtb_load <- function(years = 2019) {
 
   who_estimates_df <-
     read_who("who_2023-07-28_estimates.csv") |>
-    tidy_who(years = 2019) |>
+    tidy_who(!!.years) |>
     semi_join(hbc_df, by = join_by(country_code)) |>
     dplyr::filter(variable == "e_inc_num") |>
     dplyr::select(country_code, year, tb_estimated_cases = value)
@@ -70,7 +70,7 @@ findtb_load <- function(years = 2019) {
 
   who_budget_df <-
     read_who("who_2023-07-28_budget.csv") |>
-    tidy_who(years = 2019) |>
+    tidy_who(!!.years) |>
     semi_join(hbc_df, by = join_by(country_code)) |>
     dplyr::select(
       country_code,
@@ -83,7 +83,7 @@ findtb_load <- function(years = 2019) {
 
   who_community_df <-
     read_who("who_2023-07-28_community.csv") |>
-    tidy_who(years = 2019) |>
+    tidy_who(!!.years) |>
     dplyr::semi_join(hbc_df, by = join_by(country_code)) |>
     dplyr::select(country_code, year, comm_type = variable, comm_value = value)
 
@@ -91,7 +91,7 @@ findtb_load <- function(years = 2019) {
 
   who_sites_df <-
     read_who("who_2023-08-30_laboratories.csv") |>
-    tidy_who(years = 2019) |>
+    tidy_who(!!.years) |>
     dplyr::semi_join(hbc_df, by = join_by(country_code)) |>
     dplyr::select(country_code, year, site_type = variable, site_count = value)
 
@@ -100,7 +100,7 @@ findtb_load <- function(years = 2019) {
 
   gf_procurement_df <-
     read_gf_procurement("gf_2023-07-26_procurement.csv") |>
-    tidy_gf_procurement(years = 2019) |>
+    tidy_gf_procurement(!!.years) |>
     dplyr::semi_join(hbc_df, by = join_by(country_code)) |>
     dplyr::select(country_code, year, product, total_numb_device)
 }
