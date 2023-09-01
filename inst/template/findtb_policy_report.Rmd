@@ -3,7 +3,7 @@ title: "Findtb Policy Report"
 output: html_document
 date: "`r Sys.Date()`"
 params:
-  dm: "dm"
+  dm: dm
 ---
 
 ```{r setup, include=FALSE}
