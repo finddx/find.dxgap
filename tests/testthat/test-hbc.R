@@ -1,5 +1,5 @@
 skip_if(Sys.getenv("FINDTB_DATADIR") == "")
-file_name <- "high_tb_burden_countries_2021.docx"
+file_name <- "who_hbc.csv"
 data <- read_hbc(file_name)
 test_that("a tibble is returned", {
   skip_if_no_data(file_name)
@@ -8,8 +8,8 @@ test_that("a tibble is returned", {
 
 test_that("the tibble dimensions are as expected", {
   skip_if_no_data(file_name)
-  expect_equal(nrow(data), 34)
-  expect_equal(ncol(data), 6)
+  expect_equal(nrow(data), 60)
+  expect_equal(ncol(data), 3)
 })
 
 test_that("a tibble is returned", {
@@ -19,7 +19,7 @@ test_that("a tibble is returned", {
 
 test_that("the tibble dimensions are as expected", {
   skip_if_no_data(file_name)
-  expect_equal(nrow(tidy_hbc(data)), 30)
+  expect_equal(nrow(tidy_hbc(data)), 60)
   expect_equal(ncol(tidy_hbc(data)), 4)
 })
 
