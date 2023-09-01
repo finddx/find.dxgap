@@ -18,7 +18,7 @@ findtb_load <- function(.years = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) 
   wb_tot_pop_df <-
     read_wb(file.path(data_dir, "wb_2023-08-31_SP.POP.TOTL.csv")) |>
     tidy_wb(years = .years) |>
-    dplyr::semi_join(hbc_df, by = join_by(country_code))
+    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
 
   # World Bank Urban Pop. ------------------------------------------------------
 
@@ -26,7 +26,7 @@ findtb_load <- function(.years = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) 
     read_wb(file.path(data_dir, "wb_2023-07-28_SP.URB.TOTL.IN.ZS.csv")) |>
     tidy_wb(years = .years) |>
     dplyr::select(country_code, year, pop_urban_perc = value) |>
-    dplyr::semi_join(hbc_df, by = join_by(country_code))
+    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
 
   # World Bank Density ---------------------------------------------------------
 
@@ -34,49 +34,49 @@ findtb_load <- function(.years = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) 
     read_wb(file.path(data_dir, "wb_2023-08-31_EN.POP.DNST.csv")) |>
     tidy_wb(years = .years) |>
     dplyr::select(country_code, year, pop_density = value) |>
-    dplyr::semi_join(hbc_df, by = join_by(country_code))
+    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
 
   # WHO notifications ----------------------------------------------------------
 
   who_notifications_df <-
     read_who(file.path(data_dir, "who_2023-07-28_notifications.csv")) |>
     tidy_who(years = .years, .shape = "wide") |>
-    dplyr::semi_join(hbc_df, by = join_by(country_code))
+    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
 
   # WHO estimates --------------------------------------------------------------
 
   who_estimates_df <-
     read_who(file.path(data_dir,"who_2023-07-28_estimates.csv")) |>
     tidy_who(years = .years, .shape = "wide") |>
-    semi_join(hbc_df, by = join_by(country_code))
+    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
 
   # WHO budget -----------------------------------------------------------------
 
   who_budget_df <-
     read_who(file.path(data_dir, "who_2023-07-28_budget.csv")) |>
     tidy_who(years = .years, .shape = "wide") |>
-    semi_join(hbc_df, by = join_by(country_code))
+    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
 
   # WHO community --------------------------------------------------------------
 
   who_community_df <-
     read_who(file.path(data_dir, "who_2023-07-28_community.csv")) |>
     tidy_who(years = .years, .shape = "wide") |>
-    dplyr::semi_join(hbc_df, by = join_by(country_code))
+    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
 
   # WHO Sites ------------------------------------------------------------------
 
   who_sites_df <-
     read_who(file.path(data_dir, "who_2023-08-30_laboratories.csv")) |>
     tidy_who(years = .years, .shape = "wide") |>
-    dplyr::semi_join(hbc_df, by = join_by(country_code))
+    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
 
   # Global Fund Procurement ----------------------------------------------------
 
   gf_procurement_df <-
     read_gf_procurement(file.path(data_dir, "gf_2023-07-26_procurement.csv")) |>
     tidy_gf_procurement(years = .years) |>
-    dplyr::semi_join(hbc_df, by = join_by(country_code)) |>
+    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code)) |>
     dplyr::select(country_code, year, product, total_numb_device)
 
   tibble::lst(
