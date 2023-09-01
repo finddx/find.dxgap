@@ -59,7 +59,6 @@ tidy_wb <- function(data, years = NULL) {
     dplyr::transmute(
       indicator_value,
       country_code = countryiso3code,
-      country_id,
       country_value,
       year = date,
       value
