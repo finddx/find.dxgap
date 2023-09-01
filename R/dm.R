@@ -10,23 +10,23 @@ findtb_build_dm <- function(data_list) {
 
 set_dm_rels <- function(dm) {
   dm |>
-    dm::dm_add_pk(hbc_df, country_code) |>
-    dm::dm_add_pk(wb_tot_pop_df, country_code) |>
-    dm::dm_add_pk(wb_urb_pop_df, country_code) |>
-    dm::dm_add_pk(wb_density_pop_df, country_code) |>
-    dm::dm_add_pk(who_notifications_df, country_code) |>
-    dm::dm_add_pk(who_estimates_df, country_code) |>
-    dm::dm_add_pk(who_budget_df, country_code) |>
-    dm::dm_add_pk(who_community_df, country_code) |>
-    dm::dm_add_pk(who_sites_df, country_code) |>
-    dm::dm_add_pk(gf_procurement_df, country_code) |>
-    dm::dm_add_fk(hbc_df, country_code, wb_tot_pop_df) |>
-    dm::dm_add_fk(hbc_df, country_code, wb_urb_pop_df) |>
-    dm::dm_add_fk(hbc_df, country_code, wb_density_pop_df) |>
-    dm::dm_add_fk(hbc_df, country_code, who_notifications_df) |>
-    dm::dm_add_fk(hbc_df, country_code, who_estimates_df) |>
-    dm::dm_add_fk(hbc_df, country_code, who_budget_df) |>
-    dm::dm_add_fk(hbc_df, country_code, who_community_df) |>
-    dm::dm_add_fk(hbc_df, country_code, who_sites_df) |>
-    dm::dm_add_fk(hbc_df, country_code, gf_procurement_df)
+    dm::dm_add_pk(hbc, country_code) |>
+    dm::dm_add_pk(wb_tot_pop, country_code) |>
+    dm::dm_add_pk(wb_urb_pop, country_code) |>
+    dm::dm_add_pk(wb_density_pop, country_code) |>
+    dm::dm_add_pk(who_notifications, country_code) |>
+    dm::dm_add_pk(who_estimates, country_code) |>
+    dm::dm_add_pk(who_budget, country_code) |>
+    dm::dm_add_pk(who_community, country_code) |>
+    dm::dm_add_pk(who_sites, country_code) |>
+    dm::dm_add_pk(gf_procurement, country_code) |>
+    dm::dm_add_fk(hbc, country_code, wb_tot_pop) |>
+    dm::dm_add_fk(hbc, country_code, wb_urb_pop) |>
+    dm::dm_add_fk(hbc, country_code, wb_density_pop) |>
+    dm::dm_add_fk(hbc, country_code, who_notifications) |>
+    dm::dm_add_fk(hbc, country_code, who_estimates) |>
+    dm::dm_add_fk(hbc, country_code, who_budget) |>
+    dm::dm_add_fk(hbc, country_code, who_community) |>
+    dm::dm_add_fk(hbc, country_code, who_sites) |>
+    dm::dm_add_fk(hbc, country_code, gf_procurement)
 }

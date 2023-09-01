@@ -80,15 +80,15 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
     dplyr::select(country_code, year, product, total_numb_device)
 
   tibble::lst(
-    hbc_df = hbc_df,
-    wb_tot_pop_df = wb_tot_pop_df,
-    wb_urb_pop_df = wb_urb_pop_df,
-    wb_density_pop_df = wb_density_pop_df,
-    who_notifications_df = who_notifications_df,
-    who_estimates_df = who_estimates_df,
-    who_budget_df = who_budget_df,
-    who_community_df = who_community_df,
-    who_sites_df = who_sites_df,
-    gf_procurement_df = gf_procurement_df
+    hbc = hbc_df,
+    wb_tot_pop = wb_tot_pop_df,
+    wb_urb_pop = wb_urb_pop_df,
+    wb_density_pop = wb_density_pop_df,
+    who_notifications = who_notifications_df,
+    who_estimates = who_estimates_df,
+    who_budget = who_budget_df,
+    who_community = who_community_df,
+    who_sites = who_sites_df,
+    gf_procurement = gf_procurement_df
   )
 }

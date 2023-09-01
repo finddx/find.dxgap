@@ -3,22 +3,22 @@
     Code
       dm::glimpse(dm)
     Output
-      dm of 10 tables: `hbc_df`, `wb_tot_pop_df`, `wb_urb_pop_df`, `wb_density_pop_df`...
+      dm of 10 tables: `hbc`, `wb_tot_pop`, `wb_urb_pop`, `wb_density_pop`, `who_notif...
       
       --------------------------------------------------------------------------------
       
-      Table: `hbc_df`
+      Table: `hbc`
       Primary key: `country_code`
       9 outgoing foreign key(s):
-        `country_code` -> `wb_tot_pop_df$country_code` no_action
-        `country_code` -> `wb_urb_pop_df$country_code` no_action
-        `country_code` -> `wb_density_pop_df$country_code` no_action
-        `country_code` -> `who_notifications_df$country_code` no_action
-        `country_code` -> `who_estimates_df$country_code` no_action
-        `country_code` -> `who_budget_df$country_code` no_action
-        `country_code` -> `who_community_df$country_code` no_action
-        `country_code` -> `who_sites_df$country_code` no_action
-        `country_code` -> `gf_procurement_df$country_code` no_action
+        `country_code` -> `wb_tot_pop$country_code` no_action
+        `country_code` -> `wb_urb_pop$country_code` no_action
+        `country_code` -> `wb_density_pop$country_code` no_action
+        `country_code` -> `who_notifications$country_code` no_action
+        `country_code` -> `who_estimates$country_code` no_action
+        `country_code` -> `who_budget$country_code` no_action
+        `country_code` -> `who_community$country_code` no_action
+        `country_code` -> `who_sites$country_code` no_action
+        `country_code` -> `gf_procurement$country_code` no_action
       
       Rows: 20
       Columns: 1
@@ -26,7 +26,7 @@
       
       --------------------------------------------------------------------------------
       
-      Table: `wb_tot_pop_df`
+      Table: `wb_tot_pop`
       Primary key: `country_code`
       
       Rows: 20
@@ -38,7 +38,7 @@
       
       --------------------------------------------------------------------------------
       
-      Table: `wb_urb_pop_df`
+      Table: `wb_urb_pop`
       Primary key: `country_code`
       
       Rows: 20
@@ -48,7 +48,7 @@
       
       --------------------------------------------------------------------------------
       
-      Table: `wb_density_pop_df`
+      Table: `wb_density_pop`
       Primary key: `country_code`
       
       Rows: 20
@@ -58,7 +58,7 @@
       
       --------------------------------------------------------------------------------
       
-      Table: `who_notifications_df`
+      Table: `who_notifications`
       Primary key: `country_code`
       
       Rows: 20
@@ -69,7 +69,7 @@
       
       --------------------------------------------------------------------------------
       
-      Table: `who_estimates_df`
+      Table: `who_estimates`
       Primary key: `country_code`
       
       Rows: 20
@@ -84,7 +84,7 @@
       
       --------------------------------------------------------------------------------
       
-      Table: `who_budget_df`
+      Table: `who_budget`
       Primary key: `country_code`
       
       Rows: 20
@@ -103,7 +103,7 @@
       
       --------------------------------------------------------------------------------
       
-      Table: `who_community_df`
+      Table: `who_community`
       Primary key: `country_code`
       
       Rows: 17
@@ -119,7 +119,7 @@
       
       --------------------------------------------------------------------------------
       
-      Table: `who_sites_df`
+      Table: `who_sites`
       Primary key: `country_code`
       
       Rows: 20
@@ -137,7 +137,7 @@
       
       --------------------------------------------------------------------------------
       
-      Table: `gf_procurement_df`
+      Table: `gf_procurement`
       Primary key: `country_code`
       
       Rows: 49
