@@ -85,7 +85,6 @@ findtb_load <- function(.years = 2019) {
     dplyr::semi_join(hbc_df, by = join_by(country_code)) |>
     dplyr::select(country_code, year, site_type = variable, site_count = value)
 
-
   # Global Fund Procurement ----------------------------------------------------
 
   gf_procurement_df <-
@@ -93,4 +92,17 @@ findtb_load <- function(.years = 2019) {
     tidy_gf_procurement(!!.years) |>
     dplyr::semi_join(hbc_df, by = join_by(country_code)) |>
     dplyr::select(country_code, year, product, total_numb_device)
+
+  tibble::list(
+    hbc_df = hbc_df,
+    wb_tot_pop_df = wb_tot_pop_df,
+    wb_urb_pop_df = wb_urb_pop_df,
+    wb_density_pop_df = wb_density_pop_df,
+    who_notifications_df = who_notifications_df,
+    who_estimates_df = who_estimates_df,
+    who_budget_df = who_budget_df,
+    who_community_df = who_community_df,
+    who_sites_df = who_sites_df,
+    gf_procurement_df = gf_procurement_df
+  )
 }
