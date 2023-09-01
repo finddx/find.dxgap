@@ -40,48 +40,36 @@ findtb_load <- function(.years = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) 
 
   who_notifications_df <-
     read_who(file.path(data_dir, "who_2023-07-28_notifications.csv")) |>
-    tidy_who(years = .years) |>
-    dplyr::semi_join(hbc_df, by = join_by(country_code)) |>
-    dplyr::filter(variable == "c_newinc") |>
-    dplyr::select(country_code, year, tb_notified_cases = value)
+    tidy_who(years = .years, .shape = "wide") |>
+    dplyr::semi_join(hbc_df, by = join_by(country_code))
 
   # WHO estimates --------------------------------------------------------------
 
   who_estimates_df <-
     read_who(file.path(data_dir,"who_2023-07-28_estimates.csv")) |>
-    tidy_who(years = .years) |>
-    semi_join(hbc_df, by = join_by(country_code)) |>
-    dplyr::filter(variable == "e_inc_num") |>
-    dplyr::select(country_code, year, tb_estimated_cases = value)
+    tidy_who(years = .years, .shape = "wide") |>
+    semi_join(hbc_df, by = join_by(country_code))
 
   # WHO budget -----------------------------------------------------------------
 
   who_budget_df <-
     read_who(file.path(data_dir, "who_2023-07-28_budget.csv")) |>
-    tidy_who(years = .years) |>
-    semi_join(hbc_df, by = join_by(country_code)) |>
-    dplyr::select(
-      country_code,
-      year,
-      budget_type = variable,
-      budget_value = value
-    )
+    tidy_who(years = .years, .shape = "wide") |>
+    semi_join(hbc_df, by = join_by(country_code))
 
   # WHO community --------------------------------------------------------------
 
   who_community_df <-
     read_who(file.path(data_dir, "who_2023-07-28_community.csv")) |>
-    tidy_who(years = .years) |>
-    dplyr::semi_join(hbc_df, by = join_by(country_code)) |>
-    dplyr::select(country_code, year, comm_type = variable, comm_value = value)
+    tidy_who(years = .years, .shape = "wide") |>
+    dplyr::semi_join(hbc_df, by = join_by(country_code))
 
   # WHO Sites ------------------------------------------------------------------
 
   who_sites_df <-
     read_who(file.path(data_dir, "who_2023-08-30_laboratories.csv")) |>
-    tidy_who(years = .years) |>
-    dplyr::semi_join(hbc_df, by = join_by(country_code)) |>
-    dplyr::select(country_code, year, site_type = variable, site_count = value)
+    tidy_who(years = .years, .shape = "wide") |>
+    dplyr::semi_join(hbc_df, by = join_by(country_code))
 
   # Global Fund Procurement ----------------------------------------------------
 
