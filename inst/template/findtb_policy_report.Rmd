@@ -1,0 +1,21 @@
+---
+title: "Findtb Policy Report"
+output: html_document
+date: "`r Sys.Date()`"
+params:
+  dm: "dm"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r dm}
+dm <- params$dm
+tbl <- dm::dm_flatten_to_tbl(dm, .start = hbc)
+```
+
+
+```{r echo=FALSE}
+tbl
+```
