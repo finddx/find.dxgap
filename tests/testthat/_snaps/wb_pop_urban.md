@@ -9,7 +9,6 @@
         page = numeric(0),
         indicator_id = character(0),
         indicator_value = character(0),
-        country_id = character(0),
         country_value = character(0),
         countryiso3code = character(0),
         date = numeric(0),
@@ -29,7 +28,6 @@
       tibble::tibble(
         indicator_value = character(0),
         country_code = character(0),
-        country_id = character(0),
         country_value = character(0),
         year = numeric(0),
         value = numeric(0),
