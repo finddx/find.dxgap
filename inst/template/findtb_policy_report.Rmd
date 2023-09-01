@@ -17,5 +17,6 @@ tbl <- dm::dm_flatten_to_tbl(dm, .start = hbc)
 
 
 ```{r echo=FALSE}
-tbl
+tbl |> 
+  gt::gt()
 ```
