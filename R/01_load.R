@@ -18,8 +18,6 @@ findtb_load <- function(.years = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) 
   wb_tot_pop_df <-
     read_wb(file.path(data_dir, "wb_2023-08-31_SP.POP.TOTL.csv")) |>
     tidy_wb(years = .years) |>
-    # dplyr::mutate(value = value / 1e5) |>
-    # dplyr::select(country_code, country_value, year, pop_100k = value) |>
     dplyr::semi_join(hbc_df, by = join_by(country_code))
 
   # World Bank Urban Pop. ------------------------------------------------------
