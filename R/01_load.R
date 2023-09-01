@@ -3,7 +3,7 @@ findtb_load <- function(.years = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) 
   # HBC countries --------------------------------------------------------------
 
   hbc_df <-
-    read_hbc("who_hbc.csv") |>
+    read_hbc(file.path(data_dir, "who_hbc.csv")) |>
     tidy_hbc(years = 2015) |> # 2015 - 2020
     dplyr::filter(share_global_inc > 50) |> # restrict subset due to low complete_rate in some data
     dplyr::select(country_code) |>
