@@ -10,25 +10,28 @@ download_hbc <- function(file_name = tempfile("who_hbc_list", fileext = ".pdf"),
   invisible(normalizePath(file_path))
 }
 
-read_hbc <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
-  file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
+read_hbc <- function(...) {
   # TODO: extract table from pdf pdftools::pdf_text(file_path)[[8]]
-  officer::read_docx(path = file_path) |>
-    officer::docx_summary() |>
+  findtb_read_csv(...) |>
     tibble::as_tibble()
 }
 
-tidy_hbc <- function(data) {
-  data |>
-    dplyr::slice(1:30) |>
-    dplyr::transmute(
-      country = text,
-      year = 2021,
-      share_global_tb_incidence = c(rep(84, 20), rep(3, 10)),
+tidy_hbc <- function(data, years = NULL) {
+  df <-
+    data |>
+    dplyr::mutate(
       country_code = countrycode::countrycode(
         country,
         origin = "country.name",
         dest = "iso3c"
-      )
+      ),
+      .after = country
     )
+  if (!is.null(years)) {
+    df_subset <-
+      df |>
+      dplyr::filter(year %in% years)
+    return(df_subset)
+  }
+  df
 }
