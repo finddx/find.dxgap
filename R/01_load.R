@@ -56,16 +56,6 @@ findtb_load <- function(.years = 2019) {
     dplyr::filter(variable == "e_inc_num") |>
     dplyr::select(country_code, year, tb_estimated_cases = value)
 
-  # Dx Gap ---------------------------------------------------------------------
-
-  dx_gap_df <-
-    who_notifications |>
-    dplyr::inner_join(who_estimates, by = join_by(country_code, year)) |>
-    dplyr::mutate(
-      who_dx_gap = (tb_estimated_cases - tb_notified_cases) / tb_estimated_cases
-    ) |>
-    dplyr::select(country_code, year, who_dx_gap)
-
   # WHO budget -----------------------------------------------------------------
 
   who_budget_df <-
