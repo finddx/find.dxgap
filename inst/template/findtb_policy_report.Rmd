@@ -7,16 +7,24 @@ params:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r dm}
+```{r}
 dm <- params$dm
+```
+
+```{r}
+dm::dm_draw(dm)
+```
+
+
+```{r}
 tbl <- dm::dm_flatten_to_tbl(dm, .start = hbc)
 ```
 
 
-```{r echo=FALSE}
+```{r}
 tbl |> 
   gt::gt()
 ```
