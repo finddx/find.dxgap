@@ -12,10 +12,10 @@ set_dm_rels <- function(dm) {
     dm::dm_add_pk(wb_density_pop_df, country_code) |>
     dm::dm_add_pk(who_notifications_df, country_code) |>
     dm::dm_add_pk(who_estimates_df, country_code) |>
+    dm::dm_add_pk(who_budget_df, country_code) |>
+    dm::dm_add_pk(who_community_df, country_code) |>
+    dm::dm_add_pk(who_sites_df, country_code) |>
     dm::dm_add_pk(gf_procurement_df, country_code) |>
-    dm::dm_add_pk(who_budget_df, c(country_code, budget_type)) |>
-    dm::dm_add_pk(who_community_df, c(country_code, comm_type)) |>
-    dm::dm_add_pk(who_sites_df, c(country_code, site_type)) |>
     dm::dm_add_fk(hbc_df, country_code, wb_tot_pop_df) |>
     dm::dm_add_fk(hbc_df, country_code, wb_urb_pop_df) |>
     dm::dm_add_fk(hbc_df, country_code, wb_density_pop_df) |>
