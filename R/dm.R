@@ -25,5 +25,8 @@ set_dm_rels <- function(dm) {
     dm::dm_add_fk(hbc_df, country_code, wb_density_pop_df) |>
     dm::dm_add_fk(hbc_df, country_code, who_notifications_df) |>
     dm::dm_add_fk(hbc_df, country_code, who_estimates_df) |>
+    dm::dm_add_fk(hbc_df, country_code, who_budget_df) |>
+    dm::dm_add_fk(hbc_df, country_code, who_community_df) |>
+    dm::dm_add_fk(hbc_df, country_code, who_sites_df) |>
     dm::dm_add_fk(hbc_df, country_code, gf_procurement_df)
 }
