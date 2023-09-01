@@ -16,17 +16,22 @@ read_hbc <- function(...) {
     tibble::as_tibble()
 }
 
-tidy_hbc <- function(data) {
-  data |>
-    dplyr::slice(1:30) |>
-    dplyr::transmute(
-      country = text,
-      year = 2021,
-      share_global_tb_incidence = c(rep(84, 20), rep(3, 10)),
+tidy_hbc <- function(data, years = NULL) {
+  df <-
+    data |>
+    dplyr::mutate(
       country_code = countrycode::countrycode(
         country,
         origin = "country.name",
         dest = "iso3c"
-      )
+      ),
+      .after = country
     )
+  if (!is.null(years)) {
+    df_subset <-
+      df |>
+      dplyr::filter(year %in% years)
+    return(df_subset)
+  }
+  df
 }
