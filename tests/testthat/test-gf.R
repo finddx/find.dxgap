@@ -1,5 +1,5 @@
 skip_if(Sys.getenv("FINDTB_DATADIR") == "")
-file_name <- "global_fund_procurement_tidy_20230726.csv"
+file_name <- "gf_2023-07-26_procurement.csv"
 data <- read_gf_procurement(file_name)
 test_that("a tibble is returned", {
   skip_if_no_data(file_name)
