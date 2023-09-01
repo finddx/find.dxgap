@@ -50,3 +50,6 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 .Rproj.user
+
+# Report
+inst/eda/dxgap_report/dxgap_report.html
