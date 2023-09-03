@@ -10,16 +10,16 @@ findtb_build_dm <- function(data_list) {
 
 set_dm_rels <- function(dm) {
   dm |>
-    dm::dm_add_pk(hbc, country_code) |>
-    dm::dm_add_pk(wb_tot_pop, country_code) |>
-    dm::dm_add_pk(wb_urb_pop, country_code) |>
-    dm::dm_add_pk(wb_density_pop, country_code) |>
-    dm::dm_add_pk(who_notifications, country_code) |>
-    dm::dm_add_pk(who_estimates, country_code) |>
-    dm::dm_add_pk(who_budget, country_code) |>
-    dm::dm_add_pk(who_community, country_code) |>
-    dm::dm_add_pk(who_sites, country_code) |>
-    dm::dm_add_pk(gf_procurement, country_code) |>
+    dm::dm_add_pk(hbc, country_code, check = TRUE) |>
+    dm::dm_add_pk(wb_tot_pop, country_code, check = TRUE) |>
+    dm::dm_add_pk(wb_urb_pop, country_code, check = TRUE) |>
+    dm::dm_add_pk(wb_density_pop, country_code, check = TRUE) |>
+    dm::dm_add_pk(who_notifications, country_code, check = TRUE) |>
+    dm::dm_add_pk(who_estimates, country_code, check = TRUE) |>
+    dm::dm_add_pk(who_budget, country_code, check = TRUE) |>
+    dm::dm_add_pk(who_community, country_code, check = TRUE) |>
+    dm::dm_add_pk(who_sites, country_code, check = TRUE) |>
+    dm::dm_add_pk(gf_procurement, country_code, check = TRUE) |>
     dm::dm_add_fk(hbc, country_code, wb_tot_pop) |>
     dm::dm_add_fk(hbc, country_code, wb_urb_pop) |>
     dm::dm_add_fk(hbc, country_code, wb_density_pop) |>
