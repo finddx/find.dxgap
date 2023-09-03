@@ -25,9 +25,18 @@ dm::dm_draw(dm)
 
 ```{r}
 # data_list <- findtb_load(.year = 2019)
-tbl <- dm::dm_flatten_to_tbl(dm, .start = hbc)
+# dm <- findtb_build_dm(data_list)
+tbl <- 
+  dm::dm_flatten_to_tbl(dm, .start = hbc) |> 
+  rename(
+    tb_estimated_cases = e_inc_num,
+    tb_notified_cases = c_newinc
+  ) |> 
+  mutate(
+    who_dx_gap = (tb_estimated_cases - tb_notified_cases) / tb_estimated_cases,
+    pop_100k = pop_total / 1e5
+  )
 ```
-
 
 ```{r}
 tbl |> 
@@ -35,15 +44,6 @@ tbl |>
 ```
 
 ## Population
-
-```{r}
-wb_tot_pop_df <-
-  tbl |> 
-  mutate(pop_100k = value / 1e5) |>
-  select(country_code, country_value, year, pop_100k = value) |>
-  semi_join(hbc_df, by = join_by(country_code))
-```
-
 
 ```{r}
 tbl |>
@@ -54,6 +54,11 @@ tbl |>
     x = "Total population in 2019",
     caption = "Source: World Bank"
   )
+```
+
+
+```{r}
+
 
 
 wb_density_pop_df |>
