@@ -30,7 +30,10 @@ tbl <-
   dm::dm_flatten_to_tbl(dm, .start = hbc) |> 
   rename(
     tb_estimated_cases = e_inc_num,
-    tb_notified_cases = c_newinc
+    tb_notified_cases = c_newinc,
+    sites_culture = culture,
+    sites_smear = smear,
+    sites_xpert = xpert
   ) |> 
   mutate(
     who_dx_gap = (tb_estimated_cases - tb_notified_cases) / tb_estimated_cases,
@@ -42,6 +45,17 @@ tbl <-
 tbl |> 
   gt::gt()
 ```
+
+## Dx Gap
+
+```{r}
+dx_gap_df |>
+  ggplot(aes(who_dx_gap)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  theme_minimal() +
+  labs(x = "WHO's Dx Gap in 2019")
+```
+
 
 ## Population
 
@@ -56,10 +70,9 @@ tbl |>
   )
 ```
 
+## Population density
 
 ```{r}
-
-
 
 wb_density_pop_df |>
   ggplot(aes(pop_density)) +
@@ -70,12 +83,11 @@ wb_density_pop_df |>
     caption = "Source: World Bank"
   )
 
-dx_gap_df |>
-  ggplot(aes(who_dx_gap)) +
-  geom_density(fill = "steelblue", alpha = .5) +
-  theme_minimal() +
-  labs(x = "WHO's Dx Gap in 2019")
+```
 
+## Budget
+
+```{r}
 who_budget_dx_df |>
   ggplot(aes(budget_value, who_dx_gap)) +
   geom_point(colour = "steelblue", alpha = .8) +
@@ -131,6 +143,11 @@ who_log_budget_df |>
   geom_point(colour = "steelblue", alpha = .8) +
   facet_wrap(vars(definition), ncol = 2, scales = "free") +
   theme_minimal()
+```
+
+## Community
+
+```{r}
 
 community_complete_df <-
   who_community |>
@@ -143,6 +160,11 @@ who_community |>
   left_join(findtb_master_list, by = join_by(comm_type == variable_name)) |>
   select(country_code, comm_value, definition)
 
+```
+
+## Sites
+
+```{r}
 who_sites |>
   ggplot(aes(sites_per_100k)) +
   geom_density(fill = "steelblue", alpha = .5) +
@@ -156,18 +178,5 @@ sites_complete_df <-
   arrange(year) |>
   select(-n) |>
   filter(complete_rate > 0)
-
-
-findtb_master_list |>
-  filter(variable_name %in% c("culture", "smear", "xpert")) |>
-  select(variable_name, definition)
-
-# group_by(country_code, year, product) |>
-# summarise(
-#   total_numb_device = sum(total_numb_device, na.rm = TRUE),
-#   .groups = "drop"
-# ) |>
-# arrange(country_code, product, total_numb_device)
-
 ```
 
