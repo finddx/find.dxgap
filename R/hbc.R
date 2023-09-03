@@ -16,7 +16,7 @@ read_hbc <- function(...) {
     tibble::as_tibble()
 }
 
-tidy_hbc <- function(data, .year = NULL) {
+tidy_hbc <- function(data, year = NULL) {
   df <-
     data |>
     dplyr::mutate(
@@ -27,12 +27,12 @@ tidy_hbc <- function(data, .year = NULL) {
       ),
       .after = country
     )
-  if (!is.null(.year)) {
+  if (!is.null(year)) {
     df_subset <-
       df |>
       dplyr::mutate(year_end = year + 5) |>
-      dplyr::mutate(year_user = .year) |>
-      dplyr::filter(between(year_user, year, year_end)) |>
+      dplyr::mutate(year_user = !!year) |>
+      dplyr::filter(dplyr::between(year_user, year, year_end)) |>
       dplyr::select(-year_end, -year_user)
     return(df_subset)
   }
