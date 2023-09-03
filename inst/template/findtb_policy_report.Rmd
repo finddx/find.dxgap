@@ -49,7 +49,7 @@ tbl |>
 ## Dx Gap
 
 ```{r}
-dx_gap_df |>
+tbl |>
   ggplot(aes(who_dx_gap)) +
   geom_density(fill = "steelblue", alpha = .5) +
   theme_minimal() +
@@ -73,8 +73,7 @@ tbl |>
 ## Population density
 
 ```{r}
-
-wb_density_pop_df |>
+tbl |>
   ggplot(aes(pop_density)) +
   geom_density(fill = "steelblue", alpha = .5) +
   theme_minimal() +
@@ -82,7 +81,33 @@ wb_density_pop_df |>
     x = "Population density (people per sq. km of land area) in 2019",
     caption = "Source: World Bank"
   )
+```
 
+## Population Urban
+
+```{r}
+tbl |> 
+  mutate(country_code = forcats::fct_reorder(country_code, pop_urban_perc)) |> 
+  ggplot(aes(country_code, pop_urban_perc)) +
+  geom_col(fill = "steelblue") +
+  scale_y_continuous(labels = scales::label_percent(scale = 1)) +
+  theme_minimal() +
+  coord_flip() +
+    labs(
+    x = "Urban population (% of total population) in 2019",
+    caption = "Source: World Bank"
+  )
+```
+
+```{r}
+tbl |>
+  ggplot(aes(pop_urban_perc)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  theme_minimal() +
+  labs(
+    x = "Urban population (% of total population) in 2019",
+    caption = "Source: World Bank"
+  )
 ```
 
 ## Budget
