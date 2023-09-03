@@ -4,9 +4,14 @@ output: html_document
 date: "`r Sys.Date()`"
 params:
   dm: dm
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
+library(tidyverse)
+library(corrr)
+pkgload::load_all()
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -14,17 +19,356 @@ knitr::opts_chunk$set(echo = FALSE)
 dm <- params$dm
 ```
 
+## Data model
+
 ```{r}
 dm::dm_draw(dm)
 ```
 
+## Data
 
 ```{r}
+# data_list <- findtb_load(.year = 2019)
+# dm <- findtb_build_dm(data_list)
 tbl <- dm::dm_flatten_to_tbl(dm, .start = hbc)
 ```
 
 
 ```{r}
+tbl <- 
+  tbl |> 
+  rename(
+    tb_estimated_cases = e_inc_num,
+    tb_notified_cases = c_newinc,
+    sites_culture = culture,
+    sites_smear = smear,
+    sites_xpert = xpert
+  ) |> 
+  mutate(
+    who_dx_gap = (tb_estimated_cases - tb_notified_cases) / tb_estimated_cases,
+    pop_100k = pop_total / 1e5
+  )
+```
+
+```{r}
 tbl |> 
   gt::gt()
+```
+
+## Dx Gap
+
+```{r}
+tbl |> 
+  mutate(country_code = forcats::fct_reorder(country_code, who_dx_gap)) |> 
+  ggplot(aes(country_code, who_dx_gap)) +
+  geom_col(fill = "steelblue") +
+  theme_minimal() +
+  coord_flip() +
+    labs(
+    y = "WHO's Dx Gap in 2019",
+    caption = "Source: WHO"
+  )
+```
+
+
+```{r}
+tbl |>
+  ggplot(aes(who_dx_gap)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  theme_minimal() +
+  labs(x = "WHO's Dx Gap in 2019", caption = "Source: WHO")
+```
+
+## Population
+
+```{r}
+tbl |> 
+  mutate(country_code = forcats::fct_reorder(country_code, pop_100k)) |> 
+  ggplot(aes(country_code, pop_100k)) +
+  geom_col(fill = "steelblue") +
+  theme_minimal() +
+  coord_flip() +
+    labs(
+    y = "Total population per 100k in 2019",
+    caption = "Source: World Bank"
+  )
+```
+
+```{r}
+tbl |>
+  ggplot(aes(pop_100k)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  theme_minimal() +
+  labs(
+    x = "Total population in 2019",
+    caption = "Source: World Bank"
+  )
+```
+
+## Population density
+
+```{r}
+tbl |> 
+  mutate(country_code = forcats::fct_reorder(country_code, pop_density)) |> 
+  ggplot(aes(country_code, pop_density)) +
+  geom_col(fill = "steelblue") +
+  theme_minimal() +
+  coord_flip() +
+    labs(
+    y = "Population density (people per sq. km of land area) in 2019",
+    caption = "Source: World Bank"
+  )
+```
+
+```{r}
+tbl |>
+  ggplot(aes(pop_density)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  theme_minimal() +
+  labs(
+    x = "Population density (people per sq. km of land area) in 2019",
+    caption = "Source: World Bank"
+  )
+```
+
+## Population Urban
+
+```{r}
+tbl |> 
+  mutate(country_code = forcats::fct_reorder(country_code, pop_urban_perc)) |> 
+  ggplot(aes(country_code, pop_urban_perc)) +
+  geom_col(fill = "steelblue") +
+  scale_y_continuous(labels = scales::label_percent(scale = 1)) +
+  theme_minimal() +
+  coord_flip() +
+    labs(
+    y = "Urban population (% of total population) in 2019",
+    caption = "Source: World Bank"
+  )
+```
+
+```{r}
+tbl |>
+  ggplot(aes(pop_urban_perc)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  theme_minimal() +
+  labs(
+    x = "Urban population (% of total population) in 2019",
+    caption = "Source: World Bank"
+  )
+```
+
+## Budget
+
+```{r}
+budget_master <- 
+  findtb_master_list |> 
+  filter(dataset == "budget") |> 
+  select(variable_name, definition)
+
+budget_cols <- 
+  budget_master |> 
+  pull(variable_name)
+```
+
+```{r}
+budget_long <- 
+  tbl |>
+  select(country_code, who_dx_gap, all_of(budget_cols)) |> 
+  pivot_longer(
+    cols = all_of(budget_cols), 
+    names_to = "variable_name", 
+    values_to = "budget_value"
+  ) |> 
+  left_join(budget_master, join_by(variable_name)) |> 
+  mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
+```
+
+```{r}
+budget_long |> 
+  mutate(
+    country_code = forcats::fct_reorder(country_code, budget_value, .na_rm = TRUE)
+  ) |> 
+  ggplot(aes(country_code, budget_value)) +
+  geom_col() +
+  facet_wrap(vars(definition), ncol = 2, scales = "free") +
+  coord_flip() +
+  theme_minimal()
+```
+
+```{r}
+budget_long |>
+  ggplot(aes(budget_value)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free") +
+  theme_minimal()
+```
+
+```{r}
+budget_long |> 
+  ggplot(aes(budget_value, who_dx_gap)) +
+  geom_point(colour = "steelblue", alpha = .8) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free") +
+  theme_minimal()
+```
+
+```{r}
+budget_long |>
+  pivot_wider(names_from = definition, values_from = budget_value) |>
+  correlate() |>
+  select(term, who_dx_gap) |>
+  arrange(who_dx_gap) |>
+  filter(term != "who_dx_gap")
+```
+
+```{r}
+budget_long_log <- 
+  tbl |>
+  select(country_code, who_dx_gap, pop_100k, all_of(budget_cols)) |> 
+  pivot_longer(
+    cols = all_of(budget_cols), 
+    names_to = "variable_name", 
+    values_to = "budget_value"
+  ) |> 
+  transmute(
+    country_code,
+    variable_name,
+    budget_per_100k = budget_value / pop_100k,
+    log_budget_per_100k = log(budget_per_100k),
+    who_dx_gap
+  ) |> 
+  left_join(budget_master, join_by(variable_name)) |> 
+  mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
+```
+
+```{r}
+budget_long_log |> 
+  mutate(
+    country_code = forcats::fct_reorder(country_code, budget_per_100k, .na_rm = TRUE)
+  ) |> 
+  ggplot(aes(country_code, budget_per_100k)) +
+  geom_col() +
+  facet_wrap(vars(definition), ncol = 2, scales = "free") +
+  coord_flip() +
+  theme_minimal()
+```
+
+```{r}
+budget_long_log |>
+  ggplot(aes(log_budget_per_100k)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free") +
+  theme_minimal()
+```
+
+```{r}
+budget_long_log |>
+  ggplot(aes(log_budget_per_100k, who_dx_gap)) +
+  geom_point(colour = "steelblue", alpha = .8) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free") +
+  theme_minimal()
+```
+
+## Community
+
+```{r}
+comm_master <- 
+  findtb_master_list |> 
+  filter(dataset == "community_engagement") |> 
+  select(variable_name, definition)
+
+comm_cols <- 
+  comm_master |> 
+  pull(variable_name)
+```
+
+```{r}
+comm_long <- 
+  tbl |>
+  select(country_code, who_dx_gap, pop_100k, all_of(comm_cols)) |> 
+  pivot_longer(
+    cols = all_of(comm_cols), 
+    names_to = "variable_name", 
+    values_to = "comm_value"
+  ) |>
+  mutate(comm_units_100k = comm_value / pop_100k) |> 
+  left_join(comm_master, join_by(variable_name)) |> 
+  mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
+```
+
+```{r}
+community_complete_df <-
+  comm_long |>
+  group_by(variable_name) |>
+  summarise(
+    n = n(), 
+    complete_rate = sum(!is.na(comm_value)) / n, 
+    .groups = "drop"
+  ) |>
+  filter(complete_rate > 0.75)
+```
+
+```{r}
+comm_long <- 
+  comm_long |>
+  semi_join(community_complete_df, by = join_by(variable_name)) 
+```
+
+```{r}
+comm_long |>
+  ggplot(aes(country_code, comm_units_100k)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(vars(definition), ncol = 1, scales = "free") +
+  theme_minimal()
+```
+
+```{r}
+comm_long |>
+  ggplot(aes(comm_units_100k)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  facet_wrap(vars(definition), scales = "free") +
+  theme_minimal()
+```
+
+```{r}
+comm_long |>
+  ggplot(aes(comm_units_100k, who_dx_gap)) +
+  geom_point(colour = "steelblue", alpha = .8) +
+  facet_wrap(vars(definition), ncol = 1, scales = "free") +
+  theme_minimal()
+```
+
+## Sites
+
+```{r}
+sites_long <- 
+  tbl |> 
+  select(country_code, pop_100k, starts_with("sites")) |> 
+  pivot_longer(
+    cols = starts_with("sites"), 
+    names_to = "site_type",
+    values_to = "site_numb"
+  ) |> 
+  mutate(site_per_100k = site_numb / pop_100k) 
+```
+
+```{r}
+sites_long |>
+  group_by(site_type) |>
+  summarise(
+    n = n(), 
+    complete_rate = sum(!is.na(site_numb)) / n, 
+    .groups = "drop"
+  ) |>
+  select(-n) |>
+  filter(complete_rate > 0)
+```
+
+```{r}
+sites_long |> 
+  ggplot(aes(site_per_100k)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  facet_wrap(vars(site_type), ncol = 1, scales = "free") +
+  theme_minimal()
 ```
