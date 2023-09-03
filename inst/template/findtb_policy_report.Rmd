@@ -79,7 +79,6 @@ tbl |>
   labs(x = "WHO's Dx Gap in 2019", caption = "Source: WHO")
 ```
 
-
 ## Population
 
 ```{r}
@@ -197,7 +196,6 @@ budget_long |>
   theme_minimal()
 ```
 
-
 ```{r}
 budget_long |>
   ggplot(aes(budget_value)) +
@@ -255,7 +253,6 @@ budget_long_log |>
   theme_minimal()
 ```
 
-
 ```{r}
 budget_long_log |>
   ggplot(aes(log_budget_per_100k)) +
@@ -299,7 +296,6 @@ comm_long <-
   mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
 ```
 
-
 ```{r}
 community_complete_df <-
   comm_long |>
@@ -327,7 +323,6 @@ comm_long |>
   theme_minimal()
 ```
 
-
 ```{r}
 comm_long |>
   ggplot(aes(comm_units_100k)) +
@@ -344,7 +339,6 @@ comm_long |>
   theme_minimal()
 ```
 
-
 ## Sites
 
 ```{r}
@@ -358,7 +352,6 @@ sites_long <-
   ) |> 
   mutate(site_per_100k = site_numb / pop_100k) 
 ```
-
 
 ```{r}
 sites_long |>
@@ -379,7 +372,3 @@ sites_long |>
   facet_wrap(vars(site_type), ncol = 1, scales = "free") +
   theme_minimal()
 ```
-
-
-
-
