@@ -32,7 +32,7 @@ read_who <- function(...) {
     tibble::as_tibble()
 }
 
-tidy_who <- function(data, years = NULL, .shape = "long") {
+tidy_who <- function(data, year = NULL, .shape = "long") {
   cond_notifications <- is_ptype(data, ptype_who_notifications)
   cond_community <- is_ptype(data, ptype_who_community)
   cond_budget <- is_ptype(data, ptype_who_budget)
@@ -41,17 +41,17 @@ tidy_who <- function(data, years = NULL, .shape = "long") {
   cond_labs <- is_ptype(data, ptype_who_labs)
 
   if (cond_notifications) {
-    tidy_who_notifications(data, years = years, shape = .shape)
+    tidy_who_notifications(data, .year = year, shape = .shape)
   } else if (cond_budget) {
-    tidy_who_budget(data, years = years, shape = .shape)
+    tidy_who_budget(data, .year = year, shape = .shape)
   } else if (cond_community) {
-    tidy_who_community(data, years = years, shape = .shape)
+    tidy_who_community(data, .year = year, shape = .shape)
   } else if (cond_estimates) {
-    tidy_who_estimates(data, years = years, shape = .shape)
+    tidy_who_estimates(data, .year = year, shape = .shape)
   } else if (cond_expenditure) {
-    tidy_who_expenditures(data, years = years, shape = .shape)
+    tidy_who_expenditures(data, .year = year, shape = .shape)
   } else if (cond_labs) {
-    tidy_who_labs(data, years = years, shape = .shape)
+    tidy_who_labs(data, .year = year, shape = .shape)
   } else {
     rlang::abort(
       c("Cannot find a footprint for this data.", i = "Is this a new dataset?")
@@ -60,17 +60,17 @@ tidy_who <- function(data, years = NULL, .shape = "long") {
 }
 
 # TODO: understandable renaming
-tidy_who_notifications <- function(data, years = NULL, shape = "long") {
+tidy_who_notifications <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
   df <-
     data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3)
 
-  if (!is.null(years)) {
+  if (!is.null(.year)) {
     df_subset <-
       df |>
-      dplyr::filter(year %in% years)
+      dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
@@ -86,17 +86,17 @@ tidy_who_notifications <- function(data, years = NULL, shape = "long") {
   df_subset
 }
 
-tidy_who_budget <- function(data, years = NULL, shape = "long") {
+tidy_who_budget <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
   df <-
     data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3)
 
-  if (!is.null(years)) {
+  if (!is.null(.year)) {
     df_subset <-
       df |>
-      dplyr::filter(year %in% years)
+      dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
@@ -112,17 +112,17 @@ tidy_who_budget <- function(data, years = NULL, shape = "long") {
   df_subset
 }
 
-tidy_who_community <- function(data, years = NULL, shape = "long") {
+tidy_who_community <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
   df <-
     data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3)
 
-  if (!is.null(years)) {
+  if (!is.null(.year)) {
     df_subset <-
       df |>
-      dplyr::filter(year %in% years)
+      dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
@@ -138,17 +138,17 @@ tidy_who_community <- function(data, years = NULL, shape = "long") {
   df_subset
 }
 
-tidy_who_estimates <- function(data, years = NULL, shape = "long") {
+tidy_who_estimates <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
   df <-
     data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3)
 
-  if (!is.null(years)) {
+  if (!is.null(.year)) {
     df_subset <-
       df |>
-      dplyr::filter(year %in% years)
+      dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
@@ -164,17 +164,17 @@ tidy_who_estimates <- function(data, years = NULL, shape = "long") {
   df_subset
 }
 
-tidy_who_expenditures <- function(data, years = NULL, shape = "long") {
+tidy_who_expenditures <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
   df <-
     data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3)
 
-  if (!is.null(years)) {
+  if (!is.null(.year)) {
     df_subset <-
       df |>
-      dplyr::filter(year %in% years)
+      dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
@@ -190,17 +190,17 @@ tidy_who_expenditures <- function(data, years = NULL, shape = "long") {
   df_subset
 }
 
-tidy_who_labs <- function(data, years = NULL, shape = "long") {
+tidy_who_labs <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
   df <-
     data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3)
 
-  if (!is.null(years)) {
+  if (!is.null(.year)) {
     df_subset <-
       df |>
-      dplyr::filter(year %in% years)
+      dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
