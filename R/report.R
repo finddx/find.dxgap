@@ -13,7 +13,7 @@ findtb_render_report <- function(template_path = "inst/template/findtb_policy_re
     rmarkdown::render(
       input = template_path,
       output_file = temp_file,
-      params = list(dm = dm),
+      params = list(dm = dm, year = year),
       envir = new.env()
     )
   } else {
@@ -21,7 +21,7 @@ findtb_render_report <- function(template_path = "inst/template/findtb_policy_re
       input = template_path,
       output_file = basename(output_file),
       output_dir = dirname(output_file),
-      params = list(dm = dm),
+      params = list(dm = dm, year = year),
       envir = new.env()
     )
   }

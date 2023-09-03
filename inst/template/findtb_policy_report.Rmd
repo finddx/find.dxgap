@@ -1,9 +1,10 @@
 ---
-title: "Findtb Policy Report"
+title: "TB Policy Report"
 output: html_document
 date: "`r Sys.Date()`"
 params:
   dm: dm
+  year: year
 editor_options: 
   chunk_output_type: console
 ---
@@ -19,6 +20,8 @@ knitr::opts_chunk$set(echo = FALSE)
 dm <- params$dm
 ```
 
+The chosen year is `r params$year`.
+
 ## Data model
 
 ```{r}
@@ -28,8 +31,6 @@ dm::dm_draw(dm)
 ## Data
 
 ```{r}
-# data_list <- findtb_load(.year = 2019)
-# dm <- findtb_build_dm(data_list)
 tbl <- dm::dm_flatten_to_tbl(dm, .start = hbc)
 ```
 
@@ -65,7 +66,7 @@ tbl |>
   theme_minimal() +
   coord_flip() +
     labs(
-    y = "WHO's Dx Gap in 2019",
+    y = paste("WHO's Dx Gap in", params$year),
     caption = "Source: WHO"
   )
 ```
@@ -76,10 +77,10 @@ tbl |>
   ggplot(aes(who_dx_gap)) +
   geom_density(fill = "steelblue", alpha = .5) +
   theme_minimal() +
-  labs(x = "WHO's Dx Gap in 2019", caption = "Source: WHO")
+  labs(x = paste("WHO's Dx Gap in", params$year), caption = "Source: WHO")
 ```
 
-## Population
+## Population total
 
 ```{r}
 tbl |> 
@@ -89,7 +90,7 @@ tbl |>
   theme_minimal() +
   coord_flip() +
     labs(
-    y = "Total population per 100k in 2019",
+    y = paste("Total population per 100k", params$year),
     caption = "Source: World Bank"
   )
 ```
@@ -100,7 +101,7 @@ tbl |>
   geom_density(fill = "steelblue", alpha = .5) +
   theme_minimal() +
   labs(
-    x = "Total population in 2019",
+    x = paste("Total population in", params$year),
     caption = "Source: World Bank"
   )
 ```
@@ -115,7 +116,7 @@ tbl |>
   theme_minimal() +
   coord_flip() +
     labs(
-    y = "Population density (people per sq. km of land area) in 2019",
+    y = paste("Population density (people per sq. km of land area) in", params$year),
     caption = "Source: World Bank"
   )
 ```
@@ -126,12 +127,12 @@ tbl |>
   geom_density(fill = "steelblue", alpha = .5) +
   theme_minimal() +
   labs(
-    x = "Population density (people per sq. km of land area) in 2019",
+    x = paste("Population density (people per sq. km of land area) in", params$year),
     caption = "Source: World Bank"
   )
 ```
 
-## Population Urban
+## Population urban
 
 ```{r}
 tbl |> 
@@ -142,7 +143,7 @@ tbl |>
   theme_minimal() +
   coord_flip() +
     labs(
-    y = "Urban population (% of total population) in 2019",
+    y = paste("Urban population (% of total population) in", params$year),
     caption = "Source: World Bank"
   )
 ```
@@ -153,7 +154,7 @@ tbl |>
   geom_density(fill = "steelblue", alpha = .5) +
   theme_minimal() +
   labs(
-    x = "Urban population (% of total population) in 2019",
+    x = paste("Urban population (% of total population) in", params$year),
     caption = "Source: World Bank"
   )
 ```
