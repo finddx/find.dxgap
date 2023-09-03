@@ -30,11 +30,9 @@
       Primary key: `country_code`
       
       Rows: 20
-      Columns: 4
-      $ indicator_value <chr> "Population, total", "Population, total", "Population,~
-      $ country_code    <chr> "AGO", "BGD", "BRA", "CHN", "COD", "ETH", "IND", "IDN"~
-      $ country_value   <chr> "Angola", "Bangladesh", "Brazil", "China", "Congo, Dem~
-      $ value           <dbl> 32353588, 165516222, 211782878, 1407745000, 89906890, ~
+      Columns: 2
+      $ country_code <chr> "AGO", "BGD", "BRA", "CHN", "COD", "ETH", "IND", "IDN", "~
+      $ pop_total    <dbl> 32353588, 165516222, 211782878, 1407745000, 89906890, 114~
       
       --------------------------------------------------------------------------------
       
