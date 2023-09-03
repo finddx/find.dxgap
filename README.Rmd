@@ -30,16 +30,18 @@ devtools::install_github("cynkra/findtb")
 
 ## findtb.data
 
-Data for the project are stored in a directory called `findtb.data`. Please, create such folder and set its path as an environment variable (call `usethis::edit_r_environ(scope = "project")` to open .Renviron file).
+Data for the project are stored in a directory called `findtb.data`. Please, call `set_findtb_data_dir()` to create and populate such folder.
 
-`FINDTB_DATADIR="~/path_to/findtb.data"`
+The data available are:
 
-Then store the following files in findtb.data:
+```{r echo=FALSE}
+tibble::tibble(data_file = list.files("inst/extdata", pattern = "csv")) |> 
+  gt::gt()
+```
 
-- `tb_policy_dashboard_final_v1_14Nov22.xlsx`
-- ...
+## Report
 
-More data might be added in the future.
+Call, `findtb_render_report(year = 2019)` to render a report for given year. Create new templates and render them using the `template_path` parameter.
 
 ## Objectives of the project
 
