@@ -138,11 +138,10 @@
       Table: `gf_procurement`
       Primary key: `country_code`
       
-      Rows: 49
-      Columns: 3
-      $ country_code      <chr> "ETH", "ETH", "ETH", "IND", "IND", "IND", "IND", "IN~
-      $ product           <chr> "TB molecular diagnostics", "TB molecular diagnostic~
-      $ total_numb_device <dbl> 91000, NA, 90950, 1026600, 1200, 2000, 45000, 45000,~
+      Rows: 7
+      Columns: 2
+      $ country_code      <chr> "ETH", "IND", "KEN", "MMR", "PAK", "PHL", "VNM"
+      $ total_numb_device <dbl> 181950, 1756134, 5664, 205773, 150000, 530000, 11000
       
       --------------------------------------------------------------------------------
 
