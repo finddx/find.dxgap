@@ -78,7 +78,9 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
     read_gf_procurement(file.path(data_dir, "gf_2023-07-26_procurement.csv")) |>
     tidy_gf_procurement(years = .year) |>
     dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code)) |>
-    dplyr::select(country_code, year, product, total_numb_device)
+    dplyr::group_by(country_code) |>
+    dplyr::summarise(total_numb_device = sum(total_numb_device, na.rm = TRUE)) |>
+    dplyr::ungroup()
 
   tibble::lst(
     hbc = hbc_df,
