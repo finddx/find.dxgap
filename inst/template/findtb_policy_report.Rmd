@@ -24,6 +24,7 @@ dm::dm_draw(dm)
 
 
 ```{r}
+# data_list <- findtb_load(.year = 2019)
 tbl <- dm::dm_flatten_to_tbl(dm, .start = hbc)
 ```
 
