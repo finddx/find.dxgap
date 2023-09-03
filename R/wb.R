@@ -53,7 +53,7 @@ read_wb <- function(...) {
     tibble::as_tibble()
 }
 
-tidy_wb <- function(data, years = NULL) {
+tidy_wb <- function(data, year = NULL) {
   df <-
     data |>
     dplyr::transmute(
@@ -63,10 +63,10 @@ tidy_wb <- function(data, years = NULL) {
       year = date,
       value
     )
-  if (!is.null(years)) {
+  if (!is.null(year)) {
     df_subset <-
       df |>
-      dplyr::filter(year %in% years)
+      dplyr::filter(year == !!year)
     return(df_subset)
   }
   df
