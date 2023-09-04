@@ -16,7 +16,7 @@ read_hbc <- function(...) {
     tibble::as_tibble()
 }
 
-tidy_hbc <- function(data, year = NULL) {
+tidy_hbc <- function(data, year = NULL, all = TRUE) {
   df <-
     data |>
     dplyr::mutate(
@@ -27,6 +27,13 @@ tidy_hbc <- function(data, year = NULL) {
       ),
       .after = country
     )
+
+  if (!all) {
+    df <-
+      df |>
+      dplyr::filter(share_global_inc > 80)
+  }
+
   if (!is.null(year)) {
     df_subset <-
       df |>
