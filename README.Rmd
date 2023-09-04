@@ -36,7 +36,7 @@ The data available are:
 
 ```{r echo=FALSE}
 tibble::tibble(data_file = list.files("inst/extdata", pattern = "csv")) |> 
-  gt::gt()
+  knitr::kable()
 ```
 
 ## Report
