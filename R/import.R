@@ -65,18 +65,24 @@ findtb_import <- function(data_lst,
     data_tidy <- tidy_data(data_raw, year = .year)
   }
 
-  lst <- fetch_object(data_lst)
+  obj_name <- substitute(data_lst)
+  lst <- fetch_object(obj_name)
+  lst_names <- names(lst)
 
-  lst[[data_name]] <- data_tidy
+  if (data_name %in% lst_names) {
+    lst[[data_name]] <- data_tidy
+  } else { # does not exist or first time
+    lst[[length(lst) + 1]] <- data_tidy
+    names(lst) <- eval(data_name)
+  }
 
   lst
 
 }
 
 fetch_object <- function(obj_name) {
-  obj_name <- substitute(obj_name)
   if (exists(obj_name)) {
-    eval(obj_name)
+    get(obj_name, envir = parent.frame())
   } else {
     list()
   }
