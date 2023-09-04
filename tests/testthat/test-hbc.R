@@ -23,12 +23,10 @@ test_that("the tibble dimensions are as expected", {
   expect_equal(ncol(tidy_hbc(data)), 4)
 })
 
-test_that("primary keys match across time series and fixed data", {
+test_that("primary keys", {
   skip_if_no_data(file_name)
-  expect_equal(
-    unique(tidy_hbc(data)$country),
-    unique(tidy_hbc(data)$country)
-  )
+  df <- tidy_hbc(data)
+  expect_null(dm::check_key(df, country_code, year))
 })
 
 test_that("`country_code` entries are not missing", {
