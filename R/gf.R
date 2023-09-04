@@ -64,7 +64,8 @@ tidy_gf_procurement <- function(data, year = NULL) {
     )
   ) |>
     dplyr::mutate(year = lubridate::year(actual_delivery_date)) |>
-    dplyr::relocate(country_code, year)
+    dplyr::relocate(country_code, year) |>
+    dplyr::filter(product == "TB molecular diagnostics")
 
   if (!is.null(year)) {
     df_subset <-
