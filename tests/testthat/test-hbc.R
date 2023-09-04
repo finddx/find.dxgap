@@ -23,7 +23,7 @@ test_that("the tibble dimensions are as expected", {
   expect_equal(ncol(tidy_hbc(data)), 4)
 })
 
-test_that("primary keys", {
+test_that("primary key", {
   skip_if_no_data(file_name)
   df <- tidy_hbc(data)
   expect_null(dm::check_key(df, country_code, year))
@@ -36,4 +36,11 @@ test_that("`country_code` entries are not missing", {
       dplyr::distinct(country_code, country) |>
       dplyr::filter(is.na(country_code))
   )
+})
+
+test_that("primary key for given year", {
+  skip_if_no_data(file_name)
+  df_lst <- purrr::map(2018:2023, ~ tidy_hbc(data, year = .x))
+  check_pk <- purrr::map(df_lst, ~ dm::check_key(.x, country_code, year))
+  expect_null(unlist(check_pk))
 })
