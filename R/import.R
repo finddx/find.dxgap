@@ -60,20 +60,21 @@ findtb_import <- function(data_lst,
   )
 
   if (provider %in% c("who") && dataset != "hbc") {
-    data_tidy <- tidy_data(data_raw, year = .year, shape = "wide")
+    data_tidy <- tidy_data(data_raw, year = .year, .shape = "wide")
   } else {
     data_tidy <- tidy_data(data_raw, year = .year)
   }
 
   obj_name <- substitute(data_lst)
   lst <- fetch_object(obj_name)
-  lst_names <- names(lst)
+  lst_names <- rlang::names2(lst)
 
   if (data_name %in% lst_names) {
     lst[[data_name]] <- data_tidy
   } else { # does not exist or first time
-    lst[[length(lst) + 1]] <- data_tidy
-    names(lst) <- eval(data_name)
+    next_item_index <- length(lst) + 1
+    lst[[next_item_index]] <- data_tidy
+    rlang::names2(lst)[next_item_index] <- data_name
   }
 
   lst
