@@ -31,23 +31,11 @@ dm::dm_draw(dm)
 ## Data
 
 ```{r}
-tbl <- dm::dm_flatten_to_tbl(dm, .start = hbc)
-```
-
-
-```{r}
 tbl <- 
-  tbl |> 
-  # rename(
-  #   tb_estimated_cases = e_inc_num,
-  #   tb_notified_cases = c_newinc,
-  #   sites_culture = culture,
-  #   sites_smear = smear,
-  #   sites_xpert = xpert
-  # ) |> 
+  dm::dm_flatten_to_tbl(dm, .start = hbc) |> 
   mutate(
+    pop_100k = pop_total / 1e5,
     who_dx_gap = (e_inc_num - c_newinc) / e_inc_num,
-    pop_100k = pop_total / 1e5
   )
 ```
 
@@ -103,6 +91,16 @@ tbl |>
   labs(x = paste("Dx Gap in", params$year), caption = "Source: WHO")
 ```
 
+```{r}
+tbl |> 
+  mutate(c_cdr = c_cdr / 100) |> 
+  ggplot(aes(c_cdr, who_dx_gap)) +
+  geom_point(color = "steelblue", alpha = .5) +
+  coord_fixed() +
+  theme_minimal()
+```
+
+
 ## Population total
 
 ```{r}
@@ -135,7 +133,7 @@ tbl |>
 
 ```{r}
 tbl |> 
-  mutate(country_code = forcats::fct_reorder(country_code, pop_density)) |> 
+  mutate(country_code = forcats::fct_reorder(country_code, pop_density)) |>
   ggplot(aes(country_code, pop_density)) +
   geom_col(fill = "steelblue") +
   theme_minimal() +
@@ -520,5 +518,175 @@ sites_long_complete |>
   geom_point(color = "steelblue", alpha = .5) +
   facet_wrap(vars(definition), ncol = 1, scales = "free") +
   theme_minimal()
+```
+
+
+
+```{r}
+complete_only_df <- 
+  tbl |> 
+  pivot_longer(cols = -country_code, names_to = "variable") |> 
+  group_by(variable) |> 
+  summarise(
+    n = n(), 
+    complete_rate = sum(!is.na(value)) / n, 
+    .groups = "drop"
+  ) |>
+  select(-n) |> 
+  filter(complete_rate == 1)
+```
+
+```{r}
+tbl_complete <- 
+  tbl |> 
+  pivot_longer(cols = -country_code, names_to = "variable") |> 
+  semi_join(complete_only_df, by = join_by(variable)) |> 
+  pivot_wider(names_from = variable, values_from = value) |> 
+  transmute(
+    country_code,
+    who_dx_gap,
+    pop_100k,
+    pop_urban_perc,
+    pop_density,
+    budget_lab_100k = budget_lab / pop_100k,
+    budget_staff_100k = budget_staff / pop_100k,
+    cf_tot_domestic_100k = cf_tot_domestic / pop_100k,
+    cf_tot_sources_100k = cf_tot_sources / pop_100k,
+    culture_100k = culture / pop_100k,
+    smear_100k = smear / pop_100k,
+    xpert_100k = xpert / pop_100k
+  ) 
+```
+
+```{r eval=FALSE}
+tbl_split <- rsample::initial_split(tbl_complete)
+tbl_train <- rsample::training(tbl_split)
+tbl_test <- rsample::testing(tbl_split)
+```
+
+```{r eval=FALSE}
+tbl_rec <- 
+  recipes::recipe(who_dx_gap ~ ., data = tbl_train) |>
+  recipes::update_role(country_code, new_role = "ID") |>
+  recipes::step_normalize(recipes::all_numeric(), -recipes::all_outcomes())
+```
+
+```{r eval=FALSE}
+lasso_spec <- 
+  parsnip::linear_reg(penalty = 0.1, mixture = 1) |> 
+  parsnip::set_engine("glmnet")
+```
+
+```{r eval=FALSE}
+wf <- 
+  workflows::workflow() |> 
+  workflows::add_recipe(tbl_rec)
+```
+
+```{r eval=FALSE}
+lasso_fit <- 
+  wf |>
+  workflows::add_model(lasso_spec) |>
+  parsnip::fit(data = tbl_train)
+```
+
+```{r eval=FALSE}
+lasso_fit  |> 
+  workflows::extract_fit_parsnip() |> 
+  broom::tidy()
+```
+
+```{r eval=FALSE}
+set.seed(1234)
+tbl_boot <- rsample::bootstraps(tbl_train)
+
+tune_spec <- 
+  parsnip::linear_reg(penalty = tune::tune(), mixture = 1) |> 
+  parsnip::set_engine("glmnet")
+
+lambda_grid <- dials::grid_regular(dials::penalty(), levels = 10)
+```
+
+```{r eval=FALSE}
+set.seed(2020)
+lasso_grid <- 
+  tune::tune_grid(
+    wf |> workflows::add_model(tune_spec),
+    resamples = tbl_boot,
+    grid = lambda_grid
+  )
+```
+
+```{r eval=FALSE}
+lasso_grid |> 
+  tune::collect_metrics()
+```
+
+```{r eval=FALSE}
+lasso_grid |>
+  tune::collect_metrics() |>
+  ggplot(aes(penalty, mean, color = .metric)) +
+  geom_errorbar(aes(
+    ymin = mean - std_err,
+    ymax = mean + std_err
+  ),
+  alpha = 0.5
+  ) +
+  geom_line(linewidth = 1.5) +
+  facet_wrap(~ .metric, scales = "free", nrow = 2) +
+  scale_x_log10() +
+  theme(legend.position = "none")
+```
+
+```{r eval=FALSE}
+lowest_rmse <- 
+  lasso_grid |> 
+  tune::collect_metrics() |> 
+  filter(.metric == "rmse", penalty != 1) |> 
+  filter(mean == min(mean)) 
+```
+
+
+```{r eval=FALSE}
+final_lasso <- 
+  tune::finalize_workflow(
+    wf |>  workflows::add_model(tune_spec),
+    lowest_rmse
+  )
+```
+
+```{r eval=FALSE}
+final_lasso |> 
+  parsnip::fit(tbl_train) |> 
+  workflows::extract_fit_parsnip() |> 
+  vip::vi(lambda = lowest_rmse$penalty) |>
+  mutate(
+    Importance = abs(Importance),
+    Variable = fct_reorder(Variable, Importance)
+  ) %>%
+  ggplot(aes(x = Importance, y = Variable, fill = Sign)) +
+  geom_col() +
+  scale_x_continuous(expand = c(0, 0)) +
+  labs(y = NULL)
+```
+
+
+```{r eval=FALSE}
+tune::last_fit(
+  final_lasso,
+  tbl_split
+) %>%
+  tune::collect_metrics()
+```
+
+## Final model
+
+```{r}
+lm_mod <- lm(who_dx_gap ~ culture_100k, data = tbl_complete)
+```
+
+```{r}
+broom::tidy(lm_mod) |> 
+  gt::gt()
 ```
 
