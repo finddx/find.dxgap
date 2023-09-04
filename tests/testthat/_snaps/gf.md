@@ -15,3 +15,14 @@
       6 <NA>         Western Asia     
       7 <NA>         Zanzibar         
 
+# only relevant products are considered
+
+    Code
+      dplyr::distinct(tidy_gf_procurement(data), product)
+    Output
+      # A tibble: 2 x 1
+        product                 
+        <chr>                   
+      1 Tuberculin test         
+      2 TB molecular diagnostics
+

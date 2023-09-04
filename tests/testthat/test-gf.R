@@ -19,7 +19,7 @@ test_that("a tibble is returned", {
 
 test_that("the tibble dimensions are as expected", {
   skip_if_no_data(file_name)
-  expect_equal(nrow(tidy_gf_procurement(data)), 1677)
+  expect_equal(nrow(tidy_gf_procurement(data)), 898)
   expect_equal(ncol(tidy_gf_procurement(data)), 27)
 })
 
@@ -37,5 +37,13 @@ test_that("`country_code` entries are not missing", {
     tidy_gf_procurement(data) |>
       dplyr::distinct(country_code, country_territory) |>
       dplyr::filter(is.na(country_code))
+  )
+})
+
+test_that("only relevant products are considered", {
+  skip_if_no_data(file_name)
+  expect_snapshot(
+    tidy_gf_procurement(data) |>
+      dplyr::distinct(product)
   )
 })
