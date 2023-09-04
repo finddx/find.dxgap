@@ -1,14 +1,25 @@
-test_that("WHO labs data is downloaded, read and tidied correctly", {
-  skip_if(Sys.getenv("FINDTB_DATADIR") == "")
-  skip_if_offline()
-  skip_if_not_available("https://extranet.who.int/tme/generateCSV.asp?ds=labs")
-  path <- download_who(dataset = "laboratories")
+skip_if(Sys.getenv("FINDTB_DATADIR") == "")
+skip_if_offline()
+skip_if_not_available("https://extranet.who.int/tme/generateCSV.asp?ds=labs")
+path <- download_who(dataset = "laboratories")
+on.exit(file.remove(path), add = TRUE)
+raw <- read_who(path)
+tidy <- tidy_who(raw)
+test_that("WHO labs data is downloaded correctly", {
   expect_true(file.exists(path))
-  on.exit(file.remove(path))
+})
+
+test_that("WHO labs data is read and tidied correctly", {
   expect_snapshot({
-    raw <- read_who(path)
     constructive::construct(vctrs::vec_ptype(raw))
-    tidy <- tidy_who(raw)
     constructive::construct(vctrs::vec_ptype(tidy))
   })
+})
+
+test_that("`country_code` entries are not missing", {
+  expect_snapshot(
+    tidy |>
+      dplyr::distinct(country_code, country) |>
+      dplyr::filter(is.na(country_code))
+  )
 })

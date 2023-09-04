@@ -1,7 +1,6 @@
-# WHO labs data is downloaded, read and tidied correctly
+# WHO labs data is read and tidied correctly
 
     Code
-      raw <- read_who(path)
       constructive::construct(vctrs::vec_ptype(raw))
     Warning <rlang_warning>
       Could not use `colored = TRUE`, as the package prettycode is not installed. Please install it if you want to see colored output or see `?styler::print.vertical()` for more information.
@@ -23,7 +22,6 @@
         download_date = character(0),
       )
     Code
-      tidy <- tidy_who(raw)
       constructive::construct(vctrs::vec_ptype(tidy))
     Warning <rlang_warning>
       Could not use `colored = TRUE`, as the package prettycode is not installed. Please install it if you want to see colored output or see `?styler::print.vertical()` for more information.
@@ -36,4 +34,12 @@
         variable = character(0),
         value = numeric(0),
       )
+
+# `country_code` entries are not missing
+
+    Code
+      dplyr::filter(dplyr::distinct(tidy, country_code, country), is.na(country_code))
+    Output
+      # A tibble: 0 x 2
+      # i 2 variables: country_code <chr>, country <chr>
 

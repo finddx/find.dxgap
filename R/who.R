@@ -68,22 +68,22 @@ tidy_who_notifications <- function(data, .year = NULL, shape = "long") {
     dplyr::rename(country_code = iso3)
 
   if (!is.null(.year)) {
-    df_subset <-
+    df <-
       df |>
       dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
-    df_shape <-
-      df_subset |>
+    df <-
+      df |>
       tidyr::pivot_longer(
         cols = -c(country, country_code, g_whoregion, year),
         names_to = "variable"
       )
-    return(df_shape)
+    return(df)
   }
 
-  df_subset
+  df
 }
 
 tidy_who_budget <- function(data, .year = NULL, shape = "long") {
@@ -94,22 +94,22 @@ tidy_who_budget <- function(data, .year = NULL, shape = "long") {
     dplyr::rename(country_code = iso3)
 
   if (!is.null(.year)) {
-    df_subset <-
+    df <-
       df |>
       dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
-    df_shape <-
-      df_subset |>
+    df <-
+      df |>
       tidyr::pivot_longer(
         cols = -c(country, country_code, g_whoregion, year),
         names_to = "variable"
       )
-    return(df_shape)
+    return(df)
   }
 
-  df_subset
+  df
 }
 
 tidy_who_community <- function(data, .year = NULL, shape = "long") {
@@ -120,22 +120,22 @@ tidy_who_community <- function(data, .year = NULL, shape = "long") {
     dplyr::rename(country_code = iso3)
 
   if (!is.null(.year)) {
-    df_subset <-
+    df <-
       df |>
       dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
-    df_shape <-
-      df_subset |>
+    df <-
+      df |>
       tidyr::pivot_longer(
         cols = -c(country, country_code, g_whoregion, year),
         names_to = "variable"
       )
-    return(df_shape)
+    return(df)
   }
 
-  df_subset
+  df
 }
 
 tidy_who_estimates <- function(data, .year = NULL, shape = "long") {
@@ -146,22 +146,22 @@ tidy_who_estimates <- function(data, .year = NULL, shape = "long") {
     dplyr::rename(country_code = iso3)
 
   if (!is.null(.year)) {
-    df_subset <-
+    df <-
       df |>
       dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
-    df_shape <-
-      df_subset |>
+    df <-
+      df |>
       tidyr::pivot_longer(
         cols = -c(country, country_code, g_whoregion, year),
         names_to = "variable"
       )
-    return(df_shape)
+    return(df)
   }
 
-  df_subset
+  df
 }
 
 tidy_who_expenditures <- function(data, .year = NULL, shape = "long") {
@@ -172,22 +172,22 @@ tidy_who_expenditures <- function(data, .year = NULL, shape = "long") {
     dplyr::rename(country_code = iso3)
 
   if (!is.null(.year)) {
-    df_subset <-
+    df <-
       df |>
       dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
-    df_shape <-
-      df_subset |>
+    df <-
+      df |>
       tidyr::pivot_longer(
         cols = -c(country, country_code, g_whoregion, year),
         names_to = "variable"
       )
-    return(df_shape)
+    return(df)
   }
 
-  df_subset
+  df
 }
 
 tidy_who_labs <- function(data, .year = NULL, shape = "long") {
@@ -198,21 +198,21 @@ tidy_who_labs <- function(data, .year = NULL, shape = "long") {
     dplyr::rename(country_code = iso3)
 
   if (!is.null(.year)) {
-    df_subset <-
+    df <-
       df |>
       dplyr::filter(year == !!.year)
   }
 
   if (shape == "long") {
-    df_shape <-
-      df_subset |>
+    df <-
+      df |>
       tidyr::pivot_longer(
         cols = -c(country, country_code, g_whoregion, year),
         names_to = "variable"
       )
-    return(df_shape)
+    return(df)
   }
 
-  df_subset
+  df
 
 }
