@@ -19,7 +19,7 @@ test_that("a tibble is returned", {
 
 test_that("the tibble dimensions are as expected", {
   skip_if_no_data(file_name)
-  expect_equal(nrow(tidy_gf_procurement(data)), 891)
+  expect_equal(nrow(tidy_gf_procurement(data)), 898)
   expect_equal(ncol(tidy_gf_procurement(data)), 27)
 })
 
