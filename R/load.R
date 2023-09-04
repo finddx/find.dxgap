@@ -15,7 +15,7 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
   # World Bank Population ------------------------------------------------------
 
   wb_tot_pop_df <-
-    read_wb(file.path(data_dir, "wb_2023-08-31_SP.POP.TOTL.csv")) |>
+    read_wb(file.path(data_dir, "wb_2023-08-31_pop_total.csv")) |>
     tidy_wb(year = .year) |>
     dplyr::select(country_code, year, pop_total = value) |>
     dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
@@ -23,7 +23,7 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
   # World Bank Urban Pop. ------------------------------------------------------
 
   wb_urb_pop_df <-
-    read_wb(file.path(data_dir, "wb_2023-07-28_SP.URB.TOTL.IN.ZS.csv")) |>
+    read_wb(file.path(data_dir, "wb_2023-08-28_pop_urban.csv")) |>
     tidy_wb(year = .year) |>
     dplyr::select(country_code, year, pop_urban_perc = value) |>
     dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
@@ -31,7 +31,7 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
   # World Bank Density ---------------------------------------------------------
 
   wb_density_pop_df <-
-    read_wb(file.path(data_dir, "wb_2023-08-31_EN.POP.DNST.csv")) |>
+    read_wb(file.path(data_dir, "wb_2023-08-31_pop_density.csv")) |>
     tidy_wb(year = .year) |>
     dplyr::select(country_code, year, pop_density = value) |>
     dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))

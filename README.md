@@ -27,9 +27,9 @@ The data available are:
 |:------------------------------------|
 | gf_2023-07-26_procurement.csv       |
 | tb_find_variable_masterlist.csv     |
-| wb_2023-07-28_SP.URB.TOTL.IN.ZS.csv |
-| wb_2023-08-31_EN.POP.DNST.csv       |
-| wb_2023-08-31_SP.POP.TOTL.csv       |
+| wb_2023-08-28_pop_urban.csv |
+| wb_2023-08-31_pop_density.csv       |
+| wb_2023-08-31_pop_total.csv       |
 | who_2023-07-28_budget.csv           |
 | who_2023-07-28_community.csv        |
 | who_2023-07-28_estimates.csv        |

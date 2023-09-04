@@ -29,8 +29,18 @@ laboratories <- download_who(
   dataset = "laboratories"
 )
 Sys.sleep(3)
-pop_urban <- download_wb(indicator = "SP.URB.TOTL.IN.ZS")
+pop_urban <- download_wb(
+  file_name = compose_date_dataset_file_name("wb", dataset = "pop_urban", file_ext = ".csv"),
+  indicator = "SP.URB.TOTL.IN.ZS"
+  )
 Sys.sleep(3)
-pop_density <- download_wb(indicator = "EN.POP.DNST")
+pop_density <-
+  download_wb(
+    file_name = compose_date_dataset_file_name("wb", dataset = "pop_density", file_ext = ".csv"),
+    indicator = "EN.POP.DNST"
+  )
 Sys.sleep(3)
-pop_total <- download_wb(indicator = "SP.POP.TOTL")
+pop_total <- download_wb(
+  file_name = compose_date_dataset_file_name("wb", dataset = "pop_total", file_ext = ".csv"),
+  indicator = "SP.POP.TOTL"
+  )
