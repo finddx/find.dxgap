@@ -1,4 +1,6 @@
-findtb_import <- function(.file_name,
+#' @example lst <- findtb_import(lst, "who_hbc.csv", 2019)
+findtb_import <- function(data_lst,
+                          .file_name,
                           .year,
                           .all = TRUE,
                           .data_dir = Sys.getenv("FINDTB_DATADIR")) {
@@ -63,10 +65,22 @@ findtb_import <- function(.file_name,
     data_tidy <- tidy_data(data_raw, year = .year)
   }
 
-  data_tidy
+  lst <- fetch_object(data_lst)
+
+  lst[[data_name]] <- data_tidy
+
+  lst
 
 }
 
+fetch_object <- function(obj_name) {
+  obj_name <- substitute(obj_name)
+  if (exists(obj_name)) {
+    eval(obj_name)
+  } else {
+    list()
+  }
+}
 
 extract_name <- function(file_name) {
   stringr::str_remove_all(file_name, "\\d{4}-\\d{2}-\\d{2}\\_|\\.csv$") # TODO ext should not be hardcoded
