@@ -40,6 +40,12 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
     hbc_lst$wb_pop_density |>
     dplyr::select(country_code, year, pop_density = value)
 
+  # World Bank GDP ------------------------------------------------------------
+
+  wb_gdp_df <-
+    hbc_lst$wb_gdp |>
+    dplyr::select(country_code, year, gdp = value)
+
   # WHO notifications ----------------------------------------------------------
 
   who_notifications_df <- hbc_lst$who_notifications
@@ -73,6 +79,7 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
     wb_tot_pop = wb_tot_pop_df,
     wb_urb_pop = wb_urb_pop_df,
     wb_density_pop = wb_density_pop_df,
+    wb_gdp = wb_gdp_df,
     who_notifications = who_notifications_df,
     who_estimates = who_estimates_df,
     who_budget = who_budget_df,
