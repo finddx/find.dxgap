@@ -23,20 +23,20 @@ Please, call `set_findtb_data_dir()` to create and populate such folder.
 
 The data available are:
 
-| data_file                           |
-|:------------------------------------|
-| gf_2023-07-26_procurement.csv       |
-| tb_find_variable_masterlist.csv     |
-| wb_2023-08-28_pop_urban.csv |
-| wb_2023-08-31_pop_density.csv       |
-| wb_2023-08-31_pop_total.csv       |
-| who_2023-07-28_budget.csv           |
-| who_2023-07-28_community.csv        |
-| who_2023-07-28_estimates.csv        |
-| who_2023-07-28_expenditures.csv     |
-| who_2023-07-28_notifications.csv    |
-| who_2023-08-30_laboratories.csv     |
-| who_hbc.csv                         |
+| data_file                        |
+|:---------------------------------|
+| gf_2023-07-26_procurement.csv    |
+| tb_find_variable_masterlist.csv  |
+| wb_2023-07-28_pop_urban.csv      |
+| wb_2023-08-31_pop_density.csv    |
+| wb_2023-08-31_pop_total.csv      |
+| who_2023-07-28_budget.csv        |
+| who_2023-07-28_community.csv     |
+| who_2023-07-28_estimates.csv     |
+| who_2023-07-28_expenditures.csv  |
+| who_2023-07-28_notifications.csv |
+| who_2023-08-30_laboratories.csv  |
+| who_hbc.csv                      |
 
 ## Report
 
