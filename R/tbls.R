@@ -11,5 +11,6 @@ data_summary <-
     "gf",                         "procurement",  "csv",
     "wb",                            "pop_total", "csv",
     "wb",                         "pop_density",  "csv",
-    "wb",                          "pop_urban",   "csv"
+    "wb",                          "pop_urban",   "csv",
+    "wb",                                "gdp",   "csv"
  )

@@ -3,7 +3,7 @@
     Code
       dm::glimpse(dm)
     Output
-      dm of 10 tables: `hbc`, `wb_tot_pop`, `wb_urb_pop`, `wb_density_pop`, `who_notif...
+      dm of 11 tables: `hbc`, `wb_tot_pop`, `wb_urb_pop`, `wb_density_pop`, `wb_gdp`, ...
       
       --------------------------------------------------------------------------------
       
@@ -53,6 +53,16 @@
       Columns: 2
       $ country_code <chr> "AGO", "BGD", "BRA", "KHM", "CAF", "CHN", "COD", "COG", "~
       $ pop_density  <dbl> 25.951382, 1271.538926, 25.338518, 91.818185, 8.361944, 1~
+      
+      --------------------------------------------------------------------------------
+      
+      Table: `wb_gdp`
+      Primary key: `country_code`
+      
+      Rows: 30
+      Columns: 2
+      $ country_code <chr> "AGO", "BGD", "BRA", "KHM", "CAF", "CHN", "COD", "COG", "~
+      $ gdp          <dbl> 6.930911e+10, 3.512384e+11, 1.873288e+12, 2.708939e+10, 2~
       
       --------------------------------------------------------------------------------
       
