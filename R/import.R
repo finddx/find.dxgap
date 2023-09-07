@@ -55,7 +55,8 @@ findtb_import <- function(.data_lst,
     gf_procurement = read_gf_procurement,
     wb_pop_total = read_wb,
     wb_pop_density = read_wb,
-    wb_pop_urban = read_wb
+    wb_pop_urban = read_wb,
+    wb_gdp = read_wb
   )
 
   data_raw <- read_raw(path_file)
@@ -74,7 +75,8 @@ findtb_import <- function(.data_lst,
     gf_procurement = tidy_gf_procurement,
     wb_pop_total = tidy_wb,
     wb_pop_density = tidy_wb,
-    wb_pop_urban = tidy_wb
+    wb_pop_urban = tidy_wb,
+    wb_gdp = tidy_wb
   )
 
   if (provider %in% c("who") && dataset != "hbc") {
