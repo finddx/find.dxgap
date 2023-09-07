@@ -44,3 +44,8 @@ pop_total <- download_wb(
   file_name = compose_date_dataset_file_name("wb", dataset = "pop_total", file_ext = ".csv"),
   indicator = "SP.POP.TOTL"
   )
+Sys.sleep(3)
+gdp <- download_wb(
+  file_name = compose_date_dataset_file_name("wb", dataset = "gdp", file_ext = ".csv"),
+  indicator = "NY.GDP.MKTP.CD"
+)
