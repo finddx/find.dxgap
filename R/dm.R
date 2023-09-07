@@ -24,6 +24,7 @@ set_dm_rels <- function(dm) {
     dm::dm_add_fk(hbc, country_code, wb_tot_pop) |>
     dm::dm_add_fk(hbc, country_code, wb_urb_pop) |>
     dm::dm_add_fk(hbc, country_code, wb_density_pop) |>
+    dm::dm_add_fk(hbc, country_code, wb_gdp) |>
     dm::dm_add_fk(hbc, country_code, who_notifications) |>
     dm::dm_add_fk(hbc, country_code, who_estimates) |>
     dm::dm_add_fk(hbc, country_code, who_budget) |>
