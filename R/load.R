@@ -4,13 +4,12 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
     list.files(here::here("inst/extdata"), pattern = "csv") |>
     stringr::str_subset("masterlist", negate = TRUE)
 
-  lst <- findtb_import_bulk(lst, data_files)
+  lst <- findtb_import_bulk(lst, data_files, year = .year)
 
   # HBC countries --------------------------------------------------------------
 
   hbc_df <-
-    read_hbc(file.path(data_dir, "who_hbc.csv")) |>
-    tidy_hbc(year = .year) |>
+    lst$who_hbc |>
     dplyr::select(country_code) |>
     dplyr::mutate(country = countrycode::countrycode(
       country_code,
@@ -18,71 +17,53 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
       dest = "country.name"
     ))
 
+  hbc_lst <- purrr::map(
+    lst,
+    ~ dplyr::semi_join(.x, hbc_df, by = dplyr::join_by(country_code))
+  )
+
   # World Bank Population ------------------------------------------------------
 
   wb_tot_pop_df <-
-    read_wb(file.path(data_dir, "wb_2023-08-31_pop_total.csv")) |>
-    tidy_wb(year = .year) |>
-    dplyr::select(country_code, year, pop_total = value) |>
-    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
+    hbc_lst$wb_pop_total |>
+    dplyr::select(country_code, year, pop_total = value)
 
   # World Bank Urban Pop. ------------------------------------------------------
 
   wb_urb_pop_df <-
-    read_wb(file.path(data_dir, "wb_2023-08-28_pop_urban.csv")) |>
-    tidy_wb(year = .year) |>
-    dplyr::select(country_code, year, pop_urban_perc = value) |>
-    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
+    hbc_lst$wb_pop_urban |>
+    dplyr::select(country_code, year, pop_urban_perc = value)
 
   # World Bank Density ---------------------------------------------------------
 
   wb_density_pop_df <-
-    read_wb(file.path(data_dir, "wb_2023-08-31_pop_density.csv")) |>
-    tidy_wb(year = .year) |>
-    dplyr::select(country_code, year, pop_density = value) |>
-    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
+    hbc_lst$wb_pop_density |>
+    dplyr::select(country_code, year, pop_density = value)
 
   # WHO notifications ----------------------------------------------------------
 
-  who_notifications_df <-
-    read_who(file.path(data_dir, "who_2023-07-28_notifications.csv")) |>
-    tidy_who(year = .year, .shape = "wide") |>
-    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
+  who_notifications_df <- hbc_lst$who_notifications
 
   # WHO estimates --------------------------------------------------------------
 
-  who_estimates_df <-
-    read_who(file.path(data_dir,"who_2023-07-28_estimates.csv")) |>
-    tidy_who(year = .year, .shape = "wide") |>
-    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
+  who_estimates_df <- hbc_lst$who_estimates
 
   # WHO budget -----------------------------------------------------------------
 
-  who_budget_df <-
-    read_who(file.path(data_dir, "who_2023-07-28_budget.csv")) |>
-    tidy_who(year = .year, .shape = "wide") |>
-    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
+  who_budget_df <- hbc_lst$who_budget
 
   # WHO community --------------------------------------------------------------
 
-  who_community_df <-
-    read_who(file.path(data_dir, "who_2023-07-28_community.csv")) |>
-    tidy_who(year = .year, .shape = "wide") |>
-    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
+  who_community_df <- hbc_lst$who_community
 
   # WHO Sites ------------------------------------------------------------------
 
-  who_sites_df <-
-    read_who(file.path(data_dir, "who_2023-08-30_laboratories.csv")) |>
-    tidy_who(year = .year, .shape = "wide") |>
-    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code))
+  who_sites_df <- hbc_lst$who_laboratories
 
   # Global Fund Procurement ----------------------------------------------------
 
   gf_procurement_df <-
-    read_gf_procurement(file.path(data_dir, "gf_2023-07-26_procurement.csv")) |>
-    tidy_gf_procurement(year = .year) |>
-    dplyr::semi_join(hbc_df, by = dplyr::join_by(country_code)) |>
+    hbc_lst$gf_procurement |>
     dplyr::group_by(country_code) |>
     dplyr::summarise(total_numb_device = sum(total_numb_device, na.rm = TRUE)) |>
     dplyr::ungroup()
