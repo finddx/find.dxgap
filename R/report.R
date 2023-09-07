@@ -4,8 +4,8 @@ findtb_render_report <- function(template_path = "inst/template/findtb_policy_re
   stopifnot(is.numeric(year))
   stopifnot(is.null(output_file) || is.character(output_file))
 
-  lst <- findtb_load(.year = year)
-  dm <- findtb_build_dm(lst)
+  lst_df <- findtb_load(.year = year)
+  dm <- findtb_build_dm(lst_df)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   path <- if (is.null(output_file)) {
