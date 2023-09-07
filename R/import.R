@@ -3,20 +3,20 @@ findtb_import_bulk <- function(data_lst,
                            year,
                            data_dir = Sys.getenv("FINDTB_DATADIR")) {
   list_arg <- rlang::ensym(data_lst)
-  lst <- fetch_object(obj_name = !!list_arg, env = globalenv())
+  lst_df <- fetch_object(obj_name = !!list_arg, env = globalenv())
   for (i in seq_along(data_name)) {
-    lst <- findtb_import(
-      .data_lst = lst,
+    lst_df <- findtb_import(
+      .data_lst = lst_df,
       .file_name = data_name[[i]],
       .year = year,
       .data_dir = data_dir
     )
   }
 
-  lst
+  lst_df
 }
 
-#' @example lst <- findtb_import(lst, "who_hbc.csv", 2019)
+#' @example lst_df <- findtb_import(lst_df, "who_hbc.csv", 2019)
 findtb_import <- function(.data_lst,
                           .file_name,
                           .year,
@@ -86,18 +86,18 @@ findtb_import <- function(.data_lst,
   }
 
   list_arg <- rlang::ensym(.data_lst)
-  lst <- fetch_object(obj_name = !!list_arg, env = parent.frame())
-  lst_names <- rlang::names2(lst)
+  lst_df <- fetch_object(obj_name = !!list_arg, env = parent.frame())
+  lst_names <- rlang::names2(lst_df)
 
   if (data_name %in% lst_names) {
-    lst[[data_name]] <- data_tidy
+    lst_df[[data_name]] <- data_tidy
   } else { # does not exist or first time
-    next_item_index <- length(lst) + 1
-    lst[[next_item_index]] <- data_tidy
-    rlang::names2(lst)[next_item_index] <- data_name
+    next_item_index <- length(lst_df) + 1
+    lst_df[[next_item_index]] <- data_tidy
+    rlang::names2(lst_df)[next_item_index] <- data_name
   }
 
-  lst
+  lst_df
 
 }
 
