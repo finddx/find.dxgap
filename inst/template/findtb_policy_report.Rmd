@@ -214,6 +214,50 @@ tbl |>
   )
 ```
 
+## GDP
+
+### Bar chart
+
+```{r}
+tbl |> 
+  mutate(country_code = forcats::fct_reorder(country_code, gdp, .na_rm = FALSE)) |>
+  ggplot(aes(country_code, gdp)) +
+  geom_col(fill = "steelblue") +
+  scale_y_continuous(labels = scales::label_percent(scale = 1)) +
+  theme_minimal() +
+  coord_flip() +
+    labs(
+    y = paste("GDP (current US$) in", params$year),
+    caption = "Source: World Bank"
+  )
+```
+
+### Density distribution
+
+```{r}
+tbl |>
+  ggplot(aes(gdp)) +
+  geom_density(fill = "steelblue", alpha = .5) +
+  theme_minimal() +
+  labs(
+    x = paste("GDP (current US$) in", params$year),
+    caption = "Source: World Bank"
+  )
+```
+
+### Dx Gap
+
+```{r}
+tbl |>
+  ggplot(aes(gdp / pop_100k, who_dx_gap)) +
+  geom_point(color = "steelblue", alpha = .5) +
+  theme_minimal() +
+  labs(
+    x = paste("GDP (current US$) per 100k in", params$year),
+    caption = "Source: World Bank"
+  )
+```
+
 ## Budget
 
 ```{r}
@@ -482,6 +526,7 @@ complete_site_df <-
   ) |>
   select(-n)
 ```
+
 
 ### Completion rate
 
