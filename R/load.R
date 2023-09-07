@@ -1,5 +1,11 @@
 findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
 
+  data_files <-
+    list.files(here::here("inst/extdata"), pattern = "csv") |>
+    stringr::str_subset("masterlist", negate = TRUE)
+
+  lst <- findtb_import_bulk(lst, data_files)
+
   # HBC countries --------------------------------------------------------------
 
   hbc_df <-
