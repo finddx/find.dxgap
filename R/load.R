@@ -4,12 +4,12 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
     list.files(here::here("inst/extdata"), pattern = "csv") |>
     stringr::str_subset("masterlist", negate = TRUE)
 
-  lst <- findtb_import_bulk(lst, data_files, year = .year)
+  lst_df <- findtb_import_bulk(lst_df, data_files, year = .year)
 
   # HBC countries --------------------------------------------------------------
 
   hbc_df <-
-    lst$who_hbc |>
+    lst_df$who_hbc |>
     dplyr::select(country_code) |>
     dplyr::mutate(country = countrycode::countrycode(
       country_code,
@@ -18,7 +18,7 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
     ))
 
   hbc_lst <- purrr::map(
-    lst,
+    lst_df,
     ~ dplyr::semi_join(.x, hbc_df, by = dplyr::join_by(country_code))
   )
 
