@@ -65,8 +65,8 @@ findtb_import <- function(data_lst,
     data_tidy <- tidy_data(data_raw, year = .year)
   }
 
-  obj_name <- substitute(data_lst)
-  lst <- fetch_object(obj_name)
+  data_list <- rlang::ensym(data_lst)
+  lst <- fetch_object(obj_name = !!data_list)
   lst_names <- rlang::names2(lst)
 
   if (data_name %in% lst_names) {
@@ -82,8 +82,9 @@ findtb_import <- function(data_lst,
 }
 
 fetch_object <- function(obj_name) {
-  if (exists(obj_name)) {
-    get(obj_name, envir = parent.frame())
+  obj <- rlang::ensym(obj_name)
+  if (exists(obj)) {
+    get(obj, envir = parent.frame())
   } else {
     list()
   }
