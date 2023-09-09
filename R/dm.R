@@ -10,13 +10,28 @@ drop_cols <- function(data_list, cols_to_drop) {
     purrr::map(~ dplyr::select(.x, -tidyselect::any_of(cols_to_drop)))
 }
 
-filter_country <- function(data_list, hbc = TRUE) {
+get_non_hbc_country_code <- function(hbc_df) {
+  countrycode::codelist |>
+    dplyr::select(country_code = iso3c, country = country.name.en) |>
+    dplyr::filter(!is.na(country_code)) |>
+    dplyr::anti_join(hbc_df, by = dplyr::join_by(country_code))
+}
+
+assign_non_hbc_df <- function(non_hbc_list, non_hbc_df) {
+  non_hbc_list[[length(non_hbc_list) + 1]] <- non_hbc_df
+  rlang::names2(non_hbc_list)[length(non_hbc_list)] <- "non_hbc"
+  return(non_hbc_list)
+}
+
+filter_country <- function(data_list, .hbc = TRUE) {
   hbc_df <- data_list$hbc
-  if (hbc) {
+  if (.hbc) {
     country_lst <- filter_hbc_country(data_list)
     return(country_lst)
   }
-  filter_non_hbc_country(data_list)
+  non_hbc_df <- get_non_hbc_country_code(hbc_df)
+  non_hbc_list <- filter_non_hbc_country(data_list, non_hbc_df)
+  assign_non_hbc_df(non_hbc_list, non_hbc_df)
 }
 
 filter_hbc_country <- function(data_list) {
