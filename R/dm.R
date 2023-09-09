@@ -42,18 +42,33 @@ filter_hbc_country <- function(data_list) {
   )
 }
 
-filter_non_hbc_country <- function(data_list) {
-  hbc_df <- data_list$hbc
+filter_non_hbc_country <- function(data_list, non_hbc_df) {
   purrr::map(
     data_list,
-    ~ dplyr::anti_join(.x, hbc_df, by = dplyr::join_by(country_code))
+    ~ dplyr::semi_join(.x, non_hbc_df, by = dplyr::join_by(country_code))
   ) |>
     purrr::discard(~ nrow(.x) == 0)
 }
 
-set_dm_rels <- function(dm) {
+choose_dm <- function(dm) {
+  tbl_names <- names(dm)
+  if ("hbc" %in% tbl_names) {
+    dm <- set_dm_rels(dm, hbc)
+    return(dm)
+  }
+  set_dm_rels(dm, non_hbc)
+}
+
+set_dm_rels <- function(dm, parent_tbl) {
+  parent_tbl <- rlang::ensym(parent_tbl)
   dm |>
-    dm::dm_add_pk(hbc, country_code, check = TRUE) |>
+    set_dm_pk_parent(!!parent_tbl) |>
+    set_dm_pk() |>
+    set_dm_fk(!!parent_tbl)
+}
+
+set_dm_pk <- function(dm) {
+  dm |>
     dm::dm_add_pk(wb_tot_pop, country_code, check = TRUE) |>
     dm::dm_add_pk(wb_urb_pop, country_code, check = TRUE) |>
     dm::dm_add_pk(wb_density_pop, country_code, check = TRUE) |>
@@ -63,17 +78,27 @@ set_dm_rels <- function(dm) {
     dm::dm_add_pk(who_budget, country_code, check = TRUE) |>
     dm::dm_add_pk(who_community, country_code, check = TRUE) |>
     dm::dm_add_pk(who_sites, country_code, check = TRUE) |>
-    dm::dm_add_pk(gf_procurement, country_code, check = TRUE) |>
-    dm::dm_add_fk(hbc, country_code, wb_tot_pop) |>
-    dm::dm_add_fk(hbc, country_code, wb_urb_pop) |>
-    dm::dm_add_fk(hbc, country_code, wb_density_pop) |>
-    dm::dm_add_fk(hbc, country_code, wb_gdp) |>
-    dm::dm_add_fk(hbc, country_code, who_notifications) |>
-    dm::dm_add_fk(hbc, country_code, who_estimates) |>
-    dm::dm_add_fk(hbc, country_code, who_budget) |>
-    dm::dm_add_fk(hbc, country_code, who_community) |>
-    dm::dm_add_fk(hbc, country_code, who_sites) |>
-    dm::dm_add_fk(hbc, country_code, gf_procurement)
+    dm::dm_add_pk(gf_procurement, country_code, check = TRUE)
+}
+
+set_dm_fk <- function(dm, parent_tbl) {
+  parent_tbl <- rlang::ensym(parent_tbl)
+  dm |>
+    dm::dm_add_fk(!!parent_tbl, country_code, wb_tot_pop) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, wb_urb_pop) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, wb_density_pop) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, wb_gdp) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, who_notifications) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, who_estimates) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, who_budget) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, who_community) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, who_sites) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, gf_procurement)
+}
+
+set_dm_pk_parent <- function(dm, parent_tbl) {
+  parent_tbl <- rlang::ensym(parent_tbl)
+  dm::dm_add_pk(dm, !!parent_tbl, country_code, check = TRUE)
 }
 
 set_dm_colors <- function(dm) {
