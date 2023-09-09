@@ -1,7 +1,8 @@
-findtb_build_dm <- function(data_list) {
+findtb_build_dm <- function(data_list, hbc = TRUE) {
   prune_lst <- drop_cols(data_list, c("year", "country", "g_whoregion"))
-  dm_no_rel <- dm::dm(!!!prune_lst)
-  dm_rel <- set_dm_rels(dm_no_rel)
+  filter_lst <- filter_country(data_list = prune_lst, .hbc = hbc)
+  dm_no_rel <- dm::dm(!!!filter_lst)
+  dm_rel <- choose_dm(dm_no_rel)
   set_dm_colors(dm_rel)
 }
 
