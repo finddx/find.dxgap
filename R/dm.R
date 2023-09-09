@@ -1,23 +1,39 @@
-findtb_filter_country <- function(data_list, hbc = TRUE) {
-  hbc_df <- data_list$hbc
-  if (hbc) {
-    country_lst <- purrr::map(
-      lst_df,
-      ~ dplyr::semi_join(.x, hbc_df, by = dplyr::join_by(country_code))
-    )
-  }
-
-
-}
-
 findtb_build_dm <- function(data_list) {
-  cols_to_drop <- c("year", "country", "g_whoregion")
-  prune_lst <-
-    data_list |>
-    purrr::map(~ dplyr::select(.x, -tidyselect::any_of(cols_to_drop)))
+  prune_lst <- drop_cols(data_list, c("year", "country", "g_whoregion"))
   dm_no_rel <- dm::dm(!!!prune_lst)
   dm_rel <- set_dm_rels(dm_no_rel)
   set_dm_colors(dm_rel)
+}
+
+drop_cols <- function(data_list, cols_to_drop) {
+  data_list |>
+    purrr::map(~ dplyr::select(.x, -tidyselect::any_of(cols_to_drop)))
+}
+
+filter_country <- function(data_list, hbc = TRUE) {
+  hbc_df <- data_list$hbc
+  if (hbc) {
+    country_lst <- filter_hbc_country(data_list)
+    return(country_lst)
+  }
+  filter_non_hbc_country(data_list)
+}
+
+filter_hbc_country <- function(data_list) {
+  hbc_df <- data_list$hbc
+  purrr::map(
+    data_list,
+    ~ dplyr::semi_join(.x, hbc_df, by = dplyr::join_by(country_code))
+  )
+}
+
+filter_non_hbc_country <- function(data_list) {
+  hbc_df <- data_list$hbc
+  purrr::map(
+    data_list,
+    ~ dplyr::anti_join(.x, hbc_df, by = dplyr::join_by(country_code))
+  ) |>
+    purrr::discard(~ nrow(.x) == 0)
 }
 
 set_dm_rels <- function(dm) {
