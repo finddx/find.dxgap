@@ -1,3 +1,15 @@
+findtb_filter_country <- function(data_list, hbc = TRUE) {
+  hbc_df <- data_list$hbc
+  if (hbc) {
+    country_lst <- purrr::map(
+      lst_df,
+      ~ dplyr::semi_join(.x, hbc_df, by = dplyr::join_by(country_code))
+    )
+  }
+
+
+}
+
 findtb_build_dm <- function(data_list) {
   cols_to_drop <- c("year", "country", "g_whoregion")
   prune_lst <-

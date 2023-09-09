@@ -17,11 +17,6 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
       dest = "country.name"
     ))
 
-  hbc_lst <- purrr::map(
-    lst_df,
-    ~ dplyr::semi_join(.x, hbc_df, by = dplyr::join_by(country_code))
-  )
-
   # World Bank Population ------------------------------------------------------
 
   wb_tot_pop_df <-
