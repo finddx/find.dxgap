@@ -65,7 +65,7 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
 
   gf_procurement_df <-
     lst_df$gf_procurement |>
-    dplyr::group_by(country_code) |>
+    dplyr::group_by(country_code, year) |>
     dplyr::summarise(total_numb_device = sum(total_numb_device, na.rm = TRUE)) |>
     dplyr::ungroup()
 
