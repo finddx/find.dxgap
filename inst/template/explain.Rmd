@@ -1,0 +1,90 @@
+---
+title: "TB Policy Report"
+output: html_document
+date: "`r Sys.Date()`"
+params:
+  dm: dm
+  year: year
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+library(recipes)
+pkgload::load_all()
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message = FALSE, warning = FALSE)
+```
+
+```{r}
+dm <- params$dm
+```
+
+The chosen year is `r params$year`.
+
+```{r}
+tbl <-
+  dm::dm_flatten_to_tbl(dm, .start = hbc) |>
+  dplyr::mutate(
+    who_dx_gap = (e_inc_num - c_newinc) / e_inc_num,
+    pop_100k = pop_total / 1e5
+  ) |> 
+  filter(country_code != "RUS")
+```
+
+```{r}
+tbl_rec <-
+  recipe(who_dx_gap ~ ., data = tbl) |>
+  step_filter_missing(all_predictors(), threshold = 0.9) |> 
+  step_rm(c_cdr, c_newinc_100k, e_inc_num, e_mort_100k, e_pop_num, c_newinc) |>
+  add_role(country_code, new_role = "id") |>
+  add_role(pop_urban_perc, new_role = "no_norm") |>
+  add_role(pop_density, new_role = "no_norm") |>
+  add_role(
+    dplyr::all_of(c("e_inc_100k", "pop_total", "gdp")),  
+    new_role = "impute"
+  ) |>
+  step_rm(e_inc_100k) |>
+  step_impute_median(has_role("impute")) |> 
+  step_impute_median(budget_oth, cf_tot_gf, cf_tot_grnt) |>
+  step_filter_missing(all_predictors(), threshold = 0.2) |> 
+  step_impute_knn(
+    all_predictors(),
+    neighbors = 2,
+    impute_with = imp_vars(has_role("impute"))
+  ) |>
+  # step_mutate_at(
+  #   all_numeric_predictors(), -has_role("no_norm"), fn = ~ .x / pop_100k
+  # ) |> 
+  step_mutate_at(
+    all_numeric_predictors(), fn = ~ dplyr::if_else(.x == 0, 1, .x)
+  ) |> 
+  # step_log(all_numeric_predictors(), has_role("outcome")) |>
+  step_zv(all_numeric_predictors()) |> 
+  step_rm(country_code)
+```
+
+```{r}
+lm_model <-
+  parsnip::linear_reg(mode = "regression") %>%
+  parsnip::set_engine("lm")
+```
+
+```{r}
+wf <-
+  workflows::workflow() |>
+  workflows::add_model(lm_model) |>
+  workflows::add_recipe(tbl_rec)
+```
+
+```{r}
+lm_fit <- parsnip::fit(wf, data = tbl)
+```
+
+
+```{r}
+lm_fit  |>
+  workflows::extract_fit_parsnip() |>
+  broom::tidy()
+```
+
+
