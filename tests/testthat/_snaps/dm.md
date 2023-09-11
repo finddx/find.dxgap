@@ -309,9 +309,8 @@
         `country_code` -> `gf_procurement$country_code` no_action
       
       Rows: 219
-      Columns: 2
+      Columns: 1
       $ country_code <chr> "AFG", "ALB", "DZA", "ASM", "AND", "AIA", "ATA", "ATG", "~
-      $ country      <chr> "Afghanistan", "Albania", "Algeria", "American Samoa", "A~
       
       --------------------------------------------------------------------------------
 
