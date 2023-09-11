@@ -5,7 +5,9 @@ dm_hbc <- findtb_build_dm(df_lst)
 dm_non_hbc <- findtb_build_dm(df_lst, hbc = FALSE)
 
 dm::dm_draw(dm_hbc)
+dm::dm_examine_constraints(dm_hbc)
 dm::dm_draw(dm_non_hbc)
+dm::dm_examine_constraints(dm_non_hbc)
 
 tbl_hbc <-
   dm_hbc |>
