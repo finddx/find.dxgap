@@ -5,7 +5,9 @@ findtb_render_report <- function(template_path = "inst/template/findtb_policy_re
   stopifnot(is.null(output_file) || is.character(output_file))
 
   lst_df <- findtb_load(.year = year)
-  dm <- findtb_build_dm(lst_df)
+  dm_hbc <- findtb_build_dm(lst_df, hbc = TRUE)
+  dm_non_hbc <- findtb_build_dm(lst_df, hbc = FALSE)
+  data_tbl <- findtb_build_tbl(dm_hbc, dm_non_hbc)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   path <- if (is.null(output_file)) {
@@ -13,7 +15,12 @@ findtb_render_report <- function(template_path = "inst/template/findtb_policy_re
     rmarkdown::render(
       input = template_path,
       output_file = temp_file,
-      params = list(dm = dm, year = year),
+      params = list(
+        dm_hbc = dm_hbc,
+        dm_non_hbc = dm_non_hbc,
+        data_tbl = data_tbl,
+        year = year
+      ),
       envir = new.env()
     )
   } else {
@@ -21,7 +28,12 @@ findtb_render_report <- function(template_path = "inst/template/findtb_policy_re
       input = template_path,
       output_file = basename(output_file),
       output_dir = dirname(output_file),
-      params = list(dm = dm, year = year),
+      params = list(
+        dm_hbc = dm_hbc,
+        dm_non_hbc = dm_non_hbc,
+        data_tbl = data_tbl,
+        year = year
+      ),
       envir = new.env()
     )
   }
