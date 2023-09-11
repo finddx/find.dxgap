@@ -62,7 +62,8 @@ tidy_wb <- function(data, year = NULL) {
       country_value,
       year = date,
       value
-    )
+    ) |>
+    dplyr::filter(!is.na(country_code))
   if (!is.null(year)) {
     df_subset <-
       df |>
