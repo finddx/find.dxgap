@@ -1,3 +1,15 @@
+findtb_build_tbl <- function(dm_hbc, dm_non_hbc) {
+  hbc_tbl <-
+    dm_hbc |>
+    dm::dm_flatten_to_tbl(.start = hbc) |>
+    dplyr::mutate(is_hbc = 1)
+  non_hbc_tbl <-
+    dm_non_hbc |>
+    dm::dm_flatten_to_tbl(.start = non_hbc) |>
+    dplyr::mutate(is_hbc = 0)
+  dplyr::bind_rows(hbc_tbl, non_hbc_tbl)
+}
+
 findtb_build_dm <- function(data_list, hbc = TRUE) {
   prune_lst <- drop_cols(data_list, c("year", "country", "g_whoregion"))
   filter_lst <- filter_country(data_list = prune_lst, .hbc = hbc)
