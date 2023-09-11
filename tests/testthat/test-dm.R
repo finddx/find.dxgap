@@ -8,7 +8,8 @@ test_that("findtb_build_dm() `hbc` works", {
     dm::dm_examine_constraints(dm) |>
       tibble::as_tibble() |>
       dplyr::filter(problem != "") |>
-      print(n = Inf)
+      dplyr::pull(problem) |>
+      writeLines()
   })
 })
 
@@ -19,6 +20,7 @@ test_that("findtb_build_dm() `non_hbc` works", {
     dm::dm_examine_constraints(dm) |>
       tibble::as_tibble() |>
       dplyr::filter(problem != "") |>
-      print(n = Inf)
+      dplyr::pull(problem) |>
+      writeLines()
   })
 })

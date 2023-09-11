@@ -169,14 +169,11 @@
 ---
 
     Code
-      print(dplyr::filter(tibble::as_tibble(dm::dm_examine_constraints(dm)),
-      problem != ""), n = Inf)
+      writeLines(dplyr::pull(dplyr::filter(tibble::as_tibble(dm::dm_examine_constraints(
+        dm)), problem != ""), problem))
     Output
-      # A tibble: 2 x 6
-        table kind  columns      ref_table      is_key problem                        
-        <chr> <chr> <keys>       <chr>          <lgl>  <chr>                          
-      1 hbc   FK    country_code who_community  FALSE  values of `hbc$country_code` n~
-      2 hbc   FK    country_code gf_procurement FALSE  values of `hbc$country_code` n~
+      values of `hbc$country_code` not in `who_community$country_code`: CHN (1), PRK (1), RUS (1)
+      values of `hbc$country_code` not in `gf_procurement$country_code`: AGO (1), BGD (1), BRA (1), CAF (1), CHN (1), ...
 
 # findtb_build_dm() `non_hbc` works
 
@@ -339,20 +336,17 @@
 ---
 
     Code
-      print(dplyr::filter(tibble::as_tibble(dm::dm_examine_constraints(dm)),
-      problem != ""), n = Inf)
+      writeLines(dplyr::pull(dplyr::filter(tibble::as_tibble(dm::dm_examine_constraints(
+        dm)), problem != ""), problem))
     Output
-      # A tibble: 10 x 6
-         table   kind  columns      ref_table         is_key problem                  
-         <chr>   <chr> <keys>       <chr>             <lgl>  <chr>                    
-       1 non_hbc FK    country_code wb_tot_pop        FALSE  values of `non_hbc$count~
-       2 non_hbc FK    country_code wb_urb_pop        FALSE  values of `non_hbc$count~
-       3 non_hbc FK    country_code wb_density_pop    FALSE  values of `non_hbc$count~
-       4 non_hbc FK    country_code wb_gdp            FALSE  values of `non_hbc$count~
-       5 non_hbc FK    country_code who_notifications FALSE  values of `non_hbc$count~
-       6 non_hbc FK    country_code who_estimates     FALSE  values of `non_hbc$count~
-       7 non_hbc FK    country_code who_budget        FALSE  values of `non_hbc$count~
-       8 non_hbc FK    country_code who_community     FALSE  values of `non_hbc$count~
-       9 non_hbc FK    country_code who_sites         FALSE  values of `non_hbc$count~
-      10 non_hbc FK    country_code gf_procurement    FALSE  values of `non_hbc$count~
+      values of `non_hbc$country_code` not in `wb_tot_pop$country_code`: AIA (1), ALA (1), ATA (1), ATF (1), BES (1), ...
+      values of `non_hbc$country_code` not in `wb_urb_pop$country_code`: AIA (1), ALA (1), ATA (1), ATF (1), BES (1), ...
+      values of `non_hbc$country_code` not in `wb_density_pop$country_code`: AIA (1), ALA (1), ATA (1), ATF (1), BES (1), ...
+      values of `non_hbc$country_code` not in `wb_gdp$country_code`: AIA (1), ALA (1), ATA (1), ATF (1), BES (1), ...
+      values of `non_hbc$country_code` not in `who_notifications$country_code`: ALA (1), ATA (1), ATF (1), BES (1), BLM (1), ...
+      values of `non_hbc$country_code` not in `who_estimates$country_code`: ALA (1), ATA (1), ATF (1), BES (1), BLM (1), ...
+      values of `non_hbc$country_code` not in `who_budget$country_code`: ALA (1), ATA (1), ATF (1), BES (1), BLM (1), ...
+      values of `non_hbc$country_code` not in `who_community$country_code`: ABW (1), AIA (1), ALA (1), ALB (1), AND (1), ...
+      values of `non_hbc$country_code` not in `who_sites$country_code`: ALA (1), ATA (1), ATF (1), BES (1), BLM (1), ...
+      values of `non_hbc$country_code` not in `gf_procurement$country_code`: ABW (1), AFG (1), AIA (1), ALA (1), AND (1), ...
 
