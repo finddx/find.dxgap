@@ -1,3 +1,6 @@
+# tbl_non_hbc |>
+#   filter(if_all(-c(country_code), is.na)) |>
+#   distinct(country_code)
 country_exclude_df <- tibble::tibble(
   country_code = c(
     "ATA", "BVT", "IOT", "BES", "CXR", "CCK", "FLK", "GUF", "ATF", "GLP", "GGY",
