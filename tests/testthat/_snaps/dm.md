@@ -156,6 +156,28 @@
       
       --------------------------------------------------------------------------------
 
+---
+
+    Code
+      dm::dm_examine_constraints(dm)
+    Message <cliMessage>
+      ! Unsatisfied constraints:
+    Output
+      * Table `hbc`: foreign key `country_code` into table `who_community`: values of `hbc$country_code` not in `who_community$country_code`: CHN (1), PRK (1), RUS (1)
+      * Table `hbc`: foreign key `country_code` into table `gf_procurement`: values of `hbc$country_code` not in `gf_procurement$country_code`: AGO (1), BGD (1), BRA (1), CAF (1), CHN (1), ...
+
+---
+
+    Code
+      print(dplyr::filter(tibble::as_tibble(dm::dm_examine_constraints(dm)),
+      problem != ""), n = Inf)
+    Output
+      # A tibble: 2 x 6
+        table kind  columns      ref_table      is_key problem                        
+        <chr> <chr> <keys>       <chr>          <lgl>  <chr>                          
+      1 hbc   FK    country_code who_community  FALSE  values of `hbc$country_code` n~
+      2 hbc   FK    country_code gf_procurement FALSE  values of `hbc$country_code` n~
+
 # findtb_build_dm() `non_hbc` works
 
     Code
@@ -313,4 +335,24 @@
       $ country_code <chr> "AFG", "ALB", "DZA", "ASM", "AND", "AIA", "ATA", "ATG", "~
       
       --------------------------------------------------------------------------------
+
+---
+
+    Code
+      print(dplyr::filter(tibble::as_tibble(dm::dm_examine_constraints(dm)),
+      problem != ""), n = Inf)
+    Output
+      # A tibble: 10 x 6
+         table   kind  columns      ref_table         is_key problem                  
+         <chr>   <chr> <keys>       <chr>             <lgl>  <chr>                    
+       1 non_hbc FK    country_code wb_tot_pop        FALSE  values of `non_hbc$count~
+       2 non_hbc FK    country_code wb_urb_pop        FALSE  values of `non_hbc$count~
+       3 non_hbc FK    country_code wb_density_pop    FALSE  values of `non_hbc$count~
+       4 non_hbc FK    country_code wb_gdp            FALSE  values of `non_hbc$count~
+       5 non_hbc FK    country_code who_notifications FALSE  values of `non_hbc$count~
+       6 non_hbc FK    country_code who_estimates     FALSE  values of `non_hbc$count~
+       7 non_hbc FK    country_code who_budget        FALSE  values of `non_hbc$count~
+       8 non_hbc FK    country_code who_community     FALSE  values of `non_hbc$count~
+       9 non_hbc FK    country_code who_sites         FALSE  values of `non_hbc$count~
+      10 non_hbc FK    country_code gf_procurement    FALSE  values of `non_hbc$count~
 
