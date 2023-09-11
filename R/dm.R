@@ -7,7 +7,8 @@ findtb_build_tbl <- function(dm_hbc, dm_non_hbc) {
     dm_non_hbc |>
     dm::dm_flatten_to_tbl(.start = non_hbc) |>
     dplyr::mutate(is_hbc = 0)
-  dplyr::bind_rows(hbc_tbl, non_hbc_tbl)
+  dplyr::bind_rows(hbc_tbl, non_hbc_tbl) |>
+    dplyr::filter(!dplyr::if_all(-c(country_code), is.na))
 }
 
 findtb_build_dm <- function(data_list, hbc = TRUE) {
