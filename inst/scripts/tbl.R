@@ -13,7 +13,16 @@ tbl_hbc <-
   dm_hbc |>
   dm::dm_flatten_to_tbl(.start = hbc)
 
+
+tbl_hbc |>
+  filter(if_all(-c(country_code), is.na)) |>
+  distinct(country_code)
+
 tbl_non_hbc <-
   dm_non_hbc |>
   dm::dm_flatten_to_tbl(.start = non_hbc)
+
+tbl_non_hbc |>
+  filter(if_all(-c(country_code), is.na)) |>
+  distinct(country_code)
 
