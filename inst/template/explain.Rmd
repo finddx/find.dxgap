@@ -1,5 +1,5 @@
 ---
-title: "TB Policy Report"
+title: "Explain"
 output: html_document
 date: "`r Sys.Date()`"
 params:
@@ -31,6 +31,16 @@ tbl <-
   mutate(who_dx_gap = (e_inc_num - c_newinc) / e_inc_num) 
 ```
 
+
+```{r spending}
+tbl_split <- rsample::initial_split(tbl)
+tbl_train <- rsample::training(tbl_split)
+tbl_test <- rsample::testing(tbl_split)
+```
+
+```{r bootstrap}
+tbl_boot <- rsample::bootstraps(tbl_train)
+```
 
 ```{r rec-core}
 rec_core <-
@@ -71,13 +81,10 @@ rec_core <-
     impute_with = imp_vars(has_role("imputer_knn"))
   ) |>
   step_rm(e_inc_num, e_inc_100k, c_newinc) |> 
-  step_mutate_at(
-    all_numeric_predictors(), -has_role("no_norm"), fn = ~ .x / pop_100k
-  ) |>
   step_zv(all_numeric_predictors()) 
 ```
 
-```{r}
+```{r eval=FALSE}
 rec_core |> 
   cook() |> 
   skimr::skim()
@@ -93,6 +100,27 @@ rec_log <-
   step_log(all_numeric_predictors())
 ```
 
+```{r}
+rec_norm <- 
+  rec_core |> 
+  recipes::step_normalize(all_numeric_predictors())
+```
+
+```{r}
+rec_pop_100k <- 
+  rec_core |> 
+  step_mutate_at(
+    all_numeric_predictors(), -has_role("no_norm"), fn = ~ .x / pop_100k
+  ) 
+```
+
+```{r eval=FALSE}
+rec_pca <- 
+  rec_core |> 
+   step_pca(all_numeric_predictors(), num_comp = tune::tune()) %>% 
+   step_normalize(all_predictors())
+```
+
 
 ```{r lm}
 lm_model <-
@@ -106,17 +134,16 @@ lasso_model <-
   parsnip::linear_reg(penalty = tune::tune(), mixture = 1) |> 
   parsnip::set_engine("glmnet")
 lambda_grid <- dials::grid_regular(dials::penalty(), levels = 10)
-# lasso_grid <- tune::tune_grid(lasso_model, grid = lambda_grid)
 ```
 
-
-```{r eval=FALSE}
-rec_core_prep <- prep(rec_core)
-```
-
-```{r}
+```{r combo}
 models <- list(lm = lm_model, lasso = lasso_model)
-preproc <- list(simple = rec_core, log = rec_log)
+preproc <- list(
+  simple = rec_core, 
+  log = rec_log, 
+  norm = rec_norm, 
+  pop_100k = rec_pop_100k
+)
 ```
 
 ```{r set}
@@ -127,27 +154,22 @@ linear_models <-
    )
 ```
 
-```{r spending}
-tbl_split <- rsample::initial_split(tbl)
-tbl_train <- rsample::training(tbl_split)
-tbl_test <- rsample::testing(tbl_split)
-```
-
-```{r bootstrap}
-tbl_boot <- rsample::bootstraps(tbl_train)
-```
-
-
 ```{r fit}
 fit <- 
   workflowsets::workflow_map(
     linear_models, 
     fn = "tune_grid",
     resamples = tbl_boot,
-    grid = dials::grid_regular(dials::penalty(), levels = 10),
+    grid = lambda_grid,
     verbose = TRUE
   ) 
 ```
+
+```{r}
+rank_results(fit, rank_metric = "rmse", select_best = TRUE) %>% 
+   select(rank, mean, model, wflow_id, .config)
+```
+
 
 ```{r assess}
 autoplot(fit)
