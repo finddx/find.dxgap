@@ -1,4 +1,4 @@
-findtb_render_report <- function(template_path = "inst/template/findtb_policy_report.Rmd",
+findtb_render_report <- function(template_path = "inst/template/eda.Rmd",
                                  year = 2019,
                                  output_file = NULL) {
   stopifnot(is.numeric(year))
@@ -11,7 +11,7 @@ findtb_render_report <- function(template_path = "inst/template/findtb_policy_re
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   path <- if (is.null(output_file)) {
-    temp_file <- tempfile(pattern = "findtb_policy_report", fileext = ".html")
+    temp_file <- tempfile(pattern = "eda", fileext = ".html")
     rmarkdown::render(
       input = template_path,
       output_file = temp_file,
