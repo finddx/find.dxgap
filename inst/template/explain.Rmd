@@ -18,21 +18,21 @@ knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message 
 ```
 
 
-```{r}
+```{r params}
 year <- params$year
 data_tbl <- params$data_tbl
 ```
 
 The chosen year is `r params$year`.
 
-```{r}
+```{r data}
 tbl <- 
   data_tbl |> 
   mutate(who_dx_gap = (e_inc_num - c_newinc) / e_inc_num) 
 ```
 
 
-```{r}
+```{r rec-core}
 rec_core <-
   recipe(formula = who_dx_gap ~ ., x = tbl) |>
   update_role(who_dx_gap, new_role = "outcome") |>
@@ -56,7 +56,7 @@ rec_core <-
     ),  
     new_role = "impute_w_median"
   ) |>
-  step_filter(if_any(c("gdp", "e_inc_num", "pop_total"), is.na)) |> 
+  step_filter(!if_any(c("gdp", "e_inc_num", "who_dx_gap", "pop_total"), is.na)) |> 
   step_impute_median(has_role("impute_w_median")) |> 
   step_mutate(pop_100k = pop_total / 1e5) |> 
   step_rm(has_role("collinear")) |>
@@ -74,9 +74,6 @@ rec_core <-
   step_mutate_at(
     all_numeric_predictors(), -has_role("no_norm"), fn = ~ .x / pop_100k
   ) |>
-  step_mutate_at(
-    all_numeric_predictors(), fn = ~ dplyr::if_else(.x == 0, 0.5, .x)
-  ) |> 
   step_zv(all_numeric_predictors()) 
 ```
 
@@ -87,30 +84,42 @@ rec_core |>
 ```
 
 
-```{r}
+```{r rec-log}
 rec_log <- 
   rec_core |> 
-  step_log(all_numeric_predictors(), has_role("outcome"))
+  step_mutate_at(
+    all_numeric_predictors(), fn = ~ dplyr::if_else(.x == 0, 1, .x)
+  ) |> 
+  step_log(all_numeric_predictors())
 ```
 
 
-```{r}
+```{r lm}
 lm_model <-
   parsnip::linear_reg(mode = "regression") %>%
   parsnip::set_engine("lm")
 ```
 
-```{r}
+```{r lasso}
+set.seed(2020)
+lasso_model <- 
+  parsnip::linear_reg(penalty = tune::tune(), mixture = 1) |> 
+  parsnip::set_engine("glmnet")
+lambda_grid <- dials::grid_regular(dials::penalty(), levels = 10)
+# lasso_grid <- tune::tune_grid(lasso_model, grid = lambda_grid)
+```
+
+
+```{r eval=FALSE}
 rec_core_prep <- prep(rec_core)
 ```
 
 ```{r}
-models <- list(lm = lm_model)
+models <- list(lm = lm_model, lasso = lasso_model)
 preproc <- list(simple = rec_core, log = rec_log)
 ```
 
-
-```{r}
+```{r set}
 linear_models <- 
    workflowsets::workflow_set(
       preproc = preproc,
@@ -118,14 +127,30 @@ linear_models <-
    )
 ```
 
-```{r}
+```{r spending}
+tbl_split <- rsample::initial_split(tbl)
+tbl_train <- rsample::training(tbl_split)
+tbl_test <- rsample::testing(tbl_split)
+```
+
+```{r bootstrap}
+tbl_boot <- rsample::bootstraps(tbl_train)
+```
+
+
+```{r fit}
 fit <- 
   workflowsets::workflow_map(
     linear_models, 
-    fn = "fit_resamples", 
-    resamples = rsample::vfold_cv(tbl),
+    fn = "tune_grid",
+    resamples = tbl_boot,
+    grid = dials::grid_regular(dials::penalty(), levels = 10),
     verbose = TRUE
   ) 
+```
+
+```{r assess}
+autoplot(fit)
 ```
 
 
@@ -140,7 +165,7 @@ wf <-
 lm_fit <- parsnip::fit(linear_models, data = tbl)
 ```
 
-```{r}
+```{r eval=FALSE}
 lm_fit  |>
   workflows::extract_fit_parsnip() |>
   broom::tidy() |> 
