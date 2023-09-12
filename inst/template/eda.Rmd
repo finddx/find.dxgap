@@ -78,14 +78,20 @@ tbl |>
 ## Correlations
 
 ```{r}
-corr_df <- 
+corr_df_raw <- 
   tbl |> 
   select(-country_code) |> 
-  correlate() |>
+  correlate() 
+```
+
+```{r}
+corr_df <- 
+  corr_df_raw |> 
   select(term, who_dx_gap) |>
   arrange(who_dx_gap) |>
   filter(term != "who_dx_gap")
 ```
+
 
 ```{r}
 corr_df |> 
@@ -95,6 +101,12 @@ corr_df |>
   ) |> 
   relocate(definition, term, who_dx_gap) |> 
   gt::gt()
+```
+
+```{r fig.height=15, fig.width=15}
+corr_df_raw |> 
+  rplot(print_cor = TRUE) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
 ```
 
 
