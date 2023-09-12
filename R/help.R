@@ -64,3 +64,8 @@ req_perform_lazy <- function(req) {
   httr2::req_perform(req = req)
 }
 
+cook <- function(recipe) {
+  recipe |>
+    recipes::prep() |>
+    recipes::juice()
+}
