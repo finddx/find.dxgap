@@ -11,7 +11,7 @@ findtb_render_report <- function(template_path = "inst/template/eda.Rmd",
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   path <- if (is.null(output_file)) {
-    temp_file <- tempfile(pattern = "eda", fileext = ".html")
+    temp_file <- tempfile(pattern = "my_rmd", fileext = ".html")
     rmarkdown::render(
       input = template_path,
       output_file = temp_file,
