@@ -795,18 +795,18 @@ tune::last_fit(
   tune::collect_metrics()
 ```
 
+
+```{r eval=FALSE}
 ## Final model
 
 $dx\_gap = \beta_0 + \beta_1culture\_100k$
-
-```{r}
 tbl_mod <- 
   tbl |> 
   mutate(culture_100k = culture / pop_100k)
 lm_mod <- lm(who_dx_gap ~ culture_100k, data = tbl_mod)
 ```
 
-```{r}
+```{r eval=FALSE}
 broom::tidy(lm_mod) |> 
   gt::gt()
 ```
