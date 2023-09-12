@@ -31,14 +31,14 @@ tbl <-
 
 
 ```{r}
-tbl_rec <-
+rec_core <-
   recipe(formula = who_dx_gap ~ ., x = tbl) |>
   update_role(who_dx_gap, new_role = "outcome") |>
   update_role(country_code, new_role = "id") |>
   step_filter_missing(all_predictors(), threshold = 0.9) |> 
   update_role(
     dplyr::all_of(
-      c("c_cdr", "c_newinc_100k", 
+      c("c_cdr", "c_newinc_100k", "notified_ref_community", "notified_ref",
         "e_mort_100k", "e_pop_num", "new_labconf", "is_hbc")
     ),  
     new_role = "collinear"
@@ -54,27 +54,43 @@ tbl_rec <-
     ),  
     new_role = "impute_w_median"
   ) |>
+  step_filter(if_any(c("gdp", "e_inc_num", "pop_total"), is.na)) |> 
   step_impute_median(has_role("impute_w_median")) |> 
   step_mutate(pop_100k = pop_total / 1e5) |> 
   step_rm(has_role("collinear")) |>
-  step_rm(removals = c("c_newinc", "e_inc_num")) |> 
-  cook() |> 
-  glimpse()
+  update_role(
+    dplyr::all_of(c("gdp", "e_inc_num", "pop_total")), 
+    new_role = "imputer_knn",
+    old_role = "impute_w_median"
+  ) |> 
   step_impute_knn(
     all_predictors(),
     neighbors = 5,
-    impute_with = imp_vars(has_role("impute_w_median"))
+    impute_with = imp_vars(has_role("imputer_knn"))
   ) |>
+  step_rm(e_inc_num, e_inc_100k, c_newinc) |> 
   step_mutate_at(
     all_numeric_predictors(), -has_role("no_norm"), fn = ~ .x / pop_100k
   ) |>
   step_mutate_at(
-    all_numeric_predictors(), fn = ~ dplyr::if_else(.x == 0, 1, .x)
+    all_numeric_predictors(), fn = ~ dplyr::if_else(.x == 0, 0.5, .x)
   ) |> 
-  step_log(all_numeric_predictors(), has_role("outcome")) |>
-  step_zv(all_numeric_predictors()) |> 
-  step_rm(country_code)
+  step_zv(all_numeric_predictors()) 
 ```
+
+```{r}
+rec_core |> 
+  cook() |> 
+  skimr::skim()
+```
+
+
+```{r}
+rec_log <- 
+  rec_core |> 
+  step_log(all_numeric_predictors(), has_role("outcome"))
+```
+
 
 ```{r}
 lm_model <-
@@ -83,21 +99,64 @@ lm_model <-
 ```
 
 ```{r}
-wf <-
-  workflows::workflow() |>
-  workflows::add_model(lm_model) |>
-  workflows::add_recipe(tbl_rec)
+rec_core_prep <- prep(rec_core)
 ```
 
 ```{r}
-lm_fit <- parsnip::fit(wf, data = tbl)
+models <- list(lm = lm_model)
+preproc <- list(simple = rec_core, log = rec_log)
 ```
 
+
+```{r}
+linear_models <- 
+   workflowsets::workflow_set(
+      preproc = preproc,
+      models = models
+   )
+```
+
+```{r}
+fit <- workflowsets::workflow_map(
+  linear_models, 
+  fn = "fit_resamples", 
+  resamples = rsample::vfold_cv(tbl),
+  verbose = TRUE
+) 
+```
+
+
+```{r}
+autoplot(linear_models)
+```
+
+
+```{r}
+workflowsets::workflow_map(linear_models, "parsnip::fit")
+```
+
+
+```{r}
+wf <-
+  workflows::workflow() |>
+  workflows::add_model(lm_model) |>
+  workflows::add_recipe(rec_core_prep) 
+```
+
+```{r}
+lm_fit <- parsnip::fit(linear_models, data = tbl)
+```
 
 ```{r}
 lm_fit  |>
   workflows::extract_fit_parsnip() |>
-  broom::tidy()
+  broom::tidy() |> 
+  mutate(p.value = round(p.value, 3)) |> 
+  gt::gt() |> 
+  gt::data_color(
+    rows = p.value < 0.05,
+    palette = "red"
+  )
 ```
 
 
