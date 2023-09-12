@@ -54,7 +54,7 @@ tbl |>
 tbl |> 
   pivot_longer(-c(country_code, is_hbc), names_to = "variable_name") |> 
   left_join(findtb_master_list, join_by(variable_name)) |> 
-  group_by(variable_name, dataset) |> 
+  group_by(variable_name, definition, dataset) |> 
   summarise(
     n = n(), 
     n_missing = sum(is.na(value)),
@@ -62,7 +62,7 @@ tbl |>
     .groups = "drop"
   ) |>
   mutate(complete_rate = round(complete_rate, 2)) |> 
-  relocate(dataset, variable_name) |> 
+  relocate(dataset, definition, variable_name) |> 
   arrange(dataset, complete_rate) |> 
   select(-n) |> 
   gt::gt()
@@ -331,8 +331,6 @@ budget_long <-
   mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
 ```
 
-### Completion rate
-
 ```{r}
 complete_budget_df <- 
   budget_long |>
@@ -345,7 +343,8 @@ complete_budget_df <-
   select(-n)
 ```
 
-```{r}
+```{r eval=FALSE}
+### Completion rate
 complete_budget_df |> 
   relocate(definition, budget_type, complete_rate) |> 
   arrange(desc(complete_rate)) |>
@@ -377,7 +376,7 @@ budget_complete_long |>
 
 ### Density distribution
 
-```{r}
+```{r fig.height=15, fig.width=12}
 plot_density(
   budget_long,
   budget_per_100k,
@@ -491,9 +490,9 @@ community_complete_df <-
   select(-n)
 ```
 
-### Completion rate
 
-```{r}
+```{r eval=FALSE}
+### Completion rate
 community_complete_df |> 
   gt::gt()
 ```
@@ -592,9 +591,8 @@ complete_site_df <-
 ```
 
 
+```{r eval=FALSE}
 ### Completion rate
-
-```{r}
 complete_site_df |> 
   arrange(desc(complete_rate)) |> 
   gt::gt()
@@ -637,6 +635,36 @@ plot_scatter(
 ) +
   facet_wrap(vars(definition), ncol = 1, scales = "free")
 ```
+
+## Devices
+
+### Density distribution
+
+```{r}
+plot_density(
+  tbl,
+  total_numb_device,
+  is_hbc,
+  params$year, 
+  "TB diagnostic devices in",
+  "Source: Global Fund"
+)
+```
+
+## Dx Gap
+
+```{r}
+plot_scatter(
+  tbl,
+  total_numb_device,
+  who_dx_gap,
+  params$year, 
+  is_hbc,
+  "TB diagnostic devices in",
+  "Source: Global Fund"
+)
+```
+
 
 ```{r eval=FALSE}
 complete_only_df <- 
@@ -810,4 +838,6 @@ lm_mod <- lm(who_dx_gap ~ culture_100k, data = tbl_mod)
 broom::tidy(lm_mod) |> 
   gt::gt()
 ```
+
+
 
