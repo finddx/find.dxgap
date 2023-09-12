@@ -1,9 +1,11 @@
 ---
-title: "TB Policy Report"
+title: "EDA"
 output: html_document
 date: "`r Sys.Date()`"
 params:
-  dm: dm
+  dm_hbc: dm_hbc
+  dm_non_hbc: dm_non_hbc
+  data_tbl: data_tbl
   year: year
 editor_options: 
   chunk_output_type: console
@@ -17,7 +19,9 @@ knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message 
 ```
 
 ```{r}
-dm <- params$dm
+dm_hbc <- params$dm_hbc
+dm_non_hbc <- params$dm_non_hbc
+data_tbl <- params$data_tbl
 ```
 
 The chosen year is `r params$year`.
@@ -25,24 +29,51 @@ The chosen year is `r params$year`.
 ## Data model
 
 ```{r}
-dm::dm_draw(dm)
+dm::dm_draw(dm_hbc)
 ```
 
 ## Data
 
 ```{r}
 tbl <- 
-  dm::dm_flatten_to_tbl(dm, .start = hbc) |> 
+  data_tbl |> 
   mutate(
     pop_100k = pop_total / 1e5,
     who_dx_gap = (e_inc_num - c_newinc) / e_inc_num,
-  )
+  ) |> 
+  mutate(is_hbc = as.character(is_hbc))
+```
+
+```{r eval=FALSE}
+tbl |> 
+  arrange(is_hbc, country_code) |> 
+  gt::gt()
 ```
 
 ```{r}
 tbl |> 
+  pivot_longer(-c(country_code, is_hbc), names_to = "variable_name") |> 
+  left_join(findtb_master_list, join_by(variable_name)) |> 
+  group_by(variable_name, definition, dataset) |> 
+  summarise(
+    n = n(), 
+    n_missing = sum(is.na(value)),
+    complete_rate = sum(!is.na(value)) / n, 
+    .groups = "drop"
+  ) |>
+  mutate(complete_rate = round(complete_rate, 2)) |> 
+  relocate(dataset, definition, variable_name) |> 
+  arrange(dataset, complete_rate) |> 
+  select(-n) |> 
   gt::gt()
 ```
+
+
+```{r eval=FALSE}
+tbl |> 
+  skimr::skim()
+```
+
 
 ## Correlations
 
@@ -71,31 +102,36 @@ corr_df |>
 
 ```{r}
 tbl |> 
-  mutate(country_code = forcats::fct_reorder(country_code, who_dx_gap)) |> 
-  ggplot(aes(country_code, who_dx_gap)) +
-  geom_col(fill = "steelblue") +
+  mutate(country_code = forcats::fct_reorder(country_code, who_dx_gap, .na_rm = FALSE)) |> 
+  ggplot(aes(country_code, who_dx_gap, fill = is_hbc)) +
+  geom_col() +
   theme_minimal() +
+  theme(axis.text.y = element_text(size = rel(0.45))) +
   coord_flip() +
     labs(
     y = paste("Dx Gap in", params$year),
     caption = "Source: WHO"
-  )
+  ) +
+  facet_wrap(vars(is_hbc), scales = "free")
 ```
-
 
 ```{r}
-tbl |>
-  ggplot(aes(who_dx_gap)) +
-  geom_density(fill = "steelblue", alpha = .5) +
-  theme_minimal() +
-  labs(x = paste("Dx Gap in", params$year), caption = "Source: WHO")
+plot_density(
+  tbl,
+  who_dx_gap,
+  is_hbc,
+  params$year,
+  "Dx Gap in",
+  "Source: WHO"
+)
 ```
+
 
 ```{r}
 tbl |> 
   mutate(c_cdr = c_cdr / 100) |> 
-  ggplot(aes(c_cdr, who_dx_gap)) +
-  geom_point(color = "steelblue", alpha = .5) +
+  ggplot(aes(c_cdr, who_dx_gap, color = is_hbc)) +
+  geom_point(alpha = .5, size = 0.75) +
   coord_fixed() +
   theme_minimal()
 ```
@@ -103,159 +139,169 @@ tbl |>
 
 ## Population total
 
-```{r}
+```{r eval=FALSE}
 tbl |> 
-  mutate(country_code = forcats::fct_reorder(country_code, pop_100k)) |> 
+  mutate(country_code = forcats::fct_reorder(country_code, pop_100k, .na_rm = FALSE)) |> 
   ggplot(aes(country_code, pop_100k)) +
   geom_col(fill = "steelblue") +
   theme_minimal() +
+  theme(axis.text.y = element_text(size = rel(0.45))) +
   coord_flip() +
     labs(
     y = paste("Total population per 100k in", params$year),
     caption = "Source: World Bank"
-  )
+  ) +
+  facet_wrap(vars(is_hbc), scales = "free")
 ```
 
+
 ```{r}
-tbl |>
-  ggplot(aes(pop_100k)) +
-  geom_density(fill = "steelblue", alpha = .5) +
-  theme_minimal() +
-  labs(
-    x = paste("Total population in", params$year),
-    caption = "Source: World Bank"
-  )
+plot_density(
+  tbl,
+  pop_100k,
+  is_hbc,
+  params$year,
+  "Total population in",
+  "Source: World Bank"
+)
 ```
+
 
 ## Population density
 
+```{r eval=FALSE}
 ### Bar chart
-
-```{r}
 tbl |> 
-  # mutate(country_code = forcats::fct_reorder(country_code, pop_density)) |> # FIXME: with year 2021
+  mutate(country_code = forcats::fct_reorder(country_code, pop_density, .na_rm = FALSE)) |> 
   ggplot(aes(country_code, pop_density)) +
   geom_col(fill = "steelblue") +
   theme_minimal() +
+  theme(axis.text.y = element_text(size = rel(0.45))) +
   coord_flip() +
     labs(
     y = paste("Population density (people per sq. km of land area) in", params$year),
     caption = "Source: World Bank"
-  )
+  ) +
+  facet_wrap(vars(is_hbc), scales = "free")
 ```
 
 ### Density distrbution
 
 ```{r}
-tbl |>
-  ggplot(aes(pop_density)) +
-  geom_density(fill = "steelblue", alpha = .5) +
-  theme_minimal() +
-  labs(
-    x = paste("Population density (people per sq. km of land area) in", params$year),
-    caption = "Source: World Bank"
-  )
+plot_density(
+  tbl,
+  pop_density,
+  is_hbc,
+  params$year,
+  "Population density (people per sq. km of land area) in",
+  "Source: World Bank"
+)
 ```
 
 ### Dx Gap
 
 ```{r}
-tbl |>
-  ggplot(aes(pop_density, who_dx_gap)) +
-  geom_point(color = "steelblue", alpha = .5) +
-  theme_minimal() +
-  labs(
-    x = paste("Population density (people per sq. km of land area) in", params$year),
-    caption = "Source: World Bank"
-  )
+plot_scatter(
+  tbl, 
+  pop_density, 
+  who_dx_gap, 
+  params$year, 
+  is_hbc, 
+  "Population density (people per sq. km of land area) in", 
+  "Source: World Bank"
+)
 ```
 
 ## Population urban
 
+```{r eval=FALSE}
 ### Bar chart
-
-```{r}
 tbl |> 
-  mutate(country_code = forcats::fct_reorder(country_code, pop_urban_perc)) |> 
+  mutate(country_code = forcats::fct_reorder(country_code, pop_urban_perc, .na_rm = FALSE)) |> 
   ggplot(aes(country_code, pop_urban_perc)) +
   geom_col(fill = "steelblue") +
   scale_y_continuous(labels = scales::label_percent(scale = 1)) +
   theme_minimal() +
+  theme(axis.text.y = element_text(size = rel(0.45))) +
   coord_flip() +
     labs(
     y = paste("Urban population (% of total population) in", params$year),
     caption = "Source: World Bank"
-  )
+  ) +
+  facet_wrap(vars(is_hbc), scales = "free")
 ```
 
 ### Density distribution
 
 ```{r}
-tbl |>
-  ggplot(aes(pop_urban_perc)) +
-  geom_density(fill = "steelblue", alpha = .5) +
-  theme_minimal() +
-  labs(
-    x = paste("Urban population (% of total population) in", params$year),
-    caption = "Source: World Bank"
-  )
+plot_density(
+  tbl,
+  pop_urban_perc,
+  is_hbc,
+  params$year,
+  "Urban population (% of total population) in",
+  "Source: World Bank"
+) +
+  scale_x_continuous(labels = scales::label_percent(scale = 1)) 
 ```
 
 ### Dx Gap
 
 ```{r}
-tbl |>
-  ggplot(aes(pop_urban_perc, who_dx_gap)) +
-  geom_point(color = "steelblue", alpha = .5) +
-  theme_minimal() +
-  labs(
-    x = paste("Urban population (% of total population) in", params$year),
-    caption = "Source: World Bank"
-  )
+plot_scatter(
+  tbl,
+  pop_urban_perc,
+  who_dx_gap,
+  params$year,
+  is_hbc,
+  "Urban population (% of total population) in",
+  "Source: World Bank"
+) +
+  scale_x_continuous(labels = scales::label_percent(scale = 1)) 
 ```
 
 ## GDP
 
+```{r eval=FALSE}
 ### Bar chart
-
-```{r}
 tbl |> 
   mutate(country_code = forcats::fct_reorder(country_code, gdp, .na_rm = FALSE)) |>
   ggplot(aes(country_code, gdp)) +
   geom_col(fill = "steelblue") +
-  scale_y_continuous(labels = scales::label_percent(scale = 1)) +
   theme_minimal() +
   coord_flip() +
     labs(
     y = paste("GDP (current US$) in", params$year),
     caption = "Source: World Bank"
-  )
+  ) +
+  facet_wrap(vars(is_hbc), scales = "free")
 ```
 
 ### Density distribution
 
 ```{r}
-tbl |>
-  ggplot(aes(gdp)) +
-  geom_density(fill = "steelblue", alpha = .5) +
-  theme_minimal() +
-  labs(
-    x = paste("GDP (current US$) in", params$year),
-    caption = "Source: World Bank"
-  )
+plot_density(
+  tbl,
+  gdp,
+  is_hbc,
+  params$year,
+  "GDP (current US$) in",
+  "Source: World Bank"
+) 
 ```
 
 ### Dx Gap
 
 ```{r}
-tbl |>
-  ggplot(aes(gdp / pop_100k, who_dx_gap)) +
-  geom_point(color = "steelblue", alpha = .5) +
-  theme_minimal() +
-  labs(
-    x = paste("GDP (current US$) per 100k in", params$year),
-    caption = "Source: World Bank"
-  )
+plot_scatter(
+  tbl,
+  gdp / pop_100k,
+  who_dx_gap,
+  params$year,
+  is_hbc,
+  "GDP (current US$) per 100k in",
+  "Source: World Bank"
+)
 ```
 
 ## Budget
@@ -274,7 +320,7 @@ budget_cols <-
 ```{r}
 budget_long <- 
   tbl |>
-  select(country_code, who_dx_gap, pop_100k, all_of(budget_cols)) |> 
+  select(country_code, is_hbc, who_dx_gap, pop_100k, all_of(budget_cols)) |> 
   pivot_longer(
     cols = all_of(budget_cols), 
     names_to = "budget_type", 
@@ -284,8 +330,6 @@ budget_long <-
   left_join(budget_master, join_by(budget_type == variable_name)) |> 
   mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
 ```
-
-### Completion rate
 
 ```{r}
 complete_budget_df <- 
@@ -299,7 +343,8 @@ complete_budget_df <-
   select(-n)
 ```
 
-```{r}
+```{r eval=FALSE}
+### Completion rate
 complete_budget_df |> 
   relocate(definition, budget_type, complete_rate) |> 
   arrange(desc(complete_rate)) |>
@@ -312,12 +357,12 @@ budget_complete_long <-
   semi_join(complete_budget_df, by = join_by(budget_type))
 ```
 
-### Bar chart
 
-```{r fig.height=15, fig.width=12}
+
+```{r fig.height=15, fig.width=12, eval=FALSE}
 budget_complete_long |> 
   mutate(
-    country_code = forcats::fct_reorder(country_code, budget_per_100k, .na_rm = TRUE)
+    country_code = forcats::fct_reorder(country_code, budget_per_100k, .na_rm = FALSE)
   ) |> 
   ggplot(aes(country_code, budget_per_100k, fill = "steelblue")) +
   geom_col() +
@@ -332,21 +377,30 @@ budget_complete_long |>
 ### Density distribution
 
 ```{r fig.height=15, fig.width=12}
-budget_long |>
-  ggplot(aes(budget_per_100k)) +
-  geom_density(fill = "steelblue", alpha = .5) +
-  facet_wrap(vars(definition), ncol = 2, scales = "free") +
-  theme_minimal()
+plot_density(
+  budget_long,
+  budget_per_100k,
+  is_hbc,
+  params$year,
+  "Budget data in",
+  "Source: Global Fund"
+) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free") 
 ```
 
 ### Dx Gap
 
 ```{r fig.height=15, fig.width=12}
-budget_long |> 
-  ggplot(aes(budget_per_100k, who_dx_gap)) +
-  geom_point(colour = "steelblue", alpha = .8) +
-  facet_wrap(vars(definition), ncol = 2, scales = "free") +
-  theme_minimal()
+plot_scatter(
+  budget_long,
+  budget_per_100k,
+  who_dx_gap,
+  params$year,
+  is_hbc,
+  "Budget data in",
+  "Source: WHO"
+) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free") 
 ```
 
 ```{r eval=FALSE}
@@ -372,7 +426,7 @@ budget_long_log <-
 ```{r eval=FALSE}
 budget_long_log |> 
   mutate(
-    country_code = forcats::fct_reorder(country_code, budget_per_100k, .na_rm = TRUE)
+    country_code = forcats::fct_reorder(country_code, budget_per_100k, .na_rm = FALSE)
   ) |> 
   ggplot(aes(country_code, budget_per_100k)) +
   geom_col() +
@@ -413,7 +467,7 @@ comm_cols <-
 ```{r}
 comm_long <- 
   tbl |>
-  select(country_code, who_dx_gap, pop_100k, all_of(comm_cols)) |> 
+  select(country_code, is_hbc, who_dx_gap, pop_100k, all_of(comm_cols)) |> 
   pivot_longer(
     cols = all_of(comm_cols), 
     names_to = "variable_name", 
@@ -436,9 +490,9 @@ community_complete_df <-
   select(-n)
 ```
 
-### Completion rate
 
-```{r}
+```{r eval=FALSE}
+### Completion rate
 community_complete_df |> 
   gt::gt()
 ```
@@ -453,13 +507,13 @@ comm_long <-
   ) 
 ```
 
-### Bar chart
 
-```{r fig.height=15, fig.width=12}
+```{r fig.height=15, fig.width=12, eval=FALSE}
+### Bar chart
 comm_long |>
-  # mutate( # FIXME
-  #   country_code = forcats::fct_reorder(country_code, comm_units_100k, .na_rm = TRUE)
-  # ) |>
+  mutate(
+    country_code = forcats::fct_reorder(country_code, comm_units_100k, .na_rm = FALSE)
+  ) |>
   ggplot(aes(country_code, comm_units_100k, fill = "steelblue")) +
   geom_col() +
   scale_fill_manual(values = "steelblue") +
@@ -472,21 +526,30 @@ comm_long |>
 ### Density distribution
 
 ```{r fig.height=15, fig.width=12}
-comm_long |>
-  ggplot(aes(comm_units_100k)) +
-  geom_density(fill = "steelblue", alpha = .5) +
-  facet_wrap(vars(definition), ncol = 2, scales = "free") +
-  theme_minimal()
+plot_density(
+  comm_long,
+  comm_units_100k,
+  is_hbc,
+  params$year,
+  "Community data in",
+  "Source: WHO"
+) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free") 
 ```
 
 ### Dx Gap
 
 ```{r fig.height=15, fig.width=12}
-comm_long |>
-  ggplot(aes(comm_units_100k, who_dx_gap)) +
-  geom_point(colour = "steelblue", alpha = .8) +
-  facet_wrap(vars(definition), ncol = 2, scales = "free") +
-  theme_minimal()
+plot_scatter(
+  comm_long,
+  comm_units_100k,
+  who_dx_gap,
+  params$year,
+  is_hbc,
+  "Community data in",
+  "Source: WHO"
+) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free") 
 ```
 
 ## Laboratories
@@ -505,9 +568,9 @@ labs_cols <-
 ```{r}
 sites_long <- 
   tbl |> 
-  select(country_code, who_dx_gap, pop_100k, all_of(labs_cols)) |> 
+  select(country_code, is_hbc, who_dx_gap, pop_100k, all_of(labs_cols)) |> 
   pivot_longer(
-    cols = -c(country_code, who_dx_gap, pop_100k), 
+    cols = -c(country_code, is_hbc, who_dx_gap, pop_100k), 
     names_to = "lab_type",
     values_to = "lab_numb"
   ) |> 
@@ -528,9 +591,8 @@ complete_site_df <-
 ```
 
 
+```{r eval=FALSE}
 ### Completion rate
-
-```{r}
 complete_site_df |> 
   arrange(desc(complete_rate)) |> 
   gt::gt()
@@ -548,29 +610,66 @@ sites_long_complete <-
 ### Density distribution
 
 ```{r fig.height=10, fig.width=12}
-sites_long_complete |> 
-  ggplot(aes(lab_per_100k)) +
-  geom_density(fill = "steelblue", alpha = .5) +
-  facet_wrap(vars(definition), ncol = 1, scales = "free") +
-  theme_minimal()
+plot_density(
+  sites_long_complete,
+  lab_per_100k,
+  is_hbc,
+  params$year,
+  "Community data in",
+  "Source: WHO"
+) +
+  facet_wrap(vars(definition), ncol = 1, scales = "free")
 ```
 
 ### Dx Gap
 
 ```{r fig.height=10, fig.width=12}
-sites_long_complete |> 
-  ggplot(aes(lab_per_100k, who_dx_gap)) +
-  geom_point(color = "steelblue", alpha = .5) +
-  facet_wrap(vars(definition), ncol = 1, scales = "free") +
-  theme_minimal()
+plot_scatter(
+  sites_long_complete,
+  lab_per_100k,
+  who_dx_gap,
+  params$year, 
+  is_hbc,
+  "Labs and site data in",
+  "Source: WHO"
+) +
+  facet_wrap(vars(definition), ncol = 1, scales = "free")
+```
+
+## Devices
+
+### Density distribution
+
+```{r}
+plot_density(
+  tbl,
+  total_numb_device,
+  is_hbc,
+  params$year, 
+  "TB diagnostic devices in",
+  "Source: Global Fund"
+)
+```
+
+## Dx Gap
+
+```{r}
+plot_scatter(
+  tbl,
+  total_numb_device,
+  who_dx_gap,
+  params$year, 
+  is_hbc,
+  "TB diagnostic devices in",
+  "Source: Global Fund"
+)
 ```
 
 
-
-```{r}
+```{r eval=FALSE}
 complete_only_df <- 
   tbl |> 
-  pivot_longer(cols = -country_code, names_to = "variable") |> 
+  pivot_longer(cols = country_code, names_to = "variable") |> 
   group_by(variable) |> 
   summarise(
     n = n(), 
@@ -724,19 +823,21 @@ tune::last_fit(
   tune::collect_metrics()
 ```
 
+
+```{r eval=FALSE}
 ## Final model
 
 $dx\_gap = \beta_0 + \beta_1culture\_100k$
-
-```{r}
 tbl_mod <- 
   tbl |> 
   mutate(culture_100k = culture / pop_100k)
 lm_mod <- lm(who_dx_gap ~ culture_100k, data = tbl_mod)
 ```
 
-```{r}
+```{r eval=FALSE}
 broom::tidy(lm_mod) |> 
   gt::gt()
 ```
+
+
 
