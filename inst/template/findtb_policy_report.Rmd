@@ -52,6 +52,25 @@ tbl |>
 
 ```{r}
 tbl |> 
+  pivot_longer(-c(country_code, is_hbc), names_to = "variable_name") |> 
+  left_join(findtb_master_list, join_by(variable_name)) |> 
+  group_by(variable_name, dataset) |> 
+  summarise(
+    n = n(), 
+    n_missing = sum(is.na(value)),
+    complete_rate = sum(!is.na(value)) / n, 
+    .groups = "drop"
+  ) |>
+  mutate(complete_rate = round(complete_rate, 2)) |> 
+  relocate(dataset, variable_name) |> 
+  arrange(dataset, complete_rate) |> 
+  select(-n) |> 
+  gt::gt()
+```
+
+
+```{r eval=FALSE}
+tbl |> 
   skimr::skim()
 ```
 
