@@ -3,7 +3,7 @@ title: "TB Policy Report"
 output: html_document
 date: "`r Sys.Date()`"
 params:
-  dm: dm
+  data_tbl: data_tbl
   year: year
 editor_options: 
   chunk_output_type: console
@@ -15,15 +15,17 @@ pkgload::load_all()
 knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message = FALSE, warning = FALSE)
 ```
 
+
 ```{r}
-dm <- params$dm
+year <- params$year
+data_tbl <- params$data_tbl
 ```
 
 The chosen year is `r params$year`.
 
 ```{r}
 tbl <-
-  dm::dm_flatten_to_tbl(dm, .start = hbc) |>
+  data_tbl |>
   dplyr::mutate(
     who_dx_gap = (e_inc_num - c_newinc) / e_inc_num,
     pop_100k = pop_total / 1e5
@@ -31,34 +33,36 @@ tbl <-
   filter(country_code != "RUS")
 ```
 
+
 ```{r}
 tbl_rec <-
-  recipe(who_dx_gap ~ ., data = tbl) |>
+  recipe(formula = NULL, x = tbl) |>
   step_filter_missing(all_predictors(), threshold = 0.9) |> 
-  step_rm(c_cdr, c_newinc_100k, e_inc_num, e_mort_100k, e_pop_num, c_newinc) |>
-  add_role(country_code, new_role = "id") |>
-  add_role(pop_urban_perc, new_role = "no_norm") |>
-  add_role(pop_density, new_role = "no_norm") |>
-  add_role(
-    dplyr::all_of(c("e_inc_100k", "pop_total", "gdp")),  
+  step_rm(c_cdr, c_newinc_100k, e_inc_num, e_mort_100k, e_pop_num, new_labconf) |>
+  update_role(country_code, new_role = "id") |>
+  update_role(pop_urban_perc, new_role = "no_norm") |>
+  update_role(pop_density, new_role = "no_norm") |>
+  update_role(
+    dplyr::all_of(c("e_inc_100k", "e_inc_num", "c_newinc", "pop_total", "gdp")),  
     new_role = "impute"
   ) |>
-  step_rm(e_inc_100k) |>
+  step_mutate(who_dx_gap = (e_inc_num - c_newinc) / e_inc_num) |> 
   step_impute_median(has_role("impute")) |> 
   step_impute_median(budget_oth, cf_tot_gf, cf_tot_grnt) |>
+  step_rm(e_inc_100k, e_inc_num, c_newinc) |>
   step_filter_missing(all_predictors(), threshold = 0.2) |> 
   step_impute_knn(
     all_predictors(),
-    neighbors = 2,
+    neighbors = 5,
     impute_with = imp_vars(has_role("impute"))
   ) |>
-  # step_mutate_at(
-  #   all_numeric_predictors(), -has_role("no_norm"), fn = ~ .x / pop_100k
-  # ) |> 
+  step_mutate_at(
+    all_numeric_predictors(), -has_role("no_norm"), fn = ~ .x / pop_100k
+  ) |>
   step_mutate_at(
     all_numeric_predictors(), fn = ~ dplyr::if_else(.x == 0, 1, .x)
   ) |> 
-  # step_log(all_numeric_predictors(), has_role("outcome")) |>
+  step_log(all_numeric_predictors(), has_role("outcome")) |>
   step_zv(all_numeric_predictors()) |> 
   step_rm(country_code)
 ```
