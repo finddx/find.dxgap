@@ -166,8 +166,9 @@ fit <-
 ```
 
 ```{r}
-rank_results(fit, rank_metric = "rmse", select_best = TRUE) %>% 
-   select(rank, mean, model, wflow_id, .config)
+workflowsets::rank_results(fit, rank_metric = "rmse", select_best = TRUE) |> 
+  select(rank, mean, model, wflow_id, .config) |> 
+  gt::gt()
 ```
 
 
