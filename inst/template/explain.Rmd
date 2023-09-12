@@ -119,33 +119,24 @@ linear_models <-
 ```
 
 ```{r}
-fit <- workflowsets::workflow_map(
-  linear_models, 
-  fn = "fit_resamples", 
-  resamples = rsample::vfold_cv(tbl),
-  verbose = TRUE
-) 
+fit <- 
+  workflowsets::workflow_map(
+    linear_models, 
+    fn = "fit_resamples", 
+    resamples = rsample::vfold_cv(tbl),
+    verbose = TRUE
+  ) 
 ```
 
 
-```{r}
-autoplot(linear_models)
-```
-
-
-```{r}
-workflowsets::workflow_map(linear_models, "parsnip::fit")
-```
-
-
-```{r}
+```{r eval=FALSE}
 wf <-
   workflows::workflow() |>
   workflows::add_model(lm_model) |>
   workflows::add_recipe(rec_core_prep) 
 ```
 
-```{r}
+```{r eval=FALSE}
 lm_fit <- parsnip::fit(linear_models, data = tbl)
 ```
 
