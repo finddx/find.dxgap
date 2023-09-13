@@ -601,10 +601,7 @@ complete_site_df |>
 ```{r}
 sites_long_complete <- 
   sites_long |> 
-  semi_join(
-    filter(complete_site_df, complete_rate > 0.75),
-    by = join_by(lab_type)
-  ) 
+  semi_join(complete_site_df, by = join_by(lab_type)) 
 ```
 
 ### Density distribution
