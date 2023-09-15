@@ -9,7 +9,7 @@
       
       Table: `hbc`
       Primary key: `country_code`
-      10 outgoing foreign key(s):
+      11 outgoing foreign key(s):
         `country_code` -> `wb_tot_pop$country_code` no_action
         `country_code` -> `wb_urb_pop$country_code` no_action
         `country_code` -> `wb_density_pop$country_code` no_action
@@ -19,6 +19,7 @@
         `country_code` -> `who_budget$country_code` no_action
         `country_code` -> `who_community$country_code` no_action
         `country_code` -> `who_sites$country_code` no_action
+        `country_code` -> `who_expenditures$country_code` no_action
         `country_code` -> `gf_procurement$country_code` no_action
       
       Rows: 30
@@ -147,6 +148,7 @@
       --------------------------------------------------------------------------------
       
       Table: `who_expenditures`
+      Primary key: `country_code`
       
       Rows: 30
       Columns: 8
@@ -319,6 +321,7 @@
       --------------------------------------------------------------------------------
       
       Table: `who_expenditures`
+      Primary key: `country_code`
       
       Rows: 185
       Columns: 8
@@ -345,7 +348,7 @@
       
       Table: `non_hbc`
       Primary key: `country_code`
-      10 outgoing foreign key(s):
+      11 outgoing foreign key(s):
         `country_code` -> `wb_tot_pop$country_code` no_action
         `country_code` -> `wb_urb_pop$country_code` no_action
         `country_code` -> `wb_density_pop$country_code` no_action
@@ -355,6 +358,7 @@
         `country_code` -> `who_budget$country_code` no_action
         `country_code` -> `who_community$country_code` no_action
         `country_code` -> `who_sites$country_code` no_action
+        `country_code` -> `who_expenditures$country_code` no_action
         `country_code` -> `gf_procurement$country_code` no_action
       
       Rows: 191
@@ -378,5 +382,6 @@
       values of `non_hbc$country_code` not in `who_budget$country_code`: FRO (1), GIB (1), IMN (1), LIE (1), MAF (1), VIR (1)
       values of `non_hbc$country_code` not in `who_community$country_code`: ABW (1), AIA (1), ALB (1), AND (1), ARE (1), ...
       values of `non_hbc$country_code` not in `who_sites$country_code`: FRO (1), GIB (1), IMN (1), LIE (1), MAF (1), VIR (1)
+      values of `non_hbc$country_code` not in `who_expenditures$country_code`: FRO (1), GIB (1), IMN (1), LIE (1), MAF (1), VIR (1)
       values of `non_hbc$country_code` not in `gf_procurement$country_code`: ABW (1), AFG (1), AIA (1), AND (1), ARE (1), ...
 
