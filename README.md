@@ -13,10 +13,10 @@ You can install the development version of findtb from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("cynkra/findtb")
+devtools::install_github("cynkra/find.dxgap")
 ```
 
-## findtb.data
+## find.dxgap.data
 
 Data for the project are stored in a directory called `findtb.data`.
 Please, call `set_findtb_data_dir()` to create and populate such folder.
