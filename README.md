@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# findtb
+# find.dxgap
 
 <!-- badges: start -->
 <!-- badges: end -->
