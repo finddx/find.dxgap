@@ -688,6 +688,61 @@ plot_scatter(
 )
 ```
 
+## Expenditures
+
+```{r}
+exp_master <- 
+  findtb_master_list |> 
+  filter(dataset == "expenditure_and_utilisation") |> 
+  select(variable_name, definition)
+
+exp_cols <- 
+  exp_master |> 
+  pull(variable_name)
+```
+
+```{r}
+exp_long <- 
+  tbl |> 
+  select(country_code, is_hbc, who_dx_gap, pop_100k, all_of(exp_cols)) |> 
+  pivot_longer(
+    cols = -c(country_code, is_hbc, who_dx_gap, pop_100k), 
+    names_to = "exp_type",
+    values_to = "exp_numb"
+  ) |> 
+  mutate(exp_per_100k = exp_numb / pop_100k) |> 
+  left_join(exp_master, by = join_by(exp_type == variable_name)) 
+```
+
+### Density distribution
+
+```{r fig.height=15, fig.width=12}
+plot_density(
+  exp_long,
+  exp_per_100k,
+  is_hbc,
+  params$year,
+  "Community data in",
+  "Source: WHO"
+) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free")
+```
+
+### Dx Gap
+
+```{r fig.height=15, fig.width=12}
+plot_scatter(
+  exp_long,
+  exp_per_100k,
+  who_dx_gap,
+  params$year, 
+  is_hbc,
+  "Labs and site data in",
+  "Source: WHO"
+) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free")
+```
+
 
 ```{r eval=FALSE}
 complete_only_df <- 
