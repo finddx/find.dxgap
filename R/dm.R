@@ -58,10 +58,12 @@ filter_hbc_country <- function(data_list) {
 }
 
 filter_non_hbc_country <- function(data_list, non_hbc_df) {
-  purrr::map(
+  list_data <- purrr::map(
     data_list,
     ~ dplyr::semi_join(.x, non_hbc_df, by = dplyr::join_by(country_code))
   )
+  list_data$hbc <- NULL
+  list_data
 }
 
 choose_dm <- function(dm) {
