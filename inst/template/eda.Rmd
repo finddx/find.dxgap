@@ -84,16 +84,42 @@ corr_df <-
   correlate() |>
   select(term, who_dx_gap) |>
   arrange(who_dx_gap) |>
-  filter(term != "who_dx_gap")
+  filter(term != "who_dx_gap") |> 
+  rename(who_dx_gap_all = who_dx_gap)
 ```
 
 ```{r}
+corr_by_type <- 
+  tbl |> 
+  select(-country_code) |> 
+  group_split(is_hbc) |> 
+  map(correlate) |> 
+  set_names(c("non_hbc", "hbc")) |> 
+  map(~ select(.x, term, who_dx_gap)) |>
+  map(~ arrange(.x, who_dx_gap)) |>
+  map(~ filter(.x, term != "who_dx_gap"))
+```
+
+
+```{r}
+corr_hbc <- 
+  corr_by_type$hbc |> 
+  rename(who_dx_gap_hbc = who_dx_gap)
+corr_non_hbc <- 
+  corr_by_type$non_hbc |> 
+  rename(who_dx_gap_non_hbc = who_dx_gap)
+```
+
+
+```{r}
 corr_df |> 
+  left_join(corr_hbc, join_by(term)) |> 
+  left_join(corr_non_hbc, join_by(term)) |> 
   left_join(
     select(findtb_master_list, variable_name, definition), 
     by = join_by(term == variable_name)
   ) |> 
-  relocate(definition, term, who_dx_gap) |> 
+  relocate(definition, term, starts_with("who_dx_gap")) |> 
   gt::gt()
 ```
 
