@@ -606,7 +606,7 @@ sites_long_complete <-
 
 ### Density distribution
 
-```{r fig.height=10, fig.width=12}
+```{r fig.height=15, fig.width=12}
 plot_density(
   sites_long_complete,
   lab_per_100k,
@@ -615,12 +615,12 @@ plot_density(
   "Community data in",
   "Source: WHO"
 ) +
-  facet_wrap(vars(definition), ncol = 1, scales = "free")
+  facet_wrap(vars(definition), ncol = 2, scales = "free")
 ```
 
 ### Dx Gap
 
-```{r fig.height=10, fig.width=12}
+```{r fig.height=15, fig.width=12}
 plot_scatter(
   sites_long_complete,
   lab_per_100k,
