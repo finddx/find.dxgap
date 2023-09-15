@@ -151,7 +151,11 @@ corr_all_df |>
 
 ## Dx Gap
 
-```{r}
+The Dx Gap is computed as follows:
+
+$who\_dx\_gap = (e\_inc\_num - c\_newinc) / e\_inc\_num$
+
+```{r fig.height=12, fig.width=12}
 tbl |> 
   mutate(country_code = forcats::fct_reorder(country_code, who_dx_gap, .na_rm = FALSE)) |> 
   ggplot(aes(country_code, who_dx_gap, fill = is_hbc)) +
