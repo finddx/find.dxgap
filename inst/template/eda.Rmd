@@ -656,7 +656,7 @@ plot_scatter(
   "Labs and site data in",
   "Source: WHO"
 ) +
-  facet_wrap(vars(definition), ncol = 1, scales = "free")
+  facet_wrap(vars(definition), ncol = 2, scales = "free")
 ```
 
 ## Devices
@@ -674,7 +674,7 @@ plot_density(
 )
 ```
 
-## Dx Gap
+### Dx Gap
 
 ```{r}
 plot_scatter(
