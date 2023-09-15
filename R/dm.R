@@ -95,6 +95,7 @@ set_dm_pk <- function(dm) {
     dm::dm_add_pk(who_budget, country_code, check = TRUE) |>
     dm::dm_add_pk(who_community, country_code, check = TRUE) |>
     dm::dm_add_pk(who_sites, country_code, check = TRUE) |>
+    dm::dm_add_pk(who_expenditures, country_code, check = TRUE) |>
     dm::dm_add_pk(gf_procurement, country_code, check = TRUE)
 }
 
@@ -110,6 +111,7 @@ set_dm_fk <- function(dm, parent_tbl) {
     dm::dm_add_fk(!!parent_tbl, country_code, who_budget) |>
     dm::dm_add_fk(!!parent_tbl, country_code, who_community) |>
     dm::dm_add_fk(!!parent_tbl, country_code, who_sites) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, who_expenditures) |>
     dm::dm_add_fk(!!parent_tbl, country_code, gf_procurement)
 }
 

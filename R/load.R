@@ -61,6 +61,10 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
 
   who_sites_df <- lst_df$who_laboratories
 
+  # WHO Expenditures -----------------------------------------------------------
+
+  who_expenditures_df <- lst_df$who_expenditures
+
   # Global Fund Procurement ----------------------------------------------------
 
   gf_procurement_df <-
@@ -80,6 +84,7 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
     who_budget = who_budget_df,
     who_community = who_community_df,
     who_sites = who_sites_df,
+    who_expenditures = who_expenditures_df,
     gf_procurement = gf_procurement_df
   )
 }
