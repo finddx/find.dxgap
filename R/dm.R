@@ -61,8 +61,7 @@ filter_non_hbc_country <- function(data_list, non_hbc_df) {
   purrr::map(
     data_list,
     ~ dplyr::semi_join(.x, non_hbc_df, by = dplyr::join_by(country_code))
-  ) |>
-    purrr::discard(~ nrow(.x) == 0)
+  )
 }
 
 choose_dm <- function(dm) {
