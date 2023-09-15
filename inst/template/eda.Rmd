@@ -112,14 +112,39 @@ corr_non_hbc <-
 
 
 ```{r}
-corr_df |> 
+corr_all_df <- 
+  corr_df |> 
   left_join(corr_hbc, join_by(term)) |> 
   left_join(corr_non_hbc, join_by(term)) |> 
   left_join(
     select(findtb_master_list, variable_name, definition), 
     by = join_by(term == variable_name)
   ) |> 
-  relocate(definition, term, starts_with("who_dx_gap")) |> 
+  relocate(definition, term, starts_with("who_dx_gap"))
+```
+
+```{r fig.height=12, fig.width=12}
+corr_all_df |> 
+  pivot_longer(
+    starts_with("who_dx_gap"), 
+    names_to = "corr_cat", 
+    values_to = "corr"
+  ) |> 
+  mutate(term = forcats::fct_reorder(term, corr, .na_rm = FALSE)) |> 
+  mutate(corr_cat = forcats::fct_relevel(
+    corr_cat, 
+    c("who_dx_gap_non_hbc", "who_dx_gap_all", "who_dx_gap_hbc"))
+  ) |> 
+  ggplot(aes(term, corr)) +
+  geom_col() +
+  coord_flip() +
+  theme_minimal() +
+  facet_wrap(vars(corr_cat))
+```
+
+
+```{r}
+corr_all_df |> 
   gt::gt()
 ```
 
