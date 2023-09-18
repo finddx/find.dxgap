@@ -11,7 +11,7 @@ set_data_dir(
 }
 \arguments{
 \item{path}{a path where the folder should be created. By defeult, it is
-created at the same level of where the findtb project lives.}
+created at the same level of where the find.dxgap project lives.}
 
 \item{dirs}{a character vector with subfolders' names.}
 }
@@ -25,5 +25,5 @@ is needed for the \verb{read_*()} family of functions to work properly, in
 particular when running tests.
 }
 \examples{
-path_findtb <- set_data_dir("~/Documents/my_projects")
+path_dxgap <- set_data_dir("~/Documents/my_projects")
 }

@@ -83,12 +83,12 @@ who_dx_gap_2020 <- who_dx_gap |>
   filter(year == 2020) |>
   select(country, starts_with("who_"))
 
-findtb_dx_gap_2020 <- df_fixed |>
-  select(country, findtb_dx_gap = rate_dx_gap)
+find_dx_gap_2020 <- df_fixed |>
+  select(country, find_dx_gap = rate_dx_gap)
 
 # Find non-matching primary keys before joining:
 # - DRC
-anti_join(findtb_dx_gap_2020, who_dx_gap_2020)
+anti_join(find_dx_gap_2020, who_dx_gap_2020)
 
 who_dx_gap_2020 <- who_dx_gap_2020 |>
   mutate(
@@ -99,50 +99,50 @@ who_dx_gap_2020 <- who_dx_gap_2020 |>
     )
   )
 
-findtb_dx_gap_2020 |>
+find_dx_gap_2020 |>
   left_join(who_dx_gap_2020) |>
   correlate()
 
-findtb_dx_gap_2020 |>
+find_dx_gap_2020 |>
   left_join(who_dx_gap_2020) |>
-  pivot_longer(!c(country, findtb_dx_gap)) |>
-  ggplot(aes(findtb_dx_gap, value)) +
+  pivot_longer(!c(country, find_dx_gap)) |>
+  ggplot(aes(find_dx_gap, value)) +
   geom_point(colour = "steelblue", size = 3, alpha = .8) +
   facet_wrap(vars(name), scales = "free") +
   theme_minimal()
 
-findtb_dx_gap_2020 |>
+find_dx_gap_2020 |>
   left_join(who_dx_gap_2020) |>
   rename(
-    `Findtb diagnostic gap` = findtb_dx_gap,
+    `Find diagnostic gap` = find_dx_gap,
     `WHO diagnostic gap` = who_dx_gap_rate
   ) |>
-  ggplot(aes(`Findtb diagnostic gap`, `WHO diagnostic gap`)) +
+  ggplot(aes(`Find diagnostic gap`, `WHO diagnostic gap`)) +
   geom_point(colour = "steelblue", size = 3, alpha = .8) +
   theme_minimal() +
   labs(
-    title = "Findtb's measure of diagnostic gap negatively correlates with an alternative measure calculated from WHO data",
+    title = "Find's measure of diagnostic gap negatively correlates with an alternative measure calculated from WHO data",
     subtitle = "Pearson correlation cofficient = -0.904"
   )
 
 # Remove 'Russian Federation', which may be an outlier, as identified in
 # inst/eda/determinants_dxgap.R
-findtb_dx_gap_2020 |>
+find_dx_gap_2020 |>
   left_join(who_dx_gap_2020) |>
   filter(country != "Russian Federation") |>
   correlate()
 
-findtb_dx_gap_2020 |>
+find_dx_gap_2020 |>
   left_join(who_dx_gap_2020) |>
   filter(country != "Russian Federation") |>
   rename(
-    `Findtb diagnostic gap` = findtb_dx_gap,
+    `Find diagnostic gap` = find_dx_gap,
     `WHO diagnostic gap` = who_dx_gap_rate
   ) |>
-  ggplot(aes(`Findtb diagnostic gap`, `WHO diagnostic gap`)) +
+  ggplot(aes(`Find diagnostic gap`, `WHO diagnostic gap`)) +
   geom_point(colour = "steelblue", size = 3, alpha = .8) +
   theme_minimal() +
   labs(
-    title = "Findtb's measure of diagnostic gap negatively correlates with an alternative measure calculated from WHO data",
+    title = "Find's measure of diagnostic gap negatively correlates with an alternative measure calculated from WHO data",
     subtitle = "Pearson correlation cofficient = -0.968"
   )
