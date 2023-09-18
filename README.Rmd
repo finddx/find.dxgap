@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# findtb
+# find.dxgap
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -21,16 +21,16 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-You can install the development version of findtb from [GitHub](https://github.com/) with:
+You can install the development version of find.dxgap from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("cynkra/findtb")
+devtools::install_github("finddx/find.dxgap")
 ```
 
-## findtb.data
+## find.dxgap.data.data
 
-Data for the project are stored in a directory called `findtb.data`. Please, call `set_findtb_data_dir()` to create and populate such folder.
+Data for the project are stored in a directory called `find.dxgap.data`. Please, call `set_data_dir()` to create and populate such folder.
 
 The data available are:
 
