@@ -41,7 +41,7 @@ tibble::tibble(data_file = list.files("inst/extdata", pattern = "csv")) |>
 
 ## Report
 
-Call, `findtb_render_report(year = 2019)` to render a report for given year. Create new templates and render them using the `template_path` parameter.
+Call, `render_report(year = 2019)` to render a report for given year. Create new templates and render them using the `template_path` parameter.
 
 ## Objectives of the project
 

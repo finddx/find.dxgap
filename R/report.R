@@ -1,4 +1,4 @@
-findtb_render_report <- function(template_path = "inst/template/eda.Rmd",
+render_report <- function(template_path = "inst/template/eda.Rmd",
                                  year = 2019,
                                  output_file = NULL) {
   stopifnot(is.numeric(year))

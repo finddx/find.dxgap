@@ -40,7 +40,7 @@ The data available are:
 
 ## Report
 
-Call, `findtb_render_report(year = 2019)` to render a report for given
+Call, `render_report(year = 2019)` to render a report for given
 year. Create new templates and render them using the `template_path`
 parameter.
 
