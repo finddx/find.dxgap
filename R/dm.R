@@ -1,4 +1,4 @@
-findtb_build_tbl <- function(dm_hbc, dm_non_hbc) {
+build_tbl <- function(dm_hbc, dm_non_hbc) {
   hbc_tbl <-
     dm_hbc |>
     dm::dm_flatten_to_tbl(.start = hbc) |>
