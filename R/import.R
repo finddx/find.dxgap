@@ -5,7 +5,7 @@ import_bulk <- function(data_lst,
   list_arg <- rlang::ensym(data_lst)
   lst_df <- fetch_object(obj_name = !!list_arg, env = globalenv())
   for (i in seq_along(data_name)) {
-    lst_df <- findtb_import(
+    lst_df <- import_tbl(
       .data_lst = lst_df,
       .file_name = data_name[[i]],
       .year = year,
@@ -16,8 +16,8 @@ import_bulk <- function(data_lst,
   lst_df
 }
 
-#' @example lst_df <- findtb_import(lst_df, "who_hbc.csv", 2019)
-findtb_import <- function(.data_lst,
+#' @example lst_df <- import_tbl(lst_df, "who_hbc.csv", 2019)
+import_tbl <- function(.data_lst,
                           .file_name,
                           .year,
                           .all = TRUE,
