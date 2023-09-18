@@ -12,8 +12,8 @@
 #' @return the path to the folder, invisibly.
 #' @export
 #'
-#' @examples path_findtb <- set_findtb_datadir("~/Documents/my_projects")
-set_findtb_datadir <- function(path = fs::path_dir(getwd()),
+#' @examples path_findtb <- set_data_dir("~/Documents/my_projects")
+set_data_dir <- function(path = fs::path_dir(getwd()),
                                dirs = c("who", "global-fund", "world-bank", "meta")) {
   if (!rlang::is_character(path) && length(path) != 1) {
     rlang::abort("Not a valid character path.")
