@@ -13,7 +13,7 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
 
   data <- readr::read_csv(url_topic, show_col_types = FALSE)
   subset_cols <-
-    findtb_master_list |>
+    dxgap_master_list |>
     dplyr::filter(data_source == "who") |>
     dplyr::filter(dataset == !!dataset) |>
     dplyr::pull(variable_name)
