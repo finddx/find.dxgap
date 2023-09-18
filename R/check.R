@@ -10,7 +10,7 @@ check_ptype <- function(data, ptype) {
         rlang::as_string(sym_data),
         rlang::as_string(sym_ptype)
       )
-      rlang::abort(msg, parent = err, class = "findtb_wrong_raw_data")
+      rlang::abort(msg, parent = err, class = "dxgap_wrong_raw_data")
     }
   )
 }

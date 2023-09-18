@@ -1,6 +1,6 @@
 ^renv$
 ^renv\.lock$
-^findtb\.Rproj$
+^find.dxgap\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^data-raw$

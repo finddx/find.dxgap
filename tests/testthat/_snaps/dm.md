@@ -1,4 +1,4 @@
-# findtb_build_dm() `hbc` works
+# build_dm() `hbc` works
 
     Code
       dm::glimpse(dm)
@@ -192,7 +192,7 @@
       values of `hbc$country_code` not in `who_community$country_code`: CHN (1), PRK (1), RUS (1)
       values of `hbc$country_code` not in `gf_procurement$country_code`: AGO (1), BGD (1), BRA (1), CAF (1), CHN (1), ...
 
-# findtb_build_dm() `non_hbc` works
+# build_dm() `non_hbc` works
 
     Code
       dm::glimpse(dm)

@@ -53,7 +53,7 @@ tbl |>
 ```{r}
 tbl |> 
   pivot_longer(-c(country_code, is_hbc), names_to = "variable_name") |> 
-  left_join(findtb_master_list, join_by(variable_name)) |> 
+  left_join(dxgap_master_list, join_by(variable_name)) |> 
   group_by(variable_name, definition, dataset) |> 
   summarise(
     n = n(), 
@@ -117,7 +117,7 @@ corr_all_df <-
   left_join(corr_hbc, join_by(term)) |> 
   left_join(corr_non_hbc, join_by(term)) |> 
   left_join(
-    select(findtb_master_list, variable_name, definition), 
+    select(dxgap_master_list, variable_name, definition), 
     by = join_by(term == variable_name)
   ) |> 
   relocate(definition, term, starts_with("who_dx_gap"))
@@ -363,7 +363,7 @@ plot_scatter(
 
 ```{r}
 budget_master <- 
-  findtb_master_list |> 
+  dxgap_master_list |> 
   filter(dataset == "budget") |> 
   select(variable_name, definition)
 
@@ -510,7 +510,7 @@ budget_long_log |>
 
 ```{r}
 comm_master <- 
-  findtb_master_list |> 
+  dxgap_master_list |> 
   filter(dataset == "community_engagement") |> 
   select(variable_name, definition)
 
@@ -611,7 +611,7 @@ plot_scatter(
 
 ```{r}
 labs_master <- 
-  findtb_master_list |> 
+  dxgap_master_list |> 
   filter(dataset == "laboratories") |> 
   select(variable_name, definition)
 
@@ -721,7 +721,7 @@ plot_scatter(
 
 ```{r}
 exp_master <- 
-  findtb_master_list |> 
+  dxgap_master_list |> 
   filter(dataset == "expenditure_and_utilisation") |> 
   select(variable_name, definition)
 

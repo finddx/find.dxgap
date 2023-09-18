@@ -1,5 +1,5 @@
 read_masterlist <- function(...) {
-  findtb_read_csv(...)
+  dxgap_read_csv(...)
 }
 
 tidy_masterlist <- function(data) {

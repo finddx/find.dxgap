@@ -1,4 +1,4 @@
-read_gf_procurement <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR")) {
+read_gf_procurement <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
   readr::read_tsv(
     file_path,

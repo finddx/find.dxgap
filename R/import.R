@@ -1,11 +1,11 @@
-findtb_import_bulk <- function(data_lst,
+import_bulk <- function(data_lst,
                            data_name,
                            year,
-                           data_dir = Sys.getenv("FINDTB_DATADIR")) {
+                           data_dir = Sys.getenv("DXGAP_DATADIR")) {
   list_arg <- rlang::ensym(data_lst)
   lst_df <- fetch_object(obj_name = !!list_arg, env = globalenv())
   for (i in seq_along(data_name)) {
-    lst_df <- findtb_import(
+    lst_df <- import_tbl(
       .data_lst = lst_df,
       .file_name = data_name[[i]],
       .year = year,
@@ -16,12 +16,12 @@ findtb_import_bulk <- function(data_lst,
   lst_df
 }
 
-#' @example lst_df <- findtb_import(lst_df, "who_hbc.csv", 2019)
-findtb_import <- function(.data_lst,
+#' @example lst_df <- import_tbl(lst_df, "who_hbc.csv", 2019)
+import_tbl <- function(.data_lst,
                           .file_name,
                           .year,
                           .all = TRUE,
-                          .data_dir = Sys.getenv("FINDTB_DATADIR")) {
+                          .data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   # Extract file name ----------------------------------------------------------
   data_name <- extract_name(.file_name)
