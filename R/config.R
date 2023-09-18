@@ -22,8 +22,8 @@ set_data_dir <- function(path = fs::path_dir(getwd()),
     rlang::abort("Not a valid character vector.")
   }
 
-  sys_findtb_data <- Sys.getenv("DXGAP_DATADIR")
-  if (sys_findtb_data != "") {
+  sys_dxgap_data <- Sys.getenv("DXGAP_DATADIR")
+  if (sys_dxgap_data != "") {
     flag_ev_exists <- readline(
       prompt = paste(
         "The env. var. DXGAP_DATADIR already exists.",
@@ -31,11 +31,11 @@ set_data_dir <- function(path = fs::path_dir(getwd()),
       )
     )
     if (flag_ev_exists == "n") {
-      return(invisible(sys_findtb_data))
+      return(invisible(sys_dxgap_data))
     }
   }
 
-  dir_name <- "findtb-data"
+  dir_name <- "find.dxgap.data"
   path_to_datadir <- fs::path(path, dir_name)
   if (fs::dir_exists(path_to_datadir)) {
     flag_dir_exists <- readline(
