@@ -12,7 +12,7 @@ build_tbl <- function(dm_hbc, dm_non_hbc) {
     dplyr::relocate(is_hbc, .before = everything())
 }
 
-findtb_build_dm <- function(data_list, hbc = TRUE) {
+build_dm <- function(data_list, hbc = TRUE) {
   prune_lst <- drop_cols(data_list, c("year", "country", "g_whoregion"))
   filter_lst <- filter_country(data_list = prune_lst, .hbc = hbc)
   dm_no_rel <- dm::dm(!!!filter_lst)
