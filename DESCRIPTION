@@ -1,10 +1,10 @@
-Package: findtb
-Title: What the Package Does (One Line, Title Case)
+Package: find.dxgap
+Title: Compute dxgap for different diseases.
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Andrea", "Ranzato", , "andrea@cynkra.com", role = c("aut", "cre"))
+    person("Mike", "John Page", , "mike@cynkra.com", role = c("aut"))
+Description: Compute dxgap for different diseases.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
