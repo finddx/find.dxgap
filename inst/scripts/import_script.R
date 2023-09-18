@@ -1,6 +1,6 @@
 pkgload::load_all()
 
-lst_df <- findtb_import_bulk(lst_df, c("gf_2023-07-26_procurement.csv",
+lst_df <- import_bulk(lst_df, c("gf_2023-07-26_procurement.csv",
                                  "wb_2023-07-28_pop_urban.csv",
                                  "wb_2023-08-31_pop_density.csv",
                                  "wb_2023-09-07_gdp.csv",

@@ -4,7 +4,7 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("DXGAP_DATADIR")) {
     list.files(here::here("inst/extdata"), pattern = "csv") |>
     stringr::str_subset("masterlist", negate = TRUE)
 
-  lst_df <- findtb_import_bulk(lst_df, data_files, year = .year)
+  lst_df <- import_bulk(lst_df, data_files, year = .year)
 
   # HBC countries --------------------------------------------------------------
 

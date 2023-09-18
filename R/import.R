@@ -1,4 +1,4 @@
-findtb_import_bulk <- function(data_lst,
+import_bulk <- function(data_lst,
                            data_name,
                            year,
                            data_dir = Sys.getenv("DXGAP_DATADIR")) {
