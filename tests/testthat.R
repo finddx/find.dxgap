@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(findtb)
+library(find.dxgap)
 
-test_check("findtb")
+test_check("find.dxgap")
