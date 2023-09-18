@@ -13,8 +13,7 @@
         country_value = character(0),
         countryiso3code = character(0),
         date = numeric(0),
-        value = logical(0) |>
-          structure(class = "vctrs_unspecified"),
+        value = numeric(0),
         unit = logical(0) |>
           structure(class = "vctrs_unspecified"),
         obs_status = logical(0) |>
@@ -32,8 +31,7 @@
         country_code = character(0),
         country_value = character(0),
         year = numeric(0),
-        value = logical(0) |>
-          structure(class = "vctrs_unspecified"),
+        value = numeric(0),
       )
 
 # `country_code` entries are not missing
