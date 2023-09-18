@@ -28,7 +28,7 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
 }
 
 read_who <- function(...) {
-  findtb_read_csv(..., col_types = readr::cols("download_date" = "c")) |>
+  dxgap_read_csv(..., col_types = readr::cols("download_date" = "c")) |>
     tibble::as_tibble()
 }
 

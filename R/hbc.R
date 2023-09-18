@@ -12,7 +12,7 @@ download_hbc <- function(file_name = tempfile("who_hbc_list", fileext = ".pdf"),
 
 read_hbc <- function(...) {
   # TODO: extract table from pdf pdftools::pdf_text(file_path)[[8]]
-  findtb_read_csv(...) |>
+  dxgap_read_csv(...) |>
     tibble::as_tibble()
 }
 

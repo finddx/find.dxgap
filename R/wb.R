@@ -49,7 +49,7 @@ unnest_wb_resp <- function(data) {
 }
 
 read_wb <- function(...) {
-  findtb_read_csv(...) |>
+  dxgap_read_csv(...) |>
     tibble::as_tibble()
 }
 
