@@ -5,9 +5,9 @@
 #'
 #' @param file_name Either an absolute or relative path to the raw Excel TB
 #'   dashboard. If a relative path is provided, data is read from the
-#'   findtb.data. Instead, if an absolute path is provided, data is read from
+#'   find.dxgap.data. Instead, if an absolute path is provided, data is read from
 #'   any other location.
-#' @param data_dir An absolute path pointing to the findtb.data folder. By
+#' @param data_dir An absolute path pointing to the find.dxgap.data folder. By
 #'   default, the path is returned by the `DXGAP_DATADIR` environment
 #'   variable.
 #'
