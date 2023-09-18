@@ -17,5 +17,10 @@ tidy_masterlist <- function(data) {
       who_url_endpoints,
       dplyr::join_by(dataset)
     ) |>
+    dplyr::mutate(url = dplyr::if_else(
+      data_source == "who",
+      stringr::str_c("https://extranet.who.int/tme/generateCSV.asp?ds=", url_endpoint),
+      url
+    )) |>
     dplyr::relocate(url_endpoint, .after = dataset)
 }
