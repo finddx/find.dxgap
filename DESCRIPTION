@@ -2,8 +2,14 @@ Package: find.dxgap
 Title: Compute dxgap for different diseases.
 Version: 0.0.0.9000
 Authors@R: 
-    person("Andrea", "Ranzato", , "andrea@cynkra.com", role = c("aut", "cre"))
-    person("Mike", "John Page", , "mike@cynkra.com", role = c("aut"))
+    c(person(given = "Andrea",
+             family = "Ranzato",
+             role = c("aut", "cre"),
+             email = "andrea@cynkra.com"),
+      person(given = "Mike",
+             family = "John Page",
+             role = c("aut"),
+             email = "mike@cynkra.com"))
 Description: Compute dxgap for different diseases.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
