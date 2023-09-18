@@ -6,13 +6,13 @@
 #' particular when running tests.
 #'
 #' @param path a path where the folder should be created. By defeult, it is
-#'   created at the same level of where the findtb project lives.
+#'   created at the same level of where the find.dxgap project lives.
 #' @param dirs a character vector with subfolders' names.
 #'
 #' @return the path to the folder, invisibly.
 #' @export
 #'
-#' @examples path_findtb <- set_data_dir("~/Documents/my_projects")
+#' @examples path_dxgap <- set_data_dir("~/Documents/my_projects")
 set_data_dir <- function(path = fs::path_dir(getwd()),
                                dirs = c("who", "global-fund", "world-bank", "meta")) {
   if (!rlang::is_character(path) && length(path) != 1) {
@@ -53,7 +53,7 @@ set_data_dir <- function(path = fs::path_dir(getwd()),
 
   tree <- fs::path(path_to_datadir, dirs)
 
-  findtb_data_path <- fs::dir_create(tree)
+  dxgap_data_path <- fs::dir_create(tree)
 
   # TODO: what if run outside of the project? inst/exdata might not work
   fs::dir_copy("inst/extdata", path_to_datadir, overwrite = TRUE)
