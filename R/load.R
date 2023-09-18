@@ -1,4 +1,4 @@
-findtb_load <- function(.year = 2019, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+load <- function(.year = 2019, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   data_files <-
     list.files(here::here("inst/extdata"), pattern = "csv") |>
