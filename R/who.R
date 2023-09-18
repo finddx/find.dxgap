@@ -1,7 +1,7 @@
 download_who <- function(file_name = tempfile(compose_file_name("who", download_date, dataset), fileext = ".csv"),
                          dataset = "notification",
                          download_date = as.character(Sys.Date()),
-                         data_dir = Sys.getenv("FINDTB_DATADIR")) {
+                         data_dir = Sys.getenv("DXGAP_DATADIR")) {
   dataset <- rlang::arg_match(dataset, who_url_endpoints$dataset)
   url <-  "https://extranet.who.int/tme/generateCSV.asp?ds="
   endpoint <-

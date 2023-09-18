@@ -1,4 +1,4 @@
-skip_if(Sys.getenv("FINDTB_DATADIR") == "")
+skip_if(Sys.getenv("DXGAP_DATADIR") == "")
 file_name <- "tb_policy_dashboard_final_v1_14Nov22.xlsx"
 data <- read_tb_dashboard(file_name)
 test_that("a tibble is returned", {

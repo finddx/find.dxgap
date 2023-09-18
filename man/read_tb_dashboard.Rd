@@ -4,7 +4,7 @@
 \alias{read_tb_dashboard}
 \title{Read the TB dashboard}
 \usage{
-read_tb_dashboard(file_name, data_dir = Sys.getenv("FINDTB_DATADIR"))
+read_tb_dashboard(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
 }
 \arguments{
 \item{file_name}{Either an absolute or relative path to the raw Excel TB
@@ -13,7 +13,7 @@ findtb.data. Instead, if an absolute path is provided, data is read from
 any other location.}
 
 \item{data_dir}{An absolute path pointing to the findtb.data folder. By
-default, the path is returned by the \code{FINDTB_DATADIR} environment
+default, the path is returned by the \code{DXGAP_DATADIR} environment
 variable.}
 }
 \value{

@@ -20,7 +20,7 @@ the path to the folder, invisibly.
 }
 \description{
 This function has side effects. It creates a folder storing data for the
-project. In addition it sets the \code{FINDTB_DATADIR} environment variable which
+project. In addition it sets the \code{DXGAP_DATADIR} environment variable which
 is needed for the \verb{read_*()} family of functions to work properly, in
 particular when running tests.
 }

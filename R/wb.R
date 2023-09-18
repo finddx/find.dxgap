@@ -3,7 +3,7 @@ download_wb <- function(file_name = tempfile(compose_file_name("wb", download_da
                         indicator = "SP.URB.TOTL.IN.ZS",
                         range_years = "2015:2023",
                         download_date = as.character(Sys.Date()),
-                        data_dir = Sys.getenv("FINDTB_DATADIR")) {
+                        data_dir = Sys.getenv("DXGAP_DATADIR")) {
   base_url <- "https://api.worldbank.org/v2/country/all/indicator"
   req <-
     httr2::request(base_url) |>

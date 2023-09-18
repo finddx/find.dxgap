@@ -1,4 +1,4 @@
-skip_if(Sys.getenv("FINDTB_DATADIR") == "")
+skip_if(Sys.getenv("DXGAP_DATADIR") == "")
 data_list <- findtb_load(.year = 2019)
 test_that("findtb_build_dm() `hbc` works", {
   dm <- findtb_build_dm(data_list)

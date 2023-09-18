@@ -1,7 +1,7 @@
 #' Create folder containing data for the project.
 #'
 #' This function has side effects. It creates a folder storing data for the
-#' project. In addition it sets the `FINDTB_DATADIR` environment variable which
+#' project. In addition it sets the `DXGAP_DATADIR` environment variable which
 #' is needed for the `read_*()` family of functions to work properly, in
 #' particular when running tests.
 #'
@@ -22,11 +22,11 @@ set_data_dir <- function(path = fs::path_dir(getwd()),
     rlang::abort("Not a valid character vector.")
   }
 
-  sys_findtb_data <- Sys.getenv("FINDTB_DATADIR")
+  sys_findtb_data <- Sys.getenv("DXGAP_DATADIR")
   if (sys_findtb_data != "") {
     flag_ev_exists <- readline(
       prompt = paste(
-        "The env. var. FINDTB_DATADIR already exists.",
+        "The env. var. DXGAP_DATADIR already exists.",
         "Do you want to overwrite it [y/n]? "
       )
     )
@@ -49,7 +49,7 @@ set_data_dir <- function(path = fs::path_dir(getwd()),
     }
   }
 
-  Sys.setenv("FINDTB_DATADIR" = path_to_datadir)
+  Sys.setenv("DXGAP_DATADIR" = path_to_datadir)
 
   tree <- fs::path(path_to_datadir, dirs)
 
