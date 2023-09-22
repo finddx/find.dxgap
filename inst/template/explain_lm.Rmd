@@ -27,7 +27,8 @@ The chosen year is `r params$year`.
 ```{r data}
 tbl <- 
   data_tbl |> 
-  compute_dx_gap()
+  compute_dx_gap() |> 
+  mutate(is_hbc = forcats::as_factor(is_hbc))
 ```
 
 ```{r recipes}

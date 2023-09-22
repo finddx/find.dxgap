@@ -26,10 +26,6 @@ get_core_recipe <- function(tbl) {
     ) |>
     recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
     recipes::step_mutate(pop_100k = pop_total / 1e5) |>
-    recipes::step_mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-    recipes::step_mutate(
-      is_hbc = forcats::fct_recode(is_hbc, hbc = "1", non_hbc = "0")
-    ) |>
     recipes::step_rm(recipes::has_role("collinear")) |>
     recipes::update_role(
       dplyr::all_of(c("gdp", "e_inc_num", "pop_total")),
@@ -65,7 +61,7 @@ get_normalize_recipe <- function(core_recipe) {
 
 get_is_hbc_recipe <- function(core_recipe) {
   core_recipe |>
-    recipes::step_filter(is_hbc == "hbc") |>
+    recipes::step_filter(is_hbc == 1) |>
     recipes::step_rm(is_hbc) |>
     get_pca_recipe()
 }
@@ -84,7 +80,10 @@ get_pop_100k_recipe <- function(core_recipe) {
 get_pca_recipe <- function(core_recipe) {
   core_recipe |>
     get_normalize_recipe() |>
-    recipes::step_pca()
+    recipes::step_pca(
+      recipes::all_numeric_predictors() & -recipes::all_factor(),
+      num_comp = 5
+    )
 }
 
 
