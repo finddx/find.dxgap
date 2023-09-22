@@ -27,6 +27,9 @@ get_core_recipe <- function(tbl) {
     recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
     recipes::step_mutate(pop_100k = pop_total / 1e5) |>
     recipes::step_mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+    recipes::step_mutate(
+      is_hbc = forcats::fct_recode(is_hbc, hbc = "1", non_hbc = "0")
+    ) |>
     recipes::step_rm(recipes::has_role("collinear")) |>
     recipes::update_role(
       dplyr::all_of(c("gdp", "e_inc_num", "pop_total")),
