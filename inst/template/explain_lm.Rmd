@@ -1,0 +1,41 @@
+---
+title: "Explain"
+output: html_document
+date: "`r Sys.Date()`"
+params:
+  dm_hbc: dm_hbc
+  dm_non_hbc: dm_non_hbc
+  data_tbl: data_tbl
+  year: year
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+library(recipes)
+pkgload::load_all()
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message = FALSE, warning = FALSE)
+```
+
+```{r params}
+year <- params$year
+data_tbl <- params$data_tbl
+```
+
+The chosen year is `r params$year`.
+
+```{r data}
+tbl <- 
+  data_tbl |> 
+  compute_dx_gap()
+```
+
+```{r rec-core}
+rec_core <- get_core_recipe(tbl)
+```
+
+```{r show}
+rec_core |> 
+  cook() |> 
+  gt::gt()
+```
