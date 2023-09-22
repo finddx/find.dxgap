@@ -6,7 +6,7 @@ get_core_recipe <- function(tbl) {
     recipes::update_role(
       dplyr::all_of(
         c("c_cdr", "c_newinc_100k", "notified_ref_community", "notified_ref",
-          "e_mort_100k", "e_pop_num", "new_labconf", "is_hbc")
+          "e_mort_100k", "e_pop_num", "new_labconf")
       ),
       new_role = "collinear"
     ) |>
