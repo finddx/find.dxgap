@@ -49,7 +49,7 @@ set.seed(2023)
 tbl_cv <- rsample::vfold_cv(tbl_train)
 ```
 
-```{r show}
+```{r show, eval=FALSE}
 rec_core |> 
   cook() |> 
   head() |> 
