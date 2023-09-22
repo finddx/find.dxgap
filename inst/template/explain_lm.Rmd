@@ -35,6 +35,7 @@ rec_core <- get_core_recipe(tbl)
 rec_log <- get_log_recipe(rec_core)
 rec_norm <- get_normalize_recipe(rec_core)
 rec_pop_100k <- get_pop_100k_recipe(rec_core)
+rec_is_hbc <- get_is_hbc_recipe(rec_core)
 ```
 
 ```{r spending}
@@ -67,7 +68,8 @@ preproc <- list(
   simple = rec_core, 
   log = rec_log, 
   norm = rec_norm, 
-  pop_100k = rec_pop_100k
+  pop_100k = rec_pop_100k,
+  is_hbc = rec_is_hbc
 )
 ```
 
