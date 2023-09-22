@@ -30,12 +30,69 @@ tbl <-
   compute_dx_gap()
 ```
 
-```{r rec-core}
+```{r recipes}
 rec_core <- get_core_recipe(tbl)
+rec_log <- get_log_recipe(rec_core)
+rec_norm <- get_normalize_recipe(rec_core)
+rec_pop_100k <- get_pop_100k_recipe(rec_core)
+```
+
+```{r spending}
+tbl_split <- rsample::initial_split(tbl)
+tbl_train <- rsample::training(tbl_split)
+tbl_test <- rsample::testing(tbl_split)
+```
+
+```{r bootstrap}
+tbl_boot <- rsample::bootstraps(tbl_train)
 ```
 
 ```{r show}
 rec_core |> 
   cook() |> 
   gt::gt()
+```
+
+```{r lm}
+lm_model <-
+  parsnip::linear_reg(mode = "regression") %>%
+  parsnip::set_engine("lm")
+```
+
+```{r combo}
+models <- list(lm = lm_model)
+preproc <- list(
+  simple = rec_core, 
+  log = rec_log, 
+  norm = rec_norm, 
+  pop_100k = rec_pop_100k
+)
+```
+
+```{r set}
+linear_models <- 
+   workflowsets::workflow_set(
+      preproc = preproc,
+      models = models,
+      cross = TRUE
+   )
+```
+
+```{r fit}
+fit <- 
+  workflowsets::workflow_map(
+    linear_models, 
+    verbose = TRUE,
+    resamples = tbl_boot
+  ) 
+```
+
+```{r}
+workflowsets::rank_results(fit, rank_metric = "rmse", select_best = TRUE) |> 
+  select(rank, mean, model, wflow_id, .config) |> 
+  gt::gt()
+```
+
+```{r assess}
+autoplot(fit)
 ```
