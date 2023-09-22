@@ -44,7 +44,8 @@ tbl_test <- rsample::testing(tbl_split)
 ```
 
 ```{r bootstrap}
-tbl_boot <- rsample::bootstraps(tbl_train)
+set.seed(2023)
+tbl_cv <- rsample::vfold_cv(tbl_train)
 ```
 
 ```{r show}
@@ -83,7 +84,7 @@ fit <-
   workflowsets::workflow_map(
     linear_models, 
     verbose = TRUE,
-    resamples = tbl_boot
+    resamples = tbl_cv
   ) 
 ```
 
