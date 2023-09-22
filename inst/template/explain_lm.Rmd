@@ -51,6 +51,7 @@ tbl_cv <- rsample::vfold_cv(tbl_train)
 ```{r show}
 rec_core |> 
   cook() |> 
+  head() |> 
   gt::gt()
 ```
 
