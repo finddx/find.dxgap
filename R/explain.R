@@ -75,7 +75,8 @@ get_pop_100k_recipe <- function(core_recipe) {
         -recipes::all_factor() &
         -recipes::has_role("no_norm"),
       fn = ~ .x / pop_100k
-    )
+    ) |>
+    recipes::step_rm(pop_100k)
 }
 
 
