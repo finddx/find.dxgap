@@ -65,7 +65,7 @@ get_normalize_recipe <- function(core_recipe) {
 
 get_is_hbc_recipe <- function(core_recipe) {
   core_recipe |>
-    recipes::step_filter(is_hbc == 1)
+    recipes::step_filter(is_hbc == "hbc")
 }
 
 get_pop_100k_recipe <- function(core_recipe) {
