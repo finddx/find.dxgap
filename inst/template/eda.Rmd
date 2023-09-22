@@ -156,8 +156,7 @@ corr_all_df |>
 
 ```{r fig.height=15, fig.width=15}
 corr_df_raw |> 
-  rplot(print_cor = TRUE) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5))
+  plot_corr()
 ```
 
 
