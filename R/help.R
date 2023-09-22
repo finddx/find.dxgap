@@ -67,7 +67,8 @@ req_perform_lazy <- function(req) {
 cook <- function(recipe) {
   recipe |>
     recipes::prep() |>
-    recipes::juice()
+    recipes::juice() |>
+    dplyr::relocate(tidyselect::any_of(c("is_hbc", "country_code", "who_dx_gap")))
 }
 
 compute_dx_gap <- function(data) {
