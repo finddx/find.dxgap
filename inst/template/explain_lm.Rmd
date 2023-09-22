@@ -68,7 +68,7 @@ preproc <- list(
   simple = rec_core, 
   log = rec_log, 
   norm = rec_norm, 
-  pop_100k = rec_pop_100k,
+  # pop_100k = rec_pop_100k, # FIXME: leads to high correlation features
   is_hbc = rec_is_hbc
 )
 ```
