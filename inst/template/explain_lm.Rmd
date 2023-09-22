@@ -91,7 +91,7 @@ fit <-
 
 ```{r}
 workflowsets::rank_results(fit, rank_metric = "rmse", select_best = TRUE) |> 
-  select(rank, mean, model, wflow_id, .config) |> 
+  select(rank, .metric, mean, model, wflow_id) |> 
   gt::gt()
 ```
 
