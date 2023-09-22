@@ -87,7 +87,7 @@ fit <-
   workflowsets::workflow_map(
     linear_models, 
     verbose = TRUE,
-    fn = tune::fit_resamples(),
+    fn = "fit_resamples",
     resamples = tbl_cv
   ) 
 ```
