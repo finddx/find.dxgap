@@ -64,3 +64,17 @@ req_perform_lazy <- function(req) {
   httr2::req_perform(req = req)
 }
 
+cook <- function(recipe) {
+  recipe |>
+    recipes::prep() |>
+    recipes::juice() |>
+    dplyr::relocate(tidyselect::any_of(c("is_hbc", "country_code", "who_dx_gap")))
+}
+
+compute_dx_gap <- function(data) {
+  data |>
+    dplyr::mutate(
+      who_dx_gap = (e_inc_num - c_newinc) / e_inc_num,
+      .after = country_code
+    )
+}

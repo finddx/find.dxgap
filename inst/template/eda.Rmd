@@ -78,15 +78,21 @@ tbl |>
 ## Correlations
 
 ```{r}
-corr_df <- 
+corr_df_raw <- 
   tbl |> 
   select(-country_code) |> 
-  correlate() |>
+  correlate() 
+```
+
+```{r}
+corr_df <- 
+  corr_df_raw |> 
   select(term, who_dx_gap) |>
   arrange(who_dx_gap) |>
   filter(term != "who_dx_gap") |> 
   rename(who_dx_gap_all = who_dx_gap)
 ```
+
 
 ```{r}
 corr_by_type <- 
@@ -146,6 +152,11 @@ corr_all_df |>
 ```{r}
 corr_all_df |> 
   gt::gt()
+```
+
+```{r fig.height=15, fig.width=15}
+corr_df_raw |> 
+  plot_corr()
 ```
 
 
