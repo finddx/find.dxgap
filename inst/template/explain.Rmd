@@ -54,35 +54,17 @@ rec_core |>
 
 
 ```{r rec-log}
-rec_log <- 
-  rec_core |> 
-  step_mutate_at(
-    all_numeric_predictors(), fn = ~ dplyr::if_else(.x == 0, 1, .x)
-  ) |> 
-  step_log(all_numeric_predictors())
+rec_log <- get_log_recipe(rec_core)
+
 ```
 
 ```{r}
-rec_norm <- 
-  rec_core |> 
-  recipes::step_normalize(all_numeric_predictors())
+rec_norm <- get_normalize_recipe(rec_core)
 ```
 
 ```{r}
-rec_pop_100k <- 
-  rec_core |> 
-  step_mutate_at(
-    all_numeric_predictors(), -has_role("no_norm"), fn = ~ .x / pop_100k
-  ) 
+rec_pop_100k <- get_pop_100k_recipe(rec_core)
 ```
-
-```{r eval=FALSE}
-rec_pca <- 
-  rec_core |> 
-   step_pca(all_numeric_predictors(), num_comp = tune::tune()) %>% 
-   step_normalize(all_predictors())
-```
-
 
 ```{r lm}
 lm_model <-
