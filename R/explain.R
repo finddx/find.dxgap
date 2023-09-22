@@ -40,3 +40,28 @@ get_core_recipe <- function(tbl) {
     recipes::step_rm(e_inc_num, e_inc_100k, c_newinc) |>
     recipes::step_zv(recipes::all_numeric_predictors())
 }
+
+get_log_recipe <- function(core_recipe) {
+  core_recipe |>
+    recipes::step_mutate_at(
+      recipes::all_numeric_predictors(),
+      fn = ~ dplyr::if_else(.x == 0, 1, .x) # TODO: is this valid?
+    ) |>
+    recipes::step_log(recipes::all_numeric_predictors())
+}
+
+get_normalize_recipe <- function(core_recipe) {
+  core_recipe |>
+    recipes::step_normalize(recipes::all_numeric_predictors())
+}
+
+get_pop_100k_recipe <- function(core_recipe) {
+  core_recipe |>
+    recipes::step_mutate_at(
+      recipes::all_numeric_predictors(),
+      -recipes::has_role("no_norm"),
+      fn = ~ .x / pop_100k
+    )
+}
+
+
