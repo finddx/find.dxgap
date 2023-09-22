@@ -33,7 +33,7 @@ get_core_recipe <- function(tbl) {
       old_role = "impute_w_median"
     ) |>
     recipes::step_impute_knn(
-      all_predictors(),
+      recipes::all_predictors(),
       neighbors = 5,
       impute_with = recipes::imp_vars(recipes::has_role("imputer_knn"))
     ) |>
