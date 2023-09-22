@@ -48,15 +48,19 @@ get_core_recipe <- function(tbl) {
 get_log_recipe <- function(core_recipe) {
   core_recipe |>
     recipes::step_mutate_at(
-      recipes::all_numeric_predictors(),
+      recipes::all_numeric_predictors() & -recipes::all_factor(),
       fn = ~ dplyr::if_else(.x == 0, 1, .x) # TODO: is this valid?
     ) |>
-    recipes::step_log(recipes::all_numeric_predictors())
+    recipes::step_log(
+      recipes::all_numeric_predictors() & -recipes::all_factor()
+    )
 }
 
 get_normalize_recipe <- function(core_recipe) {
   core_recipe |>
-    recipes::step_normalize(recipes::all_numeric_predictors())
+    recipes::step_normalize(
+      recipes::all_numeric_predictors() & -recipes::all_factor()
+    )
 }
 
 get_is_hbc_recipe <- function(core_recipe) {
@@ -67,8 +71,9 @@ get_is_hbc_recipe <- function(core_recipe) {
 get_pop_100k_recipe <- function(core_recipe) {
   core_recipe |>
     recipes::step_mutate_at(
-      recipes::all_numeric_predictors(),
-      -recipes::has_role("no_norm"),
+      recipes::all_numeric_predictors() &
+        -recipes::all_factor() &
+        -recipes::has_role("no_norm"),
       fn = ~ .x / pop_100k
     )
 }
