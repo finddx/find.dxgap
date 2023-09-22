@@ -1,25 +1,25 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# findtb
+# find.dxgap
 
 <!-- badges: start -->
 <!-- badges: end -->
 
 ## Installation
 
-You can install the development version of findtb from
+You can install the development version of find.dxgap from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("cynkra/findtb")
+devtools::install_github("finddx/find.dxgap")
 ```
 
-## findtb.data
+## find.dxgap.data
 
-Data for the project are stored in a directory called `findtb.data`.
-Please, call `set_findtb_data_dir()` to create and populate such folder.
+Data for the project are stored in a directory called `find.dxgap.data`.
+Please, call `set_data_dir()` to create and populate such folder.
 
 The data available are:
 
@@ -30,6 +30,7 @@ The data available are:
 | wb_2023-07-28_pop_urban.csv      |
 | wb_2023-08-31_pop_density.csv    |
 | wb_2023-08-31_pop_total.csv      |
+| wb_2023-09-07_gdp.csv            |
 | who_2023-07-28_budget.csv        |
 | who_2023-07-28_community.csv     |
 | who_2023-07-28_estimates.csv     |
@@ -40,8 +41,8 @@ The data available are:
 
 ## Report
 
-Call, `findtb_render_report(year = 2019)` to render a report for given
-year. Create new templates and render them using the `template_path`
+Call, `render_report(year = 2019)` to render a report for given year.
+Create new templates and render them using the `template_path`
 parameter.
 
 ## Objectives of the project

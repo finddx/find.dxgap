@@ -40,12 +40,6 @@
       dplyr::filter(dplyr::distinct(tidy, country_code, country_value), is.na(
         country_code))
     Output
-      # A tibble: 5 x 2
-        country_code country_value      
-        <chr>        <chr>              
-      1 <NA>         High income        
-      2 <NA>         Low income         
-      3 <NA>         Lower middle income
-      4 <NA>         Not classified     
-      5 <NA>         Upper middle income
+      # A tibble: 0 x 2
+      # i 2 variables: country_code <chr>, country_value <chr>
 

@@ -32,7 +32,7 @@ skip_if_not_available <- function(url) {
 }
 
 skip_if_no_data <- function(file_name,
-                            data_dir = Sys.getenv("FINDTB_DATADIR")) {
+                            data_dir = Sys.getenv("DXGAP_DATADIR")) {
   skip_if(data_dir == "")
   path <- file.path(data_dir, file_name)
   skip_if(!file.exists(path))
@@ -53,7 +53,7 @@ compose_file_name <- function(..., sep = "_", file_ext = NULL) {
   paste0(paste(dots, collapse = sep), file_ext)
 }
 
-findtb_read_csv <- function(file_name, data_dir = Sys.getenv("FINDTB_DATADIR"), ...) {
+dxgap_read_csv <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"), ...) {
   file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
   readr::read_csv(file_path, show_col_types = FALSE, ...)
 }

@@ -51,5 +51,5 @@ po/*~
 rsconnect/
 .Rproj.user
 
-# Report
-inst/eda/dxgap_report/dxgap_report.html
+# Inst
+inst/*.html

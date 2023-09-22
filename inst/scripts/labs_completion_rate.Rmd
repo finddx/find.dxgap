@@ -1,0 +1,49 @@
+---
+title: "Laboratories - Completion rate across years"
+author: "cynkra"
+date: "2023-09-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+pkgload::load_all()
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+```
+
+Source: https://extranet.who.int/tme/generateCSV.asp?ds=labs
+
+```{r}
+labs <- 
+  read_who("who_2023-08-30_laboratories.csv") |>
+  tidy_who()
+```
+
+
+```{r}
+nas_labs <- 
+  labs |> 
+  group_by(variable, year) |>
+  summarise(n = n(), complete_rate = sum(!is.na(value)) / n, .groups = "drop") |>
+  arrange(year, variable) |>
+  select(-n) 
+```
+
+```{r fig.height=15}
+nas_labs |> 
+  mutate(variable = forcats::fct_relevel(
+    variable, 
+    c("lab_cul", "lab_sm", "lab_xpert", "culture", "smear", "xpert"))
+  ) |> 
+  ggplot(aes(variable, complete_rate)) +
+  geom_col() +
+  scale_y_continuous(limits = c(0, 1)) +
+  theme_minimal() +
+  facet_wrap(vars(year), ncol = 1) +
+  theme(axis.text.x = element_text(angle = 90, size = rel(1.5)))
+```
+
+```{r}
+nas_labs |> 
+  gt::gt()
+```

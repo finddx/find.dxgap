@@ -1,4 +1,4 @@
-skip_if(Sys.getenv("FINDTB_DATADIR") == "")
+skip_if(Sys.getenv("DXGAP_DATADIR") == "")
 file_name <- "gf_2023-07-26_procurement.csv"
 data <- read_gf_procurement(file_name)
 test_that("a tibble is returned", {

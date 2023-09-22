@@ -53,7 +53,7 @@ tbl |>
 ```{r}
 tbl |> 
   pivot_longer(-c(country_code, is_hbc), names_to = "variable_name") |> 
-  left_join(findtb_master_list, join_by(variable_name)) |> 
+  left_join(dxgap_master_list, join_by(variable_name)) |> 
   group_by(variable_name, definition, dataset) |> 
   summarise(
     n = n(), 
@@ -89,17 +89,68 @@ corr_df <-
   corr_df_raw |> 
   select(term, who_dx_gap) |>
   arrange(who_dx_gap) |>
-  filter(term != "who_dx_gap")
+  filter(term != "who_dx_gap") |> 
+  rename(who_dx_gap_all = who_dx_gap)
 ```
 
 
 ```{r}
-corr_df |> 
+corr_by_type <- 
+  tbl |> 
+  select(-country_code) |> 
+  group_split(is_hbc) |> 
+  map(correlate) |> 
+  set_names(c("non_hbc", "hbc")) |> 
+  map(~ select(.x, term, who_dx_gap)) |>
+  map(~ arrange(.x, who_dx_gap)) |>
+  map(~ filter(.x, term != "who_dx_gap"))
+```
+
+
+```{r}
+corr_hbc <- 
+  corr_by_type$hbc |> 
+  rename(who_dx_gap_hbc = who_dx_gap)
+corr_non_hbc <- 
+  corr_by_type$non_hbc |> 
+  rename(who_dx_gap_non_hbc = who_dx_gap)
+```
+
+
+```{r}
+corr_all_df <- 
+  corr_df |> 
+  left_join(corr_hbc, join_by(term)) |> 
+  left_join(corr_non_hbc, join_by(term)) |> 
   left_join(
-    select(findtb_master_list, variable_name, definition), 
+    select(dxgap_master_list, variable_name, definition), 
     by = join_by(term == variable_name)
   ) |> 
-  relocate(definition, term, who_dx_gap) |> 
+  relocate(definition, term, starts_with("who_dx_gap"))
+```
+
+```{r fig.height=12, fig.width=12}
+corr_all_df |> 
+  pivot_longer(
+    starts_with("who_dx_gap"), 
+    names_to = "corr_cat", 
+    values_to = "corr"
+  ) |> 
+  mutate(term = forcats::fct_reorder(term, corr, .na_rm = FALSE)) |> 
+  mutate(corr_cat = forcats::fct_relevel(
+    corr_cat, 
+    c("who_dx_gap_non_hbc", "who_dx_gap_all", "who_dx_gap_hbc"))
+  ) |> 
+  ggplot(aes(term, corr)) +
+  geom_col() +
+  coord_flip() +
+  theme_minimal() +
+  facet_wrap(vars(corr_cat))
+```
+
+
+```{r}
+corr_all_df |> 
   gt::gt()
 ```
 
@@ -112,7 +163,11 @@ corr_df_raw |>
 
 ## Dx Gap
 
-```{r}
+The Dx Gap is computed as follows:
+
+$who\_dx\_gap = (e\_inc\_num - c\_newinc) / e\_inc\_num$
+
+```{r fig.height=12, fig.width=12}
 tbl |> 
   mutate(country_code = forcats::fct_reorder(country_code, who_dx_gap, .na_rm = FALSE)) |> 
   ggplot(aes(country_code, who_dx_gap, fill = is_hbc)) +
@@ -320,7 +375,7 @@ plot_scatter(
 
 ```{r}
 budget_master <- 
-  findtb_master_list |> 
+  dxgap_master_list |> 
   filter(dataset == "budget") |> 
   select(variable_name, definition)
 
@@ -467,7 +522,7 @@ budget_long_log |>
 
 ```{r}
 comm_master <- 
-  findtb_master_list |> 
+  dxgap_master_list |> 
   filter(dataset == "community_engagement") |> 
   select(variable_name, definition)
 
@@ -568,7 +623,7 @@ plot_scatter(
 
 ```{r}
 labs_master <- 
-  findtb_master_list |> 
+  dxgap_master_list |> 
   filter(dataset == "laboratories") |> 
   select(variable_name, definition)
 
@@ -613,15 +668,12 @@ complete_site_df |>
 ```{r}
 sites_long_complete <- 
   sites_long |> 
-  semi_join(
-    filter(complete_site_df, complete_rate > 0.75),
-    by = join_by(lab_type)
-  ) 
+  semi_join(complete_site_df, by = join_by(lab_type)) 
 ```
 
 ### Density distribution
 
-```{r fig.height=10, fig.width=12}
+```{r fig.height=15, fig.width=12}
 plot_density(
   sites_long_complete,
   lab_per_100k,
@@ -630,12 +682,12 @@ plot_density(
   "Community data in",
   "Source: WHO"
 ) +
-  facet_wrap(vars(definition), ncol = 1, scales = "free")
+  facet_wrap(vars(definition), ncol = 2, scales = "free")
 ```
 
 ### Dx Gap
 
-```{r fig.height=10, fig.width=12}
+```{r fig.height=15, fig.width=12}
 plot_scatter(
   sites_long_complete,
   lab_per_100k,
@@ -645,7 +697,7 @@ plot_scatter(
   "Labs and site data in",
   "Source: WHO"
 ) +
-  facet_wrap(vars(definition), ncol = 1, scales = "free")
+  facet_wrap(vars(definition), ncol = 2, scales = "free")
 ```
 
 ## Devices
@@ -663,7 +715,7 @@ plot_density(
 )
 ```
 
-## Dx Gap
+### Dx Gap
 
 ```{r}
 plot_scatter(
@@ -675,6 +727,61 @@ plot_scatter(
   "TB diagnostic devices in",
   "Source: Global Fund"
 )
+```
+
+## Expenditures
+
+```{r}
+exp_master <- 
+  dxgap_master_list |> 
+  filter(dataset == "expenditure_and_utilisation") |> 
+  select(variable_name, definition)
+
+exp_cols <- 
+  exp_master |> 
+  pull(variable_name)
+```
+
+```{r}
+exp_long <- 
+  tbl |> 
+  select(country_code, is_hbc, who_dx_gap, pop_100k, all_of(exp_cols)) |> 
+  pivot_longer(
+    cols = -c(country_code, is_hbc, who_dx_gap, pop_100k), 
+    names_to = "exp_type",
+    values_to = "exp_numb"
+  ) |> 
+  mutate(exp_per_100k = exp_numb / pop_100k) |> 
+  left_join(exp_master, by = join_by(exp_type == variable_name)) 
+```
+
+### Density distribution
+
+```{r fig.height=15, fig.width=12}
+plot_density(
+  exp_long,
+  exp_per_100k,
+  is_hbc,
+  params$year,
+  "Community data in",
+  "Source: WHO"
+) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free")
+```
+
+### Dx Gap
+
+```{r fig.height=15, fig.width=12}
+plot_scatter(
+  exp_long,
+  exp_per_100k,
+  who_dx_gap,
+  params$year, 
+  is_hbc,
+  "Labs and site data in",
+  "Source: WHO"
+) +
+  facet_wrap(vars(definition), ncol = 2, scales = "free")
 ```
 
 

@@ -5,10 +5,10 @@
 #'
 #' @param file_name Either an absolute or relative path to the raw Excel TB
 #'   dashboard. If a relative path is provided, data is read from the
-#'   findtb.data. Instead, if an absolute path is provided, data is read from
+#'   find.dxgap.data. Instead, if an absolute path is provided, data is read from
 #'   any other location.
-#' @param data_dir An absolute path pointing to the findtb.data folder. By
-#'   default, the path is returned by the `FINDTB_DATADIR` environment
+#' @param data_dir An absolute path pointing to the find.dxgap.data folder. By
+#'   default, the path is returned by the `DXGAP_DATADIR` environment
 #'   variable.
 #'
 #' @returns A tibble
@@ -19,7 +19,7 @@
 #' }
 #' @export
 read_tb_dashboard <- function(file_name,
-                              data_dir = Sys.getenv("FINDTB_DATADIR")) {
+                              data_dir = Sys.getenv("DXGAP_DATADIR")) {
   file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
 
   readxl::read_xlsx(

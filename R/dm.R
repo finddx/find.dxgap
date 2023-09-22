@@ -1,4 +1,4 @@
-findtb_build_tbl <- function(dm_hbc, dm_non_hbc) {
+build_tbl <- function(dm_hbc, dm_non_hbc) {
   hbc_tbl <-
     dm_hbc |>
     dm::dm_flatten_to_tbl(.start = hbc) |>
@@ -8,10 +8,11 @@ findtb_build_tbl <- function(dm_hbc, dm_non_hbc) {
     dm::dm_flatten_to_tbl(.start = non_hbc) |>
     dplyr::mutate(is_hbc = 0)
   dplyr::bind_rows(hbc_tbl, non_hbc_tbl) |>
-    dplyr::filter(!dplyr::if_all(-c(country_code), is.na))
+    dplyr::filter(!dplyr::if_all(-c(country_code), is.na)) |>
+    dplyr::relocate(is_hbc, .before = everything())
 }
 
-findtb_build_dm <- function(data_list, hbc = TRUE) {
+build_dm <- function(data_list, hbc = TRUE) {
   prune_lst <- drop_cols(data_list, c("year", "country", "g_whoregion"))
   filter_lst <- filter_country(data_list = prune_lst, .hbc = hbc)
   dm_no_rel <- dm::dm(!!!filter_lst)
@@ -58,11 +59,12 @@ filter_hbc_country <- function(data_list) {
 }
 
 filter_non_hbc_country <- function(data_list, non_hbc_df) {
-  purrr::map(
+  list_data <- purrr::map(
     data_list,
     ~ dplyr::semi_join(.x, non_hbc_df, by = dplyr::join_by(country_code))
-  ) |>
-    purrr::discard(~ nrow(.x) == 0)
+  )
+  list_data$hbc <- NULL
+  list_data
 }
 
 choose_dm <- function(dm) {
@@ -93,6 +95,7 @@ set_dm_pk <- function(dm) {
     dm::dm_add_pk(who_budget, country_code, check = TRUE) |>
     dm::dm_add_pk(who_community, country_code, check = TRUE) |>
     dm::dm_add_pk(who_sites, country_code, check = TRUE) |>
+    dm::dm_add_pk(who_expenditures, country_code, check = TRUE) |>
     dm::dm_add_pk(gf_procurement, country_code, check = TRUE)
 }
 
@@ -108,6 +111,7 @@ set_dm_fk <- function(dm, parent_tbl) {
     dm::dm_add_fk(!!parent_tbl, country_code, who_budget) |>
     dm::dm_add_fk(!!parent_tbl, country_code, who_community) |>
     dm::dm_add_fk(!!parent_tbl, country_code, who_sites) |>
+    dm::dm_add_fk(!!parent_tbl, country_code, who_expenditures) |>
     dm::dm_add_fk(!!parent_tbl, country_code, gf_procurement)
 }
 

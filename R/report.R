@@ -1,13 +1,13 @@
-findtb_render_report <- function(template_path = "inst/template/eda.Rmd",
+render_report <- function(template_path = "inst/template/eda.Rmd",
                                  year = 2019,
                                  output_file = NULL) {
   stopifnot(is.numeric(year))
   stopifnot(is.null(output_file) || is.character(output_file))
 
-  lst_df <- findtb_load(.year = year)
-  dm_hbc <- findtb_build_dm(lst_df, hbc = TRUE)
-  dm_non_hbc <- findtb_build_dm(lst_df, hbc = FALSE)
-  data_tbl <- findtb_build_tbl(dm_hbc, dm_non_hbc)
+  lst_df <- load(.year = year)
+  dm_hbc <- build_dm(lst_df, hbc = TRUE)
+  dm_non_hbc <- build_dm(lst_df, hbc = FALSE)
+  data_tbl <- build_tbl(dm_hbc, dm_non_hbc)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   path <- if (is.null(output_file)) {

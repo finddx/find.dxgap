@@ -1,10 +1,10 @@
-findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
+load <- function(.year = 2019, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   data_files <-
     list.files(here::here("inst/extdata"), pattern = "csv") |>
     stringr::str_subset("masterlist", negate = TRUE)
 
-  lst_df <- findtb_import_bulk(lst_df, data_files, year = .year)
+  lst_df <- import_bulk(lst_df, data_files, year = .year)
 
   # HBC countries --------------------------------------------------------------
 
@@ -61,6 +61,10 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
 
   who_sites_df <- lst_df$who_laboratories
 
+  # WHO Expenditures -----------------------------------------------------------
+
+  who_expenditures_df <- lst_df$who_expenditures
+
   # Global Fund Procurement ----------------------------------------------------
 
   gf_procurement_df <-
@@ -80,6 +84,7 @@ findtb_load <- function(.year = 2019, data_dir = Sys.getenv("FINDTB_DATADIR")) {
     who_budget = who_budget_df,
     who_community = who_community_df,
     who_sites = who_sites_df,
+    who_expenditures = who_expenditures_df,
     gf_procurement = gf_procurement_df
   )
 }

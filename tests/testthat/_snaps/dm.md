@@ -1,15 +1,15 @@
-# findtb_build_dm() `hbc` works
+# build_dm() `hbc` works
 
     Code
       dm::glimpse(dm)
     Output
-      dm of 11 tables: `hbc`, `wb_tot_pop`, `wb_urb_pop`, `wb_density_pop`, `wb_gdp`, ...
+      dm of 12 tables: `hbc`, `wb_tot_pop`, `wb_urb_pop`, `wb_density_pop`, `wb_gdp`, ...
       
       --------------------------------------------------------------------------------
       
       Table: `hbc`
       Primary key: `country_code`
-      10 outgoing foreign key(s):
+      11 outgoing foreign key(s):
         `country_code` -> `wb_tot_pop$country_code` no_action
         `country_code` -> `wb_urb_pop$country_code` no_action
         `country_code` -> `wb_density_pop$country_code` no_action
@@ -19,6 +19,7 @@
         `country_code` -> `who_budget$country_code` no_action
         `country_code` -> `who_community$country_code` no_action
         `country_code` -> `who_sites$country_code` no_action
+        `country_code` -> `who_expenditures$country_code` no_action
         `country_code` -> `gf_procurement$country_code` no_action
       
       Rows: 30
@@ -146,6 +147,22 @@
       
       --------------------------------------------------------------------------------
       
+      Table: `who_expenditures`
+      Primary key: `country_code`
+      
+      Rows: 30
+      Columns: 8
+      $ country_code      <chr> "AGO", "BGD", "BRA", "KHM", "CAF", "CHN", "COG", "PR~
+      $ rcvd_lab          <dbl> 784599, 9242380, 6774730, 1603700, 219619, 10816901,~
+      $ rcvd_staff        <dbl> 173805, 16468442, 469186, 3347209, 317711, 146348944~
+      $ rcvd_tot_domestic <dbl> 2856381, 13308192, 31904531, 5184850, 761742, 629915~
+      $ rcvd_tot_gf       <dbl> 2416285, 36183130, 0, 4314045, 942771, NA, 5580454, ~
+      $ rcvd_tot_grnt     <dbl> 120054, 0, 17000, 1700000, 60000, 5160563, 0, 640763~
+      $ rcvd_tot_sources  <dbl> 5392720, 62991322, 31921531, 11798895, 1834513, 6350~
+      $ rcvd_tot_usaid    <dbl> 0, 13500000, 0, 600000, 70000, NA, 0, 0, 2242963, 11~
+      
+      --------------------------------------------------------------------------------
+      
       Table: `gf_procurement`
       Primary key: `country_code`
       
@@ -175,12 +192,12 @@
       values of `hbc$country_code` not in `who_community$country_code`: CHN (1), PRK (1), RUS (1)
       values of `hbc$country_code` not in `gf_procurement$country_code`: AGO (1), BGD (1), BRA (1), CAF (1), CHN (1), ...
 
-# findtb_build_dm() `non_hbc` works
+# build_dm() `non_hbc` works
 
     Code
       dm::glimpse(dm)
     Output
-      dm of 11 tables: `wb_tot_pop`, `wb_urb_pop`, `wb_density_pop`, `wb_gdp`, `who_no...
+      dm of 12 tables: `wb_tot_pop`, `wb_urb_pop`, `wb_density_pop`, `wb_gdp`, `who_no...
       
       --------------------------------------------------------------------------------
       
@@ -303,6 +320,22 @@
       
       --------------------------------------------------------------------------------
       
+      Table: `who_expenditures`
+      Primary key: `country_code`
+      
+      Rows: 185
+      Columns: 8
+      $ country_code      <chr> "AFG", "ALB", "DZA", "ASM", "AND", "AIA", "ATG", "AR~
+      $ rcvd_lab          <dbl> 2165197, NA, NA, NA, NA, NA, NA, 0, 171472, NA, NA, ~
+      $ rcvd_staff        <dbl> 1956088, NA, NA, NA, NA, NA, NA, 0, 85257, NA, NA, N~
+      $ rcvd_tot_domestic <dbl> 284773, NA, NA, NA, NA, NA, NA, 2532872, 3119098, NA~
+      $ rcvd_tot_gf       <dbl> 6573762, NA, NA, NA, NA, NA, NA, 0, 1474278, NA, NA,~
+      $ rcvd_tot_grnt     <dbl> 4826365, NA, NA, NA, NA, NA, NA, 0, NA, NA, NA, NA, ~
+      $ rcvd_tot_sources  <dbl> 14984900, NA, NA, NA, NA, NA, NA, 2532872, 4593376, ~
+      $ rcvd_tot_usaid    <dbl> 3300000, NA, NA, NA, NA, NA, NA, 0, NA, NA, NA, NA, ~
+      
+      --------------------------------------------------------------------------------
+      
       Table: `gf_procurement`
       Primary key: `country_code`
       
@@ -315,7 +348,7 @@
       
       Table: `non_hbc`
       Primary key: `country_code`
-      10 outgoing foreign key(s):
+      11 outgoing foreign key(s):
         `country_code` -> `wb_tot_pop$country_code` no_action
         `country_code` -> `wb_urb_pop$country_code` no_action
         `country_code` -> `wb_density_pop$country_code` no_action
@@ -325,6 +358,7 @@
         `country_code` -> `who_budget$country_code` no_action
         `country_code` -> `who_community$country_code` no_action
         `country_code` -> `who_sites$country_code` no_action
+        `country_code` -> `who_expenditures$country_code` no_action
         `country_code` -> `gf_procurement$country_code` no_action
       
       Rows: 191
@@ -348,5 +382,6 @@
       values of `non_hbc$country_code` not in `who_budget$country_code`: FRO (1), GIB (1), IMN (1), LIE (1), MAF (1), VIR (1)
       values of `non_hbc$country_code` not in `who_community$country_code`: ABW (1), AIA (1), ALB (1), AND (1), ARE (1), ...
       values of `non_hbc$country_code` not in `who_sites$country_code`: FRO (1), GIB (1), IMN (1), LIE (1), MAF (1), VIR (1)
+      values of `non_hbc$country_code` not in `who_expenditures$country_code`: FRO (1), GIB (1), IMN (1), LIE (1), MAF (1), VIR (1)
       values of `non_hbc$country_code` not in `gf_procurement$country_code`: ABW (1), AFG (1), AIA (1), AND (1), ARE (1), ...
 

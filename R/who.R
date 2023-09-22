@@ -1,7 +1,7 @@
 download_who <- function(file_name = tempfile(compose_file_name("who", download_date, dataset), fileext = ".csv"),
                          dataset = "notification",
                          download_date = as.character(Sys.Date()),
-                         data_dir = Sys.getenv("FINDTB_DATADIR")) {
+                         data_dir = Sys.getenv("DXGAP_DATADIR")) {
   dataset <- rlang::arg_match(dataset, who_url_endpoints$dataset)
   url <-  "https://extranet.who.int/tme/generateCSV.asp?ds="
   endpoint <-
@@ -13,7 +13,7 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
 
   data <- readr::read_csv(url_topic, show_col_types = FALSE)
   subset_cols <-
-    findtb_master_list |>
+    dxgap_master_list |>
     dplyr::filter(data_source == "who") |>
     dplyr::filter(dataset == !!dataset) |>
     dplyr::pull(variable_name)
@@ -28,7 +28,7 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
 }
 
 read_who <- function(...) {
-  findtb_read_csv(..., col_types = readr::cols("download_date" = "c")) |>
+  dxgap_read_csv(..., col_types = readr::cols("download_date" = "c")) |>
     tibble::as_tibble()
 }
 
@@ -59,160 +59,69 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
   }
 }
 
-# TODO: understandable renaming
-tidy_who_notifications <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  df <-
-    data |>
+tidy_who_core <- function(data, year, shape) {
+  data |>
+    tidy_who_rename() |>
+    tidy_who_year(.year = year) |>
+    tidy_who_shape(.shape = shape)
+}
+
+tidy_who_rename <- function(data) {
+  data |>
     dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3)
+}
 
+tidy_who_year <- function(data, .year) {
   if (!is.null(.year)) {
     df <-
-      df |>
+      data |>
       dplyr::filter(year == !!.year)
+    return(df)
   }
+  data
+}
 
-  if (shape == "long") {
+tidy_who_shape <- function(data, .shape) {
+  if (.shape == "long") {
     df <-
-      df |>
+      data |>
       tidyr::pivot_longer(
         cols = -c(country, country_code, g_whoregion, year),
         names_to = "variable"
-      )
+    )
     return(df)
   }
+  data
+}
 
-  df
+# TODO: understandable renaming
+tidy_who_notifications <- function(data, .year = NULL, shape = "long") {
+  shape <- rlang::arg_match(shape, values = c("long", "wide"))
+  tidy_who_core(data, year = .year, shape = shape)
 }
 
 tidy_who_budget <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  df <-
-    data |>
-    dplyr::select(-download_date) |>
-    dplyr::rename(country_code = iso3)
-
-  if (!is.null(.year)) {
-    df <-
-      df |>
-      dplyr::filter(year == !!.year)
-  }
-
-  if (shape == "long") {
-    df <-
-      df |>
-      tidyr::pivot_longer(
-        cols = -c(country, country_code, g_whoregion, year),
-        names_to = "variable"
-      )
-    return(df)
-  }
-
-  df
+  tidy_who_core(data, year = .year, shape = shape)
 }
 
 tidy_who_community <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  df <-
-    data |>
-    dplyr::select(-download_date) |>
-    dplyr::rename(country_code = iso3)
-
-  if (!is.null(.year)) {
-    df <-
-      df |>
-      dplyr::filter(year == !!.year)
-  }
-
-  if (shape == "long") {
-    df <-
-      df |>
-      tidyr::pivot_longer(
-        cols = -c(country, country_code, g_whoregion, year),
-        names_to = "variable"
-      )
-    return(df)
-  }
-
-  df
+  tidy_who_core(data, year = .year, shape = shape)
 }
 
 tidy_who_estimates <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  df <-
-    data |>
-    dplyr::select(-download_date) |>
-    dplyr::rename(country_code = iso3)
-
-  if (!is.null(.year)) {
-    df <-
-      df |>
-      dplyr::filter(year == !!.year)
-  }
-
-  if (shape == "long") {
-    df <-
-      df |>
-      tidyr::pivot_longer(
-        cols = -c(country, country_code, g_whoregion, year),
-        names_to = "variable"
-      )
-    return(df)
-  }
-
-  df
+  tidy_who_core(data, year = .year, shape = shape)
 }
 
 tidy_who_expenditures <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  df <-
-    data |>
-    dplyr::select(-download_date) |>
-    dplyr::rename(country_code = iso3)
-
-  if (!is.null(.year)) {
-    df <-
-      df |>
-      dplyr::filter(year == !!.year)
-  }
-
-  if (shape == "long") {
-    df <-
-      df |>
-      tidyr::pivot_longer(
-        cols = -c(country, country_code, g_whoregion, year),
-        names_to = "variable"
-      )
-    return(df)
-  }
-
-  df
+  tidy_who_core(data, year = .year, shape = shape)
 }
 
 tidy_who_labs <- function(data, .year = NULL, shape = "long") {
   shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  df <-
-    data |>
-    dplyr::select(-download_date) |>
-    dplyr::rename(country_code = iso3)
-
-  if (!is.null(.year)) {
-    df <-
-      df |>
-      dplyr::filter(year == !!.year)
-  }
-
-  if (shape == "long") {
-    df <-
-      df |>
-      tidyr::pivot_longer(
-        cols = -c(country, country_code, g_whoregion, year),
-        names_to = "variable"
-      )
-    return(df)
-  }
-
-  df
-
+  tidy_who_core(data, year = .year, shape = shape)
 }
