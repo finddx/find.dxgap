@@ -65,7 +65,9 @@ get_normalize_recipe <- function(core_recipe) {
 
 get_is_hbc_recipe <- function(core_recipe) {
   core_recipe |>
-    recipes::step_filter(is_hbc == "hbc")
+    recipes::step_filter(is_hbc == "hbc") |>
+    recipes::step_rm(is_hbc) |>
+    get_pca_recipe()
 }
 
 get_pop_100k_recipe <- function(core_recipe) {
@@ -77,6 +79,12 @@ get_pop_100k_recipe <- function(core_recipe) {
       fn = ~ .x / pop_100k
     ) |>
     recipes::step_rm(pop_100k)
+}
+
+get_pca_recipe <- function(core_recipe) {
+  core_recipe |>
+    get_normalize_recipe() |>
+    recipes::step_pca()
 }
 
 
