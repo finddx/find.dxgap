@@ -86,8 +86,7 @@ rec_core <-
 
 ```{r eval=FALSE}
 rec_core |> 
-  cook() |> 
-  skimr::skim()
+  cook()
 ```
 
 
