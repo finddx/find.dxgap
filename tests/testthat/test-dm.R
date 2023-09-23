@@ -24,3 +24,28 @@ test_that("build_dm() `non_hbc` works", {
       writeLines()
   })
 })
+
+test_that("build_dm() `hbc` works and returns a time series", {
+  dm <- build_dm(data_list, is_hbc = TRUE)
+  expect_snapshot(dm::glimpse(dm))
+  expect_snapshot(dm::dm_examine_constraints(dm))
+  expect_snapshot({
+    dm::dm_examine_constraints(dm) |>
+      tibble::as_tibble() |>
+      dplyr::filter(problem != "") |>
+      dplyr::pull(problem) |>
+      writeLines()
+  })
+})
+
+test_that("build_dm() `non_hbc` works and returns a time series", {
+  dm <- build_dm(data_list, is_hbc = FALSE)
+  expect_snapshot(dm::glimpse(dm))
+  expect_snapshot({
+    dm::dm_examine_constraints(dm) |>
+      tibble::as_tibble() |>
+      dplyr::filter(problem != "") |>
+      dplyr::pull(problem) |>
+      writeLines()
+  })
+})
