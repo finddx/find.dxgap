@@ -12,9 +12,9 @@ build_tbl <- function(dm_hbc, dm_non_hbc) {
     dplyr::relocate(is_hbc, .before = everything())
 }
 
-build_dm <- function(data_list, hbc = TRUE) {
+build_dm <- function(data_list, is_hbc = TRUE) {
   prune_lst <- drop_cols(data_list, c("year", "country", "g_whoregion"))
-  filter_lst <- filter_country(data_list = prune_lst, .hbc = hbc)
+  filter_lst <- filter_country(data_list = prune_lst, .is_hbc = is_hbc)
   dm_no_rel <- dm::dm(!!!filter_lst)
   dm_rel <- choose_dm(dm_no_rel)
   set_dm_colors(dm_rel)
@@ -39,9 +39,9 @@ assign_non_hbc_df <- function(non_hbc_list, non_hbc_df) {
   return(non_hbc_list)
 }
 
-filter_country <- function(data_list, .hbc = TRUE) {
+filter_country <- function(data_list, .is_hbc) {
   hbc_df <- data_list$hbc
-  if (.hbc) {
+  if (.is_hbc) {
     country_lst <- filter_hbc_country(data_list)
     return(country_lst)
   }
