@@ -87,38 +87,38 @@ set_dm_rels <- function(dm, parent_tbl) {
 
 set_dm_pk <- function(dm) {
   dm |>
-    dm::dm_add_pk(wb_tot_pop, country_code, check = TRUE) |>
-    dm::dm_add_pk(wb_urb_pop, country_code, check = TRUE) |>
-    dm::dm_add_pk(wb_density_pop, country_code, check = TRUE) |>
-    dm::dm_add_pk(wb_gdp, country_code, check = TRUE) |>
-    dm::dm_add_pk(who_notifications, country_code, check = TRUE) |>
-    dm::dm_add_pk(who_estimates, country_code, check = TRUE) |>
-    dm::dm_add_pk(who_budget, country_code, check = TRUE) |>
-    dm::dm_add_pk(who_community, country_code, check = TRUE) |>
-    dm::dm_add_pk(who_sites, country_code, check = TRUE) |>
-    dm::dm_add_pk(who_expenditures, country_code, check = TRUE) |>
-    dm::dm_add_pk(gf_procurement, country_code, check = TRUE)
+    dm::dm_add_pk(wb_tot_pop, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(wb_urb_pop, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(wb_density_pop, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(wb_gdp, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(who_notifications, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(who_estimates, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(who_budget, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(who_community, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(who_sites, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(who_expenditures, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(gf_procurement, c(year, country_code), check = TRUE)
 }
 
 set_dm_fk <- function(dm, parent_tbl) {
   parent_tbl <- rlang::ensym(parent_tbl)
   dm |>
-    dm::dm_add_fk(!!parent_tbl, country_code, wb_tot_pop) |>
-    dm::dm_add_fk(!!parent_tbl, country_code, wb_urb_pop) |>
-    dm::dm_add_fk(!!parent_tbl, country_code, wb_density_pop) |>
-    dm::dm_add_fk(!!parent_tbl, country_code, wb_gdp) |>
-    dm::dm_add_fk(!!parent_tbl, country_code, who_notifications) |>
-    dm::dm_add_fk(!!parent_tbl, country_code, who_estimates) |>
-    dm::dm_add_fk(!!parent_tbl, country_code, who_budget) |>
-    dm::dm_add_fk(!!parent_tbl, country_code, who_community) |>
-    dm::dm_add_fk(!!parent_tbl, country_code, who_sites) |>
-    dm::dm_add_fk(!!parent_tbl, country_code, who_expenditures) |>
-    dm::dm_add_fk(!!parent_tbl, country_code, gf_procurement)
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), wb_tot_pop) |>
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), wb_urb_pop) |>
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), wb_density_pop) |>
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), wb_gdp) |>
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), who_notifications) |>
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), who_estimates) |>
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), who_budget) |>
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), who_community) |>
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), who_sites) |>
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), who_expenditures) |>
+    dm::dm_add_fk(!!parent_tbl, c(year, country_code), gf_procurement)
 }
 
 set_dm_pk_parent <- function(dm, parent_tbl) {
   parent_tbl <- rlang::ensym(parent_tbl)
-  dm::dm_add_pk(dm, !!parent_tbl, country_code, check = TRUE)
+  dm::dm_add_pk(dm, !!parent_tbl, c(year, country_code), check = TRUE)
 }
 
 set_dm_colors <- function(dm) {
