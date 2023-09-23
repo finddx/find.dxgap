@@ -13,7 +13,7 @@ build_tbl <- function(dm_hbc, dm_non_hbc) {
 }
 
 build_dm <- function(data_list, is_hbc = TRUE) {
-  prune_lst <- drop_cols(data_list, c("year", "country", "g_whoregion"))
+  prune_lst <- drop_cols(data_list, c("country", "g_whoregion"))
   filter_lst <- filter_country(data_list = prune_lst, .is_hbc = is_hbc)
   dm_no_rel <- dm::dm(!!!filter_lst)
   dm_rel <- choose_dm(dm_no_rel)
