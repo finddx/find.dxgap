@@ -14,7 +14,7 @@ test_that("build_dm() `hbc` works", {
 })
 
 test_that("build_dm() `non_hbc` works", {
-  dm <- build_dm(data_list, hbc = FALSE)
+  dm <- build_dm(data_list, is_hbc = FALSE)
   expect_snapshot(dm::glimpse(dm))
   expect_snapshot({
     dm::dm_examine_constraints(dm) |>
