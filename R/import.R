@@ -1,6 +1,5 @@
 import_bulk <- function(data_lst,
                            data_name,
-                           year,
                            data_dir = Sys.getenv("DXGAP_DATADIR")) {
   list_arg <- rlang::ensym(data_lst)
   lst_df <- fetch_object(obj_name = !!list_arg, env = globalenv())
@@ -8,7 +7,6 @@ import_bulk <- function(data_lst,
     lst_df <- import_tbl(
       .data_lst = lst_df,
       .file_name = data_name[[i]],
-      .year = year,
       .data_dir = data_dir
     )
   }
@@ -19,7 +17,6 @@ import_bulk <- function(data_lst,
 #' @example lst_df <- import_tbl(lst_df, "who_hbc.csv", 2019)
 import_tbl <- function(.data_lst,
                           .file_name,
-                          .year,
                           .all = TRUE,
                           .data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
@@ -80,9 +77,9 @@ import_tbl <- function(.data_lst,
   )
 
   if (provider %in% c("who") && dataset != "hbc") {
-    data_tidy <- tidy_data(data_raw, year = .year, .shape = "wide")
+    data_tidy <- tidy_data(data_raw, .shape = "wide")
   } else {
-    data_tidy <- tidy_data(data_raw, year = .year)
+    data_tidy <- tidy_data(data_raw)
   }
 
   list_arg <- rlang::ensym(.data_lst)
