@@ -26,8 +26,17 @@ tidy_hbc <- function(data, year = NULL, all = TRUE) {
         dest = "iso3c"
       ),
       .after = country
+    )
+
+  grown_df <- grow_hbc(df)
+
+  df <-
+    df |>
+    dplyr::full_join(
+      grown_df,
+      dplyr::join_by(country_code, year_from == year_from_id)
     ) |>
-    dplyr::rename(year = year_from)
+    dplyr::select(-year_from)
 
   if (!all) {
     df <-
@@ -38,14 +47,32 @@ tidy_hbc <- function(data, year = NULL, all = TRUE) {
   if (!is.null(year)) {
     df_subset <-
       df |>
-      dplyr::rename(year_from = year) |>
-      dplyr::mutate(year_to = year_from + 4) |>
-      dplyr::mutate(year_user = !!year) |>
-      dplyr::filter(dplyr::between(year_user, left = year_from, right = year_to)) |>
-      dplyr::select(-year_from, -year_user, year = year_to)
+      dplyr::filter(year == !!year)
     return(df_subset)
   }
   df
+}
+
+grow_hbc <- function(data) {
+  data |>
+    dplyr::mutate(year_from_id = year_from) |>
+    tidyr::nest(.key = "hbc_data", .by = year_from_id) |>
+    dplyr::mutate(hbc_data = purrr::map(
+      hbc_data,
+      ~ dplyr::mutate(.x, year_to = year_from + 4)
+      )
+    ) |>
+    dplyr::mutate(hbc_data = purrr::map(
+      hbc_data,
+      ~ tidyr::pivot_longer(.x, tidyselect::starts_with("year"), names_to = NULL)
+      )
+    ) |>
+    dplyr::mutate(hbc_data = purrr::map(
+      hbc_data,
+      ~ tidyr::expand(.x, country_code, year = tidyr::full_seq(value, 1))
+      )
+    ) |>
+    tidyr::unnest(hbc_data)
 }
 
 get_hbc_core <- function(data) {
