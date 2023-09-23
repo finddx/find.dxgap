@@ -17,6 +17,7 @@ build_dm <- function(data_list, is_hbc = TRUE) {
   filter_lst <- filter_country(data_list = prune_lst, .is_hbc = is_hbc)
   dm_no_rel <- dm::dm(!!!filter_lst)
   dm_rel <- choose_dm(dm_no_rel)
+  dm_year <- dm::dm_filter(dm_rel, year == !!year)
   set_dm_colors(dm_rel)
 }
 
