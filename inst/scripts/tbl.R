@@ -1,6 +1,6 @@
 library(tidyverse)
 pkgload::load_all()
-df_lst <- load(.year = 2019)
+df_lst <- load()
 dm_hbc <- build_dm(df_lst, is_hbc = TRUE)
 dm_non_hbc <- build_dm(df_lst, is_hbc = FALSE)
 data_tbl <- build_tbl(dm_hbc, dm_non_hbc)
