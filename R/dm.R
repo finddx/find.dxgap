@@ -60,17 +60,25 @@ filter_hbc_country <- function(data_list) {
   hbc_df <- data_list$hbc
   purrr::map(
     data_list,
-    ~ dplyr::semi_join(.x, hbc_df, by = dplyr::join_by(country_code))
+    ~ dplyr::semi_join(.x, hbc_df, by = dplyr::join_by(country_code, year))
   )
 }
 
 filter_non_hbc_country <- function(data_list, non_hbc_df) {
   list_data <- purrr::map(
     data_list,
-    ~ dplyr::semi_join(.x, non_hbc_df, by = dplyr::join_by(country_code))
+    ~ dplyr::semi_join(.x, non_hbc_df, by = dplyr::join_by(country_code, year))
   )
   list_data$hbc <- NULL
   list_data
+}
+
+is_hbc_dm <- function(dm) {
+  tbl_names <- names(dm)
+  if ("hbc" %in% tbl_names) {
+    return(TRUE)
+  }
+  FALSE
 }
 
 choose_dm <- function(dm) {
