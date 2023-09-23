@@ -14,7 +14,7 @@ build_tbl <- function(dm_hbc, dm_non_hbc) {
 
 build_dm <- function(data_list, year = NULL, is_hbc = TRUE) {
   prune_lst <- drop_cols(data_list, c("country", "g_whoregion"))
-  filter_lst <- filter_country(data_list = prune_lst, .is_hbc = is_hbc)
+  filter_lst <- filter_country(data_list = prune_lst, year = year,  .is_hbc = is_hbc)
   dm_no_rel <- dm::dm(!!!filter_lst)
   is_hbc <- is_hbc_dm(dm_no_rel)
   if (is_hbc) {
@@ -39,7 +39,12 @@ drop_cols <- function(data_list, cols_to_drop) {
     purrr::map(~ dplyr::select(.x, -tidyselect::any_of(cols_to_drop)))
 }
 
-get_non_hbc_country_code <- function(hbc_df) {
+get_non_hbc_country_code <- function(hbc_df, .year) {
+  if (!is.null(.year)) {
+    hbc_df <-
+      hbc_df |>
+      dplyr::filter(year == !!.year)
+  }
   countrycode::codelist |>
     dplyr::select(country_code = iso3c) |>
     dplyr::filter(!is.na(country_code)) |>
@@ -54,13 +59,13 @@ assign_non_hbc_df <- function(non_hbc_list, non_hbc_df) {
   return(non_hbc_list)
 }
 
-filter_country <- function(data_list, .is_hbc) {
+filter_country <- function(data_list, year, .is_hbc) {
   hbc_df <- data_list$hbc
   if (.is_hbc) {
     country_lst <- filter_hbc_country(data_list)
     return(country_lst)
   }
-  non_hbc_df <- get_non_hbc_country_code(hbc_df)
+  non_hbc_df <- get_non_hbc_country_code(hbc_df, .year = year)
   non_hbc_list <- filter_non_hbc_country(data_list, non_hbc_df)
   assign_non_hbc_df(non_hbc_list, non_hbc_df)
 }
