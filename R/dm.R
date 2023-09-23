@@ -12,13 +12,17 @@ build_tbl <- function(dm_hbc, dm_non_hbc) {
     dplyr::relocate(is_hbc, .before = everything())
 }
 
-build_dm <- function(data_list, is_hbc = TRUE) {
+build_dm <- function(data_list, year = NULL, is_hbc = TRUE) {
   prune_lst <- drop_cols(data_list, c("country", "g_whoregion"))
   filter_lst <- filter_country(data_list = prune_lst, .is_hbc = is_hbc)
   dm_no_rel <- dm::dm(!!!filter_lst)
   dm_rel <- choose_dm(dm_no_rel)
-  dm_year <- dm::dm_filter(dm_rel, year == !!year)
-  set_dm_colors(dm_rel)
+  dm_ts <- set_dm_colors(dm_rel)
+  if (is.null(year)) {
+    return(dm_ts)
+  }
+  dm_year <- dm::dm_filter(dm_ts, year == !!year)
+  dm_year
 }
 
 drop_cols <- function(data_list, cols_to_drop) {
