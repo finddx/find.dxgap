@@ -37,10 +37,10 @@ tidy_hbc <- function(data, year = NULL, all = TRUE) {
   if (!is.null(year)) {
     df_subset <-
       df |>
-      dplyr::mutate(year_end = year + 5) |>
+      dplyr::mutate(year_to = year_from + 4) |>
       dplyr::mutate(year_user = !!year) |>
-      dplyr::filter(year_user > year & year_user <= year_end) |>
-      dplyr::select(-year_end, -year_user)
+      dplyr::filter(dplyr::between(year_user, left = year_from, right = year_to)) |>
+      dplyr::select(-year_from, -year_user, year = year_to)
     return(df_subset)
   }
   df
