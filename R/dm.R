@@ -90,15 +90,6 @@ is_hbc_dm <- function(dm) {
   FALSE
 }
 
-choose_dm <- function(dm) {
-  tbl_names <- names(dm)
-  if ("hbc" %in% tbl_names) {
-    dm <- set_dm_rels(dm, hbc)
-    return(dm)
-  }
-  set_dm_rels(dm, non_hbc)
-}
-
 set_dm_rels <- function(dm, parent_tbl) {
   parent_tbl <- rlang::ensym(parent_tbl)
   dm |>
