@@ -35,7 +35,8 @@ get_non_hbc_country_code <- function(hbc_df) {
     dplyr::select(country_code = iso3c) |>
     dplyr::filter(!is.na(country_code)) |>
     dplyr::anti_join(hbc_df, by = dplyr::join_by(country_code)) |>
-    dplyr::anti_join(country_exclude_df, by = dplyr::join_by(country_code))
+    dplyr::anti_join(country_exclude_df, by = dplyr::join_by(country_code)) |>
+    tidyr::expand(country_code, year = 2000:2099)
 }
 
 assign_non_hbc_df <- function(non_hbc_list, non_hbc_df) {
