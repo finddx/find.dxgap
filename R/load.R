@@ -10,7 +10,7 @@ load <- function(data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   hbc_df <-
     lst_df$who_hbc |>
-    dplyr::select(country_code) |>
+    dplyr::select(country_code, year) |>
     dplyr::mutate(country = countrycode::countrycode(
       country_code,
       origin = "iso3c",
