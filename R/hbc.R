@@ -26,8 +26,17 @@ tidy_hbc <- function(data, year = NULL, all = TRUE) {
         dest = "iso3c"
       ),
       .after = country
+    )
+
+  grown_df <- grow_hbc(df)
+
+  df <-
+    df |>
+    dplyr::full_join(
+      grown_df,
+      dplyr::join_by(country_code, year_from == year_from_id)
     ) |>
-    dplyr::rename(year = year_from)
+    dplyr::select(-year_from)
 
   if (!all) {
     df <-
