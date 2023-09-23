@@ -26,7 +26,7 @@ test_that("the tibble dimensions are as expected", {
 test_that("primary key", {
   skip_if_no_data(file_name)
   df <- tidy_hbc(data)
-  expect_null(dm::check_key(df, country_code, year_from))
+  expect_null(dm::check_key(df, country_code, year))
 })
 
 test_that("`country_code` entries are not missing", {
