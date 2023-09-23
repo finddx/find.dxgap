@@ -39,7 +39,7 @@ assign_non_hbc_df <- function(non_hbc_list, non_hbc_df) {
   return(non_hbc_list)
 }
 
-filter_country <- function(data_list, .is_hbc = TRUE) {
+filter_country <- function(data_list, .is_hbc) {
   hbc_df <- data_list$hbc
   if (.is_hbc) {
     country_lst <- filter_hbc_country(data_list)
