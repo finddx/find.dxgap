@@ -1,7 +1,7 @@
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
 data_list <- load()
 test_that("build_dm() `hbc` works", {
-  dm <- build_dm(data_list, year = 2019, is_hbc = FALSE)
+  dm <- build_dm(data_list, year = 2019, is_hbc = TRUE)
   expect_snapshot(dm::glimpse(dm))
   expect_snapshot(dm::dm_examine_constraints(dm))
   expect_snapshot({
