@@ -38,10 +38,32 @@ tidy_hbc <- function(data, year = NULL, all = TRUE) {
   if (!is.null(year)) {
     df_subset <-
       df |>
-      filter(year == !!year)
+      dplyr::filter(year == !!year)
     return(df_subset)
   }
   df
+}
+
+grow_hbc <- function(data) {
+  data |>
+    dplyr::mutate(year_from_id = year_from) |>
+    tidyr::nest(.key = "hbc_data", .by = year_from_id) |>
+    dplyr::mutate(hbc_data = purrr::map(
+      hbc_data,
+      ~ dplyr::mutate(.x, year_to = year_from + 4)
+      )
+    ) |>
+    dplyr::mutate(hbc_data = purrr::map(
+      hbc_data,
+      ~ tidyr::pivot_longer(.x, tidyselect::starts_with("year"), names_to = NULL)
+      )
+    ) |>
+    dplyr::mutate(hbc_data = purrr::map(
+      hbc_data,
+      ~ tidyr::expand(.x, country_code, year = tidyr::full_seq(value, 1))
+      )
+    ) |>
+    tidyr::unnest(hbc_data)
 }
 
 get_hbc_core <- function(data) {
