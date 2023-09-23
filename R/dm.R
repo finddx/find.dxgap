@@ -16,12 +16,21 @@ build_dm <- function(data_list, year = NULL, is_hbc = TRUE) {
   prune_lst <- drop_cols(data_list, c("country", "g_whoregion"))
   filter_lst <- filter_country(data_list = prune_lst, .is_hbc = is_hbc)
   dm_no_rel <- dm::dm(!!!filter_lst)
-  dm_rel <- choose_dm(dm_no_rel)
+  is_hbc <- is_hbc_dm(dm_no_rel)
+  if (is_hbc) {
+    dm_rel <- set_dm_rels(dm_no_rel, hbc)
+  } else {
+    dm_rel <- set_dm_rels(dm_no_rel, non_hbc)
+  }
   dm_ts <- set_dm_colors(dm_rel)
   if (is.null(year)) {
     return(dm_ts)
   }
-  dm_year <- dm::dm_filter(dm_ts, year == !!year)
+  if (is_hbc) {
+    dm_year <- dm::dm_filter(dm_ts, hbc = (year == !!year))
+  } else {
+    dm_year <- dm::dm_filter(dm_ts, non_hbc = (year == !!year))
+  }
   dm_year
 }
 
