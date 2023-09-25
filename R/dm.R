@@ -14,10 +14,10 @@ build_tbl <- function(dm_hbc, dm_non_hbc) {
 
 build_dm <- function(data_list, year = NULL, is_hbc = TRUE) {
   prune_lst <- drop_cols(data_list, c("country", "g_whoregion"))
-  filter_lst <- filter_country(data_list = prune_lst, .year = year,  .is_hbc = is_hbc)
-  dm_no_rel <- dm::dm(!!!filter_lst)
-  is_hbc <- is_hbc_dm(dm_no_rel)
-  if (is_hbc) {
+  hbc_lst <- subset_hbc(data_list = prune_lst, .year = year,  .is_hbc = is_hbc)
+  dm_no_rel <- dm::dm(!!!hbc_lst)
+  is_hbc2 <- is_hbc_dm(dm_no_rel)
+  if (is_hbc2) {
     dm_rel <- set_dm_rels(dm_no_rel, hbc)
   } else {
     dm_rel <- set_dm_rels(dm_no_rel, non_hbc)
@@ -26,7 +26,7 @@ build_dm <- function(data_list, year = NULL, is_hbc = TRUE) {
   if (is.null(year)) {
     return(dm_ts)
   }
-  if (is_hbc) {
+  if (is_hbc2) {
     dm_year <- dm::dm_filter(dm_ts, hbc = (year == !!year))
   } else {
     dm_year <- dm::dm_filter(dm_ts, non_hbc = (year == !!year))
@@ -59,7 +59,7 @@ assign_non_hbc_df <- function(non_hbc_list, non_hbc_df) {
   return(non_hbc_list)
 }
 
-filter_country <- function(data_list, .year, .is_hbc) {
+subset_hbc <- function(data_list, .year, .is_hbc) {
   hbc_df <- data_list$hbc
   if (.is_hbc) {
     country_lst <- filter_hbc_country(data_list)
