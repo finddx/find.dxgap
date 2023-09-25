@@ -9,7 +9,7 @@ build_tbl <- function(dm_hbc, dm_non_hbc) {
     dplyr::mutate(is_hbc = 0)
   dplyr::bind_rows(hbc_tbl, non_hbc_tbl) |>
     dplyr::filter(!dplyr::if_all(-c(country_code), is.na)) |>
-    dplyr::relocate(is_hbc, .before = everything())
+    dplyr::relocate(is_hbc, country_code, year, .before = everything())
 }
 
 build_dm <- function(data_list, year = NULL, is_hbc = TRUE) {
