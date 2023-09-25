@@ -1,16 +1,16 @@
-load <- function(.year = 2019, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+load <- function(data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   data_files <-
     list.files(here::here("inst/extdata"), pattern = "csv") |>
     stringr::str_subset("masterlist", negate = TRUE)
 
-  lst_df <- import_bulk(lst_df, data_files, year = .year)
+  lst_df <- import_bulk(lst_df, data_files)
 
   # HBC countries --------------------------------------------------------------
 
   hbc_df <-
     lst_df$who_hbc |>
-    dplyr::select(country_code) |>
+    dplyr::select(country_code, year) |>
     dplyr::mutate(country = countrycode::countrycode(
       country_code,
       origin = "iso3c",

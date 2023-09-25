@@ -41,7 +41,8 @@ tbl <-
     pop_100k = pop_total / 1e5,
     who_dx_gap = (e_inc_num - c_newinc) / e_inc_num,
   ) |> 
-  mutate(is_hbc = as.character(is_hbc))
+  mutate(is_hbc = as.character(is_hbc)) |> 
+  select(-year)
 ```
 
 ```{r eval=FALSE}
