@@ -13,7 +13,7 @@ build_dm <- function(data_list, year = NULL) {
 
   non_parent <- setdiff(names(core_lst), "hbc")
 
-  subset_lst <- drop_cols(core_lst, non_parent,  c("country", "g_whoregion"))
+  subset_lst <- drop_cols(subset_core_lst, non_parent,  c("country", "g_whoregion"))
 
   hbc_df <-
     subset_lst$hbc |>
