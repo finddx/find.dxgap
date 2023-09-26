@@ -19,7 +19,7 @@ build_dm <- function(data_list, year = NULL) {
 
   hbc_df <-
     data_list$hbc |>
-    dplyr::semi_join(subset_lst$hbc, dplyr::join_by(country_code)) |>
+    dplyr::semi_join(core_list$hbc, dplyr::join_by(country_code)) |>
     dplyr::select(country_code, year, country) |>
     dplyr::mutate(is_hbc = 1)
 
