@@ -22,7 +22,7 @@ get_core <- function(data_list) {
       )
     ) |>
     dplyr::mutate(in_common_dxgap = list(in_common_dxgap)) |>
-    dplyr::mutate(can_compute_dx_gap = map2(
+    dplyr::mutate(can_compute_dx_gap = purrr::map2(
       data2,
       in_common_dxgap,
       dplyr::inner_join,
