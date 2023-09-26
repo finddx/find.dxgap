@@ -1,15 +1,15 @@
 get_core <- function(data_list) {
-  c_newinc_df <-
+  country_notification_df <-
     data_list$who_notifications |>
     get_is_always_given_acrs_yrs(c_newinc)
 
-  e_inc_num_df <-
+  country_estimate_df <-
     data_list$who_estimates |>
     get_is_always_given_acrs_yrs(e_inc_num)
 
   in_common_dxgap <-
-    c_newinc_df |>
-    dplyr::inner_join(e_inc_num_df, dplyr::join_by(country_code))
+    country_notification_df |>
+    dplyr::inner_join(country_estimate_df, dplyr::join_by(country_code))
 
   subset_df <-
     to_nest_df(data_list) |>
