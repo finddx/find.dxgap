@@ -75,7 +75,7 @@ grow_hbc <- function(data) {
     tidyr::unnest(hbc_data)
 }
 
-get_hbc_core <- function(data) {
+get_core_countries <- function(data) {
   years_unique <-
     data |>
     dplyr::distinct(year) |>
