@@ -13,7 +13,7 @@ get_core <- function(data_list) {
 
   subset_df <-
     to_nest_df(data_list) |>
-    dplyr::mutate(in_common_acrs_yr = purrr::map(data, get_core_countries)) |>
+    dplyr::mutate(in_common_acrs_yr = purrr::map(data, get_cc_always_given_acrs_yrs)) |>
     dplyr::mutate(in_common_dxgap = list(in_common_dxgap)) |>
     dplyr::mutate(
       final = purrr::map2(
@@ -31,19 +31,8 @@ get_core <- function(data_list) {
 }
 
 
-get_core_countries <- function(data) {
-  years_unique <-
-    data |>
-    dplyr::distinct(year) |>
-    dplyr::pull(year)
-
-  if (length(years_unique) <= 1) {
-    rlang::abort(
-      c("Cannot build `core countries` across years.",
-        i = "Did you call `tidy_xyz(data, year = NULL)`?.")
-    )
-  }
-
+get_cc_always_given_acrs_yrs <- function(data) {
+  check_is_ts(data)
   data |>
     dplyr::select(country_code, year) |>
     dplyr::group_split(year, .keep = FALSE) |>
@@ -52,6 +41,7 @@ get_core_countries <- function(data) {
 
 
 get_cc_var_always_given_acrs_yrs <- function(data, var, year = NULL) {
+  check_is_ts(data)
   data |>
     dplyr::mutate(is_given = !is.na({{ var }})) |>
     dplyr::select(country_code, year, is_given) |>
