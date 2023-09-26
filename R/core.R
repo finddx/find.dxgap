@@ -14,16 +14,16 @@ get_core <- function(data_list) {
 
   subset_df <-
     to_nest_df(data_list) |>
-    dplyr::mutate(
-      data2 = dplyr::if_else(
+    dplyr::mutate( # get core set of consistently hbc across year
+      consistently_hbc = dplyr::if_else(
         name == "hbc",
         purrr::map(data, get_cc_always_given_acrs_yrs),
         data
       )
     ) |>
-    dplyr::mutate(in_common_dxgap = list(in_common_dxgap)) |>
+    dplyr::mutate(in_common_dxgap = list(in_common_dxgap)) |> # those cc for which dxgap can always be computed
     dplyr::mutate(can_compute_dx_gap = purrr::map2(
-      data2,
+      consistently_hbc,
       in_common_dxgap,
       dplyr::inner_join,
       dplyr::join_by(country_code)
@@ -33,7 +33,7 @@ get_core <- function(data_list) {
 
   final_list <- subset_df$can_compute_dx_gap
   names(final_list) <- subset_df$name
-  final_list
+  tibble::lst(core_list = final_list, can_compute_dxgap = in_common_dxgap)
 }
 
 

@@ -6,22 +6,21 @@ build_tbl <- function(dm) {
 }
 
 build_dm <- function(data_list, year = NULL) {
-  core_lst <- get_core(data_list)
-  subset_core_lst <-
-    data_list |>
-    purrr::map2(core_lst, dplyr::semi_join, dplyr::join_by(country_code))
-
-  non_parent <- setdiff(names(core_lst), "hbc")
-
-  subset_lst <- drop_cols(subset_core_lst, non_parent,  c("country", "g_whoregion"))
+  core_data <- get_core(data_list)
+  core_list <- core_data$core_list
+  can_compute_dxgap <- core_data$can_compute_dxgap
+  non_parent <- setdiff(names(core_list), "hbc")
+  subset_lst <- drop_cols(core_list, non_parent,  c("country", "g_whoregion"))
 
   hbc_df <-
-    subset_lst$hbc |>
+    data_list$hbc |>
+    dplyr::semi_join(subset_lst$hbc, dplyr::join_by(country_code)) |>
     dplyr::select(country_code, year, country) |>
     dplyr::mutate(is_hbc = 1)
 
   non_hbc_df <-
     get_non_hbc_country_code(hbc_df) |>
+    dplyr::semi_join(can_compute_dxgap, dplyr::join_by(country_code)) |>
     dplyr::mutate(is_hbc = 0)
 
   country_df <- dplyr::bind_rows(hbc_df, non_hbc_df)
