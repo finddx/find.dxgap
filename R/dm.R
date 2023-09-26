@@ -6,6 +6,11 @@ build_tbl <- function(dm) {
 }
 
 build_dm <- function(data_list, year = NULL) {
+  # TODO: max year should be computed from the who estimates and notification data
+  max_year <- lubridate::year(lubridate::today()) - 2
+  if (!is.null(year) && year > max_year) {
+    rlang::abort(sprintf("Data available up to %s.", max_year))
+  }
   core_data <- get_core(data_list)
   core_list <- core_data$core_list
   can_compute_dxgap <- core_data$can_compute_dxgap
@@ -23,7 +28,11 @@ build_dm <- function(data_list, year = NULL) {
     dplyr::semi_join(can_compute_dxgap, dplyr::join_by(country_code)) |>
     dplyr::mutate(is_hbc = 0)
 
-  country_df <- dplyr::bind_rows(hbc_df, non_hbc_df)
+  # estimates and notifications are available up to given year
+  country_df <- hbc_df |>
+    dplyr::bind_rows(non_hbc_df) |>
+    dplyr::filter(year <= max_year)
+
   subset_lst$hbc <- NULL
   subset_lst$country <- country_df
 
@@ -50,7 +59,7 @@ get_non_hbc_country_code <- function(hbc_df) {
     dplyr::filter(!is.na(country_code)) |>
     dplyr::anti_join(hbc_df, by = dplyr::join_by(country_code)) |>
     dplyr::anti_join(country_exclude_df, by = dplyr::join_by(country_code)) |>
-    tidyr::crossing(year = 2000:2099)
+    tidyr::crossing(year = 2016:2099) # start from the min year available in hbc list
 }
 
 set_dm_rels <- function(dm) {
