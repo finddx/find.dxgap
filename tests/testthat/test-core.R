@@ -13,3 +13,7 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
     dplyr::pull()
   expect_equal(numb_na, 0)
 })
+
+test_that("get_core() works", {
+  expect_type(get_core(data_list), "list")
+})
