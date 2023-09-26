@@ -29,7 +29,8 @@ build_dm <- function(data_list, year = NULL) {
     dplyr::mutate(is_hbc = 0)
 
   # estimates and notifications are available up to given year
-  country_df <- hbc_df |>
+  country_df <-
+    hbc_df |>
     dplyr::bind_rows(non_hbc_df) |>
     dplyr::filter(year <= max_year)
 
