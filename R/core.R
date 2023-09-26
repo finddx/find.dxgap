@@ -7,7 +7,9 @@ get_core <- function(data_list) {
     data_list$who_estimates |>
     get_with_data_countries(e_inc_num)
 
-  in_common_dxgap <- dplyr::inner_join(c_newinc_df, e_inc_num_df, dplyr::join_by(country_code))
+  in_common_dxgap <-
+    c_newinc_df |>
+    dplyr::inner_join(e_inc_num_df, dplyr::join_by(country_code))
 
   subset_df <-
     to_nest_df(data_list) |>
