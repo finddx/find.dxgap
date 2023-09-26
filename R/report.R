@@ -1,5 +1,5 @@
 render_bulk <- function(template_name, year) {
-  path <- purrr::walk(
+  year <- purrr::walk(
     year,
     ~ render_report(
       .template_name = template_name,
@@ -7,7 +7,7 @@ render_bulk <- function(template_name, year) {
       interactive = FALSE
     )
   )
-  invisible(path)
+  invisible(year)
 }
 
 render_report <- function(.template_name,
