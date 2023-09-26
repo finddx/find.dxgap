@@ -20,7 +20,7 @@ get_core_countries <- function(data) {
 
 get_with_data_countries <- function(data, col, year = NULL) {
   if (!is.null(year)) {
-    data <- dplyr::filter(data, year > !!year)
+    data <- dplyr::filter(data, year >= !!year)
   }
   data |>
     dplyr::mutate(is_given = !is.na({{ col }})) |>
