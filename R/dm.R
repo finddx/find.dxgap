@@ -50,6 +50,12 @@ build_dm <- function(data_list, year = NULL) {
 
 }
 
+forget_year_hbc <- function(hbc_data) {
+  hbc_data |>
+    dplyr::select(-year) |>
+    tidyr::crossing(year = 2016:2021)
+}
+
 drop_cols <- function(data_list, at, cols_to_drop) {
   data_list |>
     purrr::map_at(.at = at, .f = ~ dplyr::select(.x, -tidyselect::any_of(cols_to_drop)))
