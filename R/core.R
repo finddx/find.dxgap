@@ -13,9 +13,8 @@ get_core_countries <- function(data) {
 
   data |>
     dplyr::select(country_code, year) |>
-    dplyr::group_split(year) |>
-    purrr::reduce(dplyr::inner_join, by = dplyr::join_by(country_code)) |>
-    dplyr::select(-tidyselect::starts_with("year"))
+    dplyr::group_split(year, .keep = FALSE) |>
+    purrr::reduce(dplyr::inner_join, by = dplyr::join_by(country_code))
 }
 
 
