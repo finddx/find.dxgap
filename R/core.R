@@ -11,22 +11,26 @@ get_core <- function(data_list) {
   in_common_dxgap <-
     country_notification_df |>
     dplyr::inner_join(country_estimate_df, dplyr::join_by(country_code))
-
   subset_df <-
     to_nest_df(data_list) |>
-    dplyr::mutate(in_common_acrs_yr = purrr::map(data, get_cc_always_given_acrs_yrs)) |>
-    dplyr::mutate(in_common_dxgap = list(in_common_dxgap)) |>
     dplyr::mutate(
-      final = purrr::map2(
-        in_common_acrs_yr,
-        in_common_dxgap,
-        dplyr::semi_join,
-        dplyr::join_by(country_code)
+      data2 = dplyr::if_else(
+        name == "hbc",
+        purrr::map(data, get_cc_always_given_acrs_yrs),
+        data
       )
     ) |>
-    dplyr::select(name, final)
+    dplyr::mutate(in_common_dxgap = list(in_common_dxgap)) |>
+    dplyr::mutate(can_compute_dx_gap = map2(
+      data2,
+      in_common_dxgap,
+      dplyr::inner_join,
+      dplyr::join_by(country_code)
+      )
+    ) |>
+    dplyr::select(name, can_compute_dx_gap)
 
-  final_list <- subset_df$final
+  final_list <- subset_df$can_compute_dx_gap
   names(final_list) <- subset_df$name
   final_list
 }
