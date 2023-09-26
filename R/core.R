@@ -11,6 +11,7 @@ get_core <- function(data_list) {
   in_common_dxgap <-
     country_notification_df |>
     dplyr::inner_join(country_estimate_df, dplyr::join_by(country_code))
+
   subset_df <-
     to_nest_df(data_list) |>
     dplyr::mutate(
