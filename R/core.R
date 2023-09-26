@@ -6,8 +6,8 @@ get_core_countries <- function(data) {
 
   if (length(years_unique) <= 1) {
     rlang::abort(
-      c("Cannot build `core high TB burden country` data across years.",
-        i = "Did you call `tidy_hbc(data, year = NULL)`?.")
+      c("Cannot build `core countries` across years.",
+        i = "Did you call `tidy_xyz(data, year = NULL)`?.")
     )
   }
 
