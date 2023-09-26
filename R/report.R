@@ -24,11 +24,13 @@ render_report <- function(template_name,
       ),
       envir = new.env()
     )
+    rstudioapi::viewer(path)
   } else {
     rmarkdown::render(
       input = template_path,
       output_file = basename(output_file),
       output_dir = dirname(output_file),
+      output_format = "html_document",
       params = list(
         dm = dm,
         data_tbl = data_tbl,
@@ -37,6 +39,5 @@ render_report <- function(template_name,
       envir = new.env()
     )
   }
-  rstudioapi::viewer(path)
   invisible(path)
 }
