@@ -21,6 +21,7 @@ build_dm <- function(data_list, year = NULL) {
     data_list$hbc |>
     dplyr::semi_join(core_list$hbc, dplyr::join_by(country_code)) |>
     dplyr::select(country_code, year, country) |>
+    forget_year_hbc() |>
     dplyr::mutate(is_hbc = 1)
 
   non_hbc_df <-
@@ -47,6 +48,12 @@ build_dm <- function(data_list, year = NULL) {
 
   dm::dm_filter(dm_ts, country = (year == !!year))
 
+}
+
+forget_year_hbc <- function(hbc_data) {
+  hbc_data |>
+    dplyr::select(-year) |>
+    tidyr::crossing(year = 2016:2021)
 }
 
 drop_cols <- function(data_list, at, cols_to_drop) {

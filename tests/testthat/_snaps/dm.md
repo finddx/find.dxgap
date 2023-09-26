@@ -180,9 +180,9 @@
       
       Rows: 108
       Columns: 4
-      $ country_code <chr> "AGO", "BGD", "COD", "IND", "MOZ", "MMR", "NGA", "PHL", "~
-      $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
-      $ country      <chr> "Angola", "Bangladesh", "Congo - Kinshasa", "India", "Moz~
+      $ country_code <chr> "AGO", "BGD", "COD", "COG", "IND", "LSO", "MMR", "MOZ", "~
+      $ country      <chr> "Angola", "Bangladesh", "Congo - Kinshasa", "Congo - Braz~
+      $ year         <int> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
       $ is_hbc       <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, ~
       
       --------------------------------------------------------------------------------
@@ -388,9 +388,9 @@
       
       Rows: 648
       Columns: 4
-      $ country_code <chr> "AGO", "AGO", "AGO", "AGO", "AGO", "BGD", "BGD", "BGD", "~
-      $ year         <dbl> 2016, 2017, 2018, 2019, 2020, 2016, 2017, 2018, 2019, 202~
-      $ country      <chr> "Angola", "Angola", "Angola", "Angola", "Angola", "Bangla~
+      $ country_code <chr> "AGO", "AGO", "AGO", "AGO", "AGO", "AGO", "BGD", "BGD", "~
+      $ country      <chr> "Angola", "Angola", "Angola", "Angola", "Angola", "Angola~
+      $ year         <int> 2016, 2017, 2018, 2019, 2020, 2021, 2016, 2017, 2018, 201~
       $ is_hbc       <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ~
       
       --------------------------------------------------------------------------------
