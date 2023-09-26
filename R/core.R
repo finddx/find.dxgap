@@ -1,27 +1,27 @@
-get_core <- function(list) {
+get_core <- function(data_list) {
   c_newinc_df <-
-    list$who_notifications |>
+    data_list$who_notifications |>
     get_with_data_countries(c_newinc)
 
   e_inc_num_df <-
-    list$who_estimates |>
+    data_list$who_estimates |>
     get_with_data_countries(e_inc_num)
 
-  in_common_dxgap <- inner_join(c_newinc_df, e_inc_num_df, join_by(country_code))
+  in_common_dxgap <- dplyr::inner_join(c_newinc_df, e_inc_num_df, dplyr::join_by(country_code))
 
   subset_df <-
-    to_nest_df(df_lst) |>
-    mutate(in_common_acrs_yr = map(data, get_core_countries)) |>
-    mutate(in_common_dxgap = list(in_common_dxgap)) |>
-    mutate(
-      final = map2(
+    to_nest_df(data_list) |>
+    dplyr::mutate(in_common_acrs_yr = purrr::map(data, get_core_countries)) |>
+    dplyr::mutate(in_common_dxgap = list(in_common_dxgap)) |>
+    dplyr::mutate(
+      final = purrr::map2(
         in_common_acrs_yr,
         in_common_dxgap,
-        semi_join,
-        join_by(country_code)
+        dplyr::semi_join,
+        dplyr::join_by(country_code)
       )
     ) |>
-    select(name, final)
+    dplyr::select(name, final)
 
   final_list <- subset_df$final
   names(final_list) <- subset_df$name

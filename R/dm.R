@@ -6,8 +6,15 @@ build_tbl <- function(dm) {
 }
 
 build_dm <- function(data_list, year = NULL) {
-  non_parent <- setdiff(names(data_list), "hbc")
-  subset_lst <- drop_cols(data_list, non_parent,  c("country", "g_whoregion"))
+  core_lst <- get_core(data_list)
+  subset_core_lst <-
+    data_list |>
+    purrr::map2(core_lst, dplyr::semi_join, dplyr::join_by(country_code))
+
+  non_parent <- setdiff(names(core_lst), "hbc")
+
+  subset_lst <- drop_cols(core_lst, non_parent,  c("country", "g_whoregion"))
+
   hbc_df <-
     subset_lst$hbc |>
     dplyr::select(country_code, year, country) |>
