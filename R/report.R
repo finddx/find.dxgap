@@ -5,9 +5,8 @@ render_report <- function(template_path = "inst/template/eda.Rmd",
   stopifnot(is.null(output_file) || is.character(output_file))
 
   lst_df <- load()
-  dm_hbc <- build_dm(lst_df, year = year, is_hbc = TRUE)
-  dm_non_hbc <- build_dm(lst_df, year = year, is_hbc = FALSE)
-  data_tbl <- build_tbl(dm_hbc, dm_non_hbc)
+  dm <- build_dm(lst_df, year = year)
+  data_tbl <- build_tbl(dm)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   path <- if (is.null(output_file)) {
@@ -16,8 +15,7 @@ render_report <- function(template_path = "inst/template/eda.Rmd",
       input = template_path,
       output_file = temp_file,
       params = list(
-        dm_hbc = dm_hbc,
-        dm_non_hbc = dm_non_hbc,
+        dm = dm,
         data_tbl = data_tbl,
         year = year
       ),
@@ -29,8 +27,7 @@ render_report <- function(template_path = "inst/template/eda.Rmd",
       output_file = basename(output_file),
       output_dir = dirname(output_file),
       params = list(
-        dm_hbc = dm_hbc,
-        dm_non_hbc = dm_non_hbc,
+        dm = dm,
         data_tbl = data_tbl,
         year = year
       ),
