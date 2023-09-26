@@ -3,8 +3,7 @@ title: "Explain Dx Gap"
 output: html_document
 date: "`r Sys.Date()`"
 params:
-  dm_hbc: dm_hbc
-  dm_non_hbc: dm_non_hbc
+  dm: dm
   data_tbl: data_tbl
   year: year
 editor_options: 
