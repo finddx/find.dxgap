@@ -26,5 +26,6 @@ get_with_data_countries <- function(data, col, year = NULL) {
     dplyr::mutate(is_given = !is.na({{ col }})) |>
     dplyr::select(country_code, year, is_given) |>
     dplyr::group_split(year, .keep = FALSE) |>
-    purrr::reduce(dplyr::inner_join, by = dplyr::join_by(country_code, is_given))
+    purrr::reduce(dplyr::inner_join, by = dplyr::join_by(country_code, is_given)) |>
+    dplyr::select(country_code)
 }
