@@ -78,3 +78,14 @@ compute_dx_gap <- function(data) {
       .after = country_code
     )
 }
+
+to_nest_df <- function(list) {
+  stopifnot(is.list(list))
+  cond <- all(purrr::map_lgl(list, is.data.frame))
+  stopifnot(cond)
+  stopifnot(rlang::is_named2(list))
+  tibble::tibble(
+    name = names(list),
+    data = unname(list)
+  )
+}
