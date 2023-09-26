@@ -1,43 +1,65 @@
-render_report <- function(template_name,
-                                 year = 2019,
-                                 output_file = NULL,
-                          template_dir = "inst/template/") {
-  stopifnot(is.numeric(year))
-  stopifnot(is.null(output_file) || is.character(output_file))
+render_bulk <- function(template_name, year) {
+  path <- purrr::walk(
+    year,
+    ~ render_report(
+      .template_name = template_name,
+      .year = .x,
+      interactive = FALSE
+    )
+  )
+  invisible(path)
+}
 
-  template_path <- compose_file_path(template_name, template_dir)
+render_report <- function(.template_name,
+                                 .year = 2019,
+                                 interactive = TRUE,
+                          template_dir = "inst/template/",
+                          data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  stopifnot(is.numeric(.year))
+
+  template_path <- compose_file_path(.template_name, template_dir)
 
   lst_df <- load()
-  dm <- build_dm(lst_df, year = year)
+  dm <- build_dm(lst_df, year = .year)
   data_tbl <- build_tbl(dm)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
-  if (is.null(output_file)) {
+  if (interactive) {
     temp_file <- tempfile(pattern = "my_rmd", fileext = ".html")
-    path <- rmarkdown::render(
+    rmarkdown::render(
       input = template_path,
       output_file = temp_file,
+      output_format = "html_document",
       params = list(
         dm = dm,
         data_tbl = data_tbl,
-        year = year
+        year = .year
       ),
       envir = new.env()
     )
-    rstudioapi::viewer(path)
-    return(invisible(path))
+    rstudioapi::viewer(temp_file)
+    return(invisible(temp_file))
   }
-  path <- rmarkdown::render(
+
+  file_name <- compose_file_name(
+    fs::path_ext_remove(.template_name),
+    .year,
+    file_ext = ".html"
+  )
+
+  out_path <- compose_file_path(file_name, file.path(data_dir, "report"))
+
+  rmarkdown::render(
     input = template_path,
-    output_file = basename(output_file),
-    output_dir = dirname(output_file),
+    output_file = basename(out_path),
+    output_dir = dirname(out_path),
     output_format = "html_document",
     params = list(
       dm = dm,
       data_tbl = data_tbl,
-      year = year
+      year = .year
     ),
     envir = new.env()
   )
-  invisible(path)
+  invisible(out_path)
 }
