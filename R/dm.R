@@ -10,14 +10,14 @@ build_dm <- function(data_list, year = NULL) {
   subset_lst <- drop_cols(data_list, non_parent,  c("country", "g_whoregion"))
   hbc_df <-
     subset_lst$hbc |>
-    select(country_code, year, country) |>
-    mutate(is_hbc = 1)
+    dplyr::select(country_code, year, country) |>
+    dplyr::mutate(is_hbc = 1)
 
   non_hbc_df <-
     get_non_hbc_country_code(hbc_df) |>
-    mutate(is_hbc = 0)
+    dplyr::mutate(is_hbc = 0)
 
-  country_df <- bind_rows(hbc_df, non_hbc_df)
+  country_df <- dplyr::bind_rows(hbc_df, non_hbc_df)
   subset_lst$hbc <- NULL
   subset_lst$country <- country_df
 
