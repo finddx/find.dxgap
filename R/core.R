@@ -1,11 +1,11 @@
 get_core <- function(data_list) {
   country_notification_df <-
     data_list$who_notifications |>
-    get_is_always_given_acrs_yrs(c_newinc)
+    get_cc_var_always_given_acrs_yrs(c_newinc)
 
   country_estimate_df <-
     data_list$who_estimates |>
-    get_is_always_given_acrs_yrs(e_inc_num)
+    get_cc_var_always_given_acrs_yrs(e_inc_num)
 
   in_common_dxgap <-
     country_notification_df |>
@@ -51,7 +51,7 @@ get_core_countries <- function(data) {
 }
 
 
-get_is_always_given_acrs_yrs <- function(data, col, year = NULL) {
+get_cc_var_always_given_acrs_yrs <- function(data, col, year = NULL) {
   data |>
     dplyr::mutate(is_given = !is.na({{ col }})) |>
     dplyr::select(country_code, year, is_given) |>
