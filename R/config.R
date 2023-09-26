@@ -14,7 +14,7 @@
 #'
 #' @examples path_dxgap <- set_data_dir("~/Documents/my_projects")
 set_data_dir <- function(path = fs::path_dir(getwd()),
-                               dirs = c("who", "global-fund", "world-bank", "meta")) {
+                               dirs = c("who", "global-fund", "world-bank", "meta", "report")) {
   if (!rlang::is_character(path) && length(path) != 1) {
     rlang::abort("Not a valid character path.")
   }
