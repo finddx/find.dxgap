@@ -24,3 +24,17 @@ is_ptype <- function(data, ptype) {
     }
   )
 }
+
+check_is_ts <- function(data) {
+  years_unique <-
+    data |>
+    dplyr::distinct(year) |>
+    dplyr::pull(year)
+
+  if (length(years_unique) <= 1) {
+    rlang::abort(
+      c("Cannot build `core countries` across years.",
+        i = "Did you call `tidy_xyz(data, year = NULL)`?.")
+    )
+  }
+}
