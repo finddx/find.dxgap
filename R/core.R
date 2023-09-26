@@ -7,9 +7,10 @@ get_core <- function(list) {
     list$who_estimates |>
     get_with_data_countries(e_inc_num)
 
-  in_common_dxgap <- inner_join(c_newinc_df, e_inc_num, join_by(country_code))
+  in_common_dxgap <- inner_join(c_newinc_df, e_inc_num_df, join_by(country_code))
 
-  to_nest_df(df_lst) |>
+  subset_df <-
+    to_nest_df(df_lst) |>
     mutate(in_common_acrs_yr = map(data, get_core_countries)) |>
     mutate(in_common_dxgap = list(in_common_dxgap)) |>
     mutate(
@@ -20,8 +21,11 @@ get_core <- function(list) {
         join_by(country_code)
       )
     ) |>
-    select(name, final) |>
-    unnest(final)
+    select(name, final)
+
+  final_list <- subset_df$final
+  names(final_list) <- subset_df$name
+  final_list
 }
 
 
