@@ -3,8 +3,7 @@ title: "EDA"
 output: html_document
 date: "`r Sys.Date()`"
 params:
-  dm_hbc: dm_hbc
-  dm_non_hbc: dm_non_hbc
+  dm: dm
   data_tbl: data_tbl
   year: year
 editor_options: 
@@ -19,8 +18,7 @@ knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message 
 ```
 
 ```{r}
-dm_hbc <- params$dm_hbc
-dm_non_hbc <- params$dm_non_hbc
+dm <- params$dm
 data_tbl <- params$data_tbl
 ```
 
@@ -29,7 +27,7 @@ The chosen year is `r params$year`.
 ## Data model
 
 ```{r}
-dm::dm_draw(dm_hbc)
+dm::dm_draw(dm)
 ```
 
 ## Data
