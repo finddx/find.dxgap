@@ -51,9 +51,9 @@ get_core_countries <- function(data) {
 }
 
 
-get_cc_var_always_given_acrs_yrs <- function(data, col, year = NULL) {
+get_cc_var_always_given_acrs_yrs <- function(data, var, year = NULL) {
   data |>
-    dplyr::mutate(is_given = !is.na({{ col }})) |>
+    dplyr::mutate(is_given = !is.na({{ var }})) |>
     dplyr::select(country_code, year, is_given) |>
     dplyr::group_split(year, .keep = FALSE) |>
     purrr::reduce(dplyr::inner_join, by = dplyr::join_by(country_code, is_given)) |>
