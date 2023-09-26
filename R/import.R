@@ -14,7 +14,7 @@ import_bulk <- function(data_lst,
   lst_df
 }
 
-#' @example \donotrun{lst_df <- import_tbl(lst_df, "who_hbc.csv")}
+#' @example \dontrun{lst_df <- import_tbl(lst_df, "who_hbc.csv")}
 import_tbl <- function(.data_lst,
                           .file_name,
                           .all = TRUE,
