@@ -39,12 +39,7 @@ drop_cols <- function(data_list, cols_to_drop) {
     purrr::map(~ dplyr::select(.x, -tidyselect::any_of(cols_to_drop)))
 }
 
-get_non_hbc_country_code <- function(hbc_df, year) {
-  if (!is.null(year)) {
-    hbc_df <-
-      hbc_df |>
-      dplyr::filter(year == !!year)
-  }
+get_non_hbc_country_code <- function(hbc_df) {
   countrycode::codelist |>
     dplyr::select(country_code = iso3c) |>
     dplyr::filter(!is.na(country_code)) |>
