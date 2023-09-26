@@ -13,9 +13,23 @@ build_tbl <- function(dm_hbc, dm_non_hbc) {
 }
 
 build_dm <- function(data_list, year = NULL, is_hbc = TRUE) {
-  prune_lst <- drop_cols(data_list, c("country", "g_whoregion"))
-  hbc_lst <- subset_hbc(data_list = prune_lst, .year = year,  .is_hbc = is_hbc)
-  dm_no_rel <- dm::dm(!!!hbc_lst)
+  # prune_lst <- drop_cols(data_list, c("country", "g_whoregion"))
+  hbc_df <-
+    data_list$hbc |>
+    select(country_code, year, country) |>
+    mutate(is_hbc = 1)
+
+  non_hbc_df <-
+    get_non_hbc_country_code(hbc_df) |>
+    mutate(is_hbc = 0)
+
+  country_df <- bind_rows(hbc_df, non_hbc_df)
+  data_list$hbc <- NULL
+  data_list$country <- country_df
+
+
+
+  dm_no_rel <- dm::dm(!!!data_list)
   is_hbc2 <- is_hbc_dm(dm_no_rel)
   if (is_hbc2) {
     dm_rel <- set_dm_rels(dm_no_rel, hbc)
