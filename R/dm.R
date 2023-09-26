@@ -22,7 +22,8 @@ build_dm <- function(data_list, year = NULL) {
   subset_lst$country <- country_df
 
   dm_no_rel <- dm::dm(!!!subset_lst)
-  dm_ts <- set_dm_rels(dm_no_rel)
+  dm_col <- set_dm_colors(dm_no_rel)
+  dm_ts <- set_dm_rels(dm_col)
 
   if (is.null(year)) {
     return(dm_ts)
