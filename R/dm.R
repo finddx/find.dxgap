@@ -21,6 +21,7 @@ build_dm <- function(data_list, year = NULL) {
     data_list$hbc |>
     dplyr::semi_join(core_list$hbc, dplyr::join_by(country_code)) |>
     dplyr::select(country_code, year, country) |>
+    forget_year_hbc() |>
     dplyr::mutate(is_hbc = 1)
 
   non_hbc_df <-
