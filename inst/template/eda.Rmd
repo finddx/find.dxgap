@@ -62,7 +62,7 @@ tbl |>
   ) |>
   mutate(complete_rate = round(complete_rate, 2)) |> 
   relocate(dataset, definition, variable_name) |> 
-  arrange(dataset, complete_rate) |> 
+  arrange(dataset, variable_name) |> 
   select(-n) |> 
   gt::gt()
 ```
@@ -135,7 +135,8 @@ corr_all_df |>
     names_to = "corr_cat", 
     values_to = "corr"
   ) |> 
-  mutate(term = forcats::fct_reorder(term, corr, .na_rm = FALSE)) |> 
+  # mutate(term = forcats::fct_reorder(term, corr, .na_rm = FALSE)) |> 
+  mutate(term = forcats::fct_relevel(term, sort)) |> 
   mutate(corr_cat = forcats::fct_relevel(
     corr_cat, 
     c("who_dx_gap_non_hbc", "who_dx_gap_all", "who_dx_gap_hbc"))
@@ -150,6 +151,7 @@ corr_all_df |>
 
 ```{r}
 corr_all_df |> 
+  arrange(term) |> 
   gt::gt()
 ```
 
@@ -167,7 +169,8 @@ $who\_dx\_gap = (e\_inc\_num - c\_newinc) / e\_inc\_num$
 
 ```{r fig.height=12, fig.width=12}
 tbl |> 
-  mutate(country_code = forcats::fct_reorder(country_code, who_dx_gap, .na_rm = FALSE)) |> 
+  # mutate(country_code = forcats::fct_reorder(country_code, who_dx_gap, .na_rm = FALSE)) |> 
+  mutate(country_code = forcats::fct_relevel(country_code, sort)) |> 
   ggplot(aes(country_code, who_dx_gap, fill = is_hbc)) +
   geom_col() +
   theme_minimal() +
