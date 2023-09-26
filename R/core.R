@@ -40,7 +40,7 @@ get_cc_always_given_acrs_yrs <- function(data) {
 }
 
 
-get_cc_var_always_given_acrs_yrs <- function(data, var, year = NULL) {
+get_cc_var_always_given_acrs_yrs <- function(data, var) {
   check_is_ts(data)
   data |>
     dplyr::mutate(is_given = !is.na({{ var }})) |>
