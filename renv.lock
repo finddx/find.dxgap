@@ -250,6 +250,22 @@
       ],
       "Hash": "543776ae6848fde2f48ff3816d0628bc"
     },
+    "bayestestR": {
+      "Package": "bayestestR",
+      "Version": "0.13.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "datawizard",
+        "graphics",
+        "insight",
+        "methods",
+        "stats",
+        "utils"
+      ],
+      "Hash": "61f643ea5ee9fe0e70ab0246340b3c2e"
+    },
     "bigD": {
       "Package": "bigD",
       "Version": "0.2.0",
@@ -610,6 +626,19 @@
         "methods"
       ],
       "Hash": "b4c06e554f33344e044ccd7fdca750a9"
+    },
+    "datawizard": {
+      "Package": "datawizard",
+      "Version": "0.8.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "insight",
+        "stats",
+        "utils"
+      ],
+      "Hash": "b78bb7a4b7f2762630eb3a75269e6005"
     },
     "dbplyr": {
       "Package": "dbplyr",
@@ -1397,6 +1426,19 @@
       "Repository": "CRAN",
       "Hash": "6154ec2223172bce8162d4153cda21f7"
     },
+    "insight": {
+      "Package": "insight",
+      "Version": "0.19.3",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "methods",
+        "stats",
+        "utils"
+      ],
+      "Hash": "e605299a4e3d10404ac7989b05c4a917"
+    },
     "ipred": {
       "Package": "ipred",
       "Version": "0.9-14",
@@ -1775,6 +1817,22 @@
         "withr"
       ],
       "Hash": "009152502d5125513c353612052e9d4e"
+    },
+    "performance": {
+      "Package": "performance",
+      "Version": "0.10.4",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "bayestestR",
+        "datawizard",
+        "insight",
+        "methods",
+        "stats",
+        "utils"
+      ],
+      "Hash": "c7bd3750eea3b3f5b2fdd56f22af151a"
     },
     "pillar": {
       "Package": "pillar",
