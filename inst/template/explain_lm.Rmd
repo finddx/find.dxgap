@@ -48,13 +48,6 @@ set.seed(2023)
 tbl_cv <- rsample::vfold_cv(tbl_train)
 ```
 
-```{r show, eval=FALSE}
-rec_core_pop_total |> 
-  cook() |> 
-  head() |> 
-  gt::gt()
-```
-
 ```{r lm}
 lm_model <-
   parsnip::linear_reg(mode = "regression") %>%
