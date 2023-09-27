@@ -88,25 +88,69 @@ linear_models <-
       preproc = preproc,
       models = models,
       cross = TRUE
-   )
+   ) 
 ```
 
 ```{r fit}
-fit <- 
+wset <- 
   workflowsets::workflow_map(
     linear_models, 
     verbose = TRUE,
+    metrics = yardstick::metric_set(yardstick::rmse, yardstick::rsq),
     fn = "fit_resamples",
     resamples = tbl_cv
-  ) 
+  )
 ```
 
-```{r}
-workflowsets::rank_results(fit, rank_metric = "rmse", select_best = TRUE) |> 
-  select(rank, .metric, mean, model, wflow_id) |> 
+```{r rank}
+rank <- 
+  workflowsets::rank_results(wset, rank_metric = "rmse", select_best = TRUE) |> 
+  select(rank, wflow_id, model, .metric, mean) |> 
+  filter(.metric == "rmse")
+rank |> 
   gt::gt()
 ```
 
 ```{r assess}
-autoplot(fit)
+autoplot(wset)
+```
+
+```{r best}
+tune_res <- 
+  workflowsets::extract_workflow_set_result(
+    wset, 
+    id = rank$wflow_id[[1]]
+  ) 
+```
+
+```{r finalize}
+final_fit <- 
+  wset |> 
+  workflowsets::extract_workflow(id = rank$wflow_id[[1]]) |> 
+  # tune::finalize_workflow() # TODO: use when fine tuning `neighbor`
+  fit(data = tbl_train)
+```
+
+```{r coeff-viz, fig.width=15, fig.height=10}
+coeff_df <- 
+  final_fit |> 
+  broom::tidy() 
+
+coeff_df |> 
+  mutate(is_under_0.05 = if_else(p.value <= 0.05, TRUE, FALSE)) |> 
+  mutate(is_under_0.05 = forcats::fct_relevel(
+    as.character(is_under_0.05), 
+    c("TRUE", "FALSE"))
+  ) |> 
+  mutate(term = forcats::fct_relevel(term, sort)) |> 
+  ggplot(aes(term, estimate, color = is_under_0.05)) +
+  geom_point() +
+  geom_pointrange(aes(ymin = estimate - std.error, ymax = estimate + std.error)) +
+  coord_flip() +
+  labs(title = rank$wflow_id[[1]]) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5), 
+    axis.text.y = element_text(size = rel(1.25))
+  )
 ```
