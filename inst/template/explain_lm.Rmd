@@ -123,7 +123,31 @@ final_fit <-
   fit(data = tbl_train)
 ```
 
-```{r coeff-viz, fig.width=15, fig.height=10}
+The following plots pertain **`r rank$wflow_id[[1]]`**.
+
+## Assumptions
+
+```{r check-assumptions}
+lm_obj <- 
+  final_fit |> 
+  workflowsets::extract_fit_parsnip(id = rank$wflow_id[[1]])
+plot_check <- performance::check_model(
+  lm_obj, 
+  check = c("linearity", "normality", "qq", "outliers"),
+  theme = "ggplot2::theme_minimal"
+  )
+plot_check
+```
+
+```{r vif}
+check_vif <- performance::check_collinearity(lm_obj)
+plot(check_vif) +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+## Parameters
+
+```{r coeff-viz, fig.width=12}
 coeff_df <- 
   final_fit |> 
   broom::tidy() 
