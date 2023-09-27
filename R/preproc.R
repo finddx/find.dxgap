@@ -94,7 +94,7 @@ get_log_recipe <- function(recipe) {
   recipe |>
     recipes::step_mutate_at(
       recipes::all_numeric_predictors() & -recipes::all_factor(),
-      fn = ~ dplyr::if_else(.x == 0, 1, .x) # TODO: is this valid?
+      fn = ~ .x + 1
     ) |>
     recipes::step_log(
       recipes::all_numeric_predictors() & -recipes::all_factor()
