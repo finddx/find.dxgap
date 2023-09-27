@@ -37,18 +37,6 @@ tbl <-
   select(-year, -country)
 ```
 
-```{r recipes}
-rec_core_pop_total <- get_core_recipe_pop_total(tbl, neighbors = 5)
-rec_core_pop_density <- get_core_recipe_pop_density(tbl, neighbors = 5)
-rec_log_pop_total <- get_log_recipe(rec_core_pop_total)
-rec_log_pop_density <- get_log_recipe(rec_core_pop_density)
-rec_norm_pop_total <- get_normalize_recipe(rec_core_pop_total)
-rec_norm_pop_density <- get_normalize_recipe(rec_core_pop_density)
-# rec_pop_100k <- get_pop_100k_recipe(rec_core)
-rec_is_hbc_pop_total <- get_is_hbc_recipe(rec_core_pop_total)
-rec_is_hbc_pop_density <- get_is_hbc_recipe(rec_core_pop_density)
-```
-
 ```{r spending}
 tbl_split <- rsample::initial_split(tbl)
 tbl_train <- rsample::training(tbl_split)
@@ -75,16 +63,17 @@ lm_model <-
 
 ```{r combo}
 models <- list(lm = lm_model)
-preproc <- list(
-  simple_pop_total = rec_core_pop_total,
-  simple_pop_density = rec_core_pop_density,
-  log_pop_total = rec_log_pop_total,
-  log_pop_density = rec_log_pop_density,
-  norm_pop_total = rec_norm_pop_total,
-  norm_pop_density = rec_norm_pop_density,
+# TODO: fine tune neighbors
+preproc <- tibble::lst(
+  simple_pop_total = get_core_recipe_pop_total(tbl, neighbors = 5),
+  simple_pop_density = get_core_recipe_pop_density(tbl, neighbors = 5),
+  log_pop_total = get_log_recipe(simple_pop_total),
+  log_pop_density = get_log_recipe(simple_pop_density),
+  norm_pop_total = get_normalize_recipe(simple_pop_total),
+  norm_pop_density = get_normalize_recipe(simple_pop_density),
   # pop_100k = rec_pop_100k, # FIXME: leads to high correlation features
-  is_hbc_pop_total = rec_is_hbc_pop_total,
-  is_hbc_pop_density = rec_is_hbc_pop_density
+  is_hbc_pop_total = get_is_hbc_recipe(simple_pop_total),
+  is_hbc_pop_density = get_is_hbc_recipe(simple_pop_density)
 )
 ```
 
