@@ -13,7 +13,13 @@ editor_options:
 ```{r setup, include=FALSE}
 library(recipes)
 pkgload::load_all()
-knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  cache = TRUE, 
+  fig.align = "center", 
+  message = FALSE, 
+  warning = FALSE
+)
 ```
 
 ```{r params}
