@@ -22,6 +22,7 @@ knitr::opts_chunk$set(
   message = FALSE, 
   warning = FALSE
 )
+set.seed(2023)
 ```
 
 ```{r params}
@@ -46,7 +47,6 @@ tbl_test <- rsample::testing(tbl_split)
 ```
 
 ```{r cv}
-set.seed(2023)
 tbl_cv <- rsample::vfold_cv(tbl_train)
 ```
 
