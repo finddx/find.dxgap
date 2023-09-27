@@ -7,6 +7,7 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
     get_cc_var_always_given_acrs_yrs(c_newinc)
   numb_na <-
     who_notifications |>
+    dplyr::filter(year >= dxgap_constants$start_year) |>
     dplyr::semi_join(core_df, dplyr::join_by(country_code)) |>
     dplyr::filter(is.na(c_newinc)) |>
     dplyr::count() |>
