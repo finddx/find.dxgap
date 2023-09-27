@@ -17,6 +17,8 @@ knitr::opts_chunk$set(
   echo = FALSE, 
   cache = TRUE, 
   fig.align = "center", 
+  fig.fullwidth = TRUE,
+  fig.height = 10,
   message = FALSE, 
   warning = FALSE
 )
@@ -90,6 +92,8 @@ wset <-
   )
 ```
 
+## Best model
+
 ```{r rank}
 rank <- 
   workflowsets::rank_results(wset, rank_metric = "rmse", select_best = TRUE) |> 
@@ -99,8 +103,8 @@ rank |>
   gt::gt()
 ```
 
-```{r assess}
-autoplot(wset)
+```{r assess, fig.height=5}
+autoplot(wset) + theme_minimal()
 ```
 
 ```{r best}
