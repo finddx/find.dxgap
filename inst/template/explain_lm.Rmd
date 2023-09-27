@@ -137,14 +137,20 @@ coeff_df <-
   broom::tidy() 
 
 coeff_df |> 
-  mutate(is_significant = if_else(p.value < 0.05, TRUE, FALSE)) |> 
+  mutate(is_under_0.05 = if_else(p.value <= 0.05, TRUE, FALSE)) |> 
+  mutate(is_under_0.05 = forcats::fct_relevel(
+    as.character(is_under_0.05), 
+    c("TRUE", "FALSE"))
+  ) |> 
   mutate(term = forcats::fct_relevel(term, sort)) |> 
-  ggplot(aes(term, estimate, color = is_significant)) +
+  ggplot(aes(term, estimate, color = is_under_0.05)) +
   geom_point() +
   geom_pointrange(aes(ymin = estimate - std.error, ymax = estimate + std.error)) +
-  scale_fill_manual(values = c("#CCEEFF", "#FFDDDD"), guide = "none") +
   coord_flip() +
   labs(title = rank$wflow_id[[1]]) +
   theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5), axis.text.y = element_text(size = rel(1.25)))
+  theme(
+    plot.title = element_text(hjust = 0.5), 
+    axis.text.y = element_text(size = rel(1.25))
+  )
 ```
