@@ -68,7 +68,7 @@ for_tab |>
     columns = dplyr::where(is.numeric),
     method = "numeric",
     palette = "Greys",
-    na_color = "red"
+    na_color = "#ffcccb"
   ) 
 ```
 
