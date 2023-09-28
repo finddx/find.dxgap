@@ -1,0 +1,74 @@
+---
+title: "Missing values analysis"
+output: html_document
+date: "`r Sys.Date()`"
+params:
+  dm: dm
+  data_tbl: data_tbl
+  year: year
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+pkgload::load_all()
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  cache = TRUE, 
+  fig.align = "center", 
+  fig.fullwidth = TRUE,
+  fig.height = 10,
+  message = FALSE, 
+  warning = FALSE
+)
+```
+
+```{r params}
+data_tbl <- params$data_tbl
+```
+
+```{r}
+complete_by_year <- 
+  data_tbl |> 
+  pivot_longer(
+    -c("country_code", "country", "year"), 
+    names_to = "variable_name"
+  ) |> 
+  mutate(is_na = is.na(value)) |> 
+  count(year, variable_name, is_na) |> 
+  group_by(year, variable_name) |> 
+  mutate(tot = sum(n)) |> 
+  ungroup() |> 
+  mutate(complete_rate = n / tot) |> 
+  filter(!is_na) |> 
+  filter(year > dxgap_constants$start_year)
+```
+
+```{r}
+for_tab <- 
+  complete_by_year |> 
+  pivot_wider(
+    id_cols = variable_name,
+    names_from = year, 
+    values_from = complete_rate
+  ) |> 
+  left_join(
+    select(dxgap_master_list, dataset, variable_name, definition), 
+    join_by(variable_name)
+  ) |> 
+  relocate(dataset, definition, variable_name, .before = everything()) |> 
+  arrange(dataset, definition, variable_name)
+```
+
+```{r}
+for_tab |> 
+  gt::gt() |> 
+  gt::data_color(
+    columns = dplyr::where(is.numeric),
+    method = "numeric",
+    palette = "Greys",
+    na_color = "red"
+  ) 
+```
+
