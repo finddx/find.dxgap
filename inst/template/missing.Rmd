@@ -40,7 +40,7 @@ complete_by_year <-
   group_by(year, variable_name) |> 
   mutate(tot = sum(n)) |> 
   ungroup() |> 
-  mutate(complete_rate = n / tot) |> 
+  mutate(complete_rate = round(n / tot, 2)) |> 
   filter(!is_na) |> 
   filter(year > dxgap_constants$start_year)
 ```
