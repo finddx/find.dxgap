@@ -60,8 +60,8 @@ lm_model <-
 models <- list(lm = lm_model)
 # TODO: fine tune neighbors
 preproc <- tibble::lst(
-  simple_pop_total = get_core_recipe_pop_total(tbl, neighbors = 5),
-  simple_pop_density = get_core_recipe_pop_density(tbl, neighbors = 5),
+  simple_pop_total = get_core_recipe_pop_total(tbl, neighbors = 5, threshold = 0.9),
+  simple_pop_density = get_core_recipe_pop_density(tbl, neighbors = 5, threshold = 0.9),
   log_pop_total = get_log_recipe(simple_pop_total),
   log_pop_density = get_log_recipe(simple_pop_density),
   norm_pop_total = get_normalize_recipe(simple_pop_total),
