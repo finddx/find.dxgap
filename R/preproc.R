@@ -1,15 +1,15 @@
-get_core_recipe_pop_total <- function(tbl, neighbors) {
+get_core_recipe_pop_total <- function(tbl, neighbors, threshold) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
-    recipes::step_filter_missing(recipes::all_predictors(), threshold = 0.9) |>
+    recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
     get_step_role() |>
     get_core_recipe() |>
     get_impute_with_pop_total_recipe(neighbors = neighbors) |>
     get_finalize_recipe()
 }
 
-get_core_recipe_pop_density <- function(tbl, neighbors) {
+get_core_recipe_pop_density <- function(tbl, neighbors, threshold) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
-    recipes::step_filter_missing(recipes::all_predictors(), threshold = 0.9) |>
+    recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
     get_step_role() |>
     get_core_recipe() |>
     get_impute_with_pop_density_recipe(neighbors = neighbors) |>
