@@ -11,12 +11,10 @@ render_bulk <- function(template_name, year) {
 }
 
 render_report <- function(.template_name,
-                                 .year = 2019,
+                                 .year = NULL,
                                  interactive = TRUE,
                           template_dir = "inst/template/",
                           data_dir = Sys.getenv("DXGAP_DATADIR")) {
-  stopifnot(is.numeric(.year))
-
   template_path <- compose_file_path(.template_name, template_dir)
 
   lst_df <- load()
