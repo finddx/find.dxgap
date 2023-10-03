@@ -10,13 +10,8 @@ dxgap_constants <- tibble::lst(
               "pop_density",
               "gdp",
               "c_newinc",
-              "new_labconf",
-              "c_cdr",
-              "c_newinc_100k",
-              "e_inc_100k",
               "e_inc_num",
               "e_mort_100k",
-              "e_pop_num",
               "culture",
               "smear",
               "xpert")
