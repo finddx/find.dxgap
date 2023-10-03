@@ -28,7 +28,8 @@ plot_density <- function(data, x, fill, year, title, caption) {
 
 plot_corr <- function(data) {
   stopifnot(inherits(data, "cor_df"))
-  data |>
+  data_lower <- corrr::shave(data)
+  data_lower |>
     corrr::rplot(print_cor = TRUE) +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
 }
