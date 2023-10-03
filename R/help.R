@@ -92,7 +92,7 @@ to_nest_df <- function(list) {
 
 eval_if <- function(tbl, vars) {
   col_names <- names(tbl)
-  if (vars %in% col_names) {
+  if (any(vars %in% col_names)) {
     return(TRUE)
   }
   FALSE
