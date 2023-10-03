@@ -391,42 +391,6 @@ plot_scatter(
   facet_wrap(vars(definition), ncol = 2, scales = "free") 
 ```
 
-```{r eval=FALSE}
-budget_long_log <- 
-  tbl |>
-  select(country_code, who_dx_gap, pop_100k, all_of(budget_cols)) |> 
-  pivot_longer(
-    cols = all_of(budget_cols), 
-    names_to = "variable_name", 
-    values_to = "budget_value"
-  ) |> 
-  transmute(
-    country_code,
-    variable_name,
-    budget_per_100k = budget_value / pop_100k,
-    log_budget_per_100k = log(budget_per_100k),
-    who_dx_gap
-  ) |> 
-  left_join(budget_master, join_by(variable_name)) |> 
-  mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
-```
-
-```{r eval=FALSE, fig.height=15, fig.width=12}
-budget_long_log |>
-  ggplot(aes(log_budget_per_100k)) +
-  geom_density(fill = "steelblue", alpha = .5) +
-  facet_wrap(vars(definition), ncol = 2, scales = "free") +
-  theme_minimal()
-```
-
-```{r eval=FALSE, fig.height=15, fig.width=12}
-budget_long_log |>
-  ggplot(aes(log_budget_per_100k, who_dx_gap)) +
-  geom_point(colour = "steelblue", alpha = .8) +
-  facet_wrap(vars(definition), ncol = 2, scales = "free") +
-  theme_minimal()
-```
-
 ## Community
 
 ```{r}
