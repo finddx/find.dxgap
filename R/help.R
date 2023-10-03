@@ -74,7 +74,7 @@ cook <- function(recipe) {
 compute_dx_gap <- function(data) {
   data |>
     dplyr::mutate(
-      who_dx_gap = (e_inc_num - c_newinc) / e_inc_num,
+      who_dx_gap = (e_inc_num - c_newinc) / e_inc_num * 100,
       .after = country_code
     )
 }
