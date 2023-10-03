@@ -10,7 +10,7 @@
       Table: `wb_tot_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 196
+      Rows: 192
       Columns: 3
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS", "~
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
@@ -21,7 +21,7 @@
       Table: `wb_urb_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 196
+      Rows: 192
       Columns: 3
       $ country_code   <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS",~
       $ year           <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2~
@@ -32,7 +32,7 @@
       Table: `wb_density_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 196
+      Rows: 192
       Columns: 3
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS", "~
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
@@ -43,7 +43,7 @@
       Table: `wb_gdp`
       Primary key: (`year`, `country_code`)
       
-      Rows: 196
+      Rows: 192
       Columns: 3
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS", "~
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
@@ -54,7 +54,7 @@
       Table: `who_notifications`
       Primary key: (`year`, `country_code`)
       
-      Rows: 197
+      Rows: 192
       Columns: 4
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS", "~
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
@@ -66,11 +66,11 @@
       Table: `who_estimates`
       Primary key: (`year`, `country_code`)
       
-      Rows: 197
+      Rows: 192
       Columns: 8
       $ country_code  <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS", ~
       $ year          <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 20~
-      $ c_cdr         <dbl> 74, 87, 81, 87, 65, 87, 84, 87, 87, 79, 87, 80, NA, 78, ~
+      $ c_cdr         <dbl> 74, 87, 81, 87, 65, 87, 84, 87, 87, 79, 87, 80, 78, 87, ~
       $ c_newinc_100k <dbl> 139.0, 14.0, 49.0, 6.5, 229.0, 26.0, 22.0, 5.9, 5.2, 47.~
       $ e_inc_100k    <dbl> 189.0, 16.0, 61.0, 7.5, 351.0, 29.0, 26.0, 6.8, 6.0, 60.~
       $ e_inc_num     <dbl> 71000, 470, 26000, 6, 114000, 13000, 740, 1700, 530, 610~
@@ -82,7 +82,7 @@
       Table: `who_budget`
       Primary key: (`year`, `country_code`)
       
-      Rows: 197
+      Rows: 192
       Columns: 12
       $ country_code    <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS"~
       $ year            <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
@@ -119,16 +119,16 @@
       Table: `who_sites`
       Primary key: (`year`, `country_code`)
       
-      Rows: 197
+      Rows: 192
       Columns: 11
       $ country_code          <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM",~
       $ year                  <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
-      $ culture               <dbl> 4, 1, 29, 7, 0, 148, 1, NA, NA, 7, 1, 5, 1, 16, ~
+      $ culture               <dbl> 4, 1, 29, 7, 0, 148, 1, NA, NA, 7, 1, 5, 16, 101~
       $ lab_cul               <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
       $ lab_sm                <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
       $ smear                 <dbl> 873, 12, 240, 7, 167, 729, 25, NA, NA, 55, 1, 11~
       $ lab_xpert             <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
-      $ xpert                 <dbl> 47, 1, 4, 3, 22, 12, 13, NA, NA, 11, 0, 200, 1, ~
+      $ xpert                 <dbl> 47, 1, 4, 3, 22, 12, 13, NA, NA, 11, 0, 200, 26,~
       $ m_wrd                 <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
       $ m_wrd_tests_performed <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
       $ m_wrd_tests_positive  <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ~
@@ -138,7 +138,7 @@
       Table: `who_expenditures`
       Primary key: (`year`, `country_code`)
       
-      Rows: 197
+      Rows: 192
       Columns: 9
       $ country_code      <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AU~
       $ year              <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019~
@@ -178,7 +178,7 @@
         (`year`, `country_code`) -> (`who_expenditures$year`, `who_expenditures$countr...
         (`year`, `country_code`) -> (`gf_procurement$year`, `gf_procurement$country_co...
       
-      Rows: 197
+      Rows: 192
       Columns: 4
       $ country_code <chr> "AGO", "BGD", "BRA", "CAF", "CHN", "COD", "COG", "ETH", "~
       $ country      <chr> "Angola", "Bangladesh", "Brazil", "Central African Republ~
@@ -194,10 +194,6 @@
     Message <cliMessage>
       ! Unsatisfied constraints:
     Output
-      * Table `country`: foreign key `year`, `country_code` into table `wb_tot_pop`: values of `country$year`, `country$country_code` not in `wb_tot_pop$year`, `wb_tot_pop$country_code`: 2019, COK (1)
-      * Table `country`: foreign key `year`, `country_code` into table `wb_urb_pop`: values of `country$year`, `country$country_code` not in `wb_urb_pop$year`, `wb_urb_pop$country_code`: 2019, COK (1)
-      * Table `country`: foreign key `year`, `country_code` into table `wb_density_pop`: values of `country$year`, `country$country_code` not in `wb_density_pop$year`, `wb_density_pop$country_code`: 2019, COK (1)
-      * Table `country`: foreign key `year`, `country_code` into table `wb_gdp`: values of `country$year`, `country$country_code` not in `wb_gdp$year`, `wb_gdp$country_code`: 2019, COK (1)
       * Table `country`: foreign key `year`, `country_code` into table `who_community`: values of `country$year`, `country$country_code` not in `who_community$year`, `who_community$country_code`: 2019, ALB (1), 2019, AND (1), 2019, ARE (1), 2019, ARG (1), 2019, ARM (1), ...
       * Table `country`: foreign key `year`, `country_code` into table `gf_procurement`: values of `country$year`, `country$country_code` not in `gf_procurement$year`, `gf_procurement$country_code`: 2019, AFG (1), 2019, AGO (1), 2019, AND (1), 2019, ARE (1), 2019, ARG (1), ...
 
@@ -207,10 +203,6 @@
       writeLines(dplyr::pull(dplyr::filter(tibble::as_tibble(dm::dm_examine_constraints(
         dm)), problem != ""), problem))
     Output
-      values of `country$year`, `country$country_code` not in `wb_tot_pop$year`, `wb_tot_pop$country_code`: 2019, COK (1)
-      values of `country$year`, `country$country_code` not in `wb_urb_pop$year`, `wb_urb_pop$country_code`: 2019, COK (1)
-      values of `country$year`, `country$country_code` not in `wb_density_pop$year`, `wb_density_pop$country_code`: 2019, COK (1)
-      values of `country$year`, `country$country_code` not in `wb_gdp$year`, `wb_gdp$country_code`: 2019, COK (1)
       values of `country$year`, `country$country_code` not in `who_community$year`, `who_community$country_code`: 2019, ALB (1), 2019, AND (1), 2019, ARE (1), 2019, ARG (1), 2019, ARM (1), ...
       values of `country$year`, `country$country_code` not in `gf_procurement$year`, `gf_procurement$country_code`: 2019, AFG (1), 2019, AGO (1), 2019, AND (1), 2019, ARE (1), 2019, ARG (1), ...
 
@@ -226,7 +218,7 @@
       Table: `wb_tot_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 1,568
+      Rows: 1,536
       Columns: 3
       $ country_code <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "~
       $ year         <dbl> 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2022, 202~
@@ -237,7 +229,7 @@
       Table: `wb_urb_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 1,568
+      Rows: 1,536
       Columns: 3
       $ country_code   <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG",~
       $ year           <dbl> 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2022, 2~
@@ -248,7 +240,7 @@
       Table: `wb_density_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 1,568
+      Rows: 1,536
       Columns: 3
       $ country_code <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "~
       $ year         <dbl> 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2022, 202~
@@ -259,7 +251,7 @@
       Table: `wb_gdp`
       Primary key: (`year`, `country_code`)
       
-      Rows: 1,568
+      Rows: 1,536
       Columns: 3
       $ country_code <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "~
       $ year         <dbl> 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2022, 202~
@@ -270,7 +262,7 @@
       Table: `who_notifications`
       Primary key: (`year`, `country_code`)
       
-      Rows: 8,141
+      Rows: 7,961
       Columns: 4
       $ country_code <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "~
       $ year         <dbl> 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 198~
@@ -282,7 +274,7 @@
       Table: `who_estimates`
       Primary key: (`year`, `country_code`)
       
-      Rows: 4,301
+      Rows: 4,201
       Columns: 8
       $ country_code  <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", ~
       $ year          <dbl> 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 20~
@@ -298,7 +290,7 @@
       Table: `who_budget`
       Primary key: (`year`, `country_code`)
       
-      Rows: 985
+      Rows: 960
       Columns: 12
       $ country_code    <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "ALB", "ALB", "ALB"~
       $ year            <dbl> 2018, 2019, 2020, 2021, 2022, 2018, 2019, 2020, 2021, ~
@@ -335,7 +327,7 @@
       Table: `who_sites`
       Primary key: (`year`, `country_code`)
       
-      Rows: 2,558
+      Rows: 2,494
       Columns: 11
       $ country_code          <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG",~
       $ year                  <dbl> 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, ~
@@ -354,7 +346,7 @@
       Table: `who_expenditures`
       Primary key: (`year`, `country_code`)
       
-      Rows: 985
+      Rows: 960
       Columns: 9
       $ country_code      <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "ALB", "ALB", "AL~
       $ year              <dbl> 2017, 2018, 2019, 2020, 2021, 2017, 2018, 2019, 2020~
@@ -394,7 +386,7 @@
         (`year`, `country_code`) -> (`who_expenditures$year`, `who_expenditures$countr...
         (`year`, `country_code`) -> (`gf_procurement$year`, `gf_procurement$country_co...
       
-      Rows: 1,182
+      Rows: 1,152
       Columns: 4
       $ country_code <chr> "AGO", "AGO", "AGO", "AGO", "AGO", "AGO", "BGD", "BGD", "~
       $ country      <chr> "Angola", "Angola", "Angola", "Angola", "Angola", "Angola~
@@ -410,10 +402,6 @@
     Message <cliMessage>
       ! Unsatisfied constraints:
     Output
-      * Table `country`: foreign key `year`, `country_code` into table `wb_tot_pop`: values of `country$year`, `country$country_code` not in `wb_tot_pop$year`, `wb_tot_pop$country_code`: 2016, COK (1), 2017, COK (1), 2018, COK (1), 2019, COK (1), 2020, COK (1), 2021, COK (1)
-      * Table `country`: foreign key `year`, `country_code` into table `wb_urb_pop`: values of `country$year`, `country$country_code` not in `wb_urb_pop$year`, `wb_urb_pop$country_code`: 2016, COK (1), 2017, COK (1), 2018, COK (1), 2019, COK (1), 2020, COK (1), 2021, COK (1)
-      * Table `country`: foreign key `year`, `country_code` into table `wb_density_pop`: values of `country$year`, `country$country_code` not in `wb_density_pop$year`, `wb_density_pop$country_code`: 2016, COK (1), 2017, COK (1), 2018, COK (1), 2019, COK (1), 2020, COK (1), 2021, COK (1)
-      * Table `country`: foreign key `year`, `country_code` into table `wb_gdp`: values of `country$year`, `country$country_code` not in `wb_gdp$year`, `wb_gdp$country_code`: 2016, COK (1), 2017, COK (1), 2018, COK (1), 2019, COK (1), 2020, COK (1), 2021, COK (1)
       * Table `country`: foreign key `year`, `country_code` into table `who_budget`: values of `country$year`, `country$country_code` not in `who_budget$year`, `who_budget$country_code`: 2016, AFG (1), 2016, AGO (1), 2016, ALB (1), 2016, AND (1), 2016, ARE (1), ...
       * Table `country`: foreign key `year`, `country_code` into table `who_community`: values of `country$year`, `country$country_code` not in `who_community$year`, `who_community$country_code`: 2016, AND (1), 2016, ARE (1), 2016, ARG (1), 2016, AUS (1), 2016, AUT (1), ...
       * Table `country`: foreign key `year`, `country_code` into table `who_expenditures`: values of `country$year`, `country$country_code` not in `who_expenditures$year`, `who_expenditures$country_code`: 2016, AFG (1), 2016, AGO (1), 2016, ALB (1), 2016, AND (1), 2016, ARE (1), ...
@@ -425,10 +413,6 @@
       writeLines(dplyr::pull(dplyr::filter(tibble::as_tibble(dm::dm_examine_constraints(
         dm)), problem != ""), problem))
     Output
-      values of `country$year`, `country$country_code` not in `wb_tot_pop$year`, `wb_tot_pop$country_code`: 2016, COK (1), 2017, COK (1), 2018, COK (1), 2019, COK (1), 2020, COK (1), 2021, COK (1)
-      values of `country$year`, `country$country_code` not in `wb_urb_pop$year`, `wb_urb_pop$country_code`: 2016, COK (1), 2017, COK (1), 2018, COK (1), 2019, COK (1), 2020, COK (1), 2021, COK (1)
-      values of `country$year`, `country$country_code` not in `wb_density_pop$year`, `wb_density_pop$country_code`: 2016, COK (1), 2017, COK (1), 2018, COK (1), 2019, COK (1), 2020, COK (1), 2021, COK (1)
-      values of `country$year`, `country$country_code` not in `wb_gdp$year`, `wb_gdp$country_code`: 2016, COK (1), 2017, COK (1), 2018, COK (1), 2019, COK (1), 2020, COK (1), 2021, COK (1)
       values of `country$year`, `country$country_code` not in `who_budget$year`, `who_budget$country_code`: 2016, AFG (1), 2016, AGO (1), 2016, ALB (1), 2016, AND (1), 2016, ARE (1), ...
       values of `country$year`, `country$country_code` not in `who_community$year`, `who_community$country_code`: 2016, AND (1), 2016, ARE (1), 2016, ARG (1), 2016, AUS (1), 2016, AUT (1), ...
       values of `country$year`, `country$country_code` not in `who_expenditures$year`, `who_expenditures$country_code`: 2016, AFG (1), 2016, AGO (1), 2016, ALB (1), 2016, AND (1), 2016, ARE (1), ...
