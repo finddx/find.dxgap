@@ -21,7 +21,7 @@ get_set_role_recipe <- function(recipe) {
     recipes::update_role(who_dx_gap, new_role = "outcome") |>
     recipes::update_role(country_code, new_role = "id") |>
     recipes::update_role(
-      dplyr::all_of(
+      tidyselect::any_of(
         c(
           "c_cdr", "c_newinc_100k", "notified_ref_community", "notified_ref",
           "e_mort_100k", "e_pop_num", "new_labconf"
@@ -30,11 +30,11 @@ get_set_role_recipe <- function(recipe) {
       new_role = "collinear"
     ) |>
     recipes::update_role(
-      dplyr::all_of(c("pop_urban_perc", "pop_density")),
+      tidyselect::any_of(c("pop_urban_perc", "pop_density")),
       new_role = "no_norm"
     ) |>
     recipes::update_role(
-      dplyr::all_of(
+      tidyselect::any_of(
         c(
           "e_inc_100k", "e_inc_num", "c_newinc", "pop_total",
           "pop_density", "pop_urban_perc", "gdp"
@@ -46,7 +46,7 @@ get_set_role_recipe <- function(recipe) {
 
 get_finalize_recipe <- function(recipe) {
   recipe |>
-    recipes::step_rm(e_inc_num, e_inc_100k, c_newinc) |>
+    recipes::step_rm(tidyselect::any_of(c("e_inc_num", "e_inc_100k", "c_newinc"))) |>
     recipes::step_zv(recipes::all_numeric_predictors())
 }
 
@@ -59,7 +59,7 @@ get_impute_with_recipe <- function(recipe, impute_vars, neighbors) {
 update_role_impute_knn <- function(recipe, .vec) {
   recipe |>
     recipes::update_role(
-      dplyr::all_of(.vec),
+      tidyselect::any_of(.vec),
       new_role = "imputer_knn",
       old_role = "impute_w_median"
     )
