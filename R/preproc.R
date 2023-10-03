@@ -7,7 +7,7 @@ get_core_recipe_pop_total <- function(tbl, neighbors, threshold) {
     get_finalize_recipe()
 }
 
-get_core_recipe_pop_density <- function(tbl, neighbors, threshold) {
+get_core_recipe_pop_urban <- function(tbl, neighbors, threshold) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
     get_step_role() |>
