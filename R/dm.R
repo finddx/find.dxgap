@@ -1,7 +1,16 @@
-build_tbl <- function(dm) {
-  dm |>
+build_tbl <- function(dm, vars = NULL) {
+  tbl <-
+    dm |>
     dm::dm_flatten_to_tbl(.start = country) |>
-    dplyr::filter(!dplyr::if_all(-c(country_code), is.na)) |>
+    dplyr::filter(!dplyr::if_all(-c(country_code), is.na))
+
+  if (!is.null(vars)) {
+    tbl <-
+      tbl |>
+      dplyr::select(tidyselect::any_of(vars))
+  }
+
+  tbl |>
     dplyr::relocate(is_hbc, country_code, year, .before = everything())
 }
 
