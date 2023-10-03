@@ -1,9 +1,10 @@
-render_bulk <- function(template_name, year) {
+render_bulk <- function(template_name, year, vars) {
   year <- purrr::walk(
     year,
     ~ render_report(
       .template_name = template_name,
       .year = .x,
+      .vars = vars,
       interactive = FALSE
     )
   )
