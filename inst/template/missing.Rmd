@@ -28,6 +28,8 @@ knitr::opts_chunk$set(
 data_tbl <- params$data_tbl
 ```
 
+# Completion rate - overview across years
+
 ```{r}
 complete_by_year <- 
   data_tbl |> 
@@ -65,6 +67,45 @@ for_tab <-
 for_tab |> 
   gt::gt() |> 
   gt::data_color(
+    columns = dplyr::where(is.numeric),
+    method = "numeric",
+    palette = "Greys",
+    na_color = "#ffcccb"
+  ) 
+```
+
+
+# Completion rate per "is high-burden"
+
+```{r}
+vars_focus <- 
+  complete_by_year |> 
+  filter(between(complete_rate, 0.75, 0.94)) |> 
+  pull(variable_name)
+
+for_tab <- 
+  data_tbl |> 
+  pivot_longer(
+    -c("country_code", "country", "year", "is_hbc"), 
+    names_to = "variable_name"
+  ) |> 
+  filter(variable_name %in% vars_focus) |> 
+  mutate(is_na = is.na(value)) |> 
+  count(year, variable_name, is_na, is_hbc) |> 
+  group_by(year, variable_name, is_hbc) |> 
+  mutate(tot = sum(n)) |> 
+  ungroup() |> 
+  mutate(complete_rate = round(n / tot, 2)) |> 
+  filter(!is_na) |> 
+  filter(year > dxgap_constants$start_year) |> 
+  select(year, variable_name, is_hbc, complete_rate) |> 
+  pivot_wider(names_from = year, values_from = complete_rate)
+```
+
+```{r}
+for_tab |> 
+  gt::gt(groupname_col = "is_hbc") |> 
+    gt::data_color(
     columns = dplyr::where(is.numeric),
     method = "numeric",
     palette = "Greys",
