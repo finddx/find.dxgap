@@ -246,7 +246,6 @@ tbl |>
 tbl |>
   filter(variable_name == "pop_density") |>
   plot_density(
-    tbl,
     value,
     is_hbc,
     params$year,
