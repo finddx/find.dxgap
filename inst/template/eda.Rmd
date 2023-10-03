@@ -10,7 +10,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r}
+```{r echo=FALSE}
 year <- params$year
 if (is.null(year)) {
   rlang::abort(
@@ -22,7 +22,7 @@ if (is.null(year)) {
 }
 ```
 
-```{r}
+```{r echo=FALSE}
 dm <- params$dm
 data_tbl <- params$data_tbl
 ```
