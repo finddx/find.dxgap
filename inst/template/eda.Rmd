@@ -242,7 +242,7 @@ tbl |>
 
 ### Density distrbution
 
-```{asis, echo=eval_if(params$data_tbl, "pop_density")}
+```{r eval=eval_if(params$data_tbl, "pop_density")}
 tbl |>
   filter(variable_name == "pop_density") |>
   plot_density(
@@ -257,7 +257,7 @@ tbl |>
 
 ### Dx Gap
 
-```{asis, echo=eval_if(params$data_tbl, "pop_density")}
+```{r eval=eval_if(params$data_tbl, "pop_density")}
 tbl |>
   filter(variable_name %in% c("pop_density", "who_dx_gap")) |>
   pivot_wider(names_from = variable_name, values_from = value) |> 
@@ -275,11 +275,10 @@ tbl |>
 
 ### Density distribution
 
-```{asis, echo=eval_if(params$data_tbl, "pop_urban_perc")}
+```{r eval=eval_if(params$data_tbl, "pop_urban_perc")}
 tbl |>
   filter(variable_name == "pop_urban_perc") |>
   plot_density(
-    tbl,
     value,
     is_hbc,
     params$year,
@@ -291,7 +290,7 @@ tbl |>
 
 ### Dx Gap
 
-```{asis, echo=eval_if(params$data_tbl, "pop_urban_perc")}
+```{r eval=eval_if(params$data_tbl, "pop_urban_perc")}
 tbl |>
   filter(variable_name %in% c("pop_urban_perc", "who_dx_gap")) |>
   pivot_wider(names_from = variable_name, values_from = value) |> 
@@ -311,7 +310,7 @@ tbl |>
 
 ### Density distribution
 
-```{asis, echo=eval_if(params$data_tbl, "gdp")}
+```{r eval=eval_if(params$data_tbl, "gdp")}
 tbl |> 
   filter(variable_name == "gdp") |>
   plot_density(
@@ -325,7 +324,7 @@ tbl |>
 
 ### Dx Gap
 
-```{asis, echo=eval_if(params$data_tbl, "gdp")}
+```{r eval=eval_if(params$data_tbl, "gdp")}
 tbl |>
   filter(variable_name %in% c("gdp", "who_dx_gap")) |>
   pivot_wider(names_from = variable_name, values_from = value) |>
