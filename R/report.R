@@ -13,9 +13,9 @@ render_bulk <- function(template_name, year, vars) {
 
 #' @example \dontrun{render_report("eda.Rmd", .year = 2019, .vars = dxgap_constants$tb_vars)}
 render_report <- function(.template_name,
-                                 .year = NULL,
+                          .year = NULL,
                           .vars = NULL,
-                                 interactive = TRUE,
+                          interactive = TRUE,
                           template_dir = "inst/template/",
                           data_dir = Sys.getenv("DXGAP_DATADIR")) {
   template_path <- compose_file_path(.template_name, template_dir)
