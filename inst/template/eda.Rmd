@@ -348,32 +348,6 @@ budget_long <-
   mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
 ```
 
-```{r}
-complete_budget_df <- 
-  budget_long |>
-  group_by(budget_type, definition) |>
-  summarise(
-    n = n(), 
-    complete_rate = sum(!is.na(budget_value)) / n, 
-    .groups = "drop"
-  ) |>
-  select(-n)
-```
-
-```{r eval=FALSE}
-### Completion rate
-complete_budget_df |> 
-  relocate(definition, budget_type, complete_rate) |> 
-  arrange(desc(complete_rate)) |>
-  gt::gt()
-```
-
-```{r}
-budget_complete_long <- 
-  budget_long |> 
-  semi_join(complete_budget_df, by = join_by(budget_type))
-```
-
 
 ### Density distribution
 
@@ -467,34 +441,6 @@ comm_long <-
   mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
 ```
 
-```{r}
-community_complete_df <-
-  comm_long |>
-  group_by(definition, variable_name) |>
-  summarise(
-    n = n(), 
-    complete_rate = sum(!is.na(comm_value)) / n, 
-    .groups = "drop"
-  ) |> 
-  select(-n)
-```
-
-
-```{r eval=FALSE}
-### Completion rate
-community_complete_df |> 
-  gt::gt()
-```
-
-
-```{r}
-comm_long <- 
-  comm_long |>
-  semi_join(
-    filter(community_complete_df, complete_rate > 0), 
-    by = join_by(variable_name)
-  ) 
-```
 
 ### Density distribution
 
@@ -551,37 +497,11 @@ sites_long <-
   left_join(labs_master, by = join_by(lab_type == variable_name)) 
 ```
 
-```{r}
-complete_site_df <- 
-  sites_long |>
-  group_by(definition, lab_type) |>
-  summarise(
-    n = n(), 
-    complete_rate = sum(!is.na(lab_numb)) / n, 
-    .groups = "drop"
-  ) |>
-  select(-n)
-```
-
-
-```{r eval=FALSE}
-### Completion rate
-complete_site_df |> 
-  arrange(desc(complete_rate)) |> 
-  gt::gt()
-```
-
-```{r}
-sites_long_complete <- 
-  sites_long |> 
-  semi_join(complete_site_df, by = join_by(lab_type)) 
-```
-
 ### Density distribution
 
 ```{r fig.height=15, fig.width=12}
 plot_density(
-  sites_long_complete,
+  sites_long,
   lab_per_100k,
   is_hbc,
   params$year,
