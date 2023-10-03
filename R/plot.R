@@ -8,6 +8,7 @@ plot_scatter <- function(data, x, y, year, color, title, caption) {
       method = "lm",
       se = FALSE
     ) +
+    scale_y_continuous(labels = scales::label_percent(scale = 1)) +
     theme_minimal() +
     labs(
       x = paste(title, year),

@@ -171,6 +171,7 @@ tbl |>
   mutate(country_code = forcats::fct_relevel(country_code, sort)) |> 
   ggplot(aes(country_code, who_dx_gap, fill = is_hbc)) +
   geom_col() +
+  scale_y_continuous(labels = scales::label_percent(scale = 1)) +
   theme_minimal() +
   theme(axis.text.y = element_text(size = rel(0.45))) +
   coord_flip() +
@@ -195,9 +196,10 @@ plot_density(
 
 ```{r}
 tbl |> 
-  mutate(c_cdr = c_cdr / 100) |> 
   ggplot(aes(c_cdr, who_dx_gap, color = is_hbc)) +
   geom_point(alpha = .5, size = 0.75) +
+  scale_y_continuous(labels = scales::label_percent(scale = 1)) +
+  scale_x_continuous(labels = scales::label_percent(scale = 1)) +
   coord_fixed() +
   theme_minimal()
 ```
@@ -323,7 +325,8 @@ plot_scatter(
   "Urban population (% of total population) in",
   "Source: World Bank"
 ) +
-  scale_x_continuous(labels = scales::label_percent(scale = 1)) 
+  scale_x_continuous(labels = scales::label_percent(scale = 1)) +
+  coord_fixed()
 ```
 
 ## GDP
