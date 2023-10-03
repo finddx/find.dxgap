@@ -69,13 +69,13 @@ models <- list(lm = lm_model)
 preproc <- tibble::lst(
   simple_pop_total = get_recipe(
     tbl, neighbors = 5, 
-    threshold = 0.9,
+    threshold = 0.25,
     c("gdp", "e_inc_num", "pop_total")
   ),
   simple_pop_density = get_recipe(
     tbl, 
     neighbors = 5, 
-    threshold = 0.9,
+    threshold = 0.25,
     c("gdp", "e_inc_num", "pop_density")
   ),
   log_pop_total = get_log_recipe(simple_pop_total),
