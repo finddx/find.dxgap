@@ -32,6 +32,13 @@ data_tbl <- params$data_tbl
 
 The chosen year is `r params$year`.
 
+```{r eval=FALSE}
+df_lst <- load()
+dm <- build_dm(df_lst, year = NULL)
+data_tbl <- build_tbl(dm)
+```
+
+
 ```{r data}
 tbl <- 
   data_tbl |> 
