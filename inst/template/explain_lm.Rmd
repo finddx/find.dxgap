@@ -68,15 +68,16 @@ models <- list(lm = lm_model)
 # TODO: fine tune neighbors
 preproc <- tibble::lst(
   simple_pop_total = get_recipe(
-    tbl, neighbors = 5, 
+    tbl, 
+    neighbors = 5, 
     threshold = 0.25,
-    c("gdp", "e_inc_num", "pop_total")
+    impute_vars = c("gdp", "e_inc_num", "pop_total")
   ),
   simple_pop_density = get_recipe(
     tbl, 
     neighbors = 5, 
     threshold = 0.25,
-    c("gdp", "e_inc_num", "pop_density")
+    impute_vars = c("gdp", "e_inc_num", "pop_density")
   ),
   log_pop_total = get_log_recipe(simple_pop_total),
   log_pop_density = get_log_recipe(simple_pop_density),
