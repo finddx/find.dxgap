@@ -13,7 +13,6 @@ get_core_recipe <- function(recipe) {
       !if_any(c("gdp", "e_inc_num", "who_dx_gap", "pop_total"), is.na)
     ) |>
     recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
-    recipes::step_mutate(pop_100k = pop_total / 1e5) |>
     recipes::step_rm(recipes::has_role("collinear"))
 }
 
@@ -102,6 +101,7 @@ get_is_hbc_recipe <- function(recipe) {
 
 get_pop_100k_recipe <- function(recipe) {
   recipe |>
+    recipes::step_mutate(pop_100k = pop_total / 1e5) |>
     recipes::step_mutate_at(
       recipes::all_numeric_predictors() &
         -recipes::all_factor() &
