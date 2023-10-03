@@ -12,7 +12,7 @@ get_core_recipe_pop_density <- function(tbl, neighbors, threshold) {
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
     get_step_role() |>
     get_core_recipe() |>
-    get_impute_with_pop_density_recipe(neighbors = neighbors) |>
+    get_impute_with_pop_urban_recipe(neighbors = neighbors) |>
     get_finalize_recipe()
 }
 
@@ -66,9 +66,9 @@ get_impute_with_pop_total_recipe <- function(recipe, neighbors) {
     impute_knn(.neighbors = neighbors)
 }
 
-get_impute_with_pop_density_recipe <- function(recipe, neighbors) {
+get_impute_with_pop_urban_recipe <- function(recipe, neighbors) {
   recipe |>
-    update_role_impute_knn(.vec = c("gdp", "e_inc_num", "pop_density")) |>
+    update_role_impute_knn(.vec = c("gdp", "e_inc_num", "pop_urban_perc")) |>
     impute_knn(.neighbors = neighbors)
 }
 
