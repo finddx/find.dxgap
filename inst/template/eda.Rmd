@@ -241,90 +241,101 @@ plot_density(
 
 ### Density distrbution
 
-```{r}
-plot_density(
-  tbl,
-  pop_density,
-  is_hbc,
-  params$year,
-  "Population density (people per sq. km of land area) in",
-  "Source: World Bank"
-)
+```{asis, echo=eval_if(params$data_tbl, "pop_density")}
+tbl |>
+  filter(variable_name == "pop_density") |>
+  plot_density(
+    tbl,
+    value,
+    is_hbc,
+    params$year,
+    "Population density (people per sq. km of land area) in",
+    "Source: World Bank"
+  )
 ```
 
 ### Dx Gap
 
-```{r}
-plot_scatter(
-  tbl, 
-  pop_density, 
-  who_dx_gap, 
-  params$year, 
-  is_hbc, 
-  "Population density (people per sq. km of land area) in", 
-  "Source: World Bank"
-)
+```{asis, echo=eval_if(params$data_tbl, "pop_density")}
+tbl |>
+  filter(variable_name %in% c("pop_density", "who_dx_gap")) |>
+  pivot_wider(names_from = variable_name, values_from = value) |> 
+  plot_scatter(
+    pop_density, 
+    who_dx_gap, 
+    params$year, 
+    is_hbc, 
+    "Population density (people per sq. km of land area) in", 
+    "Source: World Bank"
+  )
 ```
 
 ## Population urban
 
 ### Density distribution
 
-```{r}
-plot_density(
-  tbl,
-  pop_urban_perc,
-  is_hbc,
-  params$year,
-  "Urban population (% of total population) in",
-  "Source: World Bank"
-) +
-  scale_x_continuous(labels = scales::label_percent(scale = 1)) 
+```{asis, echo=eval_if(params$data_tbl, "pop_urban_perc")}
+tbl |>
+  filter(variable_name == "pop_urban_perc") |>
+  plot_density(
+    tbl,
+    value,
+    is_hbc,
+    params$year,
+    "Urban population (% of total population) in",
+    "Source: World Bank"
+  ) +
+    scale_x_continuous(labels = scales::label_percent(scale = 1)) 
 ```
 
 ### Dx Gap
 
-```{r}
-plot_scatter(
-  tbl,
-  pop_urban_perc,
-  who_dx_gap,
-  params$year,
-  is_hbc,
-  "Urban population (% of total population) in",
-  "Source: World Bank"
-) +
-  scale_x_continuous(labels = scales::label_percent(scale = 1)) +
-  coord_fixed()
+```{asis, echo=eval_if(params$data_tbl, "pop_urban_perc")}
+tbl |>
+  filter(variable_name %in% c("pop_urban_perc", "who_dx_gap")) |>
+  pivot_wider(names_from = variable_name, values_from = value) |> 
+  plot_scatter(
+    pop_urban_perc,
+    who_dx_gap,
+    params$year,
+    is_hbc,
+    "Urban population (% of total population) in",
+    "Source: World Bank"
+  ) +
+    scale_x_continuous(labels = scales::label_percent(scale = 1)) +
+    coord_fixed()
 ```
 
 ## GDP
 
 ### Density distribution
 
-```{r}
-plot_density(
-  tbl,
-  gdp,
-  is_hbc,
-  params$year,
-  "GDP (current US$) in",
-  "Source: World Bank"
-) 
+```{asis, echo=eval_if(params$data_tbl, "gdp")}
+tbl |> 
+  filter(variable_name == "gdp") |>
+  plot_density(
+    value,
+    is_hbc,
+    params$year,
+    "GDP (current US$) in",
+    "Source: World Bank"
+  ) 
 ```
 
 ### Dx Gap
 
-```{r}
-plot_scatter(
-  tbl,
-  gdp / pop_100k,
-  who_dx_gap,
-  params$year,
-  is_hbc,
-  "GDP (current US$) per 100k in",
-  "Source: World Bank"
-)
+```{asis, echo=eval_if(params$data_tbl, "gdp")}
+tbl |>
+  filter(variable_name %in% c("gdp", "who_dx_gap")) |>
+  pivot_wider(names_from = variable_name, values_from = value) |>
+  plot_scatter(
+    gdp,
+    who_dx_gap,
+    params$year,
+    is_hbc,
+    "GDP (current US$) in",
+    "Source: World Bank"
+  )
 ```
 
 ## Budget
