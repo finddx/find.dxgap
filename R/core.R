@@ -6,6 +6,7 @@ get_core <- function(data_list) {
 
   country_estimate_df <-
     data_list$who_estimates |>
+    dplyr::filter(e_inc_num != 0) |> # avoid dividing by zero
     get_cc_var_always_given_acrs_yrs(e_inc_num)
 
   in_common_dxgap <-
