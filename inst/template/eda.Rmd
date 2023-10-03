@@ -225,15 +225,16 @@ tbl <-
 
 ## Population total
 
-```{r}
-plot_density(
-  tbl,
-  pop_100k,
-  is_hbc,
-  params$year,
-  "Total population in",
-  "Source: World Bank"
-)
+```{r eval=eval_if(params$data_tbl, "pop_total")}
+tbl |> 
+  filter(variable_name == "pop_total") |> 
+  plot_density(
+    value,
+    is_hbc,
+    params$year,
+    "Total population in",
+    "Source: World Bank"
+  )
 ```
 
 
