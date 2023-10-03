@@ -202,7 +202,8 @@ plot_density(
   params$year,
   "Dx Gap in",
   "Source: WHO"
-)
+) +
+  scale_x_continuous(labels = scales::label_percent(scale = 1))
 ```
 
 
