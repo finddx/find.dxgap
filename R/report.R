@@ -20,7 +20,7 @@ render_report <- function(.template_name,
 
   lst_df <- load()
   dm <- build_dm(lst_df, year = .year)
-  data_tbl <- build_tbl(dm)
+  data_tbl <- build_tbl(dm, vars = .vars)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   if (interactive) {
