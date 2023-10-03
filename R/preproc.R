@@ -1,9 +1,9 @@
-get_recipe <- function(tbl, neighbors, threshold, vars) {
+get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
     get_set_role_recipe() |>
     get_core_recipe() |>
-    get_impute_with_recipe(neighbors = neighbors, vars) |>
+    get_impute_with_recipe(neighbors = neighbors, impute_vars) |>
     get_finalize_recipe()
 }
 
@@ -51,9 +51,9 @@ get_finalize_recipe <- function(recipe) {
     recipes::step_zv(recipes::all_numeric_predictors())
 }
 
-get_impute_with_recipe <- function(recipe, vars, neighbors) {
+get_impute_with_recipe <- function(recipe, impute_vars, neighbors) {
   recipe |>
-    update_role_impute_knn(.vec = vars) |>
+    update_role_impute_knn(.vec = impute_vars) |>
     impute_knn(.neighbors = neighbors)
 }
 
