@@ -12,6 +12,7 @@ render_bulk <- function(template_name, year) {
 
 render_report <- function(.template_name,
                                  .year = NULL,
+                          .vars = NULL,
                                  interactive = TRUE,
                           template_dir = "inst/template/",
                           data_dir = Sys.getenv("DXGAP_DATADIR")) {
