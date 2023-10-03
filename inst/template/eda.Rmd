@@ -10,16 +10,28 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-library(tidyverse)
-library(corrr)
-pkgload::load_all()
-knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message = FALSE, warning = FALSE)
+```{r}
+year <- params$year
+if (is.null(year)) {
+  rlang::abort(
+    c(
+      "Cannot render without a year.",
+      i = "Did you call `render_report('eda.Rmd', .year = 2019)`?"
+    )
+  )
+}
 ```
 
 ```{r}
 dm <- params$dm
 data_tbl <- params$data_tbl
+```
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(corrr)
+pkgload::load_all()
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message = FALSE, warning = FALSE)
 ```
 
 The chosen year is `r params$year`.
