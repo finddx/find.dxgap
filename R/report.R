@@ -10,6 +10,7 @@ render_bulk <- function(template_name, year) {
   invisible(year)
 }
 
+#' @example \dontrun{render_report("eda.Rmd", .year = 2019, .vars = dxgap_constants$tb_vars)}
 render_report <- function(.template_name,
                                  .year = NULL,
                           .vars = NULL,
