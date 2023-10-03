@@ -89,3 +89,11 @@ to_nest_df <- function(list) {
     data = unname(list)
   )
 }
+
+eval_if <- function(tbl, vars) {
+  col_names <- names(tbl)
+  if (any(vars %in% col_names)) {
+    return(TRUE)
+  }
+  FALSE
+}

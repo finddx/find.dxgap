@@ -10,8 +10,10 @@ render_bulk <- function(template_name, year) {
   invisible(year)
 }
 
+#' @example \dontrun{render_report("eda.Rmd", .year = 2019, .vars = dxgap_constants$tb_vars)}
 render_report <- function(.template_name,
                                  .year = NULL,
+                          .vars = NULL,
                                  interactive = TRUE,
                           template_dir = "inst/template/",
                           data_dir = Sys.getenv("DXGAP_DATADIR")) {
@@ -19,7 +21,7 @@ render_report <- function(.template_name,
 
   lst_df <- load()
   dm <- build_dm(lst_df, year = .year)
-  data_tbl <- build_tbl(dm)
+  data_tbl <- build_tbl(dm, vars = .vars)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   if (interactive) {

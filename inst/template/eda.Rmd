@@ -217,18 +217,27 @@ tbl |>
   theme_minimal()
 ```
 
+```{r long}
+tbl <- 
+  tbl |> 
+  pivot_longer(
+    cols = -c(is_hbc, country_code, who_dx_gap), 
+    names_to = "variable_name"
+  )
+```
 
 ## Population total
 
-```{r}
-plot_density(
-  tbl,
-  pop_100k,
-  is_hbc,
-  params$year,
-  "Total population in",
-  "Source: World Bank"
-)
+```{r eval=eval_if(params$data_tbl, "pop_total")}
+tbl |> 
+  filter(variable_name == "pop_total") |> 
+  plot_density(
+    value,
+    is_hbc,
+    params$year,
+    "Total population in",
+    "Source: World Bank"
+  )
 ```
 
 
@@ -236,90 +245,99 @@ plot_density(
 
 ### Density distrbution
 
-```{r}
-plot_density(
-  tbl,
-  pop_density,
-  is_hbc,
-  params$year,
-  "Population density (people per sq. km of land area) in",
-  "Source: World Bank"
-)
+```{r eval=eval_if(params$data_tbl, "pop_density")}
+tbl |>
+  filter(variable_name == "pop_density") |>
+  plot_density(
+    value,
+    is_hbc,
+    params$year,
+    "Population density (people per sq. km of land area) in",
+    "Source: World Bank"
+  )
 ```
 
 ### Dx Gap
 
-```{r}
-plot_scatter(
-  tbl, 
-  pop_density, 
-  who_dx_gap, 
-  params$year, 
-  is_hbc, 
-  "Population density (people per sq. km of land area) in", 
-  "Source: World Bank"
-)
+```{r eval=eval_if(params$data_tbl, "pop_density")}
+tbl |>
+  filter(variable_name == "pop_density") |>
+  pivot_wider(names_from = variable_name, values_from = value) |> 
+  plot_scatter(
+    pop_density, 
+    who_dx_gap, 
+    params$year, 
+    is_hbc, 
+    "Population density (people per sq. km of land area) in", 
+    "Source: World Bank"
+  )
 ```
 
 ## Population urban
 
 ### Density distribution
 
-```{r}
-plot_density(
-  tbl,
-  pop_urban_perc,
-  is_hbc,
-  params$year,
-  "Urban population (% of total population) in",
-  "Source: World Bank"
-) +
-  scale_x_continuous(labels = scales::label_percent(scale = 1)) 
+```{r eval=eval_if(params$data_tbl, "pop_urban_perc")}
+tbl |>
+  filter(variable_name == "pop_urban_perc") |>
+  plot_density(
+    value,
+    is_hbc,
+    params$year,
+    "Urban population (% of total population) in",
+    "Source: World Bank"
+  ) +
+    scale_x_continuous(labels = scales::label_percent(scale = 1)) 
 ```
 
 ### Dx Gap
 
-```{r}
-plot_scatter(
-  tbl,
-  pop_urban_perc,
-  who_dx_gap,
-  params$year,
-  is_hbc,
-  "Urban population (% of total population) in",
-  "Source: World Bank"
-) +
-  scale_x_continuous(labels = scales::label_percent(scale = 1)) +
-  coord_fixed()
+```{r eval=eval_if(params$data_tbl, "pop_urban_perc")}
+tbl |>
+  filter(variable_name == "pop_urban_perc") |>
+  pivot_wider(names_from = variable_name, values_from = value) |> 
+  plot_scatter(
+    pop_urban_perc,
+    who_dx_gap,
+    params$year,
+    is_hbc,
+    "Urban population (% of total population) in",
+    "Source: World Bank"
+  ) +
+    scale_x_continuous(labels = scales::label_percent(scale = 1)) +
+    coord_fixed()
 ```
 
 ## GDP
 
 ### Density distribution
 
-```{r}
-plot_density(
-  tbl,
-  gdp,
-  is_hbc,
-  params$year,
-  "GDP (current US$) in",
-  "Source: World Bank"
-) 
+```{r eval=eval_if(params$data_tbl, "gdp")}
+tbl |> 
+  filter(variable_name == "gdp") |>
+  plot_density(
+    value,
+    is_hbc,
+    params$year,
+    "GDP (current US$) in",
+    "Source: World Bank"
+  ) 
 ```
 
 ### Dx Gap
 
-```{r}
-plot_scatter(
-  tbl,
-  gdp / pop_100k,
-  who_dx_gap,
-  params$year,
-  is_hbc,
-  "GDP (current US$) per 100k in",
-  "Source: World Bank"
-)
+```{r eval=eval_if(params$data_tbl, "gdp")}
+tbl |>
+  filter(variable_name == "gdp") |>
+  pivot_wider(names_from = variable_name, values_from = value) |>
+  plot_scatter(
+    gdp,
+    who_dx_gap,
+    params$year,
+    is_hbc,
+    "GDP (current US$) in",
+    "Source: World Bank"
+  )
 ```
 
 ## Budget
@@ -335,27 +353,21 @@ budget_cols <-
   pull(variable_name)
 ```
 
-```{r}
+```{r eval=eval_if(params$data_tbl, budget_cols)}
 budget_long <- 
   tbl |>
-  select(country_code, is_hbc, who_dx_gap, pop_100k, all_of(budget_cols)) |> 
-  pivot_longer(
-    cols = all_of(budget_cols), 
-    names_to = "budget_type", 
-    values_to = "budget_value"
-  ) |> 
-  mutate(budget_per_100k = budget_value / pop_100k) |> 
-  left_join(budget_master, join_by(budget_type == variable_name)) |> 
+  filter(variable_name %in% budget_cols) |> 
+  left_join(budget_master, join_by(variable_name)) |> 
   mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
 ```
 
 
 ### Density distribution
 
-```{r fig.height=15, fig.width=12}
+```{r eval=eval_if(params$data_tbl, budget_cols), fig.height=15, fig.width=12}
 plot_density(
   budget_long,
-  budget_per_100k,
+  value,
   is_hbc,
   params$year,
   "Budget data in",
@@ -366,10 +378,10 @@ plot_density(
 
 ### Dx Gap
 
-```{r fig.height=15, fig.width=12}
+```{r eval=eval_if(params$data_tbl, budget_cols), fig.height=15, fig.width=12}
 plot_scatter(
   budget_long,
-  budget_per_100k,
+  value,
   who_dx_gap,
   params$year,
   is_hbc,
@@ -428,16 +440,10 @@ comm_cols <-
   pull(variable_name)
 ```
 
-```{r}
+```{r eval=eval_if(params$data_tbl, comm_cols)}
 comm_long <- 
   tbl |>
-  select(country_code, is_hbc, who_dx_gap, pop_100k, all_of(comm_cols)) |> 
-  pivot_longer(
-    cols = all_of(comm_cols), 
-    names_to = "variable_name", 
-    values_to = "comm_value"
-  ) |>
-  mutate(comm_units_100k = comm_value / pop_100k) |> 
+  filter(variable_name %in% comm_cols) |> 
   left_join(comm_master, join_by(variable_name)) |> 
   mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
 ```
@@ -445,10 +451,10 @@ comm_long <-
 
 ### Density distribution
 
-```{r fig.height=15, fig.width=12}
+```{r eval=eval_if(params$data_tbl, comm_cols), fig.height=15, fig.width=12}
 plot_density(
   comm_long,
-  comm_units_100k,
+  value,
   is_hbc,
   params$year,
   "Community data in",
@@ -459,10 +465,10 @@ plot_density(
 
 ### Dx Gap
 
-```{r fig.height=15, fig.width=12}
+```{r eval=eval_if(params$data_tbl, comm_cols), fig.height=15, fig.width=12}
 plot_scatter(
   comm_long,
-  comm_units_100k,
+  value,
   who_dx_gap,
   params$year,
   is_hbc,
@@ -485,25 +491,19 @@ labs_cols <-
   pull(variable_name)
 ```
 
-```{r}
+```{r eval=eval_if(params$data_tbl, labs_cols)}
 sites_long <- 
   tbl |> 
-  select(country_code, is_hbc, who_dx_gap, pop_100k, all_of(labs_cols)) |> 
-  pivot_longer(
-    cols = -c(country_code, is_hbc, who_dx_gap, pop_100k), 
-    names_to = "lab_type",
-    values_to = "lab_numb"
-  ) |> 
-  mutate(lab_per_100k = lab_numb / pop_100k) |> 
-  left_join(labs_master, by = join_by(lab_type == variable_name)) 
+  filter(variable_name %in% labs_cols) |> 
+  left_join(labs_master, by = join_by(variable_name)) 
 ```
 
 ### Density distribution
 
-```{r fig.height=15, fig.width=12}
+```{r eval=eval_if(params$data_tbl, labs_cols), fig.height=15, fig.width=12}
 plot_density(
   sites_long,
-  lab_per_100k,
+  value,
   is_hbc,
   params$year,
   "Community data in",
@@ -514,10 +514,10 @@ plot_density(
 
 ### Dx Gap
 
-```{r fig.height=15, fig.width=12}
+```{r eval=eval_if(params$data_tbl, labs_cols), fig.height=15, fig.width=12}
 plot_scatter(
-  sites_long_complete,
-  lab_per_100k,
+  sites_long,
+  value,
   who_dx_gap,
   params$year, 
   is_hbc,
@@ -531,29 +531,31 @@ plot_scatter(
 
 ### Density distribution
 
-```{r}
-plot_density(
-  tbl,
-  total_numb_device,
-  is_hbc,
-  params$year, 
-  "TB diagnostic devices in",
-  "Source: Global Fund"
+```{r eval=eval_if(params$data_tbl, "total_numb_device")}
+tbl |> 
+  filter(variable_name == "total_numb_device") |> 
+  plot_density(
+    value,
+    is_hbc,
+    params$year, 
+    "TB diagnostic devices in",
+    "Source: Global Fund"
 )
 ```
 
 ### Dx Gap
 
-```{r}
-plot_scatter(
-  tbl,
-  total_numb_device,
-  who_dx_gap,
-  params$year, 
-  is_hbc,
-  "TB diagnostic devices in",
-  "Source: Global Fund"
-)
+```{r eval=eval_if(params$data_tbl, "total_numb_device")}
+tbl |> 
+  filter(variable_name == "total_numb_device") |>
+  plot_scatter(
+    value,
+    who_dx_gap,
+    params$year, 
+    is_hbc,
+    "TB diagnostic devices in",
+    "Source: Global Fund"
+  )
 ```
 
 ## Expenditures
@@ -569,25 +571,19 @@ exp_cols <-
   pull(variable_name)
 ```
 
-```{r}
+```{r eval=eval_if(params$data_tbl, exp_cols)}
 exp_long <- 
   tbl |> 
-  select(country_code, is_hbc, who_dx_gap, pop_100k, all_of(exp_cols)) |> 
-  pivot_longer(
-    cols = -c(country_code, is_hbc, who_dx_gap, pop_100k), 
-    names_to = "exp_type",
-    values_to = "exp_numb"
-  ) |> 
-  mutate(exp_per_100k = exp_numb / pop_100k) |> 
-  left_join(exp_master, by = join_by(exp_type == variable_name)) 
+  filter(variable_name %in% exp_cols) |> 
+  left_join(exp_master, by = join_by(variable_name)) 
 ```
 
 ### Density distribution
 
-```{r fig.height=15, fig.width=12}
+```{r eval=eval_if(params$data_tbl, exp_cols), fig.height=15, fig.width=12}
 plot_density(
   exp_long,
-  exp_per_100k,
+  value,
   is_hbc,
   params$year,
   "Community data in",
@@ -598,10 +594,10 @@ plot_density(
 
 ### Dx Gap
 
-```{r fig.height=15, fig.width=12}
+```{r eval=eval_if(params$data_tbl, exp_cols), fig.height=15, fig.width=12}
 plot_scatter(
   exp_long,
-  exp_per_100k,
+  value,
   who_dx_gap,
   params$year, 
   is_hbc,
