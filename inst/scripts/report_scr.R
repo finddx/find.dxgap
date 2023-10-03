@@ -1,26 +1,3 @@
+pkgload::load_all()
 
-vars <- c("year",
-           "country",
-            "is_hbc",
-           "country_code",
-           "who_dx_gap",
-           "pop_total",
-           "pop_urban_perc",
-           "pop_density",
-           "gdp",
-           "c_newinc",
-           "new_labconf",
-           "c_cdr",
-           "c_newinc_100k",
-           "e_inc_100k",
-           "e_inc_num",
-           "e_mort_100k",
-           "e_pop_num",
-           "culture",
-           "smear",
-           "xpert",
-           "cf_staff",
-           "budget_lab",
-           "pop_100k")
-
-render_report("eda.Rmd", .year = 2019, .vars = vars)
+render_report("eda.Rmd", .year = 2019, .vars = dxgap_constants$tb_vars)
