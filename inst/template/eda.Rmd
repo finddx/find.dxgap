@@ -350,7 +350,7 @@ budget_cols <-
   pull(variable_name)
 ```
 
-```{asis echo=eval_if(params$data_tbl, budget_cols)}
+```{r eval=eval_if(params$data_tbl, budget_cols)}
 budget_long <- 
   tbl |>
   filter(variable_name %in% budget_cols) |> 
@@ -361,10 +361,10 @@ budget_long <-
 
 ### Density distribution
 
-```{r fig.height=15, fig.width=12}
+```{r eval=eval_if(params$data_tbl, budget_cols), fig.height=15, fig.width=12}
 plot_density(
   budget_long,
-  budget_per_100k,
+  value,
   is_hbc,
   params$year,
   "Budget data in",
