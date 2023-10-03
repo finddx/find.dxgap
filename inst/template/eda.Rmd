@@ -48,7 +48,6 @@ dm::dm_draw(dm)
 tbl <- 
   data_tbl |> 
   compute_dx_gap() |>
-  mutate(pop_100k = pop_total / 1e5) |>
   mutate(is_hbc = as.character(is_hbc)) |> 
   select(-year, -country)
 ```
