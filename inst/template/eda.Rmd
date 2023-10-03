@@ -217,6 +217,11 @@ tbl |>
   theme_minimal()
 ```
 
+```{r long}
+tbl <- 
+  tbl |> 
+  pivot_longer(cols = -c(is_hbc, country_code), names_to = "variable_name")
+```
 
 ## Population total
 
