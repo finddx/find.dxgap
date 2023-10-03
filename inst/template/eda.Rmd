@@ -351,17 +351,11 @@ budget_cols <-
   pull(variable_name)
 ```
 
-```{r}
+```{asis echo=eval_if(params$data_tbl, budget_cols)}
 budget_long <- 
   tbl |>
-  select(country_code, is_hbc, who_dx_gap, pop_100k, all_of(budget_cols)) |> 
-  pivot_longer(
-    cols = all_of(budget_cols), 
-    names_to = "budget_type", 
-    values_to = "budget_value"
-  ) |> 
-  mutate(budget_per_100k = budget_value / pop_100k) |> 
-  left_join(budget_master, join_by(budget_type == variable_name)) |> 
+  filter(variable_name %in% budget_cols) |> 
+  left_join(budget_master, join_by(variable_name)) |> 
   mutate(definition = str_squish(str_remove(definition, "\\(.+\\)")))
 ```
 
