@@ -1,7 +1,7 @@
 get_recipe <- function(tbl, neighbors, threshold, vars) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
-    get_step_role() |>
+    get_set_role_recipe() |>
     get_core_recipe() |>
     get_impute_with_recipe(neighbors = neighbors, vars) |>
     get_finalize_recipe()
@@ -17,7 +17,7 @@ get_core_recipe <- function(recipe) {
     recipes::step_rm(recipes::has_role("collinear"))
 }
 
-get_step_role <- function(recipe) {
+get_set_role_recipe <- function(recipe) {
   recipe |>
     recipes::update_role(who_dx_gap, new_role = "outcome") |>
     recipes::update_role(country_code, new_role = "id") |>
