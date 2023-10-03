@@ -1,18 +1,9 @@
-get_core_recipe_pop_total <- function(tbl, neighbors, threshold) {
+get_recipe <- function(tbl, neighbors, threshold, vars) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
     get_step_role() |>
     get_core_recipe() |>
-    get_impute_with_pop_total_recipe(neighbors = neighbors) |>
-    get_finalize_recipe()
-}
-
-get_core_recipe_pop_urban <- function(tbl, neighbors, threshold) {
-  recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
-    recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
-    get_step_role() |>
-    get_core_recipe() |>
-    get_impute_with_pop_urban_recipe(neighbors = neighbors) |>
+    get_impute_with_recipe(neighbors = neighbors, vars) |>
     get_finalize_recipe()
 }
 
@@ -60,15 +51,9 @@ get_finalize_recipe <- function(recipe) {
     recipes::step_zv(recipes::all_numeric_predictors())
 }
 
-get_impute_with_pop_total_recipe <- function(recipe, neighbors) {
+get_impute_with_recipe <- function(recipe, vars, neighbors) {
   recipe |>
-    update_role_impute_knn(.vec = c("gdp", "e_inc_num", "pop_total")) |>
-    impute_knn(.neighbors = neighbors)
-}
-
-get_impute_with_pop_urban_recipe <- function(recipe, neighbors) {
-  recipe |>
-    update_role_impute_knn(.vec = c("gdp", "e_inc_num", "pop_urban_perc")) |>
+    update_role_impute_knn(.vec = vars) |>
     impute_knn(.neighbors = neighbors)
 }
 
