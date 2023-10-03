@@ -9,9 +9,6 @@ get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
 
 get_core_recipe <- function(recipe) {
   recipe |>
-    recipes::step_filter(
-      !if_any(c("gdp", "e_inc_num", "who_dx_gap", "pop_total"), is.na)
-    ) |>
     recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
     recipes::step_rm(recipes::has_role("collinear"))
 }
