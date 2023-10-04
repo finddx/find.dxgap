@@ -15,7 +15,7 @@ library(recipes)
 pkgload::load_all()
 knitr::opts_chunk$set(
   echo = FALSE, 
-  cache = TRUE, 
+  cache = FALSE, 
   fig.align = "center", 
   fig.fullwidth = TRUE,
   fig.height = 10,
