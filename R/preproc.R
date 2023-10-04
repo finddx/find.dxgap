@@ -7,21 +7,10 @@ get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
 
 get_impute_with_recipe <- function(recipe, impute_vars, neighbors) {
   recipe |>
-    update_role_impute_knn(.vec = impute_vars) |>
-    impute_knn(.neighbors = neighbors)
-}
-
-update_role_impute_knn <- function(recipe, .vec) {
-  recipe |>
     recipes::update_role(
-      tidyselect::any_of(.vec),
-      new_role = "imputer_knn",
-      old_role = "impute_w_median"
-    )
-}
-
-impute_knn <- function(recipe, .neighbors) {
-  recipe |>
+      tidyselect::any_of(impute_vars),
+      new_role = "imputer_knn"
+    ) |>
     recipes::step_impute_knn(
       recipes::all_predictors(),
       neighbors = .neighbors,
