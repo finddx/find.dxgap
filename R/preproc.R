@@ -5,7 +5,6 @@ get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
     recipes::update_role(gdp, new_role = "impute_w_median") |>
     recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
-    # recipes::update_role(gdp, new_role = "imputer_knn", old_role = "impute_w_median") |>
     get_impute_with_recipe(.neighbors = neighbors, .impute_vars = impute_vars) |>
     recipes::update_role(
       tidyselect::any_of(c("e_inc_num", "c_newinc")),
