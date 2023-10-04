@@ -1,8 +1,6 @@
 get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
-    get_set_role_recipe() |>
-    get_core_recipe() |>
     get_impute_with_recipe(neighbors = neighbors, impute_vars) |>
     get_finalize_recipe()
 }
