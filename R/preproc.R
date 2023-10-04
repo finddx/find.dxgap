@@ -1,14 +1,14 @@
 get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
-    get_impute_with_recipe(neighbors = neighbors, impute_vars) |>
+    get_impute_with_recipe(.neighbors = neighbors, .impute_vars = impute_vars) |>
     get_finalize_recipe()
 }
 
-get_impute_with_recipe <- function(recipe, impute_vars, neighbors) {
+get_impute_with_recipe <- function(recipe, .impute_vars, .neighbors) {
   recipe |>
     recipes::update_role(
-      tidyselect::any_of(impute_vars),
+      tidyselect::any_of(.impute_vars),
       new_role = "imputer_knn"
     ) |>
     recipes::step_impute_knn(
