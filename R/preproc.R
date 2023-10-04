@@ -5,16 +5,6 @@ get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
     get_finalize_recipe()
 }
 
-get_finalize_recipe <- function(recipe) {
-  recipe |>
-    recipes::update_role(
-      tidyselect::any_of(c("e_inc_num", "c_newinc")),
-      new_role = "collinear_w_target"
-    ) |>
-    recipes::step_rm(recipes::has_role("collinear_w_target")) |>
-    recipes::step_zv(recipes::all_numeric_predictors())
-}
-
 get_impute_with_recipe <- function(recipe, impute_vars, neighbors) {
   recipe |>
     update_role_impute_knn(.vec = impute_vars) |>
@@ -38,6 +28,17 @@ impute_knn <- function(recipe, .neighbors) {
       impute_with = recipes::imp_vars(recipes::has_role("imputer_knn"))
     )
 }
+
+get_finalize_recipe <- function(recipe) {
+  recipe |>
+    recipes::update_role(
+      tidyselect::any_of(c("e_inc_num", "c_newinc")),
+      new_role = "collinear_w_target"
+    ) |>
+    recipes::step_rm(recipes::has_role("collinear_w_target")) |>
+    recipes::step_zv(recipes::all_numeric_predictors())
+}
+
 
 get_log_recipe <- function(recipe) {
   recipe |>
