@@ -5,40 +5,6 @@ get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
     get_finalize_recipe()
 }
 
-get_core_recipe <- function(recipe) {
-  recipe |>
-    recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
-    recipes::step_rm(recipes::has_role("collinear"))
-}
-
-get_set_role_recipe <- function(recipe) {
-  recipe |>
-    recipes::update_role(who_dx_gap, new_role = "outcome") |>
-    recipes::update_role(country_code, new_role = "id") |>
-    recipes::update_role(
-      tidyselect::any_of(
-        c(
-          "c_cdr", "c_newinc_100k", "notified_ref_community", "notified_ref",
-          "e_mort_100k", "e_pop_num", "new_labconf"
-        )
-      ),
-      new_role = "collinear"
-    ) |>
-    recipes::update_role(
-      tidyselect::any_of(c("pop_urban_perc", "pop_density")),
-      new_role = "no_norm"
-    ) |>
-    recipes::update_role(
-      tidyselect::any_of(
-        c(
-          "e_inc_100k", "e_inc_num", "c_newinc", "pop_total",
-          "pop_density", "pop_urban_perc", "gdp"
-        )
-      ),
-      new_role = "impute_w_median"
-    )
-}
-
 get_finalize_recipe <- function(recipe) {
   recipe |>
     recipes::update_role(
@@ -116,6 +82,40 @@ get_pca_recipe <- function(recipe) {
     recipes::step_pca(
       recipes::all_numeric_predictors() & -recipes::all_factor(),
       num_comp = 5
+    )
+}
+
+get_core_recipe <- function(recipe) {
+  recipe |>
+    recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
+    recipes::step_rm(recipes::has_role("collinear"))
+}
+
+get_set_role_recipe <- function(recipe) {
+  recipe |>
+    recipes::update_role(who_dx_gap, new_role = "outcome") |>
+    recipes::update_role(country_code, new_role = "id") |>
+    recipes::update_role(
+      tidyselect::any_of(
+        c(
+          "c_cdr", "c_newinc_100k", "notified_ref_community", "notified_ref",
+          "e_mort_100k", "e_pop_num", "new_labconf"
+        )
+      ),
+      new_role = "collinear"
+    ) |>
+    recipes::update_role(
+      tidyselect::any_of(c("pop_urban_perc", "pop_density")),
+      new_role = "no_norm"
+    ) |>
+    recipes::update_role(
+      tidyselect::any_of(
+        c(
+          "e_inc_100k", "e_inc_num", "c_newinc", "pop_total",
+          "pop_density", "pop_urban_perc", "gdp"
+        )
+      ),
+      new_role = "impute_w_median"
     )
 }
 
