@@ -12,6 +12,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 library(recipes)
+library(ggplot2)
 pkgload::load_all()
 knitr::opts_chunk$set(
   echo = FALSE, 
