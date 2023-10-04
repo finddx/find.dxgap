@@ -5,9 +5,14 @@ get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
     recipes::update_role(gdp, new_role = "impute_w_median") |>
     recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
-    recipes::update_role(gdp, new_role = "imputer_knn", old_role = "impute_w_median") |>
+    # recipes::update_role(gdp, new_role = "imputer_knn", old_role = "impute_w_median") |>
     get_impute_with_recipe(.neighbors = neighbors, .impute_vars = impute_vars) |>
-    get_finalize_recipe()
+    recipes::update_role(
+      tidyselect::any_of(c("e_inc_num", "c_newinc")),
+      new_role = "collinear_w_target"
+    ) |>
+    recipes::step_rm(recipes::has_role("collinear_w_target")) |>
+    recipes::step_zv(recipes::all_numeric_predictors())
 }
 
 get_impute_with_recipe <- function(recipe, .impute_vars, .neighbors) {
