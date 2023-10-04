@@ -14,7 +14,8 @@ dxgap_constants <- tibble::lst(
               "e_mort_100k",
               "culture",
               "smear",
-              "xpert")
+              "xpert",
+              "m_wrd")
 )
 
 
