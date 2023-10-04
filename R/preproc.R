@@ -41,7 +41,11 @@ get_set_role_recipe <- function(recipe) {
 
 get_finalize_recipe <- function(recipe) {
   recipe |>
-    recipes::step_rm(tidyselect::any_of(c("e_inc_num", "e_inc_100k", "c_newinc"))) |>
+    recipes::update_role(
+      tidyselect::any_of(c("e_inc_num", "c_newinc")),
+      new_role = "collinear_w_target"
+    ) |>
+    recipes::step_rm(recipes::has_role("collinear_w_target")) |>
     recipes::step_zv(recipes::all_numeric_predictors())
 }
 
