@@ -1,6 +1,11 @@
 get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
+    recipes::update_role(who_dx_gap, new_role = "outcome") |>
+    recipes::update_role(country_code, new_role = "id") |>
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
+    recipes::update_role(gdp, new_role = "impute_w_median") |>
+    recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
+    recipes::update_role(gdp, new_role = "imputer_knn", old_role = "impute_w_median") |>
     get_impute_with_recipe(.neighbors = neighbors, .impute_vars = impute_vars) |>
     get_finalize_recipe()
 }
