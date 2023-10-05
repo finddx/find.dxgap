@@ -75,9 +75,9 @@ preproc <- tibble::lst(
     threshold = 0.25,
     impute_vars = c("gdp", "e_inc_num", "pop_total")
   ),
-  log_pop_total = get_log_recipe(simple),
-  norm_pop_total = get_normalize_recipe(simple),
-  is_hbc_pop_total = get_is_hbc_recipe(simple)
+  log = get_log_recipe(simple),
+  norm = get_normalize_recipe(simple),
+  just_hbc = get_is_hbc_recipe(simple)
 )
 ```
 
