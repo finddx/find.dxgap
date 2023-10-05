@@ -74,19 +74,9 @@ preproc <- tibble::lst(
     threshold = 0.25,
     impute_vars = c("gdp", "e_inc_num", "pop_total")
   ),
-  simple_pop_density = get_recipe(
-    tbl, 
-    neighbors = 5, 
-    threshold = 0.25,
-    impute_vars = c("gdp", "e_inc_num", "pop_density")
-  ),
   log_pop_total = get_log_recipe(simple_pop_total),
-  log_pop_density = get_log_recipe(simple_pop_density),
   norm_pop_total = get_normalize_recipe(simple_pop_total),
-  norm_pop_density = get_normalize_recipe(simple_pop_density),
-  # pop_100k = rec_pop_100k, # FIXME: leads to high correlation features
-  is_hbc_pop_total = get_is_hbc_recipe(simple_pop_total),
-  is_hbc_pop_density = get_is_hbc_recipe(simple_pop_density)
+  is_hbc_pop_total = get_is_hbc_recipe(simple_pop_total)
 )
 ```
 
