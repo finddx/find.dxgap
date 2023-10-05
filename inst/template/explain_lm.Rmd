@@ -68,15 +68,15 @@ lm_model <-
 models <- list(lm = lm_model)
 # TODO: fine tune neighbors
 preproc <- tibble::lst(
-  simple_pop_total = get_recipe(
+  simple = get_recipe(
     tbl, 
     neighbors = 5, 
     threshold = 0.25,
     impute_vars = c("gdp", "e_inc_num", "pop_total")
   ),
-  log_pop_total = get_log_recipe(simple_pop_total),
-  norm_pop_total = get_normalize_recipe(simple_pop_total),
-  is_hbc_pop_total = get_is_hbc_recipe(simple_pop_total)
+  log_pop_total = get_log_recipe(simple),
+  norm_pop_total = get_normalize_recipe(simple),
+  is_hbc_pop_total = get_is_hbc_recipe(simple)
 )
 ```
 
