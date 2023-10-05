@@ -39,7 +39,8 @@ The chosen year is `r params$year`.
 ## Data model
 
 ```{r}
-dm::dm_draw(dm)
+dm_svg <- DiagrammeRsvg::export_svg(dm::dm_draw(dm))
+htmltools::HTML(dm_svg)
 ```
 
 ## Data
