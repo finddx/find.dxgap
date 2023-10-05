@@ -15,6 +15,7 @@ library(recipes)
 library(ggplot2)
 pkgload::load_all()
 knitr::opts_chunk$set(
+  comment = NA,
   echo = FALSE, 
   cache = FALSE, 
   fig.align = "center", 
