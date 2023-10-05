@@ -125,56 +125,68 @@ tune_res <-
 ```
 
 ```{r finalize}
-final_fit <- 
-  wset |> 
-  workflowsets::extract_workflow(id = rank$wflow_id[[1]]) |> 
-  # tune::finalize_workflow() # TODO: use when fine tuning `neighbor`
-  fit(data = tbl_train)
+ids <- rank$wflow_id
+wfs <- purrr::map(ids, ~ workflowsets::extract_workflow(wset, id = .x))
+final_fit_wfs <- purrr::map(wfs, ~ fit(object = .x, data = tbl_train))
 ```
-
 
 ## Assumptions
 
 ```{r check-assumptions}
-lm_obj <- 
-  final_fit |> 
-  workflowsets::extract_fit_parsnip(id = rank$wflow_id[[1]])
-plot_check <- performance::check_model(
-  lm_obj, 
-  check = c("linearity", "normality", "qq", "outliers"),
-  theme = "ggplot2::theme_minimal"
+lm_obj <- purrr::map2(
+  final_fit_wfs, 
+  ids, 
+  ~ workflowsets::extract_fit_parsnip(x = .x, id = .y)
+)
+
+lm_fit_obj <- purrr::map(lm_obj, ~ purrr::pluck(.x, "fit"))
+
+plot_check <- purrr::map(
+  lm_fit_obj,
+  ~ performance::check_model(
+    .x, 
+    check = c("linearity", "normality", "qq", "outliers"),
+    theme = "ggplot2::theme_minimal"
   )
+) |> 
+  purrr::set_names(nm = rank$wflow_id)
 plot_check
 ```
 
-```{r vif}
-check_vif <- performance::check_collinearity(lm_obj)
-plot(check_vif) +
-  theme(axis.text.x = element_text(angle = 90))
+```{r vif, fig.height=5}
+check_vif <- purrr::map(lm_fit_obj, ~ performance::check_collinearity(.x))
+purrr::map(check_vif, plot) |> 
+  purrr::set_names(nm = rank$wflow_id) |> 
+  purrr::map(.f = ~ .x + theme(axis.text.x = element_text(angle = 90)))
 ```
 
 ## Parameters
 
-```{r coeff-viz, fig.width=12}
-coeff_df <- 
-  final_fit |> 
-  broom::tidy() 
-
-coeff_df |> 
-  mutate(is_under_0.05 = if_else(p.value <= 0.05, TRUE, FALSE)) |> 
-  mutate(is_under_0.05 = forcats::fct_relevel(
-    as.character(is_under_0.05), 
-    c("TRUE", "FALSE"))
-  ) |> 
-  mutate(term = forcats::fct_relevel(term, sort)) |> 
-  ggplot(aes(term, estimate, color = is_under_0.05)) +
-  geom_point() +
-  geom_pointrange(aes(ymin = estimate - std.error, ymax = estimate + std.error)) +
-  coord_flip() +
-  labs(title = rank$wflow_id[[1]]) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5), 
-    axis.text.y = element_text(size = rel(1.25))
-  )
+```{r coeff-viz, fig.height=4}
+coeff <- 
+  final_fit_wfs |> 
+  purrr::map(broom::tidy) |> 
+  purrr::set_names(nm = rank$wflow_id)
+params_plot <- purrr::map(
+  coeff,
+  function(x) { 
+    x |> 
+    mutate(is_under_0.05 = if_else(p.value <= 0.05, TRUE, FALSE)) |> 
+    mutate(is_under_0.05 = forcats::fct_relevel(
+      as.character(is_under_0.05), 
+      c("TRUE", "FALSE"))
+    ) |> 
+    mutate(term = forcats::fct_relevel(term, sort)) |> 
+    ggplot(aes(term, estimate, color = is_under_0.05)) +
+    geom_point() +
+    geom_pointrange(aes(ymin = estimate - std.error, ymax = estimate + std.error)) +
+    coord_flip() +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(hjust = 0.5), 
+      axis.text.y = element_text(size = rel(1.25))
+    )
+  }
+)
+params_plot
 ```
