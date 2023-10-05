@@ -131,7 +131,6 @@ final_fit <-
   fit(data = tbl_train)
 ```
 
-The following plots pertain **`r rank$wflow_id[[1]]`**.
 
 ## Assumptions
 
