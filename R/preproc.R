@@ -83,7 +83,7 @@ get_pca_recipe <- function(recipe) {
     get_normalize_recipe() |>
     recipes::step_pca(
       recipes::all_numeric_predictors() & -recipes::all_factor(),
-      num_comp = 5
+      threshold = .75
     )
 }
 
