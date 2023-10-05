@@ -53,7 +53,6 @@ get_log_recipe <- function(recipe) {
 
 get_normalize_recipe <- function(recipe) {
   recipe |>
-    recipes::step_mutate(who_dx_gap = who_dx_gap / 100) |>
     recipes::step_normalize(
       recipes::all_numeric_predictors() & -recipes::all_factor()
     )
