@@ -60,10 +60,15 @@ get_normalize_recipe <- function(recipe) {
 }
 
 get_is_hbc_recipe <- function(recipe) {
-  recipe |>
+  df <- recipe$template
+  recipe <-
+    recipe |>
     recipes::step_filter(is_hbc == 1) |>
-    recipes::step_rm(is_hbc) |>
-    get_pca_recipe()
+    recipes::step_rm(is_hbc)
+  if (nrow(df) > ncol(df)) {
+    return(recipe)
+  }
+  get_pca_recipe(recipe)
 }
 
 get_pop_100k_recipe <- function(recipe) {
