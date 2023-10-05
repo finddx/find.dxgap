@@ -100,7 +100,7 @@ wset <-
   )
 ```
 
-## Best model
+## Model ranking
 
 ```{r rank}
 rank <- 
