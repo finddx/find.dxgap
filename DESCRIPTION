@@ -17,50 +17,29 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
-    broom,
-    constructive,
-    corrr,
-    countrycode,
-    DiagrammeRsvg,
-    dials,
+    corrr
+    countrycode
     dm,
     dplyr,
-    forcats,
     fs,
     ggplot2,
-    glmnet,
-    gt,
     here,
-    htmltools,
     httr2,
-    knitr,
     lubridate,
-    parsnip,
-    performance,
-    pkgload,
     purrr,
     readr,
     readxl,
     recipes,
-    renv,
     rlang,
     rmarkdown,
-    rsample,
     rstudioapi,
     scales,
-    shiny,
     stringr,
     testthat,
     tibble,
     tidyr,
     tidyselect,
-    tidyverse,
-    tune,
-    usethis,
-    vctrs,
-    vdiffr,
-    workflowsets,
-    yardstick
+    vctrs
 Suggests: 
     testthat (>= 3.0.0),
     vdiffr
