@@ -8,26 +8,30 @@ dm <- build_dm(df_lst, year = NULL)
 data_tbl <- build_tbl(dm, vars = dxgap_constants$tb_vars)
 
 # ---- Prep data ----
-all_indicators_tbl <-
+tbl <-
+  data_tbl |>
+  compute_dx_gap() |>
+  mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+  select(-any_of(c("country"))) |>
+  mutate(xpert = coalesce(xpert, m_wrd)) |>
+  select(-c(m_wrd, c_newinc, e_inc_num, country_code))
+
+all_indicators_df <-
   data_tbl |>
   compute_dx_gap() |>
   mutate(is_hbc = forcats::as_factor(is_hbc)) |>
   mutate(xpert = coalesce(xpert, m_wrd)) |>
   select(-m_wrd)
 
-corr_tbl <-
-  all_indicators_tbl |>
-  select(-c(c_newinc, e_inc_num, country_code, country))
-
 # ---- EDA ----
 # Q: how does dx gap vary over time for each hb country?
-all_indicators_tbl |>
+all_indicators_df |>
   filter(is_hbc == 1) |>
   select(country, who_dx_gap, year) |>
   ggplot(aes(x = year, y = who_dx_gap)) +
   geom_line(colour = "#1f65b7", linewidth = 1) +
   facet_wrap(vars(country)) +
-  scale_x_continuous(breaks = seq(min(all_indicators_tbl$year), max(all_indicators_tbl$year), by = 2)) +
+  scale_x_continuous(breaks = seq(min(all_indicators_df$year), max(all_indicators_df$year), by = 2)) +
   theme_minimal() +
   labs(
     title = "The DX Gaps in high burden countries vary differently over time",
@@ -35,14 +39,14 @@ all_indicators_tbl |>
   )
 
 # Q: how does each test type vary over time for each hb country?
-all_indicators_tbl |>
+all_indicators_df |>
   filter(is_hbc == 1) |>
   select(country, year, culture, smear, xpert) |>
   pivot_longer(!c(country, year)) |>
   ggplot(aes(x = year, y = value, colour = name)) +
   geom_line(linewidth = 1) +
   facet_wrap(vars(country), scales = "free") +
-  scale_x_continuous(breaks = seq(min(all_indicators_tbl$year), max(all_indicators_tbl$year), by = 2)) +
+  scale_x_continuous(breaks = seq(min(all_indicators_df$year), max(all_indicators_df$year), by = 2)) +
   theme_minimal() +
   scale_colour_viridis_d(
     alpha = 1,
@@ -57,22 +61,9 @@ all_indicators_tbl |>
     x = NULL, y = "DX Gap"
   )
 
-  # Q: how does each indicator in hbc vary with respect to year?
+# Q: How does test type correlate with dx gap across all time points?
+corr_df <-
   tbl |>
-  filter(is_hbc == 1) |>
-  select(-is_hbc) |>
-  pivot_longer(!year) |>
-  ggplot(aes(x = year, y = value)) +
-  geom_point() +
-  facet_wrap(vars(name), scales = "free")
-
-# Q: does a simple ARIMA model outperform the simple regression previously
-#    fitted? (Indicating that dynamics within countries are a significant
-#    factor)
-
-# ---- Plot correlations with dx gap ----
-corr_countires_all <-
-  corr_tbl |>
   select(-is_hbc) |>
   group_split(year, .keep = FALSE) |>
   set_names(nm = sort(unique(tbl$year))) |>
@@ -81,8 +72,8 @@ corr_countires_all <-
   map(~ filter(.x, term != "who_dx_gap")) |>
   list_rbind(names_to = "year")
 
-corr_countries_split_burden <-
-  corr_tbl |>
+corr_df <-
+  tbl |>
   group_split(is_hbc, .keep = FALSE) |>
   set_names(nm = c(0, 1)) |>
   map(~ group_split(.x, year, .keep = FALSE)) |>
@@ -93,7 +84,7 @@ corr_countries_split_burden <-
   map(~ list_rbind(.x, names_to = "year")) |>
   list_rbind(names_to = "is_hbc")
 
-corr_countries_split_burden |>
+corr_df |>
   ggplot(aes(year, who_dx_gap, group = term, color = term)) +
   geom_line() +
   scale_y_continuous(limits = c(-1, 1)) +
@@ -101,7 +92,7 @@ corr_countries_split_burden |>
   labs(y = "corr. with `dxgap`") +
   facet_wrap(vars(is_hbc))
 
-corr_countries_split_burden |>
+corr_df |>
   pivot_wider(names_from = year, values_from = who_dx_gap) |>
   gt::gt(groupname_col = "is_hbc") |>
   gt::data_color(
@@ -110,3 +101,9 @@ corr_countries_split_burden |>
     palette = "Greys",
     na_color = "#ffcccb"
   )
+  
+# Q: is the time series data stationary? Can anything even be predicted?
+
+# Q: does a simple ARIMA model outperform the simple regression previously
+#    fitted? (Indicating that dynamics within countries are a significant
+#    factor)
