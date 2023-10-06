@@ -102,7 +102,14 @@ corr_df |>
     na_color = "#ffcccb"
   )
   
-# Q: is the time series data stationary? Can anything even be predicted?
+# ---- Models ----
+# Q: does adding year as a predictor come out as signficant?
+
+# Q: If fitting a more complex time series model (e.g., ARIMA) what time series
+#    features should be checked:
+#    - Lag/autocorrelation
+#    - Stationarity
+#    - Seasonality
 
 # Q: does a simple ARIMA model outperform the simple regression previously
 #    fitted? (Indicating that dynamics within countries are a significant
