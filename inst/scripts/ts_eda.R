@@ -43,7 +43,6 @@ corr_df |>
   labs(y = "corr. with `dxgap`") +
   facet_wrap(vars(is_hbc))
 
-
 corr_df |>
   pivot_wider(names_from = year, values_from = who_dx_gap) |>
   gt::gt(groupname_col = "is_hbc") |>
