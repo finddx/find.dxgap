@@ -1,20 +1,78 @@
+# ---- Load libs and data ----
 library(tidyverse)
 pkgload::load_all()
 df_lst <- load()
 
+# ---- Build dm ----
 dm <- build_dm(df_lst, year = NULL)
 data_tbl <- build_tbl(dm, vars = dxgap_constants$tb_vars)
 
-tbl <-
+# ---- Prep data ----
+all_indicators_tbl <-
   data_tbl |>
   compute_dx_gap() |>
   mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-  select(-any_of(c("country"))) |>
   mutate(xpert = coalesce(xpert, m_wrd)) |>
-  select(-c(m_wrd, c_newinc, e_inc_num, country_code))
+  select(-m_wrd)
 
-corr_countires_all <-
+corr_tbl <-
+  all_indicators_tbl |>
+  select(-c(c_newinc, e_inc_num, country_code, country))
+
+# ---- EDA ----
+# Q: how does dx gap vary over time for each hb country?
+all_indicators_tbl |>
+  filter(is_hbc == 1) |>
+  select(country, who_dx_gap, year) |>
+  ggplot(aes(x = year, y = who_dx_gap)) +
+  geom_line(colour = "#1f65b7", linewidth = 1) +
+  facet_wrap(vars(country)) +
+  scale_x_continuous(breaks = seq(min(all_indicators_tbl$year), max(all_indicators_tbl$year), by = 2)) +
+  theme_minimal() +
+  labs(
+    title = "The DX Gaps in high burden countries vary differently over time",
+    x = NULL, y = "DX Gap"
+  )
+
+# Q: how does each test type vary over time for each hb country?
+all_indicators_tbl |>
+  filter(is_hbc == 1) |>
+  select(country, year, culture, smear, xpert) |>
+  pivot_longer(!c(country, year)) |>
+  ggplot(aes(x = year, y = value, colour = name)) +
+  geom_line(linewidth = 1) +
+  facet_wrap(vars(country), scales = "free") +
+  scale_x_continuous(breaks = seq(min(all_indicators_tbl$year), max(all_indicators_tbl$year), by = 2)) +
+  theme_minimal() +
+  scale_colour_viridis_d(
+    alpha = 1,
+    begin = .2,
+    end = .8,
+    direction = 1,
+    option = "A",
+    aesthetics = "colour"
+  ) +
+  labs(
+    title = "Test types in most high burden countries have remained largely constant, with a few notable exceptions such as China and Zambia",
+    x = NULL, y = "DX Gap"
+  )
+
+  # Q: how does each indicator in hbc vary with respect to year?
   tbl |>
+  filter(is_hbc == 1) |>
+  select(-is_hbc) |>
+  pivot_longer(!year) |>
+  ggplot(aes(x = year, y = value)) +
+  geom_point() +
+  facet_wrap(vars(name), scales = "free")
+
+# Q: does a simple ARIMA model outperform the simple regression previously
+#    fitted? (Indicating that dynamics within countries are a significant
+#    factor)
+
+# ---- Plot correlations with dx gap ----
+corr_countires_all <-
+  corr_tbl |>
   select(-is_hbc) |>
   group_split(year, .keep = FALSE) |>
   set_names(nm = sort(unique(tbl$year))) |>
@@ -24,7 +82,7 @@ corr_countires_all <-
   list_rbind(names_to = "year")
 
 corr_countries_split_burden <-
-  tbl |>
+  corr_tbl |>
   group_split(is_hbc, .keep = FALSE) |>
   set_names(nm = c(0, 1)) |>
   map(~ group_split(.x, year, .keep = FALSE)) |>
