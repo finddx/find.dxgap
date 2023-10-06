@@ -13,7 +13,7 @@ tbl <-
   mutate(xpert = coalesce(xpert, m_wrd)) |>
   select(-c(m_wrd, c_newinc, e_inc_num, country_code))
 
-corr_df <-
+corr_countires_all <-
   tbl |>
   select(-is_hbc) |>
   group_split(year, .keep = FALSE) |>
@@ -23,7 +23,7 @@ corr_df <-
   map(~ filter(.x, term != "who_dx_gap")) |>
   list_rbind(names_to = "year")
 
-corr_df <-
+corr_countries_split_burden <-
   tbl |>
   group_split(is_hbc, .keep = FALSE) |>
   set_names(nm = c(0, 1)) |>
@@ -35,7 +35,7 @@ corr_df <-
   map(~ list_rbind(.x, names_to = "year")) |>
   list_rbind(names_to = "is_hbc")
 
-corr_df |>
+corr_countries_split_burden |>
   ggplot(aes(year, who_dx_gap, group = term, color = term)) +
   geom_line() +
   scale_y_continuous(limits = c(-1, 1)) +
@@ -43,7 +43,7 @@ corr_df |>
   labs(y = "corr. with `dxgap`") +
   facet_wrap(vars(is_hbc))
 
-corr_df |>
+corr_countries_split_burden |>
   pivot_wider(names_from = year, values_from = who_dx_gap) |>
   gt::gt(groupname_col = "is_hbc") |>
   gt::data_color(
