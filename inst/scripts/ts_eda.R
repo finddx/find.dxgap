@@ -38,6 +38,48 @@ all_indicators_df |>
     x = NULL, y = "DX Gap"
   )
 
+# Q: how does dx gap vary over time on average?
+all_indicators_df |>
+  summarise(mean_dx_gap = mean(who_dx_gap), .by = c(is_hbc, year)) |>
+  ggplot(aes(x = year, y = mean_dx_gap, colour = is_hbc)) +
+  geom_line(linewidth = 1) +
+  geom_text(data = . %>% filter(year == max(year)), aes(label = ifelse(is_hbc == 1, "High burden", "Low burden")), hjust = -0.1) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(
+    title = "The DX Gap over time demonstrates no seasonality/stationarity",
+    subtitle = "A simple time series model should be tested",
+    x = NULL,
+    y = "Mean TB DX Gap"
+  ) +
+  scale_colour_viridis_d(
+    alpha = 1,
+    begin = .2,
+    end = .8,
+    direction = -1,
+    option = "A",
+    aesthetics = "colour"
+  ) +
+  xlim(min(all_indicators_df$year), max(all_indicators_df$year) + .25) +
+  ylim(0, NA) # Set to zero show magnitude of relevant difference
+
+# Q: how do the predictor variables vary over time on average for HBC?
+all_indicators_df |>
+  filter(is_hbc == 1) |>
+  select(-c(is_hbc, country_code, who_dx_gap, country)) |>
+  pivot_longer(!year) |>
+  summarise(mean_value = mean(value, na.rm = TRUE), .by = c(year, name)) |>
+  ggplot(aes(x = year, y = mean_value)) +
+  facet_wrap(vars(name), scales = "free") +
+  geom_line(linewidth = 1, colour = "#1f65b7") +
+  theme_minimal() +
+  labs(
+    title = "The DX Gap over time demonstrates no seasonality/stationarity",
+    subtitle = "A simple time series model should be tested",
+    x = NULL,
+    y = "Mean"
+  )
+
 # Q: how does each test type vary over time for each hb country?
 all_indicators_df |>
   filter(is_hbc == 1) |>
@@ -101,7 +143,7 @@ corr_df |>
     palette = "Greys",
     na_color = "#ffcccb"
   )
-  
+
 # ---- Models ----
 # Q: does adding year as a predictor come out as signficant?
 
