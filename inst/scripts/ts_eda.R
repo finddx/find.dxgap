@@ -145,17 +145,34 @@ corr_df |>
   )
 
 # Is time a signficant predictor of DX Gap in HBC?
-all_indicators_df |>
-  filter(is_hbc == 1) |> 
-  select(where(is.numeric), -year) |> 
-  pivot_longer(cols = everything()) |> 
-  ggplot(aes(x = value)) +
-  geom_density(fill = "#1f65b7", alpha = .5) +
-  facet_wrap(vars(name), scales = "free") +
-  theme_minimal()
+# who_dx_gap = (tb_estimated_cases - tb_notified_cases) / tb_estimated_cases
+# As estimated and notified cases are included as part of the calculation of
+# the dx gap, the following variable are removed:
+#   - c_newinc = Total of new and relapse cases and cases with unknown previous TB treatment history
+#   - e_inc_num = Estimated number of incident cases
+ts_model_prep <-
+  all_indicators_df |>
+  filter(is_hbc == 1) |>
+  select(-is_hbc, -country_code, -country, -c_newinc, -e_inc_num,) |>
+  mutate(dummy = 1) %>%
+  pivot_wider(names_from = year, values_from = dummy, values_fill = 0) |>
+  select(-`2016`) # create reference category
 
-all_indicators_df |>
-  filter(is_hbc == 1) |> 
-  select(-is_hbc, -country_code, -country) |> 
-  lm(formula = who_dx_gap ~ .) |> 
+ts_model_lm <-
+  ts_model_prep |>
+  lm(formula = who_dx_gap ~ .)
+
+# Result: no determinants detected
+ts_model_lm |>
   summary()
+
+# Check for multicollinearity (VIF)
+# Result: there is high multicollinearity across many predictors that would need
+# resolving
+ts_model_lm |>
+  performance::check_collinearity()
+
+# Stepwise regression to optimise model (is this valid for statistical
+# inference? Are assumptions not violated?)
+# https://otexts.com/fpp3/selecting-predictors.html#beware-of-inference-after-selecting-predictors
+step(ts_model_lm)
