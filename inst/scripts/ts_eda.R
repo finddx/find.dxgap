@@ -144,15 +144,18 @@ corr_df |>
     na_color = "#ffcccb"
   )
 
-# ---- Models ----
-# Q: does adding year as a predictor come out as signficant?
+# Is time a signficant predictor of DX Gap in HBC?
+all_indicators_df |>
+  filter(is_hbc == 1) |> 
+  select(where(is.numeric), -year) |> 
+  pivot_longer(cols = everything()) |> 
+  ggplot(aes(x = value)) +
+  geom_density(fill = "#1f65b7", alpha = .5) +
+  facet_wrap(vars(name), scales = "free") +
+  theme_minimal()
 
-# Q: If fitting a more complex time series model (e.g., ARIMA) what time series
-#    features should be checked:
-#    - Lag/autocorrelation
-#    - Stationarity
-#    - Seasonality
-
-# Q: does a simple ARIMA model outperform the simple regression previously
-#    fitted? (Indicating that dynamics within countries are a significant
-#    factor)
+all_indicators_df |>
+  filter(is_hbc == 1) |> 
+  select(-is_hbc, -country_code, -country) |> 
+  lm(formula = who_dx_gap ~ .) |> 
+  summary()
