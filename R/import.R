@@ -108,5 +108,5 @@ fetch_object <- function(obj_name, env) {
 }
 
 extract_name <- function(file_name) {
-  stringr::str_remove_all(file_name, "\\d{4}-\\d{2}-\\d{2}\\_|\\.csv$") # TODO ext should not be hardcoded
+  stringr::str_remove_all(file_name, "\\d{4}-\\d{2}-\\d{2}\\_|\\.[a-zA-Z0-9]+$")
 }
