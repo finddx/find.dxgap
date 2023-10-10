@@ -13,9 +13,9 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 ## Installation
 
 This project aims to both find the determinants of the DX Gap in TB, and
-to generalise these methods into a broader R package framework. This
-creates the need for a project structure that both allows for a
-high-level of reproducibility (using exact R package versions to
+to generalise these methods into a broader R package framework for other
+diseases. This creates the need for a project structure that both allows
+for a high-level of reproducibility (using exact R package versions to
 reproduce analyses calculating determinants) and for generalisability
 (so that the methods work across different R package versions in the
 future).
@@ -32,8 +32,7 @@ project. To use this project with `renv`:
     automatically bootstrap itself, downloading and installing the
     appropriate version of renv.
 3.  You will then be prompted to download and install all the packages
-    needed by running `renv::restore()`. If this is not your first time
-    opening this project, call `renv::restore()` manually.
+    needed by running `renv::restore()`.
 
 To achieve generalisability and to install this project as an R package,
 the
