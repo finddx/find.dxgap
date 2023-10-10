@@ -1,7 +1,7 @@
 load <- function(data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   data_files <-
-    list.files(here::here("inst/extdata"), pattern = "csv") |>
+    list.files(data_dir, pattern = "csv") |>
     stringr::str_subset("masterlist", negate = TRUE)
 
   lst_df <- import_bulk(lst_df, data_files)
