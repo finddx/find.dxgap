@@ -1,4 +1,4 @@
-load <- function(data_dir = Sys.getenv("DXGAP_DATADIR")) {
+load_dx <- function(data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   data_files <-
     list.files(here::here("inst/extdata"), pattern = "csv") |>

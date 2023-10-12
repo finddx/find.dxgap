@@ -20,7 +20,7 @@ render_report <- function(.template_name,
                           data_dir = Sys.getenv("DXGAP_DATADIR")) {
   template_path <- compose_file_path(.template_name, template_dir)
 
-  lst_df <- load()
+  lst_df <- load_dx()
   dm <- build_dm(lst_df, year = .year)
   data_tbl <- build_tbl(dm, vars = .vars)
 
