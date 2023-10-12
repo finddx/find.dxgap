@@ -29,6 +29,11 @@ laboratories <- download_who(
   url_endpoint = "labs"
 )
 Sys.sleep(3)
+contact_tpt <- download_who(
+  file_name = compose_date_dataset_file_name("who", dataset = "contacts_preventive_treatment", file_ext = ".csv"),
+  url_endpoint = "contact_tpt"
+)
+Sys.sleep(3)
 pop_urban <- download_wb(
   file_name = compose_date_dataset_file_name("wb", dataset = "pop_urban", file_ext = ".csv"),
   indicator = "SP.URB.TOTL.IN.ZS"
