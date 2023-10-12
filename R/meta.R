@@ -5,7 +5,8 @@ who_url_endpoints <- tibble::tribble(
                     "estimates",               "estimates",
   "expenditure_and_utilisation", "expenditure_utilisation",
                  "laboratories",                    "labs",
-                 "notification",           "notifications"
+                 "notification",           "notifications",
+                "contacts_preventive_treatment", "contact_tpt"
   )
 
 ptype_who_notifications <- tibble::tibble(
