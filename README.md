@@ -73,7 +73,7 @@ The data available are:
 The below schema represents the flow of data in this package to aid with
 future developments:
 
-<img src='man/figures/data-schema.png' align="centre"/>
+<img src='man/figures/data-schematic.png' align="centre"/>
 
 ## Report
 
