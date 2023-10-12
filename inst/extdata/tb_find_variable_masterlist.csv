@@ -1,4 +1,6 @@
 data_source,variable_name,dataset,definition,url,notes
+WHO,ptsurvey_newinc_5plus,Contacts preventive treatment,(If prevtx_5plus_data_available=61) Number of bacteriologically-confirmed TB new and relapse cases notified in the reporting year whose medical records or treatment cards were included in a survey,,
+WHO,rev_newinc,Contacts preventive treatment,(If screen_data_available=61) Number of bacteriologically-confirmed pulmonary new and relapse TB cases whose medical records or treatment cards were included in the review,,
 WHO,budget_lab,Budget,"Budget required for laboratory infrastructure, equipment and supplies (US Dollars)",,
 WHO,budget_oth,Budget,Budget required for all other budget line items (US Dollars),,
 WHO,budget_staff,Budget,Budget required for National TB Programme staff (central unit staff and subnational TB staff)  (US Dollars),,
