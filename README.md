@@ -70,6 +70,11 @@ The data available are:
 | who_2023-08-30_laboratories.csv  |
 | who_hbc.csv                      |
 
+The below schema represents the flow of data in this package to aid with
+future developments:
+
+<img src='man/figures/data-schema.png' align="centre"/>
+
 ## Report
 
 Call, `render_report(year = 2019)` to render a report for given year.
