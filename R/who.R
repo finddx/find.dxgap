@@ -1,21 +1,17 @@
-download_who <- function(file_name = tempfile(compose_file_name("who", download_date, dataset), fileext = ".csv"),
-                         dataset = "notification",
+download_who <- function(file_name = tempfile(compose_file_name("who", download_date, url_endpoint), fileext = ".csv"),
+                         url_endpoint = "notification",
                          download_date = as.character(Sys.Date()),
                          data_dir = Sys.getenv("DXGAP_DATADIR")) {
-  dataset <- rlang::arg_match(dataset, who_url_endpoints$dataset)
+  url_endpoint <- rlang::arg_match(url_endpoint, who_url_endpoints$url_endpoint)
   url <-  "https://extranet.who.int/tme/generateCSV.asp?ds="
-  endpoint <-
-    who_url_endpoints |>
-    dplyr::filter(dataset == !!dataset) |>
-    dplyr::pull(url_endpoint)
-  url_topic <- paste0(url, endpoint)
+  url_topic <- paste0(url, url_endpoint)
   file_path <- compose_file_path(file_name, data_dir)
 
   data <- readr::read_csv(url_topic, show_col_types = FALSE)
   subset_cols <-
     dxgap_master_list |>
     dplyr::filter(data_source == "who") |>
-    dplyr::filter(dataset == !!dataset) |>
+    dplyr::filter(url_endpoint == !!url_endpoint) |>
     dplyr::pull(variable_name)
   relevant_cols <- c("country", "iso3", "g_whoregion", "year", subset_cols)
   data_subset <-
