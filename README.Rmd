@@ -55,7 +55,8 @@ devtools::install_github("finddx/find.dxgap")
 
 ## find.dxgap.data
 
-Data for the project are stored in a directory called `find.dxgap.data`. Please, call `set_data_dir()` to create and populate such folder.
+Data for the project are stored in a directory called `find.dxgap.data`. Please,
+call `set_data_dir()` to create and populate such folder.
 
 The data available are:
 
@@ -64,13 +65,20 @@ tibble::tibble(data_file = list.files("inst/extdata", pattern = "csv")) |>
   knitr::kable()
 ```
 
+The below schema represents the flow of data in this package to aid with
+future developments:
+
+<img src='man/figures/data-schematic.png' align="centre"/>
+
 ## Report
 
-Call, `render_report(year = 2019)` to render a report for given year. Create new templates and render them using the `template_path` parameter.
+Call, `render_report(year = 2019)` to render a report for given year. Create new
+templates and render them using the `template_path` parameter.
 
 ## Objectives of the project
 
-Support in data analysis / processing for the development of a Shiny dashboard (**TB Diagnostics Policy dashboard**) that will show *by country* the:
+Support in data analysis / processing for the development of a Shiny dashboard
+(**TB Diagnostics Policy dashboard**) that will show *by country* the:
 
   - *TB diagnostic landscape* 
 
@@ -82,14 +90,18 @@ More specifically it will show:
   - Need for testing by region and test type
   - Assess readiness and willingness of countries for new upcoming TB diagnostics
   - Understand *Gap* in testing and TB incidence in a country
-  - Assess existing association between algorithms and *TB incidence* / % of cases bacteriologically confirmed
+  - Assess existing association between algorithms and *TB incidence* / % of
+  cases bacteriologically confirmed
 
 ## TB dignosis Crash Course
 
 
 ### Tubercolosis 
 
-Tuberculosis (TB) is a disease caused by germs that are spread from person to person through the air. TB usually affects the lungs, but it can also affect other parts of the body, such as the brain, the kidneys, or the spine. A person with TB can die if they do not get treatment.
+Tuberculosis (TB) is a disease caused by germs that are spread from person to
+person through the air. TB usually affects the lungs, but it can also affect
+other parts of the body, such as the brain, the kidneys, or the spine. A person
+with TB can die if they do not get treatment.
 
 ### Process
 
@@ -141,7 +153,9 @@ WHO developed a global strategy for TB prevention (*End TB Strategy*) with goals
 
 - period prevalence
 
-- incidence rate (or, *cumulative incidence rate*) = (numb. of new cases arising from a definined pop. in a specified time period) / (numb. in defined at-risk pop. over the same time period)
+- incidence rate (or, *cumulative incidence rate*) = (numb. of new cases arising
+from a definined pop. in a specified time period) / (numb. in defined at-risk
+pop. over the same time period)
 
 - incidence density
 
@@ -171,7 +185,9 @@ https://www.who.int/teams/global-tuberculosis-programme/data
 
 **Model (diagnostic) algorithms**
 
-Effective and efficient TB diagnostic algorithms are key components of a diagnostic cascade designed to ensure that patients with TB are diagnosed accurately and rapidly, and are promptly placed on appropriate therapy.
+Effective and efficient TB diagnostic algorithms are key components of a
+diagnostic cascade designed to ensure that patients with TB are diagnosed
+accurately and rapidly, and are promptly placed on appropriate therapy.
 
 Objectives:
 
@@ -207,5 +223,3 @@ WHO render a list of High burden countries (HBCs) for TB, TB/HIV, etc.
 - [Global Epidemiology of Tuberculosis](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4315920/)
 
 - [Diagnosing the diagnostic gaps](https://www.youtube.com/watch?v=pvp7HiHOU2Q)
-
-
