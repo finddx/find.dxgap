@@ -1,7 +1,7 @@
 pkgload::load_all()
 notification <- download_who(
   file_name = compose_date_dataset_file_name("who", dataset = "notifications", file_ext = ".csv"),
-  url_endpoint = "notification"
+  url_endpoint = "notifications"
 )
 Sys.sleep(3)
 estimates <- download_who(
@@ -16,17 +16,17 @@ budget <- download_who(
 Sys.sleep(3)
 community_engagement <- download_who(
   file_name = compose_date_dataset_file_name("who", dataset = "community", file_ext = ".csv"),
-  url_endpoint = "community_engagement"
+  url_endpoint = "community"
 )
 Sys.sleep(3)
 expenditure_and_utilisation <- download_who(
   file_name = compose_date_dataset_file_name("who", dataset = "expenditures", file_ext = ".csv"),
-  url_endpoint = "expenditure_and_utilisation"
+  url_endpoint = "expenditure_utilisation"
 )
 Sys.sleep(3)
 laboratories <- download_who(
   file_name = compose_date_dataset_file_name("who", dataset = "laboratories", file_ext = ".csv"),
-  url_endpoint = "laboratories"
+  url_endpoint = "labs"
 )
 Sys.sleep(3)
 pop_urban <- download_wb(
