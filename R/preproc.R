@@ -18,7 +18,7 @@ get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
 
 get_impute_with_recipe <- function(recipe, .impute_vars, .neighbors) {
   recipe |>
-    recipes::update_role(
+    recipes::add_role(
       tidyselect::any_of(.impute_vars),
       new_role = "imputer_knn"
     ) |>
