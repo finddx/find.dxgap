@@ -1,6 +1,5 @@
 get_recipe <- function(tbl, neighbors, threshold, impute_vars) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
-    recipes::update_role(who_dx_gap, new_role = "outcome") |>
     recipes::update_role(country_code, new_role = "id") |>
     recipes::step_mutate(xpert = dplyr::coalesce(xpert, m_wrd)) |>
     recipes::step_rm(m_wrd) |>
