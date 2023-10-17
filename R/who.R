@@ -29,24 +29,24 @@ read_who <- function(...) {
 }
 
 tidy_who <- function(data, year = NULL, .shape = "long") {
-  cond_notifications <- is_ptype(data, ptype_who_notifications)
-  cond_community <- is_ptype(data, ptype_who_community)
-  cond_budget <- is_ptype(data, ptype_who_budget)
-  cond_estimates <- is_ptype(data, ptype_who_estimates)
-  cond_expenditure <- is_ptype(data, ptype_who_expenditures)
-  cond_labs <- is_ptype(data, ptype_who_labs)
+  is_notifications <- is_ptype(data, ptype_who_notifications)
+  is_community <- is_ptype(data, ptype_who_community)
+  is_budget <- is_ptype(data, ptype_who_budget)
+  is_estimates <- is_ptype(data, ptype_who_estimates)
+  is_expenditure <- is_ptype(data, ptype_who_expenditures)
+  is_labs <- is_ptype(data, ptype_who_labs)
 
-  if (cond_notifications) {
+  if (is_notifications) {
     tidy_who_notifications(data, .year = year, shape = .shape)
-  } else if (cond_budget) {
+  } else if (is_budget) {
     tidy_who_budget(data, .year = year, shape = .shape)
-  } else if (cond_community) {
+  } else if (is_community) {
     tidy_who_community(data, .year = year, shape = .shape)
-  } else if (cond_estimates) {
+  } else if (is_estimates) {
     tidy_who_estimates(data, .year = year, shape = .shape)
-  } else if (cond_expenditure) {
+  } else if (is_expenditure) {
     tidy_who_expenditures(data, .year = year, shape = .shape)
-  } else if (cond_labs) {
+  } else if (is_labs) {
     tidy_who_labs(data, .year = year, shape = .shape)
   } else {
     rlang::abort(
