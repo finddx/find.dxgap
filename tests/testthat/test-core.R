@@ -1,5 +1,5 @@
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-data_list <- load()
+data_list <- load_dx()
 test_that("get_cc_var_always_given_acrs_yrs() works", {
   who_notifications <- data_list$who_notifications
   core_df <-

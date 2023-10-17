@@ -1,4 +1,4 @@
-#' @example \dontrun{get_core(load())}
+#' @example \dontrun{get_core(load_dx())}
 get_core <- function(data_list) {
   country_notification_df <-
     data_list$who_notifications |>
