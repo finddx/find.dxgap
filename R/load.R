@@ -1,10 +1,11 @@
-load_dx <- function(data_dir = Sys.getenv("DXGAP_DATADIR")) {
-
-  data_files <-
-    list.files(here::here("inst/extdata"), pattern = "csv") |>
+list_dx <- function(pattern = "csv", data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  list.files(data_dir, pattern = pattern) |>
     stringr::str_subset("masterlist", negate = TRUE)
+}
 
-  lst_df <- import_bulk(lst_df, data_files)
+load_dx <- function(data_files = list_dx()) {
+
+  lst_df <- import_bulk(lst_df, data_name = data_files)
 
   # HBC countries --------------------------------------------------------------
 
@@ -67,11 +68,8 @@ load_dx <- function(data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   # Global Fund Procurement ----------------------------------------------------
 
-  gf_procurement_df <-
-    lst_df$gf_procurement |>
-    dplyr::group_by(country_code, year) |>
-    dplyr::summarise(total_numb_device = sum(total_numb_device, na.rm = TRUE)) |>
-    dplyr::ungroup()
+  gf_procurement_df_ungrouped <- lst_df$gf_procurement
+  gf_procurement_df <- compute_gf_tot_devices(gf_procurement_df_ungrouped)
 
   tibble::lst(
     hbc = hbc_df,
