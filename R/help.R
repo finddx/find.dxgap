@@ -54,6 +54,7 @@ compose_file_name <- function(..., sep = "_", file_ext = NULL) {
 }
 
 extract_name <- function(path) {
+  file_name <- basename(path)
   stringr::str_remove_all(path, "\\d{4}-\\d{2}-\\d{2}\\_|\\.[a-zA-Z0-9]+$")
 }
 
