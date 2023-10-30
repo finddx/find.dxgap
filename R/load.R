@@ -68,11 +68,8 @@ load_dx <- function(data_files = list_dx()) {
 
   # Global Fund Procurement ----------------------------------------------------
 
-  gf_procurement_df <-
-    lst_df$gf_procurement |>
-    dplyr::group_by(country_code, year) |>
-    dplyr::summarise(total_numb_device = sum(total_numb_device, na.rm = TRUE)) |>
-    dplyr::ungroup()
+  gf_procurement_df_ungrouped <- lst_df$gf_procurement
+  gf_procurement_df <- compute_gf_tot_devices(gf_procurement_df_ungrouped)
 
   tibble::lst(
     hbc = hbc_df,
