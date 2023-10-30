@@ -1,10 +1,11 @@
-load_dx <- function(data_dir = Sys.getenv("DXGAP_DATADIR")) {
-
-  data_files <-
-    list.files(here::here("inst/extdata"), pattern = "csv") |>
+list_dx <- function(pattern = "csv", data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  list.files(data_dir, pattern = pattern) |>
     stringr::str_subset("masterlist", negate = TRUE)
+}
 
-  lst_df <- import_bulk(lst_df, data_files)
+load_dx <- function(data_files = list_dx()) {
+
+  lst_df <- import_bulk(lst_df, data_name = data_files)
 
   # HBC countries --------------------------------------------------------------
 
