@@ -15,7 +15,7 @@ test_that("recipe is as expected", {
   expect_snapshot(recipe_tb)
 })
 
-test_that("recipe is as expected", {
+test_that("log transformation works for all the variables", {
   out_log <- tbl |>
     dplyr::filter(country_code %in% c("AGO", "BRA", "IND")) |>
     get_recipe_tb(5,.25, dxgap_constants$tb_vars) |>
