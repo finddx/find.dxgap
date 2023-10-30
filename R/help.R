@@ -102,3 +102,12 @@ eval_if <- function(tbl, vars) {
   }
   FALSE
 }
+
+compute_sum_by <- function(data, var, by) {
+  stopifnot(is.character(by))
+  by_syms <- rlang::syms(by)
+  data |>
+    dplyr::group_by(!!!by_syms) |>
+    dplyr::summarise("{{var}}" := sum({{ var }}, na.rm = TRUE)) |>
+    dplyr::ungroup()
+}
