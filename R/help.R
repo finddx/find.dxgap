@@ -53,6 +53,10 @@ compose_file_name <- function(..., sep = "_", file_ext = NULL) {
   paste0(paste(dots, collapse = sep), file_ext)
 }
 
+extract_name <- function(file_name) {
+  stringr::str_remove_all(file_name, "\\d{4}-\\d{2}-\\d{2}\\_|\\.[a-zA-Z0-9]+$")
+}
+
 dxgap_read_csv <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"), ...) {
   file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
   readr::read_csv(file_path, show_col_types = FALSE, ...)
