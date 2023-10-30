@@ -75,3 +75,10 @@ tidy_gf_procurement <- function(data, year = NULL) {
   }
   df
 }
+
+compute_gf_tot_devices <- function(data) {
+  data |>
+    dplyr::group_by(country_code, year) |>
+    dplyr::summarise(total_numb_device = sum(total_numb_device, na.rm = TRUE)) |>
+    dplyr::ungroup()
+}
