@@ -28,8 +28,6 @@
 
     Code
       out_log
-    Warning <rlang_warning>
-      Could not use `colored = TRUE`, as the package prettycode is not installed. Please install it if you want to see colored output or see `?styler::print.vertical()` for more information.
     Output
       tibble::tribble(
         ~who_dx_gap, ~pop_total, ~pop_urban_perc, ~pop_density, ~gdp,             ~e_mort_100k, ~culture, ~smear, ~xpert,
