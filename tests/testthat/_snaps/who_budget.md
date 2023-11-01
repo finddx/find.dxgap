@@ -2,8 +2,6 @@
 
     Code
       constructive::construct(vctrs::vec_ptype(raw))
-    Warning <rlang_warning>
-      Could not use `colored = TRUE`, as the package prettycode is not installed. Please install it if you want to see colored output or see `?styler::print.vertical()` for more information.
     Output
       tibble::tibble(
         country = character(0),
@@ -24,8 +22,6 @@
       )
     Code
       constructive::construct(vctrs::vec_ptype(tidy))
-    Warning <rlang_warning>
-      Could not use `colored = TRUE`, as the package prettycode is not installed. Please install it if you want to see colored output or see `?styler::print.vertical()` for more information.
     Output
       tibble::tibble(
         country = character(0),

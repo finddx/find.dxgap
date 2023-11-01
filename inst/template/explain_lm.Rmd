@@ -34,7 +34,7 @@ data_tbl <- params$data_tbl
 The chosen year is `r params$year`.
 
 ```{r eval=FALSE}
-df_lst <- load()
+df_lst <- load_dx()
 dm <- build_dm(df_lst, year = 2019)
 data_tbl <- build_tbl(dm, vars = dxgap_constants$tb_vars)
 ```
@@ -68,15 +68,15 @@ lm_model <-
 models <- list(lm = lm_model)
 # TODO: fine tune neighbors
 preproc <- tibble::lst(
-  simple = get_recipe(
+  simple = get_recipe_tb(
     tbl, 
     neighbors = 5, 
     threshold = 0.25,
     impute_vars = c("gdp", "e_inc_num", "pop_total")
   ),
-  log_pop_total = get_log_recipe(simple),
-  norm_pop_total = get_normalize_recipe(simple),
-  is_hbc_pop_total = get_is_hbc_recipe(simple)
+  log_pop_total = get_log_recipe_tb(simple),
+  norm_pop_total = get_normalize_recipe_tb(simple),
+  is_hbc_pop_total = get_is_hbc_recipe_tb(simple)
 )
 ```
 
