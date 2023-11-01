@@ -4,11 +4,42 @@
 # find.dxgap
 
 <!-- badges: start -->
+
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
 ## Installation
 
-You can install the development version of find.dxgap from
+This project aims to both find the determinants of the DX Gap in TB, and
+to generalise these methods into a broader R package framework for other
+diseases. This creates the need for a project structure that both allows
+for a high-level of reproducibility (using exact R package versions to
+reproduce analyses calculating determinants) and for generalisability
+(so that the methods work across different R package versions in the
+future).
+
+To achieve reproducibility, the
+[`renv`](https://rstudio.github.io/renv/articles/renv.html) package is
+used to create a reproducibile environment. Take this approach when you
+want to exactly reproduce any analyses performed as part of this
+project. To use this project with `renv`:
+
+1.  [Clone](https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls)
+    the package with HTTPS/SSH.
+2.  If this is your first time running the project, `renv` should
+    automatically bootstrap itself, downloading and installing the
+    appropriate version of renv.
+3.  You will then be prompted to download and install all the packages
+    needed by running `renv::restore()`.
+
+To achieve generalisability and to install this project as an R package,
+the
+[`DESCRIPTION`](https://r-pkgs.org/description.html#sec-description-imports-suggests)
+file is used to specify package dependencies. Take this approach when
+you want to use the functions and ideas within the package. You can
+install the development version of find.dxgap from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -28,9 +59,9 @@ The data available are:
 | gf_2023-07-26_procurement.csv    |
 | tb_find_variable_masterlist.csv  |
 | wb_2023-07-28_pop_urban.csv      |
-| wb_2023-08-31_pop_density.csv    |
 | wb_2023-08-31_pop_total.csv      |
 | wb_2023-09-07_gdp.csv            |
+| wb_2023-10-04_pop_density.csv    |
 | who_2023-07-28_budget.csv        |
 | who_2023-07-28_community.csv     |
 | who_2023-07-28_estimates.csv     |
@@ -38,6 +69,11 @@ The data available are:
 | who_2023-07-28_notifications.csv |
 | who_2023-08-30_laboratories.csv  |
 | who_hbc.csv                      |
+
+The below schema represents the flow of data in this package to aid with
+future developments:
+
+<img src='man/figures/data-schematic.png' align="centre"/>
 
 ## Report
 

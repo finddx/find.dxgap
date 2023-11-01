@@ -1,7 +1,7 @@
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
 skip_if_offline()
 skip_if_not_available("https://extranet.who.int/tme/generateCSV.asp?ds=community")
-path <- download_who(dataset = "community_engagement")
+path <- download_who(url_endpoint = "community")
 on.exit(file.remove(path), add = TRUE)
 raw <- read_who(path)
 tidy <- tidy_who(raw)

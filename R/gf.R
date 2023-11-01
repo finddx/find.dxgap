@@ -75,3 +75,7 @@ tidy_gf_procurement <- function(data, year = NULL) {
   }
   df
 }
+
+compute_gf_tot_devices <- function(data) {
+  compute_sum_by(data, total_numb_device, by = c("country_code", "year"))
+}

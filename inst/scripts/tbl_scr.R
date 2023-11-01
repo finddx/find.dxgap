@@ -1,6 +1,6 @@
 library(tidyverse)
 pkgload::load_all()
-df_lst <- load()
+df_lst <- load_dx()
 
 dm <- build_dm(df_lst, year = 2019)
 data_tbl <- build_tbl(dm)

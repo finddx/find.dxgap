@@ -1,5 +1,5 @@
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-data_list <- load()
+data_list <- load_dx()
 test_that("build_dm()", {
   dm <- build_dm(data_list, year = 2019)
   expect_snapshot(dm::glimpse(dm))
