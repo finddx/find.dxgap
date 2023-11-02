@@ -141,7 +141,8 @@ all_indicators_df |>
     aesthetics = "colour"
   ) +
   labs(
-    title = "Test types in most high burden countries have remained largely constant, with a few notable exceptions such as China and Zambia",
+    title = "Test types in most high burden countries have remained largely constant.",
+    subtitle = "However, few notable exceptions such as China and Zambia are found",
     x = NULL, y = "DX Gap"
   )
 ```
