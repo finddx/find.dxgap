@@ -88,8 +88,11 @@ all_indicators_df |>
     option = "A",
     aesthetics = "colour"
   ) +
-  xlim(min(all_indicators_df$year), max(all_indicators_df$year) + .25) +
-  ylim(0, NA) # Set to zero show magnitude of relevant difference
+  # Set to zero show magnitude of relevant difference
+  scale_y_continuous(limits = c(0, NA), labels = scales::label_percent(scale = 1)) + 
+  scale_x_continuous(
+    limits = c(min(all_indicators_df$year), max(all_indicators_df$year) + .25)
+  )
 ```
 
 ```{r}
