@@ -179,6 +179,7 @@ corr_df <-
 
 ```{r}
 corr_df |>
+  mutate(is_hbc = if_else(is_hbc == 1, "High burden", "Low burden")) |> 
   ggplot(aes(year, who_dx_gap, group = term, color = term)) +
   geom_line() +
   scale_y_continuous(limits = c(-1, 1)) +
