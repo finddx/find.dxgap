@@ -103,12 +103,12 @@ all_indicators_df |>
   pivot_longer(!year) |>
   summarise(mean_value = mean(value, na.rm = TRUE), .by = c(year, name)) |>
   ggplot(aes(x = year, y = mean_value)) +
-  facet_wrap(vars(name), scales = "free") +
+  facet_wrap(vars(name), scales = "free_y", ncol = 3) +
   geom_line(linewidth = 1, colour = "#1f65b7") +
   theme_minimal() +
   labs(
-    title = "The DX Gap over time demonstrates no seasonality/stationarity",
-    subtitle = "A simple time series model should be tested",
+    title = "On average, predictors increase or decrease monotonically",
+    subtitle = "With few exceptions in which some variability is detected",
     x = NULL,
     y = "Mean"
   )
