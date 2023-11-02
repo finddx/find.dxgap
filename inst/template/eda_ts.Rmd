@@ -132,6 +132,7 @@ all_indicators_df |>
     )
   ) +
   theme_minimal() +
+  theme(legend.position = "top") + 
   scale_colour_viridis_d(
     alpha = 1,
     begin = .2,
@@ -181,6 +182,7 @@ corr_df |>
   geom_line() +
   scale_y_continuous(limits = c(-1, 1)) +
   theme_minimal() +
+  theme(legend.position = "top") + 
   labs(y = "corr. with `dxgap`") +
   facet_wrap(vars(is_hbc))
 ```
