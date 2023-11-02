@@ -38,14 +38,14 @@ all_indicators_df <-
   select(-m_wrd)
 ```
 
-```{r}
+```{r fig.height=8}
 # Q: how does dx gap vary over time for each hb country?
 all_indicators_df |>
   filter(is_hbc == 1) |>
   select(country, who_dx_gap, year) |>
   ggplot(aes(x = year, y = who_dx_gap)) +
   geom_line(colour = "#1f65b7", linewidth = 1) +
-  facet_wrap(vars(country)) +
+  facet_wrap(vars(country), ncol = 3) +
   scale_x_continuous(
     breaks = seq(
       min(all_indicators_df$year), 
