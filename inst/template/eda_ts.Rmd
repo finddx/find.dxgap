@@ -184,6 +184,7 @@ corr_df |>
   geom_line() +
   scale_y_continuous(limits = c(-1, 1)) +
   theme_minimal() +
+  theme(legend.title = element_blank()) +
   theme(legend.position = "top") + 
   labs(y = "corr. with `dxgap`") +
   facet_wrap(vars(is_hbc))
