@@ -1,14 +1,13 @@
 get_recipe_tb <- function(tbl, neighbors, threshold, impute_vars) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
-    recipes::update_role(who_dx_gap, new_role = "outcome") |>
     recipes::update_role(country_code, new_role = "id") |>
     recipes::step_mutate(xpert = dplyr::coalesce(xpert, m_wrd)) |>
     recipes::step_rm(m_wrd) |>
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
-    recipes::update_role(gdp, new_role = "impute_w_median") |>
+    recipes::add_role(gdp, new_role = "impute_w_median") |>
     recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
     get_impute_with_recipe_tb(.neighbors = neighbors, .impute_vars = impute_vars) |>
-    recipes::update_role(
+    recipes::add_role(
       tidyselect::any_of(c("e_inc_num", "c_newinc")),
       new_role = "collinear_w_target"
     ) |>
@@ -18,7 +17,7 @@ get_recipe_tb <- function(tbl, neighbors, threshold, impute_vars) {
 
 get_impute_with_recipe_tb <- function(recipe, .impute_vars, .neighbors) {
   recipe |>
-    recipes::update_role(
+    recipes::add_role(
       tidyselect::any_of(.impute_vars),
       new_role = "imputer_knn"
     ) |>
