@@ -186,7 +186,11 @@ corr_df |>
   theme_minimal() +
   theme(legend.title = element_blank()) +
   theme(legend.position = "top") + 
-  labs(title = "Correlation with Dx Gap has remained largely constant.") +
+  labs(
+    title = "Correlation with Dx Gap has remained largely constant.",
+    x = NULL,
+    y = NULL
+  ) +
   facet_wrap(vars(is_hbc))
 ```
 
