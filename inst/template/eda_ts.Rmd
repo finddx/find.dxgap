@@ -15,13 +15,9 @@ pkgload::load_all()
 knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message = FALSE, warning = FALSE)
 ```
 
-```{r}
-df_lst <- load_dx()
-```
-
-```{r}
-dm <- build_dm(df_lst, year = NULL)
-data_tbl <- build_tbl(dm, vars = dxgap_constants$tb_vars)
+```{r echo=FALSE}
+dm <- params$dm
+data_tbl <- params$data_tbl
 ```
 
 ```{r}
