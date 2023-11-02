@@ -184,11 +184,20 @@ corr_df |>
   ggplot(aes(year, who_dx_gap, group = term, color = term)) +
   geom_line() +
   scale_y_continuous(limits = c(-1, 1)) +
+  # scale_colour_viridis_d(
+  #   # alpha = 1,
+  #   # # begin = .2,
+  #   # # end = .8,
+  #   # # direction = -1,
+  #   # option = "A",
+  #   # aesthetics = "colour"
+  # ) +
   theme_minimal() +
   theme(legend.title = element_blank()) +
   theme(legend.position = "top") + 
   labs(
     title = "Correlation with Dx Gap has remained largely constant.",
+    subtitle = "Covid effect in 2020?",
     x = NULL,
     y = NULL
   ) +
