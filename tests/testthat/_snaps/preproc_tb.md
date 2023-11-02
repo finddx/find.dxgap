@@ -8,8 +8,12 @@
       
       -- Inputs 
       Number of variables by role
-      imputer_knn:        12
+      outcome:             1
+      predictor:          12
+      imputer_knn:        14
       collinear_w_target:  2
+      id:                  1
+      impute_w_median:     1
       
       -- Operations 
       * Variable mutation for: dplyr::coalesce(xpert, m_wrd)
@@ -31,13 +35,13 @@
     Output
       tibble::tibble(
         who_dx_gap = c(35, 10.91, 26.95),
-        pop_total = c(32353588, 211782878, 1383112050),
-        pop_urban_perc = c(66.18, 86.82, 34.47),
-        pop_density = c(25.95, 25.34, 465.19),
-        gdp = c(69309110145.77, 1873288159000.64, 2835606242052.48),
-        e_mort_100k = c(62, 3.3, 33),
-        culture = c(0, 386, 92),
-        smear = c(167, 2463, 20356),
-        xpert = c(22, 206, 1545),
+        pop_total = c(17.29, 19.17, 21.05),
+        pop_urban_perc = c(4.21, 4.48, 3.57),
+        pop_density = c(3.29, 3.27, 6.14),
+        gdp = c(24.96, 28.26, 28.67),
+        e_mort_100k = c(4.14, 1.46, 3.53),
+        culture = c(0, 5.96, 4.53),
+        smear = c(5.12, 7.81, 9.92),
+        xpert = c(3.14, 5.33, 7.34),
       )
 
