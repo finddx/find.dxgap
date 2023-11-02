@@ -69,7 +69,8 @@ all_indicators_df |>
   geom_text(
     data = . %>% filter(year == max(year)), 
     aes(label = ifelse(is_hbc == 1, "High burden", "Low burden")), 
-    hjust = -0.1
+    hjust = 1,
+    vjust = -1
   ) +
   theme_minimal() +
   theme(legend.position = "none") +
