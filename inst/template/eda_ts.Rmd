@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 params:
   dm: dm
   data_tbl: data_tbl
+  year: year
 editor_options: 
   chunk_output_type: console
 ---
