@@ -13,7 +13,7 @@ editor_options:
 ```{r include=FALSE}
 library(tidyverse)
 pkgload::load_all()
-knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message = FALSE, warning = FALSE, fig.height = 8)
 ```
 
 ```{r echo=FALSE}
