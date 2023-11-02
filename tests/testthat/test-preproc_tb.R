@@ -23,6 +23,6 @@ test_that("log transformation works for all the variables", {
     cook() |>
     dplyr::select(tidyselect::where(is.double)) |>
     dplyr::mutate(dplyr::across(tidyselect::everything(), ~ round(.x, 2))) |>
-    constructive::construct(constructive::opts_tbl_df(constructor = "tribble"))
+    constructive::construct(constructive::opts_tbl_df(constructor = "tibble"))
   expect_snapshot(out_log)
 })
