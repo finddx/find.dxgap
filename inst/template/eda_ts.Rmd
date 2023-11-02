@@ -10,9 +10,10 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r}
+```{r include=FALSE}
 library(tidyverse)
 pkgload::load_all()
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message = FALSE, warning = FALSE)
 ```
 
 ```{r}
