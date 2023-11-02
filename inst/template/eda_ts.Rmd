@@ -50,7 +50,13 @@ all_indicators_df |>
   ggplot(aes(x = year, y = who_dx_gap)) +
   geom_line(colour = "#1f65b7", linewidth = 1) +
   facet_wrap(vars(country)) +
-  scale_x_continuous(breaks = seq(min(all_indicators_df$year), max(all_indicators_df$year), by = 2)) +
+  scale_x_continuous(
+    breaks = seq(
+      min(all_indicators_df$year), 
+      max(all_indicators_df$year), 
+      by = 2
+    )
+  ) +
   theme_minimal() +
   labs(
     title = "The DX Gaps in high burden countries vary differently over time",
@@ -64,7 +70,11 @@ all_indicators_df |>
   summarise(mean_dx_gap = mean(who_dx_gap), .by = c(is_hbc, year)) |>
   ggplot(aes(x = year, y = mean_dx_gap, colour = is_hbc)) +
   geom_line(linewidth = 1) +
-  geom_text(data = . %>% filter(year == max(year)), aes(label = ifelse(is_hbc == 1, "High burden", "Low burden")), hjust = -0.1) +
+  geom_text(
+    data = . %>% filter(year == max(year)), 
+    aes(label = ifelse(is_hbc == 1, "High burden", "Low burden")), 
+    hjust = -0.1
+  ) +
   theme_minimal() +
   theme(legend.position = "none") +
   labs(
@@ -114,7 +124,13 @@ all_indicators_df |>
   ggplot(aes(x = year, y = value, colour = name)) +
   geom_line(linewidth = 1) +
   facet_wrap(vars(country), scales = "free") +
-  scale_x_continuous(breaks = seq(min(all_indicators_df$year), max(all_indicators_df$year), by = 2)) +
+  scale_x_continuous(
+    breaks = seq(
+      min(all_indicators_df$year), 
+      max(all_indicators_df$year), 
+      by = 2
+    )
+  ) +
   theme_minimal() +
   scale_colour_viridis_d(
     alpha = 1,
