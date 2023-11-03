@@ -152,15 +152,7 @@ all_indicators_df |>
 
 ```{r}
 # Q: How does test type correlate with dx gap across all time points?
-corr_df <-
-  tbl |>
-  select(-is_hbc) |>
-  group_split(year, .keep = FALSE) |>
-  set_names(nm = sort(unique(tbl$year))) |>
-  map(~ corrr::correlate(.x)) |>
-  map(~ select(.x, term, who_dx_gap)) |>
-  map(~ filter(.x, term != "who_dx_gap")) |>
-  list_rbind(names_to = "year")
+corr_df_1 <- reframe(tbl, .by = year, compute_corr(pick(everything())))
 ```
 
 
