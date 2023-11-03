@@ -2,5 +2,7 @@
 
 export(plot_tb_ts)
 export(read_tb_dashboard)
+export(render_bulk)
+export(render_report)
 export(set_data_dir)
 export(tidy_tb_dashboard)
