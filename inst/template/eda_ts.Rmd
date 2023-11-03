@@ -165,17 +165,8 @@ corr_df <-
 
 
 ```{r}
-corr_df <-
-  tbl |>
-  group_split(is_hbc, .keep = FALSE) |>
-  set_names(nm = c(0, 1)) |>
-  map(~ group_split(.x, year, .keep = FALSE)) |>
-  map(~ set_names(.x, nm = sort(unique(tbl$year)))) |>
-  map(~ map(.x, ~ corrr::correlate(.x))) |>
-  map(~ map(.x, ~ select(.x, term, who_dx_gap))) |>
-  map(~ map(.x, ~ filter(.x, term != "who_dx_gap"))) |>
-  map(~ list_rbind(.x, names_to = "year")) |>
-  list_rbind(names_to = "is_hbc")
+# credits: https://github.com/moodymudskipper
+corr_df <- reframe(tbl, .by = c(is_hbc, year), compute_corr(pick(everything())))
 ```
 
 ```{r}
