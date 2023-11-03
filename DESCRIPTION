@@ -23,15 +23,18 @@ Imports:
     dplyr,
     fs,
     ggplot2,
+    gt,
     here,
     httr2,
     lubridate,
+    parsnip,
     purrr,
     readr,
     readxl,
     recipes,
     rlang,
     rmarkdown,
+    rsample,
     rstudioapi,
     scales,
     stringr,
@@ -39,8 +42,12 @@ Imports:
     tibble,
     tidyr,
     tidyselect,
-    vctrs
+    vctrs,
+    withr,
+    workflowsets
 Suggests: 
+    constructive,
+    DiagrammeRsvg,
     testthat (>= 3.0.0),
     vdiffr
 Config/testthat/edition: 3
