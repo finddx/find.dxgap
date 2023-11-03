@@ -1,3 +1,4 @@
+#' Get core countries
 #' @examples \dontrun{
 #' get_core(load_dx())
 #' }
