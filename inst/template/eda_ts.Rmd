@@ -108,8 +108,7 @@ all_indicators_df |>
   geom_line(linewidth = 1, colour = "#1f65b7") +
   theme_minimal() +
   labs(
-    title = "On average, predictors increase or decrease monotonically",
-    subtitle = "With few exceptions in which some variability is detected",
+    title = "How do predictors change, on average?",
     x = NULL,
     y = "Mean"
   )
