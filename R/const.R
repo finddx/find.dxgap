@@ -18,6 +18,14 @@ dxgap_constants <- tibble::lst(
               "m_wrd")
 )
 
+tb_mod_const <- tibble::lst(
+  neighbors = 0.5,
+  threshold = 0.25,
+  impute_vars = c("gdp", "e_inc_num", "pop_total"),
+  mode = "regression",
+  engine = "lm",
+  folds = 10
+)
 
 tb_constants <- tibble::lst(
   country = c(
