@@ -216,7 +216,7 @@ ts_model_lm |>
   mutate_is_significant(threshold = 0.05) |> 
   mutate(is_under_0.05 = forcats::fct_relevel(is_under_0.05, c("TRUE", "FALSE"))) |> 
   mutate(term = forcats::fct_relevel(term, sort)) |> 
-  plot_coeff_table(.title = rank$wflow_id[[1]])
+  plot_coeff_table()
 ```
 
 ```{r}
