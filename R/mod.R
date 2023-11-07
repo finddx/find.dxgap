@@ -10,7 +10,7 @@ run_mod <- function(tbl,
   splits_list <- split_mod(tbl, .v = folds)
 
   # Matrix ---------------------------------------------------------------------
-  linear_models <- build_mod_matrix(
+  linear_models_matrix <- build_mod_matrix(
     .mod_list = mod,
     .preproc_list = preproc,
     .cross = cross
@@ -18,7 +18,7 @@ run_mod <- function(tbl,
 
   # Fit ------------------------------------------------------------------------
   wset <- fit_mod_matrix(
-    linear_models,
+    .matrix = linear_models_matrix,
     .metrics = metrics,
     .resamples = splits_list$tbl_cv,
     .seed = seed
