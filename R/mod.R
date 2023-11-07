@@ -1,8 +1,11 @@
 run_mod <- function(tbl,
                     mod,
                     preproc,
-                    folds = tb_mod_const$folds,
-                    cross = TRUE) {
+                    folds,
+                    metrics,
+                    rank_metric,
+                    cross = TRUE,
+                    seed = 2023) {
   # Spending -------------------------------------------------------------------
   splits_list <- split_mod(tbl, .v = folds)
 
