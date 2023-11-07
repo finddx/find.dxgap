@@ -62,6 +62,10 @@ split_mod <- function(tbl, .v) {
   )
 }
 
+pull_best <- function(rank_df) {
+  rank_df$wflow_id[[1]]
+}
+
 build_mod_matrix <- function(.mod_list, .preproc_list, .cross)  {
   args <- list(.mod_list, .preproc_list)
   args_are_all_list <- all(purrr::map_lgl(args, is.list))
