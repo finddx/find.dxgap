@@ -84,6 +84,31 @@ compute_dx_gap <- function(data) {
     )
 }
 
+mutate_is_significant <- function(data, threshold = 0.05) {
+  data |>
+    dplyr::mutate(
+      "is_under_{threshold}" := dplyr::if_else(
+        p.value <= threshold,
+        TRUE,
+        FALSE
+      )
+    ) |>
+    dplyr::mutate(
+      dplyr::across(
+        tidyselect::starts_with("is_under_"),
+        as.character
+    )
+  )
+}
+
+# credits to: https://github.com/moodymudskipper
+compute_corr <- function(data) {
+  data |>
+    corrr::correlate(dplyr::pick(tidyselect::everything()), quiet = TRUE) |>
+    dplyr::select(term, who_dx_gap) |>
+    dplyr::filter(term != "who_dx_gap")
+}
+
 to_nest_df <- function(list) {
   stopifnot(is.list(list))
   cond <- all(purrr::map_lgl(list, is.data.frame))

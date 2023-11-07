@@ -26,3 +26,4 @@ read_who("who_2023-08-30_laboratories.csv") |>
   pull(year) |>
   range()
 
+render_report("eda_ts.Rmd", .vars = dxgap_constants$tb_vars)

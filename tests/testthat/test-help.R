@@ -13,3 +13,25 @@ test_that("extract_name() works", {
   file_name <- "wb_2023-08-31_pop_total.csv"
   expect_identical(extract_name(file_name), "wb_pop_total")
 })
+
+test_that("is_significant() works", {
+  withr::with_seed(
+    2023,
+    code = {
+      p_value_df <- tibble::tibble(
+        p.value = round(rnorm(10, mean = 0.5, sd = 1), 3)
+      )
+      expect_snapshot(
+        constructive::construct(
+          mutate_is_significant(p_value_df, 0.25),
+          constructive::opts_tbl_df(constructor = "tribble")
+        )
+      )
+      expect_snapshot(
+        constructive::construct(
+          mutate_is_significant(p_value_df, 0.5),
+          constructive::opts_tbl_df(constructor = "tribble"))
+      )
+    }
+  )
+})
