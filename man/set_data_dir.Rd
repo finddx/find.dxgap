@@ -6,7 +6,7 @@
 \usage{
 set_data_dir(
   path = fs::path_dir(getwd()),
-  dirs = c("who", "global-fund", "world-bank", "meta")
+  dirs = c("who", "global-fund", "world-bank", "meta", "report")
 )
 }
 \arguments{

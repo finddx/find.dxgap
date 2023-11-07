@@ -1,3 +1,7 @@
+#' Import tables in bulk
+#' @examples \dontrun{
+#' lst_df <- import_tbl(lst_df, "who_hbc.csv")
+#' }
 import_bulk <- function(data_lst,
                            data_name,
                            data_dir = Sys.getenv("DXGAP_DATADIR")) {
@@ -14,7 +18,10 @@ import_bulk <- function(data_lst,
   lst_df
 }
 
-#' @example \dontrun{lst_df <- import_tbl(lst_df, "who_hbc.csv")}
+#' Import table
+#' @examples \dontrun{
+#' lst_df <- import_tbl(lst_df, "who_hbc.csv")
+#' }
 import_tbl <- function(.data_lst,
                           .file_name,
                           .all = TRUE,

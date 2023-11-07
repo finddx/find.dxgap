@@ -127,7 +127,6 @@ tune_res <-
 final_fit <- 
   wset |> 
   workflowsets::extract_workflow(id = rank$wflow_id[[1]]) |> 
-  # tune::finalize_workflow() # TODO: use when fine tuning `neighbor`
   fit(data = tbl_train)
 ```
 

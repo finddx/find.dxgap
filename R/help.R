@@ -111,6 +111,14 @@ eval_if <- function(tbl, vars) {
   FALSE
 }
 
+eval_if_is_installed_strict <- function(.pkg_vec) {
+  cond <- rlang::is_installed(pkg = .pkg_vec)
+  if (cond) {
+    return(TRUE)
+  }
+  FALSE
+}
+
 compute_sum_by <- function(data, var, by, .na.rm = TRUE) {
   stopifnot(is.character(by))
   by_syms <- rlang::syms(by)
