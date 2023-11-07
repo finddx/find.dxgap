@@ -84,8 +84,7 @@ compute_dx_gap <- function(data) {
     )
 }
 
-mutate_is_significant <- function(data, threshold = 0.05) {
-  browser()
+mutate_is_significant <- function(data, threshold = 0.25) {
   data |>
     dplyr::mutate(
       "is_under_{threshold}" := dplyr::if_else(
