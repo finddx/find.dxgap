@@ -29,6 +29,7 @@ Imports:
     httr2,
     lubridate,
     parsnip,
+    performance,
     purrr,
     readr,
     readxl,
