@@ -28,10 +28,7 @@ run_mod <- function(tbl,
   rank <- rank_mod(wset, .rank_metric = rank_metric)
 
   # Finalize -------------------------------------------------------------------
-  final_fit <-
-    wset |>
-    workflowsets::extract_workflow(id = pull_mod_best(rank)) |>
-    fit(data = splits_list$tbl_train)
+  final_fit <- finalize_mod(wset, rank, splits_list$tbl_train)
 
   tibble::lst(
     wset = wset,
@@ -40,9 +37,15 @@ run_mod <- function(tbl,
   )
 }
 
-fit_mod_matrix <- function(matrix, .metrics, .resamples, .seed) {
+finalize_mod <- function(.wset, .rank, .train) {
+  .wset |>
+    workflowsets::extract_workflow(id = pull_mod_best(.rank)) |>
+    fit(data = .train)
+}
+
+fit_mod_matrix <- function(.matrix, .metrics, .resamples, .seed) {
   workflowsets::workflow_map(
-    object = matrix,
+    object = .matrix,
     verbose = TRUE,
     metrics = .metrics,
     fn = "fit_resamples",
