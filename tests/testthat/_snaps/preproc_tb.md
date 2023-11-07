@@ -23,8 +23,6 @@
       * K-nearest neighbor imputation for: recipes::all_predictors()
       * Variables removed: recipes::has_role("collinear_w_target")
       * Zero variance filter on: recipes::all_numeric_predictors()
-      * Variable mutation for: recipes::all_numeric_predictors() &
-        -recipes::all_factor()
       * Log transformation on: recipes::all_numeric_predictors() &
         -recipes::all_factor()
 
