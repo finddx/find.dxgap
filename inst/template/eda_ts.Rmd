@@ -225,7 +225,7 @@ plot(check_vif) +
   theme(axis.text.x = element_text(angle = 90))
 ```
 
-```{r}
+```{r eval=FALSE}
 # Stepwise regression to optimise model (is this valid for statistical
 # inference? Are assumptions not violated?)
 # https://otexts.com/fpp3/selecting-predictors.html#beware-of-inference-after-selecting-predictors
