@@ -2130,7 +2130,7 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.17.3",
+      "Version": "1.0.3",
       "OS_type": null,
       "NeedsCompilation": "no",
       "Repository": "RSPM",
