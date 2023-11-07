@@ -84,7 +84,7 @@ compute_dx_gap <- function(data) {
     )
 }
 
-mutate_is_significant <- function(data, threshold = 0.25) {
+mutate_is_significant <- function(data, threshold = 0.05) {
   data |>
     dplyr::mutate(
       "is_under_{threshold}" := dplyr::if_else(
@@ -95,8 +95,8 @@ mutate_is_significant <- function(data, threshold = 0.25) {
     ) |>
     dplyr::mutate(
       dplyr::across(
-        tidyselect::starts_with("is_under"),
-        ~ forcats::fct_relevel(.x, .f = c("TRUE", "FALSE"))
+        tidyselect::starts_with("is_under_"),
+        as.character
     )
   )
 }
