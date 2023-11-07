@@ -160,11 +160,8 @@ coeff_df <-
   broom::tidy() 
 
 coeff_df |> 
-  mutate(is_under_0.05 = if_else(p.value <= 0.05, TRUE, FALSE)) |> 
-  mutate(is_under_0.05 = forcats::fct_relevel(
-    as.character(is_under_0.05), 
-    c("TRUE", "FALSE"))
-  ) |> 
+  mutate_is_significant(threshold = 0.05) |> 
+  mutate(is_under_0.05 = forcats::fct_relevel(is_under_0.05, c("TRUE", "FALSE"))) |> 
   mutate(term = forcats::fct_relevel(term, sort)) |> 
-  plot_coeff_table()
+  plot_coeff_table(.title = rank$wflow_id[[1]])
 ```
