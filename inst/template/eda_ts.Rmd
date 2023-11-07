@@ -212,7 +212,8 @@ ts_model_lm <-
 
 # Result: no determinants detected
 ts_model_lm |>
-  summary()
+  broom::tidy() |> 
+  gt::gt()
 ```
 
 ```{r}
