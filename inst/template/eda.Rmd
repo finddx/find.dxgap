@@ -36,9 +36,7 @@ knitr::opts_chunk$set(echo = FALSE, cache = TRUE, fig.align = "center", message 
 
 The chosen year is `r params$year`.
 
-## Data model
-
-```{r}
+```{r eval=eval_if_is_installed_strict(c("DiagrammeRsvg", "htmltools"))}
 dm_svg <- DiagrammeRsvg::export_svg(dm::dm_draw(dm))
 htmltools::HTML(dm_svg)
 ```
