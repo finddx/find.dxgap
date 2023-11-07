@@ -33,16 +33,20 @@ run_mod <- function(tbl,
   tune_res <-
     workflowsets::extract_workflow_set_result(
       wset,
-      id = rank$wflow_id[[1]]
+      id = pull_best(rank)
     )
 
   # Finalize -------------------------------------------------------------------
   final_fit <-
     wset |>
-    workflowsets::extract_workflow(id = rank$wflow_id[[1]]) |>
+    workflowsets::extract_workflow(id = pull_best(rank)) |>
     fit(data = splits_list$tbl_train)
 
-  final_fit
+  tibble::lst(
+    wset = wset,
+    rank = rank,
+    final_fit = final_fit,
+  )
 }
 
 split_mod <- function(tbl, .v) {
