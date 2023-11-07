@@ -99,7 +99,7 @@ plot(check_vif) +
 
 ```{r coeff-viz, fig.width=12}
 coeff_df <- 
-  final_fit |> 
+  mod_objects$final_fit |> 
   broom::tidy() 
 
 coeff_df |> 
