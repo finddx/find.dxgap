@@ -18,9 +18,9 @@ test_that("is_significant() works", {
   withr::with_seed(
     2023,
     {
-      p_value_df <- tibble:tibble(p.value = round(runif(10), 3))
+      p_value_df <- tibble::tibble(p.value = round(rnorm(10, mean = 0.125), 3))
       p_value_df |>
-        is_sig
+        mutate_is_significant()
     }
   )
 })

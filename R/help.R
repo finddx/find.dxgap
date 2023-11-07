@@ -84,17 +84,22 @@ compute_dx_gap <- function(data) {
     )
 }
 
-is_significant <- function(data, threshold = 0.05) {
+mutate_is_significant <- function(data, threshold = 0.05) {
+  browser()
   data |>
     dplyr::mutate(
       "is_under_{threshold}" := dplyr::if_else(
         p.value <= threshold,
-        TRUE, FALSE)
+        TRUE,
+        FALSE
+      )
     ) |>
-    dplyr::mutate("is_under_{threshold}" := forcats::fct_relevel(
-      as.character("is_under_{threshold}"),
-      c("TRUE", "FALSE"))
+    dplyr::mutate(
+      dplyr::across(
+        tidyselect::starts_with("is_under"),
+        ~ forcats::fct_relevel(.x, .f = c("TRUE", "FALSE"))
     )
+  )
 }
 
 # credits to: https://github.com/moodymudskipper
