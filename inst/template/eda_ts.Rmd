@@ -125,6 +125,7 @@ all_indicators_df |>
   ggplot(aes(x = year, y = value, colour = name)) +
   geom_line(linewidth = 1) +
   facet_wrap(vars(country), scales = "free_y", ncol = 3) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 3)) +
   scale_x_continuous(
     breaks = seq(
       min(all_indicators_df$year), 
