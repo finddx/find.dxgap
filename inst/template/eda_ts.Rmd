@@ -219,8 +219,9 @@ ts_model_lm |>
 # Check for multicollinearity (VIF)
 # Result: there is high multicollinearity across many predictors that would need
 # resolving
-ts_model_lm |>
-  performance::check_collinearity()
+check_vif <- performance::check_collinearity(ts_model_lm)
+plot(check_vif) +
+  theme(axis.text.x = element_text(angle = 90))
 ```
 
 ```{r}
