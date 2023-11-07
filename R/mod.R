@@ -17,20 +17,15 @@ run_mod <- function(tbl,
   )
 
   # Fit ------------------------------------------------------------------------
-  wset <-
-    workflowsets::workflow_map(
-      linear_models,
-      verbose = TRUE,
-      metrics = yardstick::metric_set(yardstick::rmse, yardstick::rsq),
-      fn = "fit_resamples",
-      resamples = splits_list$tbl_cv
-    )
+  wset <- fit_mod_matrix(
+    linear_models,
+    .metrics = metrics,
+    .resamples = splits_list$tbl_cv,
+    .seed = seed
+  )
 
   # Rank -----------------------------------------------------------------------
-  rank <-
-    workflowsets::rank_results(wset, rank_metric = "rmse", select_best = TRUE) |>
-    dplyr::select(rank, wflow_id, model, .metric, mean) |>
-    dplyr::filter(.metric == "rmse")
+  rank <- rank_mod(wset, .rank_metric = rank_metric)
 
   # Finalize -------------------------------------------------------------------
   final_fit <-
@@ -42,6 +37,17 @@ run_mod <- function(tbl,
     wset = wset,
     rank = rank,
     final_fit = final_fit,
+  )
+}
+
+fit_mod_matrix <- function(matrix, .metrics, .resamples, .seed) {
+  workflowsets::workflow_map(
+    object = matrix,
+    verbose = TRUE,
+    metrics = .metrics,
+    fn = "fit_resamples",
+    resamples = .resamples,
+    seed = .seed
   )
 }
 
@@ -60,6 +66,12 @@ split_mod <- function(tbl, .v) {
 
 pull_mod_best <- function(rank_df) {
   rank_df$wflow_id[[1]]
+}
+
+rank_mod <- function(wset, .rank_metric) {
+  workflowsets::rank_results(wset, rank_metric = .rank_metric, select_best = TRUE) |>
+    dplyr::select(rank, wflow_id, model, .metric, mean) |>
+    dplyr::filter(.metric == !!.rank_metric)
 }
 
 build_mod_matrix <- function(.mod_list, .preproc_list, .cross)  {
