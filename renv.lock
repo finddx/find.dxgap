@@ -178,20 +178,6 @@
       ],
       "Hash": "e749cae40fa9ef469b6050959517453c"
     },
-    "RcppEigen": {
-      "Package": "RcppEigen",
-      "Version": "0.3.3.9.3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "Matrix",
-        "R",
-        "Rcpp",
-        "stats",
-        "utils"
-      ],
-      "Hash": "1e035db628cefb315c571202d70202fe"
-    },
     "SQUAREM": {
       "Package": "SQUAREM",
       "Version": "2021.1",
@@ -1100,24 +1086,6 @@
       ],
       "Hash": "ab08ac61f3e1be454ae21911eb8bc2fe"
     },
-    "glmnet": {
-      "Package": "glmnet",
-      "Version": "4.1-7",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "Matrix",
-        "R",
-        "Rcpp",
-        "RcppEigen",
-        "foreach",
-        "methods",
-        "shape",
-        "survival",
-        "utils"
-      ],
-      "Hash": "06f12f72ce94e533751a041cef8b71bc"
-    },
     "globals": {
       "Package": "globals",
       "Version": "0.16.2",
@@ -1502,6 +1470,12 @@
       "Version": "1.8.7",
       "Source": "Repository",
       "Repository": "RSPM",
+      "RemoteType": "standard",
+      "RemotePkgRef": "jsonlite",
+      "RemoteRef": "jsonlite",
+      "RemoteRepos": "https://packagemanager.posit.co/cran/2023-11-01",
+      "RemotePkgPlatform": "x86_64-apple-darwin17.0",
+      "RemoteSha": "1.8.7",
       "Requirements": [
         "methods"
       ],
@@ -2717,9 +2691,9 @@
     },
     "tune": {
       "Package": "tune",
-      "Version": "1.1.1",
+      "Version": "1.1.2",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Requirements": [
         "GPfit",
         "R",
@@ -2745,7 +2719,7 @@
         "workflows",
         "yardstick"
       ],
-      "Hash": "abf2edf028c09305eaf0159fbb27d851"
+      "Hash": "d684ce908eb093910df3493510eebbc7"
     },
     "tzdb": {
       "Package": "tzdb",
