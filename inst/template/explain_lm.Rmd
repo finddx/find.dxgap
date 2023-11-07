@@ -73,14 +73,14 @@ mod_objects$rank |>
 autoplot(mod_objects$wset) + theme_minimal()
 ```
 
-The following plots pertain **`r pull_best(mod_objects$rank)`**.
+The following plots pertain **`r pull_mod_best(mod_objects$rank)`**.
 
 ## Assumptions
 
 ```{r check-assumptions}
 lm_obj <- 
   mod_objects$final_fit |> 
-  workflowsets::extract_fit_parsnip(id = pull_best(mod_objects$rank))
+  workflowsets::extract_fit_parsnip(id = pull_mod_best(mod_objects$rank))
 plot_check <- performance::check_model(
   lm_obj, 
   check = c("linearity", "normality", "qq", "outliers"),
@@ -106,5 +106,5 @@ coeff_df |>
   mutate_is_significant(threshold = 0.05) |> 
   mutate(is_under_0.05 = forcats::fct_relevel(is_under_0.05, c("TRUE", "FALSE"))) |> 
   mutate(term = forcats::fct_relevel(term, sort)) |> 
-  plot_coeff_table(.title = pull_best(mod_objects$rank))
+  plot_coeff_table(.title = pull_mod_best(mod_objects$rank))
 ```

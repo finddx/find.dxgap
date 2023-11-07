@@ -32,7 +32,7 @@ run_mod <- function(tbl,
   # Finalize -------------------------------------------------------------------
   final_fit <-
     wset |>
-    workflowsets::extract_workflow(id = pull_best(rank)) |>
+    workflowsets::extract_workflow(id = pull_mod_best(rank)) |>
     fit(data = splits_list$tbl_train)
 
   tibble::lst(
@@ -55,7 +55,7 @@ split_mod <- function(tbl, .v) {
   )
 }
 
-pull_best <- function(rank_df) {
+pull_mod_best <- function(rank_df) {
   rank_df$wflow_id[[1]]
 }
 
