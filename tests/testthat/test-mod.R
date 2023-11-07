@@ -16,6 +16,6 @@ test_that("run_mod() works", {
     .impute_vars = tb_mod_const$impute_vars
   )
   mod_list <- get_mod_mod(tb_mod_const$mode, tb_mod_const$engine)
-  final_fit <- run_mod(tbl, preproc = preproc_list, mod = mod_list)
-  expect_snapshot(final_fit)
+  mod_objects <- run_mod(tbl, preproc = preproc_list, mod = mod_list)
+  expect_snapshot(mod_objects)
 })
