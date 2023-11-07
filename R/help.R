@@ -84,6 +84,19 @@ compute_dx_gap <- function(data) {
     )
 }
 
+is_significant <- function(data, threshold = 0.05) {
+  data |>
+    dplyr::mutate(
+      "is_under_{threshold}" := dplyr::if_else(
+        p.value <= threshold,
+        TRUE, FALSE)
+    ) |>
+    dplyr::mutate("is_under_{threshold}" := forcats::fct_relevel(
+      as.character("is_under_{threshold}"),
+      c("TRUE", "FALSE"))
+    )
+}
+
 # credits to: https://github.com/moodymudskipper
 compute_corr <- function(data) {
   data |>
