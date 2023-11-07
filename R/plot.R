@@ -38,6 +38,8 @@ plot_corr <- function(data) {
 plot_coeff_table <- function(data, .title = NULL) {
   if (!is.null(.title)) {
     plot_title <- paste("Parameters from ", .title, " model")
+  } else {
+    plot_title <- paste("Parameters from model")
   }
   data |>
     ggplot2::ggplot(ggplot2::aes(term, estimate, color = is_under_0.05)) +
