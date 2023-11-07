@@ -29,13 +29,6 @@ run_mod <- function(tbl,
     dplyr::select(rank, wflow_id, model, .metric, mean) |>
     dplyr::filter(.metric == "rmse")
 
-  # Extract best ---------------------------------------------------------------
-  tune_res <-
-    workflowsets::extract_workflow_set_result(
-      wset,
-      id = pull_best(rank)
-    )
-
   # Finalize -------------------------------------------------------------------
   final_fit <-
     wset |>
