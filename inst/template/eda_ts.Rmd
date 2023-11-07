@@ -107,6 +107,8 @@ all_indicators_df |>
   facet_wrap(vars(name), scales = "free_y", ncol = 3) +
   geom_line(linewidth = 1, colour = "#1f65b7") +
   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  scale_y_continuous(labels = scales::label_number(big.mark = "'")) +
   labs(
     title = "How do predictors change, on average?",
     x = NULL,
