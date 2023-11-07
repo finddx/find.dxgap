@@ -116,7 +116,7 @@ all_indicators_df |>
 ```
 
 
-```{r}
+```{r fig.height=10}
 # Q: how does each test type vary over time for each hb country?
 all_indicators_df |>
   filter(is_hbc == 1) |>
@@ -191,7 +191,7 @@ corr_df |>
   )
 ```
 
-```{r}
+```{r fig.width=12}
 # Is time a signficant predictor of DX Gap in HBC?
 # who_dx_gap = (tb_estimated_cases - tb_notified_cases) / tb_estimated_cases
 # As estimated and notified cases are included as part of the calculation of
