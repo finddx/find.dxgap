@@ -48,96 +48,46 @@ tbl <-
   select(-any_of(c("year", "country")))
 ```
 
-```{r spending}
-tbl_split <- rsample::initial_split(tbl)
-tbl_train <- rsample::training(tbl_split)
-tbl_test <- rsample::testing(tbl_split)
-```
-
-```{r cv}
-tbl_cv <- rsample::vfold_cv(tbl_train)
-```
-
-```{r lm}
-lm_model <-
-  parsnip::linear_reg(mode = "regression") %>%
-  parsnip::set_engine("lm")
-```
-
-```{r combo}
-models <- list(lm = lm_model)
-# TODO: fine tune neighbors
-preproc <- tibble::lst(
-  simple = get_recipe_tb(
-    tbl, 
-    neighbors = 5, 
-    threshold = 0.25,
-    impute_vars = c("gdp", "e_inc_num", "pop_total")
-  ),
-  log_pop_total = get_log_recipe_tb(simple),
-  norm_pop_total = get_normalize_recipe_tb(simple),
-  is_hbc_pop_total = get_is_hbc_recipe_tb(simple)
+```{r matrix}
+preproc_list <- get_mod_preproc(
+  .tbl = tbl,
+  .neighbors = tb_mod_const$neighbors,
+  .threshold = tb_mod_const$threshold,
+  .impute_vars = tb_mod_const$impute_vars
 )
+mod_list <- get_mod_mod(tb_mod_const$mode, tb_mod_const$engine)
 ```
 
-```{r set}
-linear_models <- 
-   workflowsets::workflow_set(
-      preproc = preproc,
-      models = models,
-      cross = TRUE
-   ) 
-```
-
-```{r fit}
-wset <- 
-  workflowsets::workflow_map(
-    linear_models, 
-    verbose = TRUE,
-    metrics = yardstick::metric_set(yardstick::rmse, yardstick::rsq),
-    fn = "fit_resamples",
-    resamples = tbl_cv
-  )
+```{r run-model}
+mod_objects <- run_mod(
+  tbl, 
+  preproc = preproc_list, 
+  mod = mod_list,
+  folds = tb_mod_const$folds,
+  metrics = tb_mod_const$metrics,
+  rank_metric = tb_mod_const$rank_metric
+)
 ```
 
 ## Best model
 
 ```{r rank}
-rank <- 
-  workflowsets::rank_results(wset, rank_metric = "rmse", select_best = TRUE) |> 
-  select(rank, wflow_id, model, .metric, mean) |> 
-  filter(.metric == "rmse")
-rank |> 
+mod_objects$rank |> 
   gt::gt()
 ```
 
 ```{r assess, fig.height=5}
-autoplot(wset) + theme_minimal()
+autoplot(mod_objects$wset) + theme_minimal()
 ```
 
-```{r best}
-tune_res <- 
-  workflowsets::extract_workflow_set_result(
-    wset, 
-    id = rank$wflow_id[[1]]
-  ) 
-```
-
-```{r finalize}
-final_fit <- 
-  wset |> 
-  workflowsets::extract_workflow(id = rank$wflow_id[[1]]) |> 
-  fit(data = tbl_train)
-```
-
-The following plots pertain **`r rank$wflow_id[[1]]`**.
+The following plots pertain **`r pull_mod_best(mod_objects$rank)`**.
 
 ## Assumptions
 
 ```{r check-assumptions}
 lm_obj <- 
-  final_fit |> 
-  workflowsets::extract_fit_parsnip(id = rank$wflow_id[[1]])
+  mod_objects$final_fit |> 
+  workflowsets::extract_fit_parsnip(id = pull_mod_best(mod_objects$rank))
 plot_check <- performance::check_model(
   lm_obj, 
   check = c("linearity", "normality", "qq", "outliers"),
@@ -156,12 +106,12 @@ plot(check_vif) +
 
 ```{r coeff-viz, fig.width=12}
 coeff_df <- 
-  final_fit |> 
+  mod_objects$final_fit |> 
   broom::tidy() 
 
 coeff_df |> 
   mutate_is_significant(threshold = 0.05) |> 
   mutate(is_under_0.05 = forcats::fct_relevel(is_under_0.05, c("TRUE", "FALSE"))) |> 
   mutate(term = forcats::fct_relevel(term, sort)) |> 
-  plot_coeff_table(.title = rank$wflow_id[[1]])
+  plot_coeff_table(.title = pull_mod_best(mod_objects$rank))
 ```
