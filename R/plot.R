@@ -35,7 +35,10 @@ plot_corr <- function(data) {
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5))
 }
 
-plot_coeff_table <- function(data) {
+plot_coeff_table <- function(data, .title = NULL) {
+  if (!is.null(.title)) {
+    plot_title <- paste("Parameters from ", .title, " model")
+  }
   data |>
     ggplot2::ggplot(ggplot2::aes(term, estimate, color = is_under_0.05)) +
     ggplot2::geom_point() +
@@ -43,7 +46,7 @@ plot_coeff_table <- function(data) {
       ggplot2::aes(ymin = estimate - std.error, ymax = estimate + std.error)
     ) +
     ggplot2::coord_flip() +
-    ggplot2::labs(title = rank$wflow_id[[1]]) +
+    ggplot2::labs(title = plot_title) +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       plot.title = ggplot2::element_text(hjust = 0.5),
