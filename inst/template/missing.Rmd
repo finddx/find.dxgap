@@ -44,7 +44,7 @@ complete_by_year <-
   ungroup() |> 
   mutate(complete_rate = round(n / tot, 2)) |> 
   filter(!is_na) |> 
-  filter(year > dxgap_constants$start_year)
+  filter(year > dxgap_const$start_year)
 ```
 
 ```{r}
@@ -97,7 +97,7 @@ for_tab <-
   ungroup() |> 
   mutate(complete_rate = round(n / tot, 2)) |> 
   filter(!is_na) |> 
-  filter(year > dxgap_constants$start_year) |> 
+  filter(year > dxgap_const$start_year) |> 
   select(year, variable_name, is_hbc, complete_rate) |> 
   pivot_wider(names_from = year, values_from = complete_rate)
 ```

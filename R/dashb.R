@@ -231,7 +231,7 @@ plot_tb_ts <- function(metric = "tb_incidence_per_100k",
                        countries = c("Angola", "Brazil", "Zambia")) {
 
   stopifnot(is.character(metric) && length(metric) == 1)
-  metric <- rlang::arg_match(metric, values = tb_constants$indicator_ts)
+  metric <- rlang::arg_match(metric, values = tb_const$indicator_ts)
 
   years <- sort(years)
   stopifnot(length(years) > 1)
@@ -239,7 +239,7 @@ plot_tb_ts <- function(metric = "tb_incidence_per_100k",
   stopifnot(is.character(countries))
   countries <- rlang::arg_match(
     countries,
-    tb_constants$country,
+    tb_const$country,
     multiple = TRUE
   )
 

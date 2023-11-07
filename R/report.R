@@ -1,7 +1,7 @@
 #' Render template across multiple years
 #'
 #' @examples \dontrun{
-#' render_bulk("eda.Rmd", year = 2018:2021, vars = dxgap_constants$tb_vars)
+#' render_bulk("eda.Rmd", year = 2018:2021, vars = dxgap_const$tb_vars)
 #' }
 #' @export
 render_bulk <- function(template_name, year, vars) {
@@ -20,7 +20,7 @@ render_bulk <- function(template_name, year, vars) {
 #' Render template
 #'
 #' @examples \dontrun{
-#' render_report("eda.Rmd", .year = 2019, .vars = dxgap_constants$tb_vars)
+#' render_report("eda.Rmd", .year = 2019, .vars = dxgap_const$tb_vars)
 #' }
 #' @export
 render_report <- function(.template_name,

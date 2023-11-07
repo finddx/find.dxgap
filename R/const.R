@@ -1,4 +1,4 @@
-dxgap_constants <- tibble::lst(
+dxgap_const <- tibble::lst(
   start_year = 2015,
   tb_vars = c("year",
               "country",
@@ -29,7 +29,7 @@ tb_mod_const <- tibble::lst(
   rank_metric = "rmse"
 )
 
-tb_constants <- tibble::lst(
+tb_const <- tibble::lst(
   country = c(
     "Angola",
     "Bangladesh",

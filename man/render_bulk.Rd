@@ -11,6 +11,6 @@ Render template across multiple years
 }
 \examples{
 \dontrun{
-render_bulk("eda.Rmd", year = 2018:2021, vars = dxgap_constants$tb_vars)
+render_bulk("eda.Rmd", year = 2018:2021, vars = dxgap_const$tb_vars)
 }
 }

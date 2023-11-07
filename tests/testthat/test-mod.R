@@ -1,7 +1,7 @@
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
 df_lst <- load_dx()
 dm <- build_dm(df_lst, year = 2019)
-data_tbl <- build_tbl(dm, vars = dxgap_constants$tb_vars)
+data_tbl <- build_tbl(dm, vars = dxgap_const$tb_vars)
 tbl <-
   data_tbl |>
   compute_dx_gap() |>
