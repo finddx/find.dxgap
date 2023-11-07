@@ -30,12 +30,9 @@ get_impute_with_recipe_tb <- function(recipe, .impute_vars, .neighbors) {
 
 get_log_recipe_tb <- function(recipe) {
   recipe |>
-    recipes::step_mutate_at(
-      recipes::all_numeric_predictors() & -recipes::all_factor(),
-      fn = ~ .x + 1
-    ) |>
     recipes::step_log(
-      recipes::all_numeric_predictors() & -recipes::all_factor()
+      recipes::all_numeric_predictors() & -recipes::all_factor(),
+      offset = 1
     )
 }
 
