@@ -25,10 +25,14 @@ run_mod <- function(tbl,
   )
 
   # Rank -----------------------------------------------------------------------
-  rank <- rank_mod(wset, .rank_metric = rank_metric)
+  rank <- rank_mod(.wset = wset, .rank_metric = rank_metric)
 
   # Finalize -------------------------------------------------------------------
-  final_fit <- finalize_mod(wset, rank, splits_list$tbl_train)
+  final_fit <- finalize_mod(
+    .wset = wset,
+    .rank = rank,
+    .train = splits_list$tbl_train
+  )
 
   tibble::lst(
     wset = wset,
@@ -71,8 +75,8 @@ pull_mod_best <- function(rank_df) {
   rank_df$wflow_id[[1]]
 }
 
-rank_mod <- function(wset, .rank_metric) {
-  workflowsets::rank_results(wset, rank_metric = .rank_metric, select_best = TRUE) |>
+rank_mod <- function(.wset, .rank_metric) {
+  workflowsets::rank_results(.wset, rank_metric = .rank_metric, select_best = TRUE) |>
     dplyr::select(rank, wflow_id, model, .metric, mean) |>
     dplyr::filter(.metric == !!.rank_metric)
 }
