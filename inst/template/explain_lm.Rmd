@@ -79,7 +79,7 @@ The following plots pertain **`r pull_best(mod_objects$rank)`**.
 
 ```{r check-assumptions}
 lm_obj <- 
-  mod_objects$wset |> 
+  mod_objects$final_fit |> 
   workflowsets::extract_fit_parsnip(id = pull_best(mod_objects$rank))
 plot_check <- performance::check_model(
   lm_obj, 
