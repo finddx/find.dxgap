@@ -47,6 +47,12 @@ finalize_mod <- function(.wset, .rank, .train) {
     fit(data = .train)
 }
 
+rank_mod <- function(.wset, .rank_metric) {
+  workflowsets::rank_results(.wset, rank_metric = .rank_metric, select_best = TRUE) |>
+    dplyr::select(rank, wflow_id, model, .metric, mean) |>
+    dplyr::filter(.metric == !!.rank_metric)
+}
+
 fit_mod_matrix <- function(.matrix, .metrics, .resamples, .seed) {
   workflowsets::workflow_map(
     object = .matrix,
@@ -55,6 +61,17 @@ fit_mod_matrix <- function(.matrix, .metrics, .resamples, .seed) {
     fn = "fit_resamples",
     resamples = .resamples,
     seed = .seed
+  )
+}
+
+build_mod_matrix <- function(.mod_list, .preproc_list, .cross)  {
+  args <- list(.mod_list, .preproc_list)
+  args_are_all_list <- all(purrr::map_lgl(args, is.list))
+  stopifnot(args_are_all_list)
+  workflowsets::workflow_set(
+    preproc = .preproc_list,
+    models = .mod_list,
+    cross = .cross
   )
 }
 
@@ -71,36 +88,6 @@ split_mod <- function(tbl, .v) {
   )
 }
 
-pull_mod_best <- function(rank_df) {
-  rank_df$wflow_id[[1]]
-}
-
-rank_mod <- function(.wset, .rank_metric) {
-  workflowsets::rank_results(.wset, rank_metric = .rank_metric, select_best = TRUE) |>
-    dplyr::select(rank, wflow_id, model, .metric, mean) |>
-    dplyr::filter(.metric == !!.rank_metric)
-}
-
-build_mod_matrix <- function(.mod_list, .preproc_list, .cross)  {
-  args <- list(.mod_list, .preproc_list)
-  args_are_all_list <- all(purrr::map_lgl(args, is.list))
-  stopifnot(args_are_all_list)
-  workflowsets::workflow_set(
-    preproc = .preproc_list,
-    models = .mod_list,
-    cross = .cross
-  )
-}
-
-get_mod_mod <- function(.mode, .engine) {
-  tibble::lst(lm = specify_mod(.mode = .mode, .engine = .engine))
-}
-
-specify_mod <- function(.mode, .engine) {
-  parsnip::linear_reg(mode = .mode) |>
-    parsnip::set_engine(engine = .engine)
-}
-
 # TODO: explode it with a do.call or rlang::exec?
 get_mod_preproc <- function(.tbl, .neighbors, .threshold, .impute_vars) {
   tibble::lst(
@@ -115,3 +102,18 @@ get_mod_preproc <- function(.tbl, .neighbors, .threshold, .impute_vars) {
     is_hbc_pop_total = get_is_hbc_recipe_tb(simple)
   )
 }
+
+get_mod_mod <- function(.mode, .engine) {
+  tibble::lst(lm = specify_mod(.mode = .mode, .engine = .engine))
+}
+
+specify_mod <- function(.mode, .engine) {
+  parsnip::linear_reg(mode = .mode) |>
+    parsnip::set_engine(engine = .engine)
+}
+
+pull_mod_best <- function(rank_df) {
+  rank_df$wflow_id[[1]]
+}
+
+
