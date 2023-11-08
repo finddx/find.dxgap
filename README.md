@@ -68,7 +68,7 @@ The data available are:
 | who_2023-07-28_expenditures.csv  |
 | who_2023-07-28_notifications.csv |
 | who_2023-08-30_laboratories.csv  |
-| who_hbc.csv                      |
+| who_2023-07-28_hbc.csv                      |
 
 The below schema represents the flow of data in this package to aid with
 future developments:

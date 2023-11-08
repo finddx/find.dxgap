@@ -1,6 +1,6 @@
 #' Import tables in bulk
 #' @examples \dontrun{
-#' lst_df <- import_tbl(lst_df, "who_hbc.csv")
+#' lst_df <- import_tbl(lst_df, "who_2023-07-28_hbc.csv")
 #' }
 import_bulk <- function(data_lst,
                            data_name,
@@ -20,7 +20,7 @@ import_bulk <- function(data_lst,
 
 #' Import table
 #' @examples \dontrun{
-#' lst_df <- import_tbl(lst_df, "who_hbc.csv")
+#' lst_df <- import_tbl(lst_df, "who_2023-07-28_hbc.csv")
 #' }
 import_tbl <- function(.data_lst,
                           .file_name,

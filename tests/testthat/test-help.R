@@ -6,7 +6,7 @@ test_that("compose_file_path() works", {
 })
 
 test_that("extract_name() works", {
-  path_a <- "/Users/a_user/find.dxgap.data/who_hbc.csv"
+  path_a <- "/Users/a_user/find.dxgap.data/who_2023-07-28_hbc.csv"
   expect_identical(extract_name(path_a), "who_hbc")
   path_b <- "/Users/a_user/find.dxgap.data/wb_2023-08-31_pop_total.csv"
   expect_identical(extract_name(path_b), "wb_pop_total")
