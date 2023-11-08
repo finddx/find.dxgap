@@ -19,7 +19,7 @@ dxgap_const <- tibble::lst(
 )
 
 tb_mod_const <- tibble::lst(
-  neighbors = 0.5,
+  neighbors = 5,
   threshold = 0.25,
   impute_vars = c("gdp", "e_inc_num", "pop_total"),
   mode = "regression",
