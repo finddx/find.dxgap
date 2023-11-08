@@ -1,16 +1,16 @@
 plot_scatter <- function(data, x, y, year, color, title, caption) {
   data |>
-    ggplot(aes({{ x }}, {{ y }}, color = {{ color }})) +
-    geom_point(alpha = .5, size = .75) +
-    geom_smooth(
-      aes(colour = {{ color }}),
+    ggplot2::ggplot(ggplot2::aes({{ x }}, {{ y }}, color = {{ color }})) +
+    ggplot2::geom_point(alpha = .5, size = .75) +
+    ggplot2::geom_smooth(
+      ggplot2::aes(colour = {{ color }}),
       linewidth = 0.5,
       method = "lm",
       se = FALSE
     ) +
-    scale_y_continuous(labels = scales::label_percent(scale = 1)) +
-    theme_minimal() +
-    labs(
+    ggplot2::scale_y_continuous(labels = scales::label_percent(scale = 1)) +
+    ggplot2::theme_minimal() +
+    ggplot2::labs(
       x = paste(title, year),
       caption = caption
     )
@@ -18,10 +18,10 @@ plot_scatter <- function(data, x, y, year, color, title, caption) {
 
 plot_density <- function(data, x, fill, year, title, caption) {
   data |>
-    ggplot(aes({{ x }}, fill = {{ fill }})) +
-    geom_density(alpha = .5) +
-    theme_minimal() +
-    labs(
+    ggplot2::ggplot(ggplot2::aes({{ x }}, fill = {{ fill }})) +
+    ggplot2::geom_density(alpha = .5) +
+    ggplot2::theme_minimal() +
+    ggplot2::labs(
       x = paste(title, year),
       caption = caption
     )
