@@ -1,3 +1,4 @@
+skip("tb_policy_dashboard_final_v1_14Nov22.xlsx is a superseded file.")
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
 file_name <- "tb_policy_dashboard_final_v1_14Nov22.xlsx"
 data <- read_tb_dashboard(file_name)
