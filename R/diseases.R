@@ -1,8 +1,3 @@
-dxgap_provider <- tibble::tribble(
-  ~provider_id, ~provider_desc,
-  "gf", "glo"
-)
-
 dxgap_tb_tables <- tibble::tribble(
   ~provider_id, ~dataset_type, ~extension,
   "gf", "procurement", "csv",
