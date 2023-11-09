@@ -1,5 +1,6 @@
 check_supported_disease <- function(disease) {
-  if (!disease %in% dxgap_diseases$disease) {
+  supported_diseases <- dxgap_diseases$disease
+  if (!disease %in% supported_diseases) {
     rlang::abort(
       c(
         sprintf("Cannot find `%s` in `dxgap_diseases`.", disease),
