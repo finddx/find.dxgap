@@ -1,3 +1,15 @@
+check_supported_disease <- function(disease) {
+  if (!disease %in% dxgap_diseases$disease) {
+    rlang::abort(
+      c(
+        sprintf("Cannot find `%s` in `dxgap_diseases`.", disease),
+        x = "Disease is not supported yet."
+      ),
+      class = "dxgap_disease_not_supported"
+    )
+  }
+}
+
 check_ptype <- function(data, ptype) {
   sym_ptype <- rlang::ensym(ptype)
   sym_data <- rlang::ensym(data)
