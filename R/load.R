@@ -22,3 +22,18 @@ load_dx <- function(disease, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   tbl_list
 }
+
+generate_disease_pattern <- function(dxgap_diseases, disease) {
+  dxgap_diseases |>
+    dplyr::filter(disease == !!disease) |>
+    tidyr::unnest(tables) |>
+    dplyr::mutate(date_pattern = "\\d{4}-\\d{2}-\\d{2}") |>
+    dplyr::mutate(
+      pattern = stringr::str_c(
+        provider_id,
+        date_pattern,
+        dataset_type,
+        sep = "_"
+      )
+    )
+}
