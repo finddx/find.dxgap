@@ -16,8 +16,7 @@ dxgap_tb_tables <- tibble::tribble(
 
 dxgap_diseases <- tibble::tribble(
   ~disease, ~start_year, ~end_year, ~tables,
-  "tb",     2016,         2021,     dxgap_tb_tables,
-  "covid",  NA,           NA,       NA
+  "tb",     2016,         2021,     dxgap_tb_tables
 )
 
 

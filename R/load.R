@@ -17,8 +17,7 @@ load_dx <- function(disease, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   lst_df <- import_bulk(lst_df, data_name = data_dir_list)
 
   tbl_list <- switch(disease,
-    tb = tb_load(lst_df),
-    covid = rlang::abort("Disease is not yet supported.")
+    tb = tb_load(lst_df)
   )
 
   tbl_list
