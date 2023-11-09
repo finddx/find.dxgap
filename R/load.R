@@ -3,6 +3,7 @@ list_dxgap_datadir <- function(.pattern, .data_dir = Sys.getenv("DXGAP_DATADIR")
 }
 
 load_dx <- function(disease, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  check_supported_disease(disease)
   disease_df <-
     dxgap_diseases |>
     dplyr::filter(disease == !!disease) |>
