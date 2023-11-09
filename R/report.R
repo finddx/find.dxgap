@@ -57,14 +57,17 @@ render_bulk <- function(template_name, year = NULL, vars = NULL) {
 #' render_report("eda.Rmd", .year = 2019, .vars = dxgap_const$tb_vars)
 #' }
 render_report <- function(.template_name,
+                          .disease,
                           .year = NULL,
                           .vars = NULL,
                           interactive = TRUE,
                           template_dir = "inst/template/",
                           data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  check_supported_disease(.disease)
+  # TODO: check template per disease, or adopt more flexibility in templates
   template_path <- compose_file_path(.template_name, template_dir)
 
-  lst_df <- load_dx()
+  lst_df <- load_dx(.disease)
   dm <- build_dm(lst_df, year = .year)
   data_tbl <- build_tbl(dm, vars = .vars)
 

@@ -1,5 +1,5 @@
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-df_lst <- load_dx()
+df_lst <- load_dx("tb")
 dm <- build_dm(df_lst, year = 2019)
 data_tbl <- build_tbl(dm, vars = dxgap_const$tb_vars)
 tbl <-
