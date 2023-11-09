@@ -11,6 +11,6 @@ Get core countries
 }
 \examples{
 \dontrun{
-get_core(load_dx())
+get_core(load_dx("tb"))
 }
 }
