@@ -11,6 +11,23 @@ check_supported_disease <- function(disease) {
   }
 }
 
+check_clean_data_dir <- function(data_files, .pattern) {
+  pattern <- paste0(c(.pattern, "\\..*$"), collapse = "|")
+  core_pattern <- stringr::str_remove_all(
+    data_files,
+    pattern = pattern
+  )
+  n_duplicates <- anyDuplicated(core_pattern)
+  if (n_duplicates != 0) {
+    rlang::abort(
+      c(
+        "`data_files` are not unique.",
+        i = "One file per `dataset_type` must be present in the data folder."
+      )
+    )
+  }
+}
+
 check_ptype <- function(data, ptype) {
   sym_ptype <- rlang::ensym(ptype)
   sym_data <- rlang::ensym(data)
