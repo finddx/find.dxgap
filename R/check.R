@@ -1,5 +1,5 @@
-check_supported_disease <- function(disease) {
-  supported_diseases <- dxgap_diseases$disease
+check_supported_disease <- function(disease, .dxgap_diseases = dxgap_diseases) {
+  supported_diseases <- .dxgap_diseases$disease
   if (!disease %in% supported_diseases) {
     rlang::abort(
       c(
