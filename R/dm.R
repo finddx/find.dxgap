@@ -1,3 +1,14 @@
+#' Title
+#'
+#' @param dm
+#' @param vars
+#'
+#' @seealso [build_dm()]
+#'
+#' @return
+#' @export
+#'
+#' @examples
 build_tbl <- function(dm, vars = NULL) {
   tbl <-
     dm |>
@@ -14,6 +25,18 @@ build_tbl <- function(dm, vars = NULL) {
     dplyr::relocate(is_hbc, country_code, year, .before = everything())
 }
 
+
+#' Title
+#'
+#' @param data_list
+#' @param year
+#'
+#' @seealso [build_tbl()]
+#'
+#' @return
+#' @export
+#'
+#' @examples
 build_dm <- function(data_list, year = NULL) {
   # TODO: max year should be computed from the who estimates and notification data
   max_year <- lubridate::year(lubridate::today()) - 2
