@@ -4,16 +4,14 @@
 \alias{write_data_dir}
 \title{Create folder containing data for the project.}
 \usage{
-write_data_dir(
-  path = fs::path_dir(getwd()),
-  dirs = c("who", "global-fund", "world-bank", "meta", "report")
-)
+write_data_dir(path = fs::path_dir(getwd()), dirs = NULL)
 }
 \arguments{
 \item{path}{A path where the folder should be created. By default, it is
 created at the same level as the find.dxgap root directory.}
 
-\item{dirs}{a character vector with sub-folder names.}
+\item{dirs}{Defaults to NULL. An optional character vector to build
+additional sub-folders. Not yet in use.}
 }
 \value{
 the path to the folder, invisibly.

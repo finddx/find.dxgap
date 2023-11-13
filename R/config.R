@@ -7,7 +7,8 @@
 #'
 #' @param path A path where the folder should be created. By default, it is
 #'   created at the same level as the find.dxgap root directory.
-#' @param dirs a character vector with sub-folder names.
+#' @param dirs Defaults to NULL. An optional character vector to build
+#'   additional sub-folders. Not yet in use.
 #'
 #' @return the path to the folder, invisibly.
 #' @export
@@ -15,8 +16,7 @@
 #' @examples
 #' write_data_dir() # Create folder at same level as project
 #' write_data_dir("~/Documents/my_projects") # Specify specific folder
-write_data_dir <- function(path = fs::path_dir(getwd()),
-                               dirs = c("who", "global-fund", "world-bank", "meta", "report")) {
+write_data_dir <- function(path = fs::path_dir(getwd()), dirs = NULL) {
   if (!rlang::is_character(path) && length(path) != 1) {
     rlang::abort("Not a valid character path.")
   }
