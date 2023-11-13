@@ -50,7 +50,7 @@ devtools::install_github("finddx/find.dxgap")
 ## find.dxgap.data
 
 Data for the project are stored in a directory called `find.dxgap.data`.
-Please, call `set_data_dir()` to create and populate such folder.
+Please, call `write_data_dir()` to create and populate such folder.
 
 The data available are:
 

@@ -1,6 +1,6 @@
 pkgload::load_all()
 
-set_data_dir()
+write_data_dir()
 
 render_report(
   "missing.Rmd",
