@@ -10,10 +10,10 @@ write_data_dir(
 )
 }
 \arguments{
-\item{path}{a path where the folder should be created. By defeult, it is
-created at the same level of where the find.dxgap project lives.}
+\item{path}{A path where the folder should be created. By default, it is
+created at the same level as the find.dxgap root directory.}
 
-\item{dirs}{a character vector with subfolders' names.}
+\item{dirs}{a character vector with sub-folder names.}
 }
 \value{
 the path to the folder, invisibly.
@@ -21,9 +21,10 @@ the path to the folder, invisibly.
 \description{
 This function has side effects. It creates a folder storing data for the
 project. In addition it sets the \code{DXGAP_DATADIR} environment variable which
-is needed for the \verb{read_*()} family of functions to work properly, in
-particular when running tests.
+is needed for the \verb{read_*()} family of functions to work, in particular when
+running tests.
 }
 \examples{
-path_dxgap <- write_data_dir("~/Documents/my_projects")
+write_data_dir() # Create folder at same level as project
+write_data_dir("~/Documents/my_projects") # Specify specific folder
 }
