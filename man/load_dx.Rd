@@ -7,9 +7,16 @@
 load_dx(data_files = list_dx())
 }
 \arguments{
-\item{data_files}{}
+\item{data_files}{A vector of file paths to load. Defaults to \code{\link[=list_dx]{list_dx()}}}
+}
+\value{
+A list of tibbles, the same length as \code{\link[=list_dx]{list_dx()}}
 }
 \description{
-\code{load_dx()} loads a list of data frames created by
-\code{\link[=write_data_dir]{write_data_dir()}}
+\code{load_dx()} loads all .csv files frames created by \code{\link[=write_data_dir]{write_data_dir()}} into a
+list of tibbles. Call \code{list_dx()} to view the list of .csv files to be
+loaded.
+}
+\seealso{
+\code{\link[=build_dm]{build_dm()}}
 }

@@ -105,6 +105,3 @@ read_who("who_2023-08-30_laboratories.csv") |>
   tidy_who()
 }
 }
-\seealso{
-\code{\link[=read_who]{read_who()}}, \code{\link[=download_who]{download_who()}}
-}

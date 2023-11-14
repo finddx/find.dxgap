@@ -2,7 +2,7 @@
 % Please edit documentation in R/config.R
 \name{write_data_dir}
 \alias{write_data_dir}
-\title{Create folder containing data for the project.}
+\title{Create a folder containing data for the project.}
 \usage{
 write_data_dir(path = fs::path_dir(getwd()), dirs = NULL)
 }

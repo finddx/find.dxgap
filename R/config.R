@@ -1,4 +1,4 @@
-#' Create folder containing data for the project.
+#' Create a folder containing data for the project.
 #'
 #' This function has side effects. It creates a folder storing data for the
 #' project. In addition it sets the `DXGAP_DATADIR` environment variable which
@@ -11,6 +11,7 @@
 #'   additional sub-folders. Not yet in use.
 #'
 #' @return the path to the folder, invisibly.
+#'
 #' @export
 #'
 #' @examples
