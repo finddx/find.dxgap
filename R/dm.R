@@ -1,19 +1,34 @@
-#' Title
+#' Join all data into a big table
 #'
-#' @param dm
-#' @param vars
+#' `build_tbl()` flattens all of the tables contained in a dm object created by
+#' [build_dm()] into a single wide table by performing a series of cascading
+#' joins.
+#'
+#' @param dm An object of class dm, created by [build_dm()].
+#' @param vars A vector of strings naming columns to subset the data on.
 #'
 #' @seealso [build_dm()]
 #'
-#' @return
+#' @return A tibble.
+#'
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' dm_object <- load_dx() |>
+#'   build_dm()
+#'
+#' build_tbl(dm_object) # All cols
+#' build_tbl(dm_object, vars = c("year", "country", "pop_density")) # select cols
+#' }
 build_tbl <- function(dm, vars = NULL) {
   tbl <-
     dm |>
     dm::dm_flatten_to_tbl(.start = country) |>
     dplyr::filter(!dplyr::if_all(-c(country_code), is.na))
+
+  tbl <- tbl |>
+    dplyr::relocate(is_hbc, country_code, year, .before = everything())
 
   if (!is.null(vars)) {
     tbl <-
@@ -21,8 +36,7 @@ build_tbl <- function(dm, vars = NULL) {
       dplyr::select(tidyselect::any_of(vars))
   }
 
-  tbl |>
-    dplyr::relocate(is_hbc, country_code, year, .before = everything())
+  return(tbl)
 }
 
 

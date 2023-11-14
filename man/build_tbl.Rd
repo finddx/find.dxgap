@@ -2,15 +2,31 @@
 % Please edit documentation in R/dm.R
 \name{build_tbl}
 \alias{build_tbl}
-\title{Title}
+\title{Join all data into a big table}
 \usage{
 build_tbl(dm, vars = NULL)
 }
 \arguments{
-\item{vars}{}
+\item{dm}{An object of class dm, created by \code{\link[=build_dm]{build_dm()}}.}
+
+\item{vars}{A vector of strings naming columns to subset the data on.}
+}
+\value{
+A tibble.
 }
 \description{
-Title
+\code{build_tbl()} flattens all of the tables contained in a dm object created by
+\code{\link[=build_dm]{build_dm()}} into a single wide table by performing a series of cascading
+joins.
+}
+\examples{
+\dontrun{
+dm_object <- load_dx() |>
+  build_dm()
+
+build_tbl(dm_object) # All cols
+build_tbl(dm_object, vars = c("year", "country", "pop_density")) # select cols
+}
 }
 \seealso{
 \code{\link[=build_dm]{build_dm()}}
