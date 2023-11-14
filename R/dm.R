@@ -39,7 +39,6 @@ build_tbl <- function(dm, vars = NULL) {
   return(tbl)
 }
 
-
 #' Build a dm model object
 #'
 #' `build_dm()` converts a list of tables into a dm object, extending the list
