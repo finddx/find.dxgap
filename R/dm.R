@@ -26,17 +26,27 @@ build_tbl <- function(dm, vars = NULL) {
 }
 
 
-#' Title
+#' Build a dm model object
 #'
-#' @param data_list
-#' @param year
+#' `build_dm()` converts a list of tables into a dm object, extending the list
+#' to include information on the relationship between the tables.
+#'
+#' @param data_list A list of tables, typically generated from [load_dx()].
+#' @param year An integer indicating a year to filter the data on. Defaults to
+#'   NULL, returning all years present in the data.
 #'
 #' @seealso [build_tbl()]
 #'
-#' @return
+#' @return An object of class dm, containing the same number of tables as in the
+#' input `data_list`.
+#'
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' build_dm(load_dx()) # all years
+#' build_dm(load_dx(), year = 2019) # only 2019
+#' }
 build_dm <- function(data_list, year = NULL) {
   # TODO: max year should be computed from the who estimates and notification data
   max_year <- lubridate::year(lubridate::today()) - 2

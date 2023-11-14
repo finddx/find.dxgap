@@ -2,15 +2,29 @@
 % Please edit documentation in R/dm.R
 \name{build_dm}
 \alias{build_dm}
-\title{Title}
+\title{Build a dm model object}
 \usage{
 build_dm(data_list, year = NULL)
 }
 \arguments{
-\item{year}{}
+\item{data_list}{A list of tables, typically generated from \code{\link[=load_dx]{load_dx()}}.}
+
+\item{year}{An integer indicating a year to filter the data on. Defaults to
+NULL, returning all years present in the data.}
+}
+\value{
+An object of class dm, containing the same number of tables as in the
+input \code{data_list}.
 }
 \description{
-Title
+\code{build_dm()} converts a list of tables into a dm object, extending the list
+to include information on the relationship between the tables.
+}
+\examples{
+\dontrun{
+build_dm(load_dx()) # all years
+build_dm(load_dx(), year = 2019) # only 2019
+}
 }
 \seealso{
 \code{\link[=build_tbl]{build_tbl()}}
