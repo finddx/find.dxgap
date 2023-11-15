@@ -1,5 +1,7 @@
 #' Run a suite of statistical models
 #'
+#' `run_mod()` runs a suite of statical models, returning a final model fit.
+#'
 #' @param tbl Input data frame containing the data to model.
 #' @param mod A list of models to run.
 #' @param preproc A list of preprocessing steps.
