@@ -5,7 +5,8 @@
 #' joins.
 #'
 #' @param dm An object of class dm, created by [build_dm()].
-#' @param vars A vector of strings naming columns to subset the data on.
+#' @param vars A vector of strings naming columns to subset the data on. Defaults
+#' to NULL, indicating all variables should be used.
 #'
 #' @seealso [build_dm()]
 #'

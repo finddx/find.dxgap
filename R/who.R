@@ -111,10 +111,10 @@ who_url_endpoints <- tibble::tribble(
 #'
 #' @param file_name A string containing the name of the WHO file to be read
 #' @param data_dir Path containing the directory to read the data from. Defaults
-#' to the path set by the environment variable "DXGAP_DATADIR".
+#' to the path set by the environment variable `"DXGAP_DATADIR"`.
 #' @param ... Additional arguments passed to [readr::read_csv()]
 #'
-#' @return A tibble containing the who data set
+#' @return A tibble containing the who data set.
 #'
 #' @rdname who
 #'
