@@ -181,3 +181,16 @@ compute_sum_by <- function(data, var, by, .na.rm = TRUE) {
     dplyr::summarise("{{var}}" := sum({{ var }}, na.rm = .na.rm)) |>
     dplyr::ungroup()
 }
+
+#' @export
+#' @keywords internal
+#' @examples
+#' \dontrun{
+#' view_templates()
+#' }
+view_templates <- function() {
+  all_templates <- fs::dir_ls("inst/template", regexp = "\\.Rmd$") |>
+    fs::path_file()
+  valid_templates <- all_templates[!grepl("test\\.Rmd$", all_templates)]
+  return(valid_templates)
+}
