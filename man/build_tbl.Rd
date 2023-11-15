@@ -9,7 +9,8 @@ build_tbl(dm, vars = NULL)
 \arguments{
 \item{dm}{An object of class dm, created by \code{\link[=build_dm]{build_dm()}}.}
 
-\item{vars}{A vector of strings naming columns to subset the data on.}
+\item{vars}{A vector of strings naming columns to subset the data on. Defaults
+to NULL, indicating all variables should be used.}
 }
 \value{
 A tibble.

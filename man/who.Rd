@@ -30,7 +30,7 @@ seen by calling the \code{who_url_endpoints} tibble.}
 date.}
 
 \item{data_dir}{Path containing the directory to read the data from. Defaults
-to the path set by the environment variable "DXGAP_DATADIR".}
+to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
 
 \item{...}{Additional arguments passed to \code{\link[readr:read_delim]{readr::read_csv()}}}
 
@@ -46,7 +46,7 @@ format. Defaults to "long".}
 \code{download_who()} returns invisibly the file path in which data are
 stored.
 
-A tibble containing the who data set
+A tibble containing the who data set.
 
 A tibble. This is a tidied version of the input tibble.
 }
