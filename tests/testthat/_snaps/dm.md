@@ -195,7 +195,7 @@
 
     Code
       dm::dm_examine_constraints(dm)
-    Message
+    Message <cliMessage>
       ! Unsatisfied constraints:
     Output
       * Table `country`: foreign key `year`, `country_code` into table `who_community`: values of `country$year`, `country$country_code` not in `who_community$year`, `who_community$country_code`: 2019, ALB (1), 2019, AND (1), 2019, ARE (1), 2019, ARG (1), 2019, ARM (1), ...
@@ -407,7 +407,7 @@
 
     Code
       dm::dm_examine_constraints(dm)
-    Message
+    Message <cliMessage>
       ! Unsatisfied constraints:
     Output
       * Table `country`: foreign key `year`, `country_code` into table `who_budget`: values of `country$year`, `country$country_code` not in `who_budget$year`, `who_budget$country_code`: 2016, AFG (1), 2016, AGO (1), 2016, ALB (1), 2016, AND (1), 2016, ARE (1), ...
