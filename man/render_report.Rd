@@ -6,6 +6,7 @@
 \usage{
 render_report(
   .template_name,
+  .disease,
   .year = NULL,
   .vars = NULL,
   interactive = TRUE,
