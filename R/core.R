@@ -2,7 +2,7 @@
 #' @noRd
 #' @param data_list A list of tibbles as returned by `load_dx()`.
 #' @examples \dontrun{
-#' get_core(load_dx())
+#' get_core(load_dx("tb"))
 #' }
 get_core <- function(data_list) {
   country_notification_df <-
