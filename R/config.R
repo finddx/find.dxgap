@@ -14,9 +14,10 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examples \dontrun{
 #' write_data_dir() # Create folder at same level as project
 #' write_data_dir("~/Documents/my_projects") # Specify specific folder
+#' }
 write_data_dir <- function(path = fs::path_dir(getwd()), dirs = character(0)) {
   if (!rlang::is_character(path) && length(path) != 1) {
     rlang::abort("Not a valid character path.")
