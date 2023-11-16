@@ -2,16 +2,20 @@ list_dxgap_datadir <- function(.pattern, .data_dir = Sys.getenv("DXGAP_DATADIR")
   list.files(path = .data_dir, pattern = .pattern)
 }
 
-load_dx <- function(disease, .dxgap_diseases = dxgap_diseases, data_dir = Sys.getenv("DXGAP_DATADIR")) {
-  check_supported_disease(disease, .dxgap_diseases)
+load_dx <- function(disease) {
+  load_dx_impl(.disease = disease)
+}
+
+load_dx_impl <- function(.disease, .dxgap_diseases = dxgap_diseases, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  check_supported_disease(.disease, .dxgap_diseases)
   pattern <- "\\d{4}-\\d{2}-\\d{2}"
-  disease_df <- generate_disease_pattern(.dxgap_diseases, disease, pattern)
+  disease_df <- generate_disease_pattern(.dxgap_diseases, .disease, pattern)
   regex_pattern <- paste(disease_df$pattern, collapse = "|")
   data_files <- list_dxgap_datadir(.data_dir = data_dir, .pattern = regex_pattern)
   check_clean_data_dir(data_files, .pattern = pattern)
   lst_df <- import_bulk(lst_df, data_name = data_files)
 
-  tbl_list <- switch(disease,
+  tbl_list <- switch(.disease,
     tb = tb_load(lst_df)
   )
   tbl_list
