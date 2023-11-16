@@ -1,5 +1,4 @@
-#' @export
-#' @keywords interal
+#' @noRd
 #'
 #' @example
 #' list_dx()
