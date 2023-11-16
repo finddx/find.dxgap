@@ -9,20 +9,21 @@ list_dx <- function(pattern = "csv", data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
 #' Load diagnostic gap data
 #'
-#' `load_dx()` loads all .csv files frames created by [write_data_dir()] into a
-#' list of tibbles. Call `list_dx()` to view the list of .csv files to be
-#' loaded.
-#'
-#' @param data_files A vector of file paths to load. Defaults to [list_dx()]
+#' `load_dx()` loads all files frames created by [write_data_dir()] into a
+#' list of tibbles.
 #'
 #' @seealso [build_dm()]
 #'
-#' @return A list of tibbles, the same length as [list_dx()]
+#' @return A list of tibbles.
 #'
 #' @export
 #'
 #' @examples
-load_dx <- function(data_files = list_dx()) {
+load_dx <- function() {
+  load_dx_impl()
+}
+
+load_dx_impl <- function(data_files = list_dx()) {
 
   lst_df <- import_bulk(lst_df, data_name = data_files)
 
