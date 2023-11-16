@@ -15,7 +15,7 @@ download_who(
   data_dir = Sys.getenv("DXGAP_DATADIR")
 )
 
-read_who(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"), ...)
+read_who(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
 
 tidy_who(data, year = NULL, .shape = "long")
 }
@@ -32,8 +32,6 @@ date.}
 \item{data_dir}{Path containing the directory to read the data from. Defaults
 to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
 
-\item{...}{Additional arguments passed to \code{\link[readr:read_delim]{readr::read_csv()}}}
-
 \item{data}{A tibble returned from the corresponding \code{\link[=read_]{read_()}} function.}
 
 \item{year}{A year to filter the data by. Defaults to NULL, returning data
@@ -41,6 +39,8 @@ for all years.}
 
 \item{.shape}{A string indicating if the data should be in "wide", or "long"
 format. Defaults to "long".}
+
+\item{...}{Additional arguments passed to \code{\link[readr:read_delim]{readr::read_csv()}}}
 }
 \value{
 \code{download_who()} returns invisibly the file path in which data are

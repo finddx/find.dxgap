@@ -4,18 +4,14 @@
 \alias{load_dx}
 \title{Load diagnostic gap data}
 \usage{
-load_dx(data_files = list_dx())
-}
-\arguments{
-\item{data_files}{A vector of file paths to load. Defaults to \code{\link[=list_dx]{list_dx()}}}
+load_dx()
 }
 \value{
-A list of tibbles, the same length as \code{\link[=list_dx]{list_dx()}}
+A list of tibbles.
 }
 \description{
-\code{load_dx()} loads all .csv files frames created by \code{\link[=write_data_dir]{write_data_dir()}} into a
-list of tibbles. Call \code{list_dx()} to view the list of .csv files to be
-loaded.
+\code{load_dx()} loads all files frames created by \code{\link[=write_data_dir]{write_data_dir()}} into a
+list of tibbles.
 }
 \seealso{
 \code{\link[=build_dm]{build_dm()}}

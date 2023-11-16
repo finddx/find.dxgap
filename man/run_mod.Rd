@@ -39,7 +39,7 @@ A list containing a workset, ranked model results, and a final model
 fit.
 }
 \description{
-Run a suite of statistical models
+\code{run_mod()} runs a suite of statical models, returning a final model fit.
 }
 \examples{
 \dontrun{
