@@ -182,8 +182,8 @@ compute_sum_by <- function(data, var, by, .na.rm = TRUE) {
     dplyr::ungroup()
 }
 
+#' List available templates
 #' @export
-#' @keywords internal
 #' @examples
 #' \dontrun{
 #' view_templates()
