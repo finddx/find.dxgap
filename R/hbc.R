@@ -10,9 +10,9 @@ download_hbc <- function(file_name = tempfile("who_hbc_list", fileext = ".pdf"),
   invisible(normalizePath(file_path))
 }
 
-read_hbc <- function(...) {
+read_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   # TODO: extract table from pdf pdftools::pdf_text(file_path)[[8]]
-  dxgap_read_csv(...) |>
+  dxgap_read_csv(file_name = file_name, data_dir = data_dir) |>
     tibble::as_tibble()
 }
 

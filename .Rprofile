@@ -1,2 +1,1 @@
-options(renv.config.mran.enabled = FALSE)
-# source("renv/activate.R")
+options(renv.config.mran.enabled = FALSE, renv.config.autoloader.enabled = FALSE)
