@@ -34,7 +34,7 @@ Imports:
     readxl,
     recipes,
     rlang (>= 1.1.0),
-    rmarkdown,
+    rmarkdown (>= 2.3.4),
     rsample,
     rstudioapi,
     scales,
