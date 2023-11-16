@@ -18,7 +18,7 @@ to \code{\link[=build_tbl]{build_tbl()}}. Defaults to NULL, indicating all varia
 used.}
 }
 \description{
-\code{render_bulk()} is a convenience wrapper around \code{\link[=render_template]{render_template()}} that
+\code{render_bulk()} is a convenience wrapper around \code{\link[=render_report]{render_report()}} that
 allows you to render templates across multiple years.
 }
 \examples{
