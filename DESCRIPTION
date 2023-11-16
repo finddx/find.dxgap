@@ -50,6 +50,7 @@ Imports:
 Suggests: 
     constructive,
     DiagrammeRsvg,
+    forcats,
     htmltools,
     testthat (>= 3.0.0),
     vdiffr
