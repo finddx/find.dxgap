@@ -1,6 +1,6 @@
 #' Render templates across multiple years
 #'
-#' `render_bulk()` is a convenience wrapper around [render_template()] that
+#' `render_bulk()` is a convenience wrapper around [render_report()] that
 #' allows you to render templates across multiple years.
 #'
 #' @param template_name String containing the name of the template to render.
