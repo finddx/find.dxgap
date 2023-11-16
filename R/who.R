@@ -124,8 +124,8 @@ who_url_endpoints <- tibble::tribble(
 #' \dontrun{
 #' read_who("who_2023-08-30_laboratories.csv")
 #' }
-read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"), ...) {
-  dxgap_read_csv(file_name, ..., col_types = readr::cols("download_date" = "c")) |>
+read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  dxgap_read_csv(file_name, col_types = readr::cols("download_date" = "c")) |>
     tibble::as_tibble()
 }
 
