@@ -48,8 +48,8 @@ unnest_wb_resp <- function(data) {
     tidyr::unnest_wider(indicator, names_sep = "_")
 }
 
-read_wb <- function(...) {
-  dxgap_read_csv(...) |>
+read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  dxgap_read_csv(file_name = file_name, data_dir = data_dir) |>
     tibble::as_tibble()
 }
 
