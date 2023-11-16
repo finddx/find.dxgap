@@ -13,6 +13,11 @@ A list of tibbles.
 \code{load_dx()} loads all files frames created by \code{\link[=write_data_dir]{write_data_dir()}} into a
 list of tibbles.
 }
+\examples{
+\dontrun{
+load_dx()
+}
+}
 \seealso{
 \code{\link[=build_dm]{build_dm()}}
 }

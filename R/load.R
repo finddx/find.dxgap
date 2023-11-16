@@ -18,7 +18,9 @@ list_dx <- function(pattern = "csv", data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'
 #' @export
 #'
-#' @examples
+#' @examples \dontrun{
+#' load_dx()
+#' }
 load_dx <- function() {
   load_dx_impl()
 }
