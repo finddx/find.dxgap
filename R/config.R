@@ -1,20 +1,23 @@
-#' Create folder containing data for the project.
+#' Create a folder containing data for the project.
 #'
 #' This function has side effects. It creates a folder storing data for the
 #' project. In addition it sets the `DXGAP_DATADIR` environment variable which
-#' is needed for the `read_*()` family of functions to work properly, in
-#' particular when running tests.
+#' is needed for the `read_*()` family of functions to work, in particular when
+#' running tests.
 #'
-#' @param path a path where the folder should be created. By defeult, it is
-#'   created at the same level of where the find.dxgap project lives.
-#' @param dirs a character vector with subfolders' names.
+#' @param path A path where the folder should be created. By default, it is
+#'   created at the same level as the find.dxgap root directory.
+#' @param dirs Defaults to `character(0)`. An optional character vector to build
+#'   additional sub-folders. Not yet in use.
 #'
 #' @return the path to the folder, invisibly.
+#'
 #' @export
 #'
-#' @examples path_dxgap <- write_data_dir("~/Documents/my_projects")
-write_data_dir <- function(path = fs::path_dir(getwd()),
-                               dirs = c("who", "global-fund", "world-bank", "meta", "report")) {
+#' @examples
+#' write_data_dir() # Create folder at same level as project
+#' write_data_dir("~/Documents/my_projects") # Specify specific folder
+write_data_dir <- function(path = fs::path_dir(getwd()), dirs = character(0)) {
   if (!rlang::is_character(path) && length(path) != 1) {
     rlang::abort("Not a valid character path.")
   }
@@ -51,6 +54,7 @@ write_data_dir <- function(path = fs::path_dir(getwd()),
 
   Sys.setenv("DXGAP_DATADIR" = path_to_datadir)
 
+  dirs <- c(dirs, "report")
   tree <- fs::path(path_to_datadir, dirs)
 
   dxgap_data_path <- fs::dir_create(tree)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/report.R
 \name{render_report}
 \alias{render_report}
-\title{Render template}
+\title{Render a template report for a single year}
 \usage{
 render_report(
   .template_name,
@@ -13,11 +13,33 @@ render_report(
   data_dir = Sys.getenv("DXGAP_DATADIR")
 )
 }
+\arguments{
+\item{.template_name}{String containing the name of the template to render.
+Run \code{\link[=view_templates]{view_templates()}} to see a list of valid options.}
+
+\item{.year}{Integer matching the year of the report passed to \code{\link[=build_dm]{build_dm()}}.}
+
+\item{.vars}{A vector of strings naming columns to subset the data on. Passed
+to \code{\link[=build_tbl]{build_tbl()}}. Defaults to NULL, indicating all variables should be
+used.}
+
+\item{interactive}{Logical indicating whether to open the report with the
+RStudio Viewer.}
+
+\item{template_dir}{Path where blank templates can be found. Defaults to
+\code{"inst/template/"}.}
+
+\item{data_dir}{Path containing the directory to read the data from. Defaults
+to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
+}
 \description{
-Render template
+\code{render_report()} generates a report for a given template and year.
 }
 \examples{
 \dontrun{
 render_report("eda.Rmd", .year = 2019, .vars = dxgap_const$tb_vars)
 }
+}
+\seealso{
+\code{\link[=render_bulk]{render_bulk()}}
 }

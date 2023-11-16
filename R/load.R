@@ -1,9 +1,31 @@
+#' @noRd
+#'
+#' @example
+#' list_dx()
 list_dx <- function(pattern = "csv", data_dir = Sys.getenv("DXGAP_DATADIR")) {
   list.files(data_dir, pattern = pattern) |>
     stringr::str_subset("masterlist", negate = TRUE)
 }
 
-load_dx <- function(data_files = list_dx()) {
+#' Load diagnostic gap data
+#'
+#' `load_dx()` loads all files frames created by [write_data_dir()] into a
+#' list of tibbles.
+#'
+#' @seealso [build_dm()]
+#'
+#' @return A list of tibbles.
+#'
+#' @export
+#'
+#' @examples \dontrun{
+#' load_dx()
+#' }
+load_dx <- function() {
+  load_dx_impl()
+}
+
+load_dx_impl <- function(data_files = list_dx()) {
 
   lst_df <- import_bulk(lst_df, data_name = data_files)
 

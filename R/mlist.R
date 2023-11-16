@@ -1,5 +1,5 @@
-read_masterlist <- function(...) {
-  dxgap_read_csv(...)
+read_masterlist <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  dxgap_read_csv(file_name = file_name, data_dir = data_dir)
 }
 
 tidy_masterlist <- function(data) {

@@ -1,10 +1,24 @@
-#' Render template across multiple years
+#' Render templates across multiple years
+#'
+#' `render_bulk()` is a convenience wrapper around [render_template()] that
+#' allows you to render templates across multiple years.
+#'
+#' @param template_name String containing the name of the template to render.
+#'   Run [view_templates()] to see a list of valid options.
+#' @param year Integer matching the year(s) of the report to be rendered. Can be
+#'   a single integer like `2019`, or a vector of integers such as `2019:2021`.
+#' @param vars A vector of strings naming columns to subset the data on. Passed
+#'   to [build_tbl()]. Defaults to NULL, indicating all variables should be
+#'   used.
+#'
+#' @seealso [render_report()]
+#'
+#' @export
 #'
 #' @examples \dontrun{
 #' render_bulk("eda.Rmd", year = 2018:2021, vars = dxgap_const$tb_vars)
 #' }
-#' @export
-render_bulk <- function(template_name, year, vars) {
+render_bulk <- function(template_name, year = NULL, vars = NULL) {
   year <- purrr::walk(
     year,
     ~ render_report(
@@ -17,12 +31,31 @@ render_bulk <- function(template_name, year, vars) {
   invisible(year)
 }
 
-#' Render template
+#' Render a template report for a single year
+#'
+#' `render_report()` generates a report for a given template and year.
+#'
+#' @param .template_name String containing the name of the template to render.
+#'   Run [view_templates()] to see a list of valid options.
+#' @param .year Integer matching the year of the report passed to [build_dm()].
+#' @param .vars A vector of strings naming columns to subset the data on. Passed
+#'   to [build_tbl()]. Defaults to NULL, indicating all variables should be
+#'   used.
+#' @param interactive Logical indicating whether to open the report with the
+#'   RStudio Viewer.
+#' @param template_dir Path where blank templates can be found. Defaults to
+#'   `"inst/template/"`.
+#' @param data_dir Path containing the directory to read the data from. Defaults
+#'   to the path set by the environment variable `"DXGAP_DATADIR"`.
+#'
+#'
+#' @seealso [render_bulk()]
+#'
+#' @export
 #'
 #' @examples \dontrun{
 #' render_report("eda.Rmd", .year = 2019, .vars = dxgap_const$tb_vars)
 #' }
-#' @export
 render_report <- function(.template_name,
                           .year = NULL,
                           .vars = NULL,
