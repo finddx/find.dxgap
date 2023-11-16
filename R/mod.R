@@ -1,3 +1,50 @@
+#' Run a suite of statistical models
+#'
+#' `run_mod()` runs a suite of statical models, returning a final model fit.
+#'
+#' @param tbl Input data frame containing the data to model.
+#' @param mod A list of models to run.
+#' @param preproc A list of preprocessing steps.
+#' @param folds An integer. The number of cross-validation folds.
+#' @param metrics A tibble containing the performance metrics to evaluate.
+#' @param rank_metric A metric from `metrics` to rank results by.
+#' @param cross A logical: should all combinations of the preprocessors and
+#'   models be used to create the workflows? If FALSE, the length of preproc and
+#'   models should be equal.
+#' @param seed A single integer.
+#'
+#' @return A list containing a workset, ranked model results, and a final model
+#' fit.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' tbl <- load_dx() |>
+#'   build_dm(year = 2019) |>
+#'   build_tbl(vars = dxgap_const$tb_vars) |>
+#'   compute_dx_gap() |>
+#'   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+#'   dplyr::select(-any_of(c("year", "country")))
+#'
+#'  preproc_list <- get_mod_preproc(
+#'   .tbl = tbl,
+#'   .neighbors = tb_mod_const$neighbors,
+#'   .threshold = tb_mod_const$threshold,
+#'   .impute_vars = tb_mod_const$impute_vars
+#'  )
+#'
+#' mod_list <- get_mod_mod(tb_mod_const$mode, tb_mod_const$engine)
+#'
+#' run_mod(
+#'   tbl,
+#'   preproc = preproc_list,
+#'   mod = mod_list,
+#'   folds = tb_mod_const$folds,
+#'   metrics = tb_mod_const$metrics,
+#'   rank_metric = tb_mod_const$rank_metric,
+#' )
+#' }
 run_mod <- function(tbl,
                     mod,
                     preproc,

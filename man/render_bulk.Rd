@@ -2,15 +2,30 @@
 % Please edit documentation in R/report.R
 \name{render_bulk}
 \alias{render_bulk}
-\title{Render template across multiple years}
+\title{Render templates across multiple years}
 \usage{
-render_bulk(template_name, year, vars)
+render_bulk(template_name, year = NULL, vars = NULL)
+}
+\arguments{
+\item{template_name}{String containing the name of the template to render.
+Run \code{\link[=view_templates]{view_templates()}} to see a list of valid options.}
+
+\item{year}{Integer matching the year(s) of the report to be rendered. Can be
+a single integer like \code{2019}, or a vector of integers such as \code{2019:2021}.}
+
+\item{vars}{A vector of strings naming columns to subset the data on. Passed
+to \code{\link[=build_tbl]{build_tbl()}}. Defaults to NULL, indicating all variables should be
+used.}
 }
 \description{
-Render template across multiple years
+\code{render_bulk()} is a convenience wrapper around \code{\link[=render_template]{render_template()}} that
+allows you to render templates across multiple years.
 }
 \examples{
 \dontrun{
 render_bulk("eda.Rmd", year = 2018:2021, vars = dxgap_const$tb_vars)
 }
+}
+\seealso{
+\code{\link[=render_report]{render_report()}}
 }
