@@ -20,7 +20,7 @@ read_who(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
 tidy_who(data, year = NULL, .shape = "long")
 }
 \arguments{
-\item{file_name}{A string containing the name of the WHO file to be read}
+\item{file_name}{A string containing the name of the file to be read}
 
 \item{url_endpoint}{A string indicating the name of the data set to be
 downloaded (e.g., "budget", "community", "labs"). Possible options can be
@@ -32,7 +32,7 @@ date.}
 \item{data_dir}{Path containing the directory to read the data from. Defaults
 to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
 
-\item{data}{A tibble returned from the corresponding \code{\link[=read_who]{read_who()}} function.}
+\item{data}{A tibble returned from the corresponding \code{read_()} function.}
 
 \item{year}{A year to filter the data by. Defaults to NULL, returning data
 for all years.}
