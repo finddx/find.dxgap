@@ -131,7 +131,7 @@ read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #' Tidy WHO data sets
 #'
 #' @param data A tibble returned from the corresponding `read_()` function.
-#' @param year A year to filter the data by. Defaults to NULL, returning data
+#' @param year A year to filter the data by. Defaults to `NULL`, returning data
 #'   for all years.
 #' @param .shape A string indicating if the data should be in "wide", or "long"
 #'   format. Defaults to "long".
