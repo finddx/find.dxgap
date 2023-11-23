@@ -88,6 +88,12 @@ run_mod <- function(tbl,
   )
 }
 
+prepare_mod_tbl <- function(tbl) {
+  tbl |>
+    dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+    dplyr::select(-any_of(c("year", "country")))
+}
+
 finalize_mod <- function(.wset, .rank, .train) {
   .wset |>
     workflowsets::extract_workflow(id = pull_mod_best(.rank)) |>

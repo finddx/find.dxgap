@@ -19,4 +19,3 @@ dxgap_diseases <- tibble::tribble(
   "tb",     2016,         2021,     dxgap_tb_tables
 )
 
-
