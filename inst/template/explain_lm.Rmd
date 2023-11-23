@@ -72,7 +72,7 @@ mod_objects <- run_mod(
 ## Best model
 
 ```{r rank}
-mod_objects$rank |> 
+pull_mod_rank(mod_objects) |> 
   gt::gt()
 ```
 
@@ -85,9 +85,7 @@ The following plots pertain **`r pull_mod_best(mod_objects$rank)`**.
 ## Assumptions
 
 ```{r check-assumptions}
-lm_obj <- 
-  mod_objects$final_fit |> 
-  workflowsets::extract_fit_parsnip(id = pull_mod_best(mod_objects$rank))
+lm_obj <- pull_mod_fit(mod_objects)
 plot_check <- performance::check_model(
   lm_obj, 
   check = c("linearity", "normality", "qq", "outliers"),
@@ -105,10 +103,8 @@ plot(check_vif) +
 ## Parameters
 
 ```{r coeff-viz, fig.width=12}
-coeff_df <- 
-  mod_objects$final_fit |> 
-  broom::tidy() 
-
+coeff_df <- pull_mod_coeff(mod_objects)
+  
 coeff_df |> 
   mutate_is_significant(threshold = 0.05) |> 
   mutate(is_under_0.05 = forcats::fct_relevel(is_under_0.05, c("TRUE", "FALSE"))) |> 
