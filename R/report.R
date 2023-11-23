@@ -51,6 +51,9 @@ render_bulk <- function(template_name, disease, override_vars_check = FALSE,  ye
 #'   used.
 #' @param interactive Logical indicating whether to open the report with the
 #'   RStudio Viewer.
+#' @param override_vars_check Logical indicating whether to override checks on
+#'   supported .vars. Defaults to FALSE. If TRUE, consistent results are not
+#'   guaranteed.
 #' @param template_dir Path where blank templates can be found. Defaults to
 #'   `"inst/template/"`.
 #' @param data_dir Path containing the directory to read the data from. Defaults
