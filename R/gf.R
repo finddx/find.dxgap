@@ -20,7 +20,7 @@ NULL
 #'
 #' @inheritParams read_who
 #' @rdname gf
-#' @return A tibble containing the data set.
+#' @return `read_gf_procurement()` returns a tibble containing the data set.
 #' @export
 #' @examples
 #' \dontrun{
@@ -39,7 +39,8 @@ read_gf_procurement <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"
 #'
 #' @inheritParams tidy_who
 #' @rdname gf
-#' @return A tibble. This is a tidied version of the input tibble.
+#' @return `tidy_gf_procurement()` returns a tibble. This is a tidied version of
+#'   the input tibble.
 #' @export
 #' @examples
 #' \dontrun{
