@@ -31,7 +31,7 @@ pull_mod_coeff_all(tbl, mod_const = tb_mod_const)
 \value{
 \code{pull_mod_rank()} returns a tibble.
 
-\code{pull_mod_best()} returns a character of length one
+\code{pull_mod_best()} returns a character of length one.
 
 \code{pull_mod_coeff()} returns a tibble.
 

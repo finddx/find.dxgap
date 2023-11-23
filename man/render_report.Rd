@@ -42,7 +42,7 @@ to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
 }
 \examples{
 \dontrun{
-render_report("eda.Rmd", .year = 2019, .vars = dxgap_const$tb_vars)
+render_report("eda.Rmd", .disease = "tb", .year = 2019, .vars = dxgap_const$tb_vars)
 }
 }
 \seealso{
