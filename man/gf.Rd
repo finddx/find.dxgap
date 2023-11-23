@@ -22,9 +22,10 @@ to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
 for all years.}
 }
 \value{
-A tibble containing the data set.
+\code{read_gf_procurement()} returns a tibble containing the data set.
 
-A tibble. This is a tidied version of the input tibble.
+\code{tidy_gf_procurement()} returns a tibble. This is a tidied version of
+the input tibble.
 }
 \description{
 These help pages document the lower-level API to individually download, read,
