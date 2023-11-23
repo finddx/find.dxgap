@@ -6,6 +6,9 @@
 #' @param template_name String containing the name of the template to render.
 #'   Run [view_templates()] to see a list of valid options.
 #' @inheritParams load_dx
+#' @param override_vars_check Logical indicating whether to override checks on
+#'   supported .vars. Defaults to FALSE. If TRUE, consistent results are not
+#'   guaranteed.
 #' @param year Integer matching the year(s) of the report to be rendered. Can be
 #'   a single integer like `2019`, or a vector of integers such as `2019:2021`.
 #' @param vars A vector of strings naming columns to subset the data on. Passed
@@ -20,9 +23,7 @@
 #' \dontrun{
 #'   render_bulk("eda.Rmd", disease = "tb", year = 2018:2021, vars = dxgap_const$tb_vars)
 #' }
-render_bulk <- function(template_name, disease, year = NULL, vars = NULL) {
-  check_supported_disease(disease)
-  check_supported_year(year = year, disease = disease)
+render_bulk <- function(template_name, disease, override_vars_check = FALSE,  year = NULL, vars = NULL) {
   year <- purrr::walk(
     year,
     ~ render_report(
@@ -30,6 +31,7 @@ render_bulk <- function(template_name, disease, year = NULL, vars = NULL) {
       .template_name = template_name,
       .year = .x,
       .vars = vars,
+      .override_vars_check = override_vars_check,
       interactive = FALSE
     )
   )
