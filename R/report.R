@@ -21,6 +21,7 @@
 #'   render_bulk("eda.Rmd", disease = "tb", year = 2018:2021, vars = dxgap_const$tb_vars)
 #' }
 render_bulk <- function(template_name, disease, year = NULL, vars = NULL) {
+  check_supported_disease(disease)
   year <- purrr::walk(
     year,
     ~ render_report(
