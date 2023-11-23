@@ -11,6 +11,40 @@ check_supported_disease <- function(disease, .dxgap_diseases = dxgap_diseases) {
   }
 }
 
+check_supported_templates <- function(template, disease, .dxgap_diseases = dxgap_diseases) {
+  template_strip_ext <- stringr::str_remove(template, "\\..*$")
+  supported_template <-
+    .dxgap_diseases |>
+    dplyr::filter(disease == !!disease) |>
+    dplyr::select(template) |>
+    tidyr::unnest(template) |>
+    dplyr::pull(template_id)
+  if (!template_strip_ext %in% supported_template) {
+    rlang::abort(
+      sprintf("`%s` is not supported for disease `%s`.", template, disease)
+    )
+  }
+}
+
+check_supported_year <- function(year, disease, .dxgap_diseases = dxgap_diseases) {
+  if (is.null(year)) {
+    invisible(year)
+  }
+  supported_years <-
+    .dxgap_diseases |>
+    dplyr::filter(disease == !!disease) |>
+    dplyr::select(start_year, end_year) |>
+    as.list() |>
+    purrr::reduce(.f = seq)
+  if (!all(year %in% supported_years)) {
+    rlang::abort(
+      c(
+        sprintf("`year` is out of supported range for disease `%s`.", disease)
+      )
+    )
+  }
+}
+
 check_clean_data_dir <- function(data_files, .pattern) {
   pattern <- paste0(c(.pattern, "\\..*$"), collapse = "|")
   core_pattern <- stringr::str_remove_all(
