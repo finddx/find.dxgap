@@ -88,6 +88,21 @@ run_mod <- function(tbl,
   )
 }
 
+#' Extract coefficients from final fit
+#'
+#' An helper functions to extract coefficient estimates from the best model
+#' returned by [run_mod()].
+#'
+#' @param mod_out_list A list object as returned by [run_mod()].
+#'
+#' @return A tibble.
+#' @export
+extract_mod_coeff <- function(mod_out_list) {
+  stopifnot(is.list(mod_out_list) && length(mod_out_list) == 3)
+  mod_out_list$final_fit |>
+    broom::tidy()
+}
+
 finalize_mod <- function(.wset, .rank, .train) {
   .wset |>
     workflowsets::extract_workflow(id = pull_mod_best(.rank)) |>
@@ -162,5 +177,7 @@ specify_mod <- function(.mode, .engine) {
 pull_mod_best <- function(rank_df) {
   rank_df$wflow_id[[1]]
 }
+
+
 
 
