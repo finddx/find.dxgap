@@ -29,7 +29,7 @@ The following helpers extract elements of the list returned by \code{\link[=run_
 \code{pull_mod_rank()} extracts a tibble summarising the ranking of
 pre-processing steps.
 
-\code{pull_mod_coeff()} extracts coefficient estimates from the best model.
+\code{pull_mod_coeff()} extracts best model coefficient estimates.
 
 \code{pull_mod_fit()} extracts the best model object.
 }
