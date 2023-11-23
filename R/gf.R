@@ -9,14 +9,18 @@
 #' The data sets currently supported from Global Fund in this package are:
 #' * procurement
 #'
+#' @section Source:
+#' \url{https://insights.theglobalfund.org/t/Public/views/PriceQualityReportingTransactionSummary/TransactionSummary?iframeSizedToWindow=true&%3Aembed=y&%3AshowAppBanner=false&%3Adisplay_count=no&%3AshowVizHome=no?}
+#'
+#'
 #' @name global_fund
 NULL
 
 #' Read Global Fund data sets
 #'
 #' @inheritParams read_who
-#' @inherit read_who return
 #' @rdname global_fund
+#' @return A tibble containing the who data set.
 #' @export
 #' @examples
 #' \dontrun{
@@ -34,8 +38,8 @@ read_gf_procurement <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"
 #' Tidy Global Fund data sets
 #'
 #' @inheritParams tidy_who
-#' @inherit tidy_who return
 #' @rdname global_fund
+#' @return A tibble. This is a tidied version of the input tibble.
 #' @export
 #' @examples
 #' \dontrun{
