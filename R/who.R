@@ -109,7 +109,7 @@ who_url_endpoints <- tibble::tribble(
 
 #' Read WHO data sets
 #'
-#' @param file_name A string containing the name of the file to be read
+#' @param file_name A string containing the name of the file to be read.
 #' @param data_dir Path containing the directory to read the data from. Defaults
 #' to the path set by the environment variable `"DXGAP_DATADIR"`.
 #'
