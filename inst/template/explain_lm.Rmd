@@ -105,10 +105,8 @@ plot(check_vif) +
 ## Parameters
 
 ```{r coeff-viz, fig.width=12}
-coeff_df <- 
-  mod_objects$final_fit |> 
-  broom::tidy() 
-
+coeff_df <- extract_mod_coeff(mod_objects)
+  
 coeff_df |> 
   mutate_is_significant(threshold = 0.05) |> 
   mutate(is_under_0.05 = forcats::fct_relevel(is_under_0.05, c("TRUE", "FALSE"))) |> 
