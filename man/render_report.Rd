@@ -10,6 +10,7 @@ render_report(
   .year = NULL,
   .vars = NULL,
   interactive = TRUE,
+  override_vars_check = FALSE,
   template_dir = "inst/template/",
   data_dir = Sys.getenv("DXGAP_DATADIR")
 )
