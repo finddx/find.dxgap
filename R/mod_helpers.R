@@ -70,17 +70,31 @@ pull_mod_fit <- function(mod_out_list) {
     workflowsets::extract_fit_parsnip(id = pull_mod_best(mod_out_list$rank))
 }
 
-pull_mod_coeff_all <- function(disease,
-                               vars = dxgap_const$tb_vars,
-                               mod_const = tb_mod_const) {
-  check_supported_disease(disease)
-  tbl <-
-    load_dx(disease = disease) |>
-    build_dm(year = NULL) |>
-    build_tbl(vars = vars) |>
-    compute_dx_gap() |>
-    dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-    dplyr::select(-any_of(c("country")))
+#' Extract coefficients across years
+#'
+#' `pull_mod_coeff_all()` extracts coefficients estimates referenced by year.
+#'
+#' @inheritParams run_mod
+#' @param mod_const Default models specs as returned by the list `tb_mod_const`.
+#'
+#' @rdname mod_helpers
+#' @return `pull_mod_coeff_all()` returns a tibble.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' tbl <-
+#'  load_dx("tb") |>
+#'  build_dm(year = NULL) |>
+#'  build_tbl(vars = vars) |>
+#'  compute_dx_gap() |>
+#'  dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+#'  dplyr::select(-any_of(c("country")))
+#' coeff_df <- pull_mod_coeff_all(tbl)
+#' }
+pull_mod_coeff_all <- function(tbl, mod_const = tb_mod_const) {
+  stopifnot(is.data.frame(tbl))
+  stopifnot(is.list(mod_const))
 
   tbl_nested <- tidyr::nest(tbl, .key = "disease_data", .by = year)
 
