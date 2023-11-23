@@ -85,9 +85,7 @@ The following plots pertain **`r pull_mod_best(mod_objects$rank)`**.
 ## Assumptions
 
 ```{r check-assumptions}
-lm_obj <- 
-  mod_objects$final_fit |> 
-  workflowsets::extract_fit_parsnip(id = pull_mod_best(mod_objects$rank))
+lm_obj <- extract_mod_fit(mod_objects)
 plot_check <- performance::check_model(
   lm_obj, 
   check = c("linearity", "normality", "qq", "outliers"),
