@@ -30,9 +30,11 @@ pull_mod_coeff_all <- function(disease,
     tbl_nested_preproc |>
     dplyr::mutate(
       mod_obj = purrr::pmap(
-        disease_data,
-        preproc,
-        mod,
+        list(
+          disease_data,
+          preproc,
+          mod
+        ),
         .f = function(x, y, z) {
           run_mod(
             tbl = x,
