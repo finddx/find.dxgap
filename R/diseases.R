@@ -14,8 +14,16 @@ dxgap_tb_tables <- tibble::tribble(
     "who",           "hbc",        "csv"
 )
 
+dxgap_tb_templates <- tibble::tribble(
+  ~template_id,
+  "explain_lm",
+  "eda_ts",
+  "eda",
+  "missing"
+)
+
 dxgap_diseases <- tibble::tribble(
-  ~disease, ~start_year, ~end_year, ~tables,
-  "tb",     2016,         2021,     dxgap_tb_tables
+  ~disease, ~start_year, ~end_year, ~tables,         ~template,
+  "tb",     2016,         2021,     dxgap_tb_tables, dxgap_tb_templates
 )
 

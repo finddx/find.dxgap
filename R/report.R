@@ -22,6 +22,7 @@
 #' }
 render_bulk <- function(template_name, disease, year = NULL, vars = NULL) {
   check_supported_disease(disease)
+  check_supported_year(year = year, disease = disease)
   year <- purrr::walk(
     year,
     ~ render_report(
@@ -69,7 +70,9 @@ render_report <- function(.template_name,
                           template_dir = "inst/template/",
                           data_dir = Sys.getenv("DXGAP_DATADIR")) {
   check_supported_disease(.disease)
-  # TODO: check template per disease, or adopt more flexibility in templates
+  check_supported_year(year = .year, disease = disease)
+  check_supported_templates(template = .template_name, disease = .disease)
+
   template_path <- compose_file_path(.template_name, template_dir)
 
   lst_df <- load_dx(.disease)
