@@ -2,36 +2,36 @@
 % Please edit documentation in R/mod_helpers.R
 \name{mod_helpers}
 \alias{mod_helpers}
-\alias{extract_mod_rank}
-\alias{extract_mod_coeff}
-\alias{extract_mod_fit}
+\alias{pull_mod_rank}
+\alias{pull_mod_coeff}
+\alias{pull_mod_fit}
 \title{Helpers to work out \code{run_mod()}'s output}
 \usage{
-extract_mod_rank(mod_out_list)
+pull_mod_rank(mod_out_list)
 
-extract_mod_coeff(mod_out_list)
+pull_mod_coeff(mod_out_list)
 
-extract_mod_fit(mod_out_list)
+pull_mod_fit(mod_out_list)
 }
 \arguments{
 \item{mod_out_list}{A list object as returned by \code{\link[=run_mod]{run_mod()}}.}
 }
 \value{
-\code{extract_mod_rank()} returns a tibble.
+\code{pull_mod_rank()} returns a tibble.
 
-\code{extract_mod_coeff()} returns a tibble.
+\code{pull_mod_coeff()} returns a tibble.
 
-\code{extract_mod_fit()} returns an object of class \verb{_lm}.
+\code{pull_mod_fit()} returns an object of class \verb{_lm}.
 }
 \description{
 These helpers extract elements of the list returned by \code{\link[=run_mod]{run_mod()}}.
 
-\code{extract_mod_rank()} extracts a tibble summarising the ranking of
+\code{pull_mod_rank()} extracts a tibble summarising the ranking of
 pre-processing steps.
 
-\code{extract_mod_coeff()} extracts coefficient estimates from the best model.
+\code{pull_mod_coeff()} extracts coefficient estimates from the best model.
 
-\code{extract_mod_fit()} extracts the best model object.
+\code{pull_mod_fit()} extracts the best model object.
 }
 \examples{
 \dontrun{
@@ -43,13 +43,13 @@ mod_objects <- run_mod(
   metrics = tb_mod_const$metrics,
   rank_metric = tb_mod_const$rank_metric,
 )
-extract_mod_rank(mod_objects)
+pull_mod_rank(mod_objects)
 }
 \dontrun{
-extract_mod_coeff(mod_objects)
+pull_mod_coeff(mod_objects)
 }
 \dontrun{
-lm_obj <- extract_mod_fit(mod_objects)
+lm_obj <- pull_mod_fit(mod_objects)
 plot_check <- performance::check_model(
   lm_obj,
   check = c("linearity", "normality", "qq", "outliers"),
