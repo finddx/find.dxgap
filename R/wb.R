@@ -1,7 +1,65 @@
-# https://datahelpdesk.worldbank.org/knowledgebase/articles/898581
+#' Data from World Bank
+#'
+#' These help pages document the lower-level API to individually download, read,
+#' and tidy data. For a higher-level API that works across all data sets,
+#' see:
+#' * [write_data_dir()] to download all data
+#' * [load_dx()] to load all data
+#'
+#' The data sets currently available from WHO in this package are:
+#' * urban population
+#' * total population
+#' * population density
+#' * gdp
+#'
+#' @section Source:
+#' The World Bank API is documented at \url{https://datahelpdesk.worldbank.org/knowledgebase/articles/898581}.
+#'
+#' @name wb
+NULL
+
+
+#' Download data sets from the WHO
+#'
+#' @inheritParams download_who
+#' @param indicator A string indicating the label of the data set as documented
+#'   in the World Bank API. For instance, "SP.POP.TOTL".
+#' @param range_years The range of the years to be downloaded as a string.
+#'
+#' @return `download_wb()` returns invisibly the file path in which data are
+#'   stored.
+#'
+#' @rdname wb
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' pop_urban <- download_wb(
+#'   file_name = compose_date_dataset_file_name("wb", dataset = "pop_urban", file_ext = ".csv"),
+#'   indicator = "SP.URB.TOTL.IN.ZS",
+#'   range_years = "2015:2023"
+#' )
+#' pop_density <-
+#'   download_wb(
+#'     file_name = compose_date_dataset_file_name("wb", dataset = "pop_density", file_ext = ".csv"),
+#'     indicator = "EN.POP.DNST",
+#'     range_years = "2015:2023"
+#'   )
+#' pop_total <- download_wb(
+#'   file_name = compose_date_dataset_file_name("wb", dataset = "pop_total", file_ext = ".csv"),
+#'   indicator = "SP.POP.TOTL",
+#'   range_years = "2015:2023"
+#' )
+#' gdp <- download_wb(
+#'   file_name = compose_date_dataset_file_name("wb", dataset = "gdp", file_ext = ".csv"),
+#'   indicator = "NY.GDP.MKTP.CD",
+#'   range_years = "2015:2023"
+#' )
+#' }
 download_wb <- function(file_name = tempfile(compose_file_name("wb", download_date, indicator), fileext = ".csv"),
-                        indicator = "SP.URB.TOTL.IN.ZS",
-                        range_years = "2015:2023",
+                        indicator,
+                        range_years,
                         download_date = as.character(Sys.Date()),
                         data_dir = Sys.getenv("DXGAP_DATADIR")) {
   base_url <- "https://api.worldbank.org/v2/country/all/indicator"
@@ -48,11 +106,44 @@ unnest_wb_resp <- function(data) {
     tidyr::unnest_wider(indicator, names_sep = "_")
 }
 
+#' Read WHO data sets
+#'
+#' @param file_name A string containing the name of the file to be read.
+#' @param data_dir Path containing the directory to read the data from. Defaults
+#' to the path set by the environment variable `"DXGAP_DATADIR"`.
+#'
+#' @return `read_wb()` a tibble containing the data set.
+#'
+#' @rdname wb
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' read_wb("wb_2023-07-28_pop_urban.csv")
+#' }
 read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   dxgap_read_csv(file_name = file_name, data_dir = data_dir) |>
     tibble::as_tibble()
 }
 
+#' Tidy WHO data sets
+#'
+#' @param data A tibble returned from the corresponding `read_()` function.
+#' @param year A year to filter the data by. Defaults to `NULL`, returning data
+#'   for all years.
+#'
+#' @return `tidy_wb()` a tibble. This is a tidied version of the input tibble.
+#'
+#' @rdname wb
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' read_wb("wb_2023-07-28_pop_urban.csv") |>
+#'   tidy_wb()
+#' }
 tidy_wb <- function(data, year = NULL) {
   df <-
     data |>
