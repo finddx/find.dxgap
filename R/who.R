@@ -46,8 +46,8 @@ NULL
 #' @examples
 #' \dontrun{
 #' notification <- download_who(
-#' file_name = compose_date_dataset_file_name("who", dataset = "notifications", file_ext = ".csv"),
-#' url_endpoint = "notifications"
+#'   file_name = compose_date_dataset_file_name("who", dataset = "notifications", file_ext = ".csv"),
+#'   url_endpoint = "notifications"
 #' )
 #' estimates <- download_who(
 #'   file_name = compose_date_dataset_file_name("who", dataset = "estimates", file_ext = ".csv"),
