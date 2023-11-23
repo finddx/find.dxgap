@@ -109,7 +109,7 @@ who_url_endpoints <- tibble::tribble(
 
 #' Read WHO data sets
 #'
-#' @param file_name A string containing the name of the WHO file to be read
+#' @param file_name A string containing the name of the file to be read
 #' @param data_dir Path containing the directory to read the data from. Defaults
 #' to the path set by the environment variable `"DXGAP_DATADIR"`.
 #'
@@ -130,7 +130,7 @@ read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
 #' Tidy WHO data sets
 #'
-#' @param data A tibble returned from the corresponding [read_who()] function.
+#' @param data A tibble returned from the corresponding `read_()` function.
 #' @param year A year to filter the data by. Defaults to NULL, returning data
 #'   for all years.
 #' @param .shape A string indicating if the data should be in "wide", or "long"
