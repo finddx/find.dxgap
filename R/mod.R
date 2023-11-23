@@ -20,7 +20,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' tbl <- load_dx() |>
+#' tbl <- load_dx("tb") |>
 #'   build_dm(year = 2019) |>
 #'   build_tbl(vars = dxgap_const$tb_vars) |>
 #'   compute_dx_gap() |>
