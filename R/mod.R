@@ -103,6 +103,18 @@ extract_mod_coeff <- function(mod_out_list) {
     broom::tidy()
 }
 
+#' Extract lm model fit object
+#'
+#' @inheritParams extract_mod_coeff
+#'
+#' @return An object of class `_lm`.
+#' @export
+extract_mod_fit <- function(mod_out_list) {
+  stopifnot(is.list(mod_out_list) && length(mod_out_list) == 3)
+  mod_out_list$final_fit |>
+    workflowsets::extract_fit_parsnip(id = pull_mod_best(mod_out_list$rank))
+}
+
 finalize_mod <- function(.wset, .rank, .train) {
   .wset |>
     workflowsets::extract_workflow(id = pull_mod_best(.rank)) |>
