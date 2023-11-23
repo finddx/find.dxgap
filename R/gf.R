@@ -20,7 +20,7 @@ NULL
 #'
 #' @inheritParams read_who
 #' @rdname global_fund
-#' @return A tibble containing the who data set.
+#' @return A tibble containing the data set.
 #' @export
 #' @examples
 #' \dontrun{
