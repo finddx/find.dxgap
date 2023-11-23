@@ -41,16 +41,17 @@ for all years.}
 format. Defaults to "long".}
 }
 \value{
-Returns invisibly the file path in which data are
+\code{download_who()} returns invisibly the file path in which data are
 stored.
 
-A tibble containing the data set.
+\code{read_who()} returns a tibble containing the data set.
 
-A tibble. This is a tidied version of the input tibble.
+\code{tidy_who()} returns s tibble. This is a tidied version of the input
+tibble.
 }
 \description{
 These help pages document the lower-level API to individually download, read,
-and tidy WHO data. For a higher-level API that works across all data sets,
+and tidy data. For a higher-level API that works across all data sets,
 see:
 \itemize{
 \item \code{\link[=write_data_dir]{write_data_dir()}} to download all data
