@@ -1,6 +1,7 @@
 pull_mod_coeff_all <- function(disease,
                                vars = dxgap_const$tb_vars,
                                mod_const = tb_mod_const) {
+  check_supported_disease(disease)
   tbl <-
     load_dx(disease = disease) |>
     build_dm(year = NULL) |>
