@@ -30,7 +30,7 @@ pull_mod_rank <- function(mod_out_list) {
   mod_out_list$rank
 }
 
-#' Extract coefficients from final fit
+#' Extract coefficients from best model fit
 #'
 #' `pull_mod_coeff()` extracts best model coefficient estimates.
 #'
@@ -48,7 +48,7 @@ pull_mod_coeff <- function(mod_out_list) {
     broom::tidy()
 }
 
-#' Extract lm model fit object
+#' Extract best model object
 #'
 #' `pull_mod_fit()` extracts the best model object.
 #'
