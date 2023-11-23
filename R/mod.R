@@ -1,14 +1,14 @@
 #' Run a suite of statistical models
 #'
-#' `run_mod()` runs a suite of statical models, returning a final model fit.
+#' `run_mod()` runs a suite of statistical models, returning a final model fit.
 #'
 #' @param tbl Input data frame containing the data to model.
 #' @param mod A list of models to run.
-#' @param preproc A list of preprocessing steps.
+#' @param preproc A list of pre-processing steps.
 #' @param folds An integer. The number of cross-validation folds.
 #' @param metrics A tibble containing the performance metrics to evaluate.
 #' @param rank_metric A metric from `metrics` to rank results by.
-#' @param cross A logical: should all combinations of the preprocessors and
+#' @param cross A logical: should all combinations of the pre-processors and
 #'   models be used to create the workflows? If FALSE, the length of preproc and
 #'   models should be equal.
 #' @param seed A single integer.
