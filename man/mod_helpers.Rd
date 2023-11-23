@@ -24,7 +24,7 @@ pull_mod_fit(mod_out_list)
 \code{pull_mod_fit()} returns an object of class \verb{_lm}.
 }
 \description{
-These helpers extract elements of the list returned by \code{\link[=run_mod]{run_mod()}}.
+The following helpers extract elements of the list returned by \code{\link[=run_mod]{run_mod()}}.
 
 \code{pull_mod_rank()} extracts a tibble summarising the ranking of
 pre-processing steps.
