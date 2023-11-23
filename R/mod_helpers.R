@@ -32,7 +32,7 @@ pull_mod_rank <- function(mod_out_list) {
 
 #' Extract coefficients from final fit
 #'
-#' `pull_mod_coeff()` extracts coefficient estimates from the best model.
+#' `pull_mod_coeff()` extracts best model coefficient estimates.
 #'
 #' @param mod_out_list A list object as returned by [run_mod()].
 #' @rdname mod_helpers
