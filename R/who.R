@@ -1,7 +1,7 @@
 #' Data from WHO
 #'
 #' These help pages document the lower-level API to individually download, read,
-#' and tidy WHO data. For a higher-level API that works across all data sets,
+#' and tidy data. For a higher-level API that works across all data sets,
 #' see:
 #' * [write_data_dir()] to download all data
 #' * [load_dx()] to load all data
@@ -36,7 +36,7 @@ NULL
 #'   which data are stored and retrieved. This default path plays a role only
 #'   when a relative path is specified in `file_name`.
 #'
-#' @return Returns invisibly the file path in which data are
+#' @return `download_who()` returns invisibly the file path in which data are
 #'   stored.
 #'
 #' @rdname who
@@ -113,7 +113,7 @@ who_url_endpoints <- tibble::tribble(
 #' @param data_dir Path containing the directory to read the data from. Defaults
 #' to the path set by the environment variable `"DXGAP_DATADIR"`.
 #'
-#' @return A tibble containing the data set.
+#' @return `read_who()` returns a tibble containing the data set.
 #'
 #' @rdname who
 #'
@@ -136,7 +136,8 @@ read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #' @param .shape A string indicating if the data should be in "wide", or "long"
 #'   format. Defaults to "long".
 #'
-#' @return A tibble. This is a tidied version of the input tibble.
+#' @return `tidy_who()` returns s tibble. This is a tidied version of the input
+#'   tibble.
 #'
 #' @rdname who
 #'
