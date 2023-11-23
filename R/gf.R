@@ -13,13 +13,13 @@
 #' \url{https://insights.theglobalfund.org/t/Public/views/PriceQualityReportingTransactionSummary/TransactionSummary?iframeSizedToWindow=true&%3Aembed=y&%3AshowAppBanner=false&%3Adisplay_count=no&%3AshowVizHome=no?}
 #'
 #'
-#' @name global_fund
+#' @name gf
 NULL
 
 #' Read Global Fund data sets
 #'
 #' @inheritParams read_who
-#' @rdname global_fund
+#' @rdname gf
 #' @return A tibble containing the data set.
 #' @export
 #' @examples
@@ -38,7 +38,7 @@ read_gf_procurement <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"
 #' Tidy Global Fund data sets
 #'
 #' @inheritParams tidy_who
-#' @rdname global_fund
+#' @rdname gf
 #' @return A tibble. This is a tidied version of the input tibble.
 #' @export
 #' @examples
