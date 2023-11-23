@@ -50,9 +50,19 @@ pull_mod_coeff_all <- function(disease,
 
   tbl_coeff <-
     tbl_mod_out |>
-    dplyr::mutate(coeff = purrr::map(mod_obj, pull_mod_coeff)) |>
-    dplyr::select(year, coeff) |>
-    tidyr::unnest_longer(coeff)
+    dplyr::mutate(
+      coeff = purrr::map(mod_obj, pull_mod_coeff),
+      best_mod = purrr::map_chr(
+        mod_obj,
+        function(x) {
+          pull_mod_rank(x) |>
+            pull_mod_best()
+        }
+      )
+    ) |>
+    dplyr::select(year, best_mod, coeff) |>
+    tidyr::unnest(coeff) |>
+    mutate_is_significant()
 
   tbl_coeff
 
