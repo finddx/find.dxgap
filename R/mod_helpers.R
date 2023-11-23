@@ -1,6 +1,6 @@
 #' Helpers to work out `run_mod()`'s output
 #'
-#' These helpers extract elements of the list returned by [run_mod()].
+#' The following helpers extract elements of the list returned by [run_mod()].
 #'
 #' @name mod_helpers
 NULL
