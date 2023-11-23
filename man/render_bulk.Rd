@@ -4,7 +4,13 @@
 \alias{render_bulk}
 \title{Render templates across multiple years}
 \usage{
-render_bulk(template_name, disease, year = NULL, vars = NULL)
+render_bulk(
+  template_name,
+  disease,
+  override_vars_check = FALSE,
+  year = NULL,
+  vars = NULL
+)
 }
 \arguments{
 \item{template_name}{String containing the name of the template to render.
@@ -13,6 +19,10 @@ Run \code{\link[=view_templates]{view_templates()}} to see a list of valid optio
 \item{disease}{A character of lenght one identifying the disease for which
 the user wants to build a wide table. The tibble \code{dxgap_diseases} shows the
 diseases that are currently supported.}
+
+\item{override_vars_check}{Logical indicating whether to override checks on
+supported .vars. Defaults to FALSE. If TRUE, consistent results are not
+guaranteed.}
 
 \item{year}{Integer matching the year(s) of the report to be rendered. Can be
 a single integer like \code{2019}, or a vector of integers such as \code{2019:2021}.}
