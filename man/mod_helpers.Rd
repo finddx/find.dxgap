@@ -5,6 +5,7 @@
 \alias{pull_mod_rank}
 \alias{pull_mod_coeff}
 \alias{pull_mod_fit}
+\alias{pull_mod_coeff_all}
 \title{Helpers to work out \code{run_mod()}'s output}
 \usage{
 pull_mod_rank(mod_out_list)
@@ -12,9 +13,15 @@ pull_mod_rank(mod_out_list)
 pull_mod_coeff(mod_out_list)
 
 pull_mod_fit(mod_out_list)
+
+pull_mod_coeff_all(tbl, mod_const = tb_mod_const)
 }
 \arguments{
 \item{mod_out_list}{A list object as returned by \code{\link[=run_mod]{run_mod()}}.}
+
+\item{tbl}{Input data frame containing the data to model.}
+
+\item{mod_const}{Default specs as returned by the list \code{tb_mod_const}.}
 }
 \value{
 \code{pull_mod_rank()} returns a tibble.
@@ -22,6 +29,8 @@ pull_mod_fit(mod_out_list)
 \code{pull_mod_coeff()} returns a tibble.
 
 \code{pull_mod_fit()} returns an object of class \verb{_lm}.
+
+\code{pull_mod_coeff_all()} returns a tibble.
 }
 \description{
 The following helpers extract elements of the list returned by \code{\link[=run_mod]{run_mod()}}.
@@ -32,6 +41,8 @@ pre-processing steps.
 \code{pull_mod_coeff()} extracts best model coefficient estimates.
 
 \code{pull_mod_fit()} extracts the best model object.
+
+\code{pull_mod_coeff_all()} extracts coefficients estimates referenced by year.
 }
 \examples{
 \dontrun{
@@ -55,5 +66,15 @@ plot_check <- performance::check_model(
   check = c("linearity", "normality", "qq", "outliers"),
   theme = "ggplot2::theme_minimal"
 )
+}
+\dontrun{
+tbl <-
+ load_dx("tb") |>
+ build_dm(year = NULL) |>
+ build_tbl(vars = vars) |>
+ compute_dx_gap() |>
+ dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+ dplyr::select(-any_of(c("country")))
+coeff_df <- pull_mod_coeff_all(tbl)
 }
 }
