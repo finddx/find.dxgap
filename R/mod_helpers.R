@@ -30,6 +30,25 @@ pull_mod_rank <- function(mod_out_list) {
   mod_out_list$rank
 }
 
+#' Extract best model id
+#'
+#' `pull_mod_best()` extract the best model id.
+#'
+#' @param rank_df A tibble as returned by [pull_mod_rank()]
+#'
+#' @rdname mod_helpers
+#' @return `pull_mod_best()` returns a character of length one.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' pull_mod_rank(mod_objects) |>
+#'   pull_mod_best()
+#' }
+pull_mod_best <- function(rank_df) {
+  rank_df$wflow_id[[1]]
+}
+
 #' Extract coefficients from best model fit
 #'
 #' `pull_mod_coeff()` extracts best model coefficient estimates.
@@ -154,3 +173,4 @@ pull_mod_coeff_all <- function(tbl, mod_const = tb_mod_const) {
   tbl_coeff
 
 }
+

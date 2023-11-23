@@ -164,8 +164,3 @@ specify_mod <- function(.mode, .engine) {
   parsnip::linear_reg(mode = .mode) |>
     parsnip::set_engine(engine = .engine)
 }
-
-pull_mod_best <- function(rank_df) {
-  rank_df$wflow_id[[1]]
-}
-

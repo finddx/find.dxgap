@@ -3,12 +3,15 @@
 \name{mod_helpers}
 \alias{mod_helpers}
 \alias{pull_mod_rank}
+\alias{pull_mod_best}
 \alias{pull_mod_coeff}
 \alias{pull_mod_fit}
 \alias{pull_mod_coeff_all}
 \title{Helpers to work out \code{run_mod()}'s output}
 \usage{
 pull_mod_rank(mod_out_list)
+
+pull_mod_best(rank_df)
 
 pull_mod_coeff(mod_out_list)
 
@@ -19,12 +22,16 @@ pull_mod_coeff_all(tbl, mod_const = tb_mod_const)
 \arguments{
 \item{mod_out_list}{A list object as returned by \code{\link[=run_mod]{run_mod()}}.}
 
+\item{rank_df}{A tibble as returned by \code{\link[=pull_mod_rank]{pull_mod_rank()}}}
+
 \item{tbl}{Input data frame containing the data to model.}
 
-\item{mod_const}{Default specs as returned by the list \code{tb_mod_const}.}
+\item{mod_const}{Default models specs as returned by the list \code{tb_mod_const}.}
 }
 \value{
 \code{pull_mod_rank()} returns a tibble.
+
+\code{pull_mod_best()} returns a character of length one
 
 \code{pull_mod_coeff()} returns a tibble.
 
@@ -37,6 +44,8 @@ The following helpers extract elements of the list returned by \code{\link[=run_
 
 \code{pull_mod_rank()} extracts a tibble summarising the ranking of
 pre-processing steps.
+
+\code{pull_mod_best()} extract the best model id.
 
 \code{pull_mod_coeff()} extracts best model coefficient estimates.
 
@@ -55,6 +64,10 @@ mod_objects <- run_mod(
   rank_metric = tb_mod_const$rank_metric,
 )
 pull_mod_rank(mod_objects)
+}
+\dontrun{
+pull_mod_rank(mod_objects) |>
+  pull_mod_best()
 }
 \dontrun{
 pull_mod_coeff(mod_objects)
