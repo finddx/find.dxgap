@@ -4,11 +4,15 @@
 \alias{render_bulk}
 \title{Render templates across multiple years}
 \usage{
-render_bulk(template_name, year = NULL, vars = NULL)
+render_bulk(template_name, disease, year = NULL, vars = NULL)
 }
 \arguments{
 \item{template_name}{String containing the name of the template to render.
 Run \code{\link[=view_templates]{view_templates()}} to see a list of valid options.}
+
+\item{disease}{A character of lenght one identifying the disease for which
+the user wants to build a wide table. The tibble \code{dxgap_diseases} shows the
+diseases that are currently supported.}
 
 \item{year}{Integer matching the year(s) of the report to be rendered. Can be
 a single integer like \code{2019}, or a vector of integers such as \code{2019:2021}.}
@@ -23,7 +27,7 @@ allows you to render templates across multiple years.
 }
 \examples{
 \dontrun{
-render_bulk("eda.Rmd", year = 2018:2021, vars = dxgap_const$tb_vars)
+  render_bulk("eda.Rmd", disease = "tb", year = 2018:2021, vars = dxgap_const$tb_vars)
 }
 }
 \seealso{

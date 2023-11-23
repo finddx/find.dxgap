@@ -18,6 +18,10 @@ render_report(
 \item{.template_name}{String containing the name of the template to render.
 Run \code{\link[=view_templates]{view_templates()}} to see a list of valid options.}
 
+\item{.disease}{A character of lenght one identifying the disease for which
+the user wants to build a wide table. The tibble \code{dxgap_diseases} shows the
+diseases that are currently supported.}
+
 \item{.year}{Integer matching the year of the report passed to \code{\link[=build_dm]{build_dm()}}.}
 
 \item{.vars}{A vector of strings naming columns to subset the data on. Passed

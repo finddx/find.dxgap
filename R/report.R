@@ -5,6 +5,7 @@
 #'
 #' @param template_name String containing the name of the template to render.
 #'   Run [view_templates()] to see a list of valid options.
+#' @inheritParams load_dx
 #' @param year Integer matching the year(s) of the report to be rendered. Can be
 #'   a single integer like `2019`, or a vector of integers such as `2019:2021`.
 #' @param vars A vector of strings naming columns to subset the data on. Passed
@@ -15,13 +16,15 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
-#' render_bulk("eda.Rmd", year = 2018:2021, vars = dxgap_const$tb_vars)
+#' @examples
+#' \dontrun{
+#'   render_bulk("eda.Rmd", disease = "tb", year = 2018:2021, vars = dxgap_const$tb_vars)
 #' }
-render_bulk <- function(template_name, year = NULL, vars = NULL) {
+render_bulk <- function(template_name, disease, year = NULL, vars = NULL) {
   year <- purrr::walk(
     year,
     ~ render_report(
+      .disease = disease,
       .template_name = template_name,
       .year = .x,
       .vars = vars,
@@ -37,6 +40,7 @@ render_bulk <- function(template_name, year = NULL, vars = NULL) {
 #'
 #' @param .template_name String containing the name of the template to render.
 #'   Run [view_templates()] to see a list of valid options.
+#' @inheritParams load_dx
 #' @param .year Integer matching the year of the report passed to [build_dm()].
 #' @param .vars A vector of strings naming columns to subset the data on. Passed
 #'   to [build_tbl()]. Defaults to NULL, indicating all variables should be
