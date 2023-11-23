@@ -40,7 +40,7 @@ WHO,m_wrd_tests_performed,Laboratories,Total number of diagnostic tests performe
 WHO,m_wrd_tests_positive,Laboratories,Number of positive results among the diagnostic tests performed using molecular WHO-recommended rapid diagnostics,,
 WHO,c_newinc,Notification,Total of new and relapse cases and cases with unknown previous TB treatment history,,
 WHO,new_labconf,Notification,New pulmonary bacteriologically confirmed TB cases (smear positive or culture positive or positive by WHO-recommended rapid diagnostics such as Xpert MTB/RIF). As of 2013 this also includes pulmonary bacteriologically confirmed cases with unknown previous TB treatment history.,,
-Global Fund,total_numb_device,Diagnostics,Number of TB diagnostic devices per given country and year,,
+Global Fund,total_numb_device,Diagnostics,Number of TB diagnostic devices per given country and year,https://insights.theglobalfund.org/t/Public/views/PriceQualityReportingTransactionSummary/TransactionSummary?iframeSizedToWindow=true&%3Aembed=y&%3AshowAppBanner=false&%3Adisplay_count=no&%3AshowVizHome=no?,
 World Bank,pop_urban_perc,Population,Urban population (% of total population),https://api.worldbank.org/v2/country/all/indicator/SP.URB.TOTL.IN.ZS?format=json,
 World Bank,pop_density,Population,Population density (people per sq. km of land area),https://api.worldbank.org/v2/country/all/indicator/EN.POP.DNST?format=json,
 World Bank,pop_total,Population,Population total,https://api.worldbank.org/v2/country/all/indicator/SP.POP.TOT?format=json,
