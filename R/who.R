@@ -1,7 +1,7 @@
 #' Data from WHO
 #'
 #' These help pages document the lower-level API to individually download, read,
-#' and tidy WHO data. For a higher-level API that works across all data sets,
+#' and tidy data. For a higher-level API that works across all data sets,
 #' see:
 #' * [write_data_dir()] to download all data
 #' * [load_dx()] to load all data
@@ -46,8 +46,8 @@ NULL
 #' @examples
 #' \dontrun{
 #' notification <- download_who(
-#' file_name = compose_date_dataset_file_name("who", dataset = "notifications", file_ext = ".csv"),
-#' url_endpoint = "notifications"
+#'   file_name = compose_date_dataset_file_name("who", dataset = "notifications", file_ext = ".csv"),
+#'   url_endpoint = "notifications"
 #' )
 #' estimates <- download_who(
 #'   file_name = compose_date_dataset_file_name("who", dataset = "estimates", file_ext = ".csv"),
@@ -109,11 +109,11 @@ who_url_endpoints <- tibble::tribble(
 
 #' Read WHO data sets
 #'
-#' @param file_name A string containing the name of the WHO file to be read
+#' @param file_name A string containing the name of the file to be read.
 #' @param data_dir Path containing the directory to read the data from. Defaults
 #' to the path set by the environment variable `"DXGAP_DATADIR"`.
 #'
-#' @return A tibble containing the who data set.
+#' @return `read_who()` returns a tibble containing the data set.
 #'
 #' @rdname who
 #'
@@ -130,13 +130,14 @@ read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
 #' Tidy WHO data sets
 #'
-#' @param data A tibble returned from the corresponding [read_who()] function.
-#' @param year A year to filter the data by. Defaults to NULL, returning data
+#' @param data A tibble returned from the corresponding `read_()` function.
+#' @param year A year to filter the data by. Defaults to `NULL`, returning data
 #'   for all years.
 #' @param .shape A string indicating if the data should be in "wide", or "long"
 #'   format. Defaults to "long".
 #'
-#' @return A tibble. This is a tidied version of the input tibble.
+#' @return `tidy_who()` returns s tibble. This is a tidied version of the input
+#'   tibble.
 #'
 #' @rdname who
 #'
