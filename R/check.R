@@ -21,7 +21,8 @@ check_supported_templates <- function(template, disease, .dxgap_diseases = dxgap
     dplyr::pull(template_id)
   if (!template_strip_ext %in% supported_template) {
     rlang::abort(
-      sprintf("`%s` is not supported for disease `%s`.", template, disease)
+      sprintf("`%s` is not supported for disease `%s`.", template, disease),
+      class = "dxgap_template_not_supported"
     )
   }
 }
@@ -44,7 +45,8 @@ check_supported_vars <- function(vars, disease, .dxgap_diseases = dxgap_diseases
         i = sprintf("Not known vars: `%s`", paste(unknown_vars, collapse = ", ")),
         i = "Set override_vars_check to `TRUE` to override this check.",
         i = "If `override_vars_check = TRUE` consistent results are not guaranteed."
-      )
+      ),
+      class = "dxgap_vars_not_supported"
     )
   }
 }
@@ -63,7 +65,8 @@ check_supported_year <- function(year, disease, .dxgap_diseases = dxgap_diseases
     rlang::abort(
       c(
         sprintf("`year` is out of supported range for disease `%s`.", disease)
-      )
+      ),
+      class = "dxgap_year_not_supported"
     )
   }
 }
@@ -80,7 +83,8 @@ check_clean_data_dir <- function(data_files, .pattern) {
       c(
         "`data_files` are not unique.",
         i = "One file per `dataset_type` must be present in the data folder."
-      )
+      ),
+      class = "dxgap_data_dir"
     )
   }
 }
@@ -121,7 +125,8 @@ check_is_ts <- function(data) {
   if (length(years_unique) <= 1) {
     rlang::abort(
       c("Cannot build `core countries` across years.",
-        i = "Did you call `tidy_xyz(data, year = NULL)`?.")
+        i = "Did you call `tidy_xyz(data, year = NULL)`?."),
+      class = "dxgap_data"
     )
   }
 }
