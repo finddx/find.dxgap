@@ -10,6 +10,7 @@ render_report(
   .year = NULL,
   .vars = NULL,
   interactive = TRUE,
+  .override_vars_check = FALSE,
   template_dir = "inst/template/",
   data_dir = Sys.getenv("DXGAP_DATADIR")
 )
@@ -36,6 +37,10 @@ RStudio Viewer.}
 
 \item{data_dir}{Path containing the directory to read the data from. Defaults
 to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
+
+\item{override_vars_check}{Logical indicating whether to override checks on
+supported .vars. Defaults to FALSE. If TRUE, consistent results are not
+guaranteed.}
 }
 \description{
 \code{render_report()} generates a report for a given template and year.

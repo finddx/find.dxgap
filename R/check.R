@@ -26,6 +26,29 @@ check_supported_templates <- function(template, disease, .dxgap_diseases = dxgap
   }
 }
 
+check_supported_vars <- function(vars, disease, .dxgap_diseases = dxgap_diseases) {
+  if (is.null(vars)) {
+    invisible(vars)
+  }
+  supported_vars <-
+    .dxgap_diseases |>
+    dplyr::filter(disease == !!disease) |>
+    dplyr::select(vars) |>
+    tidyr::unnest(vars) |>
+    dplyr::pull(vars)
+  unknown_vars <- setdiff(vars, supported_vars)
+  if (length(unknown_vars) != 0) {
+    rlang::abort(
+      c(
+        sprintf("Some `vars` are not supported for disease `%s`.", disease),
+        i = sprintf("Not known vars: `%s`", paste(unknown_vars, collapse = ", ")),
+        i = "Set override_vars_check to `TRUE` to override this check.",
+        i = "If `override_vars_check = TRUE` consistent results are not guaranteed."
+      )
+    )
+  }
+}
+
 check_supported_year <- function(year, disease, .dxgap_diseases = dxgap_diseases) {
   if (is.null(year)) {
     invisible(year)

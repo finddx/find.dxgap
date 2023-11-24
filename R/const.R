@@ -1,23 +1,3 @@
-dxgap_const <- tibble::lst(
-  start_year = 2015,
-  tb_vars = c("year",
-              "country",
-              "is_hbc",
-              "country_code",
-              "who_dx_gap",
-              "pop_total",
-              "pop_urban_perc",
-              "pop_density",
-              "gdp",
-              "c_newinc",
-              "e_inc_num",
-              "e_mort_100k",
-              "culture",
-              "smear",
-              "xpert",
-              "m_wrd")
-)
-
 tb_mod_const <- tibble::lst(
   neighbors = 5,
   threshold = 0.25,
