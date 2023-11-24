@@ -67,9 +67,26 @@ render_report <- function(template_name,
                           year = NULL,
                           vars = NULL,
                           interactive = TRUE,
-                          override_vars_check = FALSE,
-                          template_dir = "inst/template/",
-                          data_dir = Sys.getenv("DXGAP_DATADIR")) {
+                          override_vars_check = FALSE) {
+
+  render_report_impl(
+    template_name,
+    disease,
+    year = year,
+    vars = vars,
+    interactive = interactive,
+    override_vars_check = override_vars_check
+  )
+}
+
+render_report_impl <- function(template_name,
+                               disease,
+                               year,
+                               vars,
+                               interactive,
+                               override_vars_check,
+                               template_dir = "inst/template/",
+                               data_dir = Sys.getenv("DXGAP_DATADIR")) {
   check_supported_disease(disease)
   check_supported_year(year = year, disease = disease)
   check_supported_templates(template = template_name, disease = disease)
