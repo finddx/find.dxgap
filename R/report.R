@@ -1,37 +1,40 @@
 #' Render templates across multiple years
 #'
-#' `render_bulk()` is a convenience wrapper around [render_report()] that
+#' `render_bulk()` is a convenience wrapper around `render_report()` that
 #' allows you to render templates across multiple years.
 #'
 #' @param template_name String containing the name of the template to render.
 #'   Run [view_templates()] to see a list of valid options.
 #' @inheritParams load_dx
 #' @param override_vars_check Logical indicating whether to override checks on
-#'   supported .vars. Defaults to FALSE. If TRUE, consistent results are not
+#'   supported vars. Defaults to FALSE. If TRUE, consistent results are not
 #'   guaranteed.
-#' @param year Integer matching the year(s) of the report to be rendered. Can be
+#' @param years Integer matching the year(s) of the report to be rendered. Can be
 #'   a single integer like `2019`, or a vector of integers such as `2019:2021`.
 #' @param vars A vector of strings naming columns to subset the data on. Passed
 #'   to [build_tbl()]. Defaults to NULL, indicating all variables should be
 #'   used.
 #'
-#' @seealso [render_report()]
+#' @rdname render
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#'   render_bulk("eda.Rmd", disease = "tb", year = 2018:2021, vars = dxgap_const$tb_vars)
+#' tb_vars <- c("year", "country", "is_hbc", "country_code", "who_dx_gap",
+#'              "pop_total", "pop_urban_perc", "pop_density", "gdp", "c_newinc",
+#'              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
+#' render_bulk("eda.Rmd", disease = "tb", years = 2018:2021, vars = tb_vars)
 #' }
-render_bulk <- function(template_name, disease, override_vars_check = FALSE,  year = NULL, vars = NULL) {
-  year <- purrr::walk(
-    year,
+render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, override_vars_check = FALSE) {
+  years <- purrr::walk(
+    years,
     ~ render_report(
-      .disease = disease,
-      .template_name = template_name,
-      .year = .x,
-      .vars = vars,
-      .override_vars_check = override_vars_check,
+      disease = disease,
+      template_name = template_name,
+      year = .x,
+      vars = vars,
+      override_vars_check = override_vars_check,
       interactive = FALSE
     )
   )
@@ -42,51 +45,53 @@ render_bulk <- function(template_name, disease, override_vars_check = FALSE,  ye
 #'
 #' `render_report()` generates a report for a given template and year.
 #'
-#' @param .template_name String containing the name of the template to render.
+#' @param template_name String containing the name of the template to render.
 #'   Run [view_templates()] to see a list of valid options.
 #' @inheritParams load_dx
-#' @param .year Integer matching the year of the report passed to [build_dm()].
-#' @param .vars A vector of strings naming columns to subset the data on. Passed
+#' @param year Integer matching the year of the report passed to [build_dm()].
+#' @param vars A vector of strings naming columns to subset the data on. Passed
 #'   to [build_tbl()]. Defaults to NULL, indicating all variables should be
 #'   used.
 #' @param interactive Logical indicating whether to open the report with the
 #'   RStudio Viewer.
 #' @param override_vars_check Logical indicating whether to override checks on
-#'   supported .vars. Defaults to FALSE. If TRUE, consistent results are not
+#'   supported vars. Defaults to FALSE. If TRUE, consistent results are not
 #'   guaranteed.
 #' @param template_dir Path where blank templates can be found. Defaults to
 #'   `"inst/template/"`.
 #' @param data_dir Path containing the directory to read the data from. Defaults
 #'   to the path set by the environment variable `"DXGAP_DATADIR"`.
 #'
-#'
-#' @seealso [render_bulk()]
+#' @rdname render
 #'
 #' @export
 #'
 #' @examples \dontrun{
-#' render_report("eda.Rmd", .disease = "tb", .year = 2019, .vars = dxgap_const$tb_vars)
+#' tb_vars <- c("year", "country", "is_hbc", "country_code", "who_dx_gap",
+#'              "pop_total", "pop_urban_perc", "pop_density", "gdp", "c_newinc",
+#'              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
+#' render_report("eda.Rmd", disease = "tb", year = 2019, vars = tb_vars)
 #' }
-render_report <- function(.template_name,
-                          .disease,
-                          .year = NULL,
-                          .vars = NULL,
+render_report <- function(template_name,
+                          disease,
+                          year = NULL,
+                          vars = NULL,
                           interactive = TRUE,
-                          .override_vars_check = FALSE,
+                          override_vars_check = FALSE,
                           template_dir = "inst/template/",
                           data_dir = Sys.getenv("DXGAP_DATADIR")) {
-  check_supported_disease(.disease)
-  check_supported_year(year = .year, disease = disease)
-  check_supported_templates(template = .template_name, disease = .disease)
-  if (!.override_vars_check) {
-    check_supported_vars(vars = .vars, disease = .disease)
+  check_supported_disease(disease)
+  check_supported_year(year = year, disease = disease)
+  check_supported_templates(template = template_name, disease = disease)
+  if (!override_vars_check) {
+    check_supported_vars(vars = vars, disease = disease)
   }
 
-  template_path <- compose_file_path(.template_name, template_dir)
+  template_path <- compose_file_path(template_name, template_dir)
 
-  lst_df <- load_dx(.disease)
-  dm <- build_dm(lst_df, year = .year)
-  data_tbl <- build_tbl(dm, vars = .vars)
+  lst_df <- load_dx(disease)
+  dm <- build_dm(lst_df, year = year)
+  data_tbl <- build_tbl(dm, vars = vars)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   if (interactive) {
@@ -98,7 +103,7 @@ render_report <- function(.template_name,
       params = list(
         dm = dm,
         data_tbl = data_tbl,
-        year = .year
+        year = year
       ),
       envir = new.env()
     )
@@ -107,8 +112,8 @@ render_report <- function(.template_name,
   }
 
   file_name <- compose_file_name(
-    fs::path_ext_remove(.template_name),
-    .year,
+    fs::path_ext_remove(template_name),
+    year,
     file_ext = ".html"
   )
 
@@ -122,7 +127,7 @@ render_report <- function(.template_name,
     params = list(
       dm = dm,
       data_tbl = data_tbl,
-      year = .year
+      year = year
     ),
     envir = new.env()
   )
