@@ -46,7 +46,6 @@ render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, over
 #' `render_report()` generates a report for a given template and year. The final
 #' output can be viewed in RStudio.
 #'
-#' @inheritParams render_bulk
 #' @inheritParams load_dx
 #' @param year Integer matching the year of the report passed to [build_dm()].
 #' @param interactive Logical indicating whether to open the report with the
