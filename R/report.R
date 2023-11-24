@@ -38,29 +38,19 @@ render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, over
       interactive = FALSE
     )
   )
-  invisible(year)
+  invisible(years)
 }
 
 #' Render a template report for a single year
 #'
-#' `render_report()` generates a report for a given template and year.
+#' `render_report()` generates a report for a given template and year. The final
+#' output can be viewed in RStudio.
 #'
-#' @param template_name String containing the name of the template to render.
-#'   Run [view_templates()] to see a list of valid options.
+#' @inheritParams render_bulk
 #' @inheritParams load_dx
 #' @param year Integer matching the year of the report passed to [build_dm()].
-#' @param vars A vector of strings naming columns to subset the data on. Passed
-#'   to [build_tbl()]. Defaults to NULL, indicating all variables should be
-#'   used.
 #' @param interactive Logical indicating whether to open the report with the
 #'   RStudio Viewer.
-#' @param override_vars_check Logical indicating whether to override checks on
-#'   supported vars. Defaults to FALSE. If TRUE, consistent results are not
-#'   guaranteed.
-#' @param template_dir Path where blank templates can be found. Defaults to
-#'   `"inst/template/"`.
-#' @param data_dir Path containing the directory to read the data from. Defaults
-#'   to the path set by the environment variable `"DXGAP_DATADIR"`.
 #'
 #' @rdname render
 #'
