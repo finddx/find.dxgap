@@ -5,4 +5,6 @@ tbl <- build_tbl(dm)
 test_that("compute_completion_rate() works", {
   complete_rate_df <- compute_completion_rate(tbl, id_vars = "year")
   expect_snapshot(constructive::construct(complete_rate_df))
+  complete_rate_df <- compute_completion_rate(tbl, id_vars = c("year", "is_hbc"))
+  expect_snapshot(constructive::construct(complete_rate_df))
 })
