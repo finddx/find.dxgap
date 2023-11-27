@@ -1,0 +1,8 @@
+skip_if(Sys.getenv("DXGAP_DATADIR") == "")
+data_list <- load_dx("tb")
+dm <- build_dm(data_list, year = 2019)
+tbl <- build_tbl(dm)
+test_that("compute_completion_rate() works", {
+  complete_rate_df <- compute_completion_rate(tbl, id_vars = "year")
+  expect_snapshot(constructive::construct(complete_rate_df))
+})
