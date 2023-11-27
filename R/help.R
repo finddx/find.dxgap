@@ -138,14 +138,6 @@ mutate_is_significant <- function(data, threshold = 0.05) {
   )
 }
 
-# credits to: https://github.com/moodymudskipper
-compute_corr <- function(data) {
-  data |>
-    corrr::correlate(dplyr::pick(tidyselect::everything()), quiet = TRUE) |>
-    dplyr::select(term, who_dx_gap) |>
-    dplyr::filter(term != "who_dx_gap")
-}
-
 to_nest_df <- function(list) {
   stopifnot(is.list(list))
   cond <- all(purrr::map_lgl(list, is.data.frame))

@@ -38,3 +38,43 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
     dplyr::select(!!id_vars, var_name = name, completion_rate)
 }
 
+#' Compute correlation across years
+#'
+#' `compute_correlation()` allows to compute
+#'
+#' @param data
+#' @param target_var
+#' @param by
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+compute_correlation <- function(data, target_var, by = NULL, ...) {
+  stopifnot(is.data.frame(data))
+  if (is.null(by)) {
+    corr_df <-
+      data |>
+      dplyr::select(dplyr::where(is.numeric)) |>
+      corrr::correlate(quiet = TRUE, ...) |>
+      dplyr::select(term, {{ target_var }}) |>
+      dplyr::filter(term != {{ target_var }})
+    return(corr_df)
+  }
+  check_var_in_cols(data, var_to_check = by)
+  data |>
+    dplyr::reframe(
+      compute_corr(dplyr::pick(tidyselect::where(is.numeric)), who_dx_gap, ...),
+      .by = tidyselect::all_of(by)
+    )
+}
+
+# credits to: https://github.com/moodymudskipper
+compute_corr <- function(data, target_var, ...) {
+  data |>
+    corrr::correlate(dplyr::pick(tidyselect::where(is.numeric)), quiet = TRUE, ...) |>
+    dplyr::select(term, {{ target_var }}) |>
+    dplyr::filter(term != {{ target_var }})
+}
+
