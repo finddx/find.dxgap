@@ -63,6 +63,7 @@ compute_correlation <- function(data, target_var, by = NULL, ...) {
     return(corr_df)
   }
   check_var_in_cols(data, var_to_check = by)
+  stopifnot(is.character(by))
   data |>
     dplyr::reframe(
       compute_corr(dplyr::pick(tidyselect::where(is.numeric)), who_dx_gap, ...),
