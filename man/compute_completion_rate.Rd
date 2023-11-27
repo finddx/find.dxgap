@@ -19,7 +19,7 @@ to \code{NULL} indicating that no groups should be used.}
 A tibble.
 }
 \description{
-compute_completion_rate() computes
+\code{compute_completion_rate()} computes the percentage of non-missing values.
 }
 \examples{
 \dontrun{
