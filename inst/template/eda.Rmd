@@ -61,17 +61,14 @@ tbl |>
 tbl |> 
   pivot_longer(-c(country_code, is_hbc), names_to = "variable_name") |> 
   left_join(dxgap_master_list, join_by(variable_name)) |> 
-  group_by(variable_name, definition, dataset) |> 
-  summarise(
-    n = n(), 
-    n_missing = sum(is.na(value)),
-    complete_rate = sum(!is.na(value)) / n, 
-    .groups = "drop"
-  ) |>
-  mutate(complete_rate = round(complete_rate, 2)) |> 
+  select(variable_name, definition, dataset, value) |> 
+  compute_completion_rate(
+    id_vars = c("variable_name", "definition", "dataset"), 
+    digits = 3
+  ) |> 
+  select(-var_name) |> 
   relocate(dataset, definition, variable_name) |> 
   arrange(dataset, variable_name) |> 
-  select(-n) |> 
   gt::gt()
 ```
 
