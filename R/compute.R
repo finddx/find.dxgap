@@ -1,6 +1,6 @@
 #' Compute completion rate
 #'
-#' compute_completion_rate() computes
+#' `compute_completion_rate()` computes the percentage of non-missing values.
 #'
 #' @param data A tibble.
 #' @param id_vars A character vector of variable names indicating the groups
