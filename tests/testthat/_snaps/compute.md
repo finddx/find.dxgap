@@ -1,7 +1,7 @@
 # compute_completion_rate() works
 
     Code
-      constructive::construct(complete_rate_df)
+      constructive::construct(complete_rate_df_country)
     Output
       tibble::tibble(
         year = rep("2019", 43L),
@@ -26,7 +26,7 @@
 ---
 
     Code
-      constructive::construct(complete_rate_df)
+      constructive::construct(complete_rate_df_is_hbc)
     Output
       tibble::tibble(
         year = rep("2019", 84L),
@@ -53,5 +53,15 @@
           1, 0.96, 1, 0.7, 0.67, 1, 1, 1, 0.85, 0.85, 0.85, 0.81, 0.81, 0.85, 0.74, 1,
           0.33, 1
         ),
+      )
+
+---
+
+    Code
+      constructive::construct(complete_rate_df_cars)
+    Output
+      tibble::tibble(
+        var_name = c("am", "car_name", "carb", "cyl", "disp", "drat", "gear", "hp", "mpg", "qsec", "vs", "wt"),
+        completion_rate = rep(1, 12L),
       )
 
