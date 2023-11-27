@@ -33,17 +33,7 @@ data_tbl <- params$data_tbl
 ```{r}
 complete_by_year <- 
   data_tbl |> 
-  pivot_longer(
-    -c("country_code", "country", "year"), 
-    names_to = "variable_name"
-  ) |> 
-  mutate(is_na = is.na(value)) |> 
-  count(year, variable_name, is_na) |> 
-  group_by(year, variable_name) |> 
-  mutate(tot = sum(n)) |> 
-  ungroup() |> 
-  mutate(complete_rate = round(n / tot, 2)) |> 
-  filter(!is_na) |> 
+  compute_completion_rate("year") |> 
   filter(year > dxgap_const$start_year)
 ```
 
@@ -51,16 +41,16 @@ complete_by_year <-
 for_tab <- 
   complete_by_year |> 
   pivot_wider(
-    id_cols = variable_name,
+    id_cols = var_name,
     names_from = year, 
-    values_from = complete_rate
+    values_from = completion_rate
   ) |> 
   left_join(
     select(dxgap_master_list, dataset, variable_name, definition), 
-    join_by(variable_name)
+    join_by(var_name == variable_name)
   ) |> 
-  relocate(dataset, definition, variable_name, .before = everything()) |> 
-  arrange(dataset, definition, variable_name)
+  relocate(dataset, definition, var_name, .before = everything()) |> 
+  arrange(dataset, definition, var_name)
 ```
 
 ```{r}
@@ -80,32 +70,22 @@ for_tab |>
 ```{r}
 vars_focus <- 
   complete_by_year |> 
-  filter(between(complete_rate, 0.75, 0.94)) |> 
-  pull(variable_name)
+  filter(between(completion_rate, 0.75, 0.94)) |> 
+  pull(var_name)
 
 for_tab <- 
   data_tbl |> 
-  pivot_longer(
-    -c("country_code", "country", "year", "is_hbc"), 
-    names_to = "variable_name"
-  ) |> 
-  filter(variable_name %in% vars_focus) |> 
-  mutate(is_na = is.na(value)) |> 
-  count(year, variable_name, is_na, is_hbc) |> 
-  group_by(year, variable_name, is_hbc) |> 
-  mutate(tot = sum(n)) |> 
-  ungroup() |> 
-  mutate(complete_rate = round(n / tot, 2)) |> 
-  filter(!is_na) |> 
+  compute_completion_rate(c("year", "is_hbc")) |> 
+  filter(var_name %in% vars_focus) |> 
   filter(year > dxgap_const$start_year) |> 
-  select(year, variable_name, is_hbc, complete_rate) |> 
-  pivot_wider(names_from = year, values_from = complete_rate)
+  select(year, var_name, is_hbc, completion_rate) |> 
+  pivot_wider(names_from = year, values_from = completion_rate)
 ```
 
 ```{r}
 for_tab |> 
   gt::gt(groupname_col = "is_hbc") |> 
-    gt::data_color(
+  gt::data_color(
     columns = dplyr::where(is.numeric),
     method = "numeric",
     palette = "Greys",
