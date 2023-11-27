@@ -59,6 +59,12 @@ tbl |>
 
 ```{r}
 tbl |> 
+  count() |> 
+  gt::gt(caption = "Total number of records")
+```
+
+```{r}
+tbl |> 
   pivot_longer(-c(country_code, is_hbc), names_to = "variable_name") |> 
   left_join(dxgap_master_list, join_by(variable_name)) |> 
   select(variable_name, definition, dataset, value) |> 
