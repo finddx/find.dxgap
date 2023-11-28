@@ -3,6 +3,7 @@
 export(build_dm)
 export(build_tbl)
 export(compute_completion_rate)
+export(compute_correlation)
 export(compute_dx_gap)
 export(download_hbc)
 export(download_wb)
