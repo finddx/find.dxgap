@@ -1,8 +1,8 @@
-prep_tb_data <- function(data) {
+prep_tb_data <- function(data, rm_vars = c("year", "country")) {
   data |>
     compute_dx_gap() |>
     dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-    dplyr::select(-any_of(c("year", "country")))
+    dplyr::select(-tidyselect::any_of(rm_vars))
 }
 
 get_recipe_tb <- function(tbl, neighbors, threshold, impute_vars) {
