@@ -147,3 +147,7 @@ check_all_numeric <- function(data) {
     rlang::abort("Some variables are not numeric.", class = "dxgap_data")
   }
 }
+
+check_unique_ptype <- function(...) {
+  stopifnot(sum(...) == 1)
+}
