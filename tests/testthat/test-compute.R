@@ -14,7 +14,10 @@ test_that("compute_completion_rate() works", {
 
 test_that("compute_correlation() works", {
   tbl_dxgap <- compute_dx_gap(tbl)
-  corr_df <- compute_correlation(dplyr::select(tbl_dxgap, -year), who_dx_gap)
+  corr_df <-
+    tbl_dxgap |>
+    dplyr::select(-tidyselect::all_of(c("year", "country", "country_code"))) |>
+    compute_correlation(who_dx_gap)
   expect_snapshot(constructive::construct(corr_df))
   corr_df_by <- compute_correlation(tbl_dxgap, who_dx_gap, by = "year")
   expect_snapshot(constructive::construct(corr_df_by))
