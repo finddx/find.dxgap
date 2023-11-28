@@ -43,9 +43,7 @@ data_tbl <- build_tbl(dm, vars = dxgap_const$tb_vars)
 ```{r data}
 tbl <- 
   data_tbl |> 
-  compute_dx_gap() |> 
-  mutate(is_hbc = forcats::as_factor(is_hbc)) |> 
-  select(-any_of(c("year", "country")))
+  prep_tb_data()
 ```
 
 ```{r matrix}
