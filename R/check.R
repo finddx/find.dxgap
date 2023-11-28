@@ -120,7 +120,7 @@ check_var_in_cols <- function(data, var_to_check) {
   stopifnot(is.character(var_to_check))
   if (!all(var_to_check %in% names(data))) {
     rlang::abort(
-      sprintf("`%s` not in data.", var_to_check),
+      sprintf("`%s` not in data.", paste(var_to_check, collapse = ", ")),
       class = "dxgap_data"
     )
   }
