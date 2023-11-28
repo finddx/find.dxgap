@@ -38,11 +38,11 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
     dplyr::select(!!id_vars, var_name = name, completion_rate)
 }
 
-#' Compute correlation wrt to a target variable
+#' Compute correlations wrt to a target variable
 #'
 #' `compute_correlation()` allows to compute correlation of several numerical
-#' predictors with respect to a target variable. Optionally we can compute
-#' correlations by groups.
+#' predictors with respect to a target variable. Optionally, the computation
+#' can be done by groups.
 #'
 #' @param data A tibble.
 #' @param target_var The variable against which the correlations needs to be
