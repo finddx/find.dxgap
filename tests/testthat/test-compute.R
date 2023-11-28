@@ -14,6 +14,7 @@ test_that("compute_completion_rate() works", {
 
 test_that("compute_correlation() works", {
   tbl_dxgap <- compute_dx_gap(tbl)
+  expect_error(compute_correlation(tbl_dxgap, who_dx_gap), regexp = "numeric")
   corr_df <-
     tbl_dxgap |>
     dplyr::select(-tidyselect::all_of(c("year", "country", "country_code"))) |>
