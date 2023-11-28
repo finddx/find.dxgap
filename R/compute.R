@@ -72,6 +72,7 @@ compute_correlation <- function(data, target_var, by = NULL, ...) {
   }
   check_var_in_cols(data, var_to_check = by)
   stopifnot(is.character(by))
+  # credits to: https://github.com/moodymudskipper
   data |>
     dplyr::reframe(
       compute_corr(
@@ -83,7 +84,6 @@ compute_correlation <- function(data, target_var, by = NULL, ...) {
     )
 }
 
-# credits to: https://github.com/moodymudskipper
 compute_corr <- function(data, target_var, ...) {
   data |>
     corrr::correlate(quiet = TRUE, ...) |>
