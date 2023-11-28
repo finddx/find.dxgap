@@ -118,7 +118,7 @@ is_ptype <- function(data, ptype) {
 
 check_var_in_cols <- function(data, var_to_check) {
   stopifnot(is.character(var_to_check))
-  if (!var_to_check %in% names(data)) {
+  if (!all(var_to_check %in% names(data))) {
     rlang::abort(
       sprintf("`%s` not in data.", var_to_check),
       class = "dxgap_data"
