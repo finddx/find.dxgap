@@ -44,7 +44,8 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 #' predictors with respect to a target variable. Optionally, the computation
 #' can be done by groups.
 #'
-#' @param data A tibble.
+#' @param data A tibble. If `by` is `NULL` all variables should be numeric
+#'   columns.
 #' @param target_var The variable against which the correlations needs to be
 #'   computed. For instance, `who_dx_gap`.
 #' @param by A character vector.
