@@ -185,6 +185,36 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
   }
 }
 
+# TODO: understandable renaming
+tidy_who_notifications <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_budget <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_community <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_estimates <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_expenditures <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_labs <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_impl <- function(data, .year = NULL, shape = "long") {
+  shape <- rlang::arg_match(shape, values = c("long", "wide"))
+  tidy_who_core(data, year = .year, shape = shape)
+}
+
 tidy_who_core <- function(data, year, shape) {
   data |>
     tidy_who_rename() |>
@@ -219,35 +249,4 @@ tidy_who_shape <- function(data, .shape) {
     return(df)
   }
   data
-}
-
-# TODO: understandable renaming
-tidy_who_notifications <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
-}
-
-tidy_who_budget <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
-}
-
-tidy_who_community <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
-}
-
-tidy_who_estimates <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
-}
-
-tidy_who_expenditures <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
-}
-
-tidy_who_labs <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
 }
