@@ -76,7 +76,6 @@ compute_correlation <- function(data, target_var, by = NULL, ...) {
   check_var_in_cols(data, var_to_check = by)
   stopifnot(is.character(by))
   data |>
-    dplyr::select(tidyselect::all_of(by), tidyselect::where(is.numeric)) |>
     dplyr::reframe(
       compute_corr(dplyr::pick(tidyselect::where(is.numeric)), {{ target_var }}, ...),
       .by = tidyselect::all_of(by)
