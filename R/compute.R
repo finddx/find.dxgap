@@ -63,18 +63,17 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 compute_correlation <- function(data, target_var, by = NULL, ...) {
   stopifnot(is.data.frame(data))
   rlang::check_required(target_var)
-  numeric_df <- dplyr::select(data, tidyselect::where(is.numeric))
   if (is.null(by)) {
     corr_df <-
-      numeric_df |>
+      data |>
       corrr::correlate(quiet = TRUE, ...) |>
       dplyr::select(term, {{ target_var }}) |>
       dplyr::filter(term != {{ target_var }})
     return(corr_df)
   }
-  check_var_in_cols(numeric_df, var_to_check = by)
+  check_var_in_cols(data, var_to_check = by)
   stopifnot(is.character(by))
-  numeric_df |>
+  data |>
     dplyr::reframe(
       compute_corr(dplyr::pick(tidyselect::everything()), {{ target_var }}, ...),
       .by = tidyselect::all_of(by)
