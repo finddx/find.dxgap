@@ -95,43 +95,19 @@ corr_df_raw <-
 ```
 
 ```{r}
-corr_df <- 
-  corr_df_raw |> 
-  select(term, who_dx_gap) |>
-  arrange(who_dx_gap) |>
-  filter(term != "who_dx_gap") |> 
-  rename(who_dx_gap_all = who_dx_gap)
+corr_all <- 
+  compute_correlation(tbl, who_dx_gap) |> 
+  mutate(is_hbc = "99") # all
 ```
-
 
 ```{r}
-corr_by_type <- 
-  tbl |> 
-  select(-country_code) |> 
-  group_split(is_hbc) |> 
-  map(correlate) |> 
-  set_names(c("non_hbc", "hbc")) |> 
-  map(~ select(.x, term, who_dx_gap)) |>
-  map(~ arrange(.x, who_dx_gap)) |>
-  map(~ filter(.x, term != "who_dx_gap"))
+corr_by_type <- compute_correlation(tbl, who_dx_gap, by = "is_hbc")
 ```
-
-
-```{r}
-corr_hbc <- 
-  corr_by_type$hbc |> 
-  rename(who_dx_gap_hbc = who_dx_gap)
-corr_non_hbc <- 
-  corr_by_type$non_hbc |> 
-  rename(who_dx_gap_non_hbc = who_dx_gap)
-```
-
 
 ```{r}
 corr_all_df <- 
-  corr_df |> 
-  left_join(corr_hbc, join_by(term)) |> 
-  left_join(corr_non_hbc, join_by(term)) |> 
+  corr_by_type |> 
+  bind_rows(corr_all) |> 
   left_join(
     select(dxgap_master_list, variable_name, definition), 
     by = join_by(term == variable_name)
@@ -140,28 +116,39 @@ corr_all_df <-
 ```
 
 ```{r fig.height=12, fig.width=12}
+corr_names_vec_labels <- c(
+     "0" = "who_dx_gap_non_hbc", 
+     "99" = "who_dx_gap_all", 
+     "1" = "who_dx_gap_hbc"
+)
+corr_names_vec_levels <- c(
+    "who_dx_gap_non_hbc" = "0", 
+    "who_dx_gap_all" = "99", 
+    "who_dx_gap_hbc" = "1"
+)
 corr_all_df |> 
-  pivot_longer(
-    starts_with("who_dx_gap"), 
-    names_to = "corr_cat", 
-    values_to = "corr"
-  ) |> 
   # mutate(term = forcats::fct_reorder(term, corr, .na_rm = FALSE)) |> 
   mutate(term = forcats::fct_relevel(term, sort)) |> 
-  mutate(corr_cat = forcats::fct_relevel(
-    corr_cat, 
-    c("who_dx_gap_non_hbc", "who_dx_gap_all", "who_dx_gap_hbc"))
+  mutate(
+    corr_cat = forcats::as_factor(is_hbc),
+    corr_cat = forcats::fct_relevel(corr_cat, corr_names_vec_levels)
   ) |> 
-  ggplot(aes(term, corr)) +
+  ggplot(aes(term, who_dx_gap)) +
   geom_col() +
   coord_flip() +
   theme_minimal() +
-  facet_wrap(vars(corr_cat))
+  facet_wrap(vars(corr_cat), labeller = labeller(corr_cat = corr_names_vec_labels))
 ```
 
 
 ```{r}
-corr_all_df |> 
+corr_all_df |>
+  pivot_wider(
+    id_cols = c(term, definition), 
+    names_from = is_hbc,
+    values_from = who_dx_gap
+  ) |> 
+  rename(all_of(corr_names_vec_levels)) |> 
   arrange(term) |> 
   gt::gt()
 ```
