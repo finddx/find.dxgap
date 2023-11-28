@@ -16,10 +16,10 @@
       # A tibble: 4 x 5
          rank wflow_id            model      .metric  mean
         <int> <chr>               <chr>      <chr>   <dbl>
-      1     1 log_pop_total_lm    linear_reg rmse     9.64
-      2     2 simple_lm           linear_reg rmse    14.8 
-      3     3 norm_pop_total_lm   linear_reg rmse    14.8 
-      4     4 is_hbc_pop_total_lm linear_reg rmse    70.8 
+      1     1 log_pop_total_lm    linear_reg rmse     9.79
+      2     2 simple_lm           linear_reg rmse    18.4 
+      3     3 norm_pop_total_lm   linear_reg rmse    18.4 
+      4     4 is_hbc_pop_total_lm linear_reg rmse    26.0 
       
       $final_fit
       == Workflow [trained] ==========================================================
@@ -45,9 +45,9 @@
       
       Coefficients:
          (Intercept)         is_hbc1       pop_total  pop_urban_perc     pop_density  
-            -44.8996         -3.6135          4.2935          3.3298          0.2281  
+           -47.25424        -2.65440         4.33669         0.94852         0.56163  
                  gdp     e_mort_100k         culture           smear           xpert  
-             -0.6275          8.0197         -2.1969         -1.0055         -1.6595  
+            -0.18834         7.19791        -2.96444        -0.06239        -2.54542  
       
       
 
