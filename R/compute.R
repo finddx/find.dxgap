@@ -66,16 +66,19 @@ compute_correlation <- function(data, target_var, by = NULL, ...) {
   if (is.null(by)) {
     corr_df <-
       data |>
-      corrr::correlate(quiet = TRUE, ...) |>
-      dplyr::select(term, {{ target_var }}) |>
-      dplyr::filter(term != {{ target_var }})
+      dplyr::select(tidyselect::where(is.numeric)) |>
+      compute_corr({{ target_var }})
     return(corr_df)
   }
   check_var_in_cols(data, var_to_check = by)
   stopifnot(is.character(by))
   data |>
     dplyr::reframe(
-      compute_corr(dplyr::pick(tidyselect::where(is.numeric)), {{ target_var }}, ...),
+      compute_corr(
+        dplyr::pick(tidyselect::where(is.numeric)),
+        {{ target_var }},
+        ...
+      ),
       .by = tidyselect::all_of(by)
     )
 }
@@ -83,7 +86,7 @@ compute_correlation <- function(data, target_var, by = NULL, ...) {
 # credits to: https://github.com/moodymudskipper
 compute_corr <- function(data, target_var, ...) {
   data |>
-    corrr::correlate(dplyr::pick(tidyselect::where(is.numeric)), quiet = TRUE, ...) |>
+    corrr::correlate(quiet = TRUE, ...) |>
     dplyr::select(term, {{ target_var }}) |>
     dplyr::filter(term != {{ target_var }})
 }
