@@ -1,3 +1,10 @@
+prep_tb_data <- function(data) {
+  data |>
+    compute_dx_gap() |>
+    dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+    dplyr::select(-any_of(c("year", "country")))
+}
+
 get_recipe_tb <- function(tbl, neighbors, threshold, impute_vars) {
   recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
     recipes::update_role(country_code, new_role = "id") |>

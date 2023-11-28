@@ -187,10 +187,3 @@ view_templates <- function() {
   return(valid_templates)
 }
 
-prep_test_data <- function(data) {
-  data |>
-    compute_dx_gap() |>
-    dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-    dplyr::select(-any_of(c("year", "country")))
-}
-
