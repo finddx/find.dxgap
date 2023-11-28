@@ -2,7 +2,7 @@ test_that("run_mod() works", {
   withr::local_seed(2023)
   testdata_path <- testthat::test_path("testdata", "tb_tbl.rds")
   tb_tbl <- readr::read_rds(testdata_path)
-  tb_tbl_prep <- prep_test_data(tb_tbl)
+  tb_tbl_prep <- prep_tb_data(tb_tbl)
   preproc_list <- get_mod_preproc(
     .tbl = tb_tbl_prep,
     .neighbors = tb_mod_const$neighbors,
