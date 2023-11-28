@@ -140,3 +140,10 @@ check_is_ts <- function(data) {
     )
   }
 }
+
+check_all_numeric <- function(data) {
+  is_numeric <- purrr::map_lgl(data, is.numeric)
+  if (!all(is_numeric)) {
+    rlang::abort("Some variables are not numeric.", class = "dxgap_data")
+  }
+}

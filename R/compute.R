@@ -64,6 +64,7 @@ compute_correlation <- function(data, target_var, by = NULL, ...) {
   stopifnot(is.data.frame(data))
   rlang::check_required(target_var)
   if (is.null(by)) {
+    check_all_numeric(data)
     corr_df <-
       data |>
       corrr::correlate(quiet = TRUE, ...) |>
