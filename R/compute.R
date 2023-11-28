@@ -66,7 +66,7 @@ compute_correlation <- function(data, target_var, by = NULL, ...) {
   stopifnot(is.character(by))
   numeric_df |>
     dplyr::reframe(
-      compute_corr(dplyr::pick(tidyselect::everything()), target_var, ...),
+      compute_corr(dplyr::pick(tidyselect::everything()), {{ target_var }}, ...),
       .by = tidyselect::all_of(by)
     )
 }
