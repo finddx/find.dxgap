@@ -2,7 +2,7 @@
 
     Code
       recipe_tb
-    Message
+    Message <cliMessage>
       
       -- Recipe ----------------------------------------------------------------------
       
