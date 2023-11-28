@@ -116,6 +116,16 @@ is_ptype <- function(data, ptype) {
   )
 }
 
+check_var_in_cols <- function(data, var_to_check) {
+  stopifnot(is.character(var_to_check))
+  if (!any(var_to_check %in% names(data))) {
+    rlang::abort(
+      sprintf("`%s` not in data.", paste(var_to_check, collapse = ", ")),
+      class = "dxgap_data"
+    )
+  }
+}
+
 check_is_ts <- function(data) {
   years_unique <-
     data |>
@@ -128,5 +138,12 @@ check_is_ts <- function(data) {
         i = "Did you call `tidy_xyz(data, year = NULL)`?."),
       class = "dxgap_data"
     )
+  }
+}
+
+check_all_numeric <- function(data) {
+  is_numeric <- purrr::map_lgl(data, is.numeric)
+  if (!all(is_numeric)) {
+    rlang::abort("Some variables are not numeric.", class = "dxgap_data")
   }
 }

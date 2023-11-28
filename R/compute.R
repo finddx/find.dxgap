@@ -38,3 +38,56 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
     dplyr::select(!!id_vars, var_name = name, completion_rate)
 }
 
+#' Compute correlations wrt to a target variable
+#'
+#' `compute_correlation()` allows to compute correlation of several numerical
+#' predictors with respect to a target variable. Optionally, the computation
+#' can be done by groups.
+#'
+#' @param data A tibble.
+#' @param target_var The variable against which the correlations needs to be
+#'   computed. For instance, `who_dx_gap`.
+#' @param by A character vector.
+#' @param ... Optional arguments passed to [correlate()]
+#'
+#' @return A tibble.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' car_tbl <- as_tibble(mtcars, rownames = "car_name")
+#' my_cars <- select(car_tbl, -all_of(c("vs", "am", "carb")))
+#' compute_correlation(my_cars, mpg, by = c("gear", "cyl"))
+#' compute_correlation(my_cars, mpg, by = NULL) # car_name is dropped by default
+#' }
+compute_correlation <- function(data, target_var, by = NULL, ...) {
+  stopifnot(is.data.frame(data))
+  rlang::check_required(target_var)
+  if (is.null(by)) {
+    corr_df <-
+      data |>
+      dplyr::select(tidyselect::where(is.numeric)) |>
+      compute_corr({{ target_var }})
+    return(corr_df)
+  }
+  check_var_in_cols(data, var_to_check = by)
+  stopifnot(is.character(by))
+  # credits to: https://github.com/moodymudskipper
+  data |>
+    dplyr::reframe(
+      compute_corr(
+        dplyr::pick(tidyselect::where(is.numeric)),
+        {{ target_var }},
+        ...
+      ),
+      .by = tidyselect::all_of(by)
+    )
+}
+
+compute_corr <- function(data, target_var, ...) {
+  data |>
+    corrr::correlate(quiet = TRUE, ...) |>
+    dplyr::select(term, {{ target_var }}) |>
+    dplyr::filter(term != {{ target_var }})
+}
+
