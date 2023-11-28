@@ -186,3 +186,11 @@ view_templates <- function() {
   valid_templates <- all_templates[!grepl("test\\.Rmd$", all_templates)]
   return(valid_templates)
 }
+
+prep_test_data <- function(data) {
+  data |>
+    compute_dx_gap() |>
+    dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+    dplyr::select(-any_of(c("year", "country")))
+}
+
