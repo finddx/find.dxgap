@@ -1,11 +1,9 @@
-skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-data_list <- load_dx("tb")
-dm <- build_dm(data_list, year = NULL)
-tbl <- build_tbl(dm, vars = dxgap_const$tb_vars)
 test_that("compute_completion_rate() works", {
-  complete_rate_df_country <- compute_completion_rate(tbl, id_vars = "year")
+  testdata_path <- testthat::test_path("testdata", "tb_tbl_ts.rds")
+  tb_tbl <- readr::read_rds(testdata_path)
+  complete_rate_df_country <- compute_completion_rate(tb_tbl, id_vars = "year")
   expect_snapshot(constructive::construct(complete_rate_df_country))
-  complete_rate_df_is_hbc <- compute_completion_rate(tbl, id_vars = c("year", "is_hbc"))
+  complete_rate_df_is_hbc <- compute_completion_rate(tb_tbl, id_vars = c("year", "is_hbc"))
   expect_snapshot(constructive::construct(complete_rate_df_is_hbc))
   cars_df <- tibble::as_tibble(mtcars, rownames = "car_name")
   complete_rate_df_cars <- compute_completion_rate(cars_df, id_vars = NULL)
@@ -13,7 +11,9 @@ test_that("compute_completion_rate() works", {
 })
 
 test_that("compute_correlation() works", {
-  tbl_dxgap <- compute_dx_gap(tbl)
+  testdata_path <- testthat::test_path("testdata", "tb_tbl_ts.rds")
+  tb_tbl <- readr::read_rds(testdata_path)
+  tbl_dxgap <- compute_dx_gap(tb_tbl)
   corr_df <- compute_correlation(tbl_dxgap, who_dx_gap)
   expect_snapshot(constructive::construct(corr_df))
   corr_df_by <- compute_correlation(tbl_dxgap, who_dx_gap, by = "year")
