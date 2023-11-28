@@ -1,22 +1,18 @@
-skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-data_list <- load_dx("tb")
-dm <- build_dm(data_list, year = 2019)
-data_tbl <- build_tbl(dm, vars = dxgap_const$tb_vars)
-tbl <-
-  data_tbl |>
-  compute_dx_gap() |>
-  dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-  dplyr::select(-any_of(c("year", "country")))
-
 test_that("recipe is as expected", {
-  recipe_tb <- tbl |>
+  testdata_path <- testthat::test_path("testdata", "tb_tbl.rds")
+  tb_tbl <- readr::read_rds(testdata_path)
+  tb_tbl_prep <- prep_tb_data(tb_tbl)
+  recipe_tb <- tb_tbl_prep |>
     get_recipe_tb(5,.25, dxgap_const$tb_vars) |>
     get_log_recipe_tb()
   expect_snapshot(recipe_tb)
 })
 
 test_that("log transformation works for all the variables", {
-  out_log <- tbl |>
+  testdata_path <- testthat::test_path("testdata", "tb_tbl.rds")
+  tb_tbl <- readr::read_rds(testdata_path)
+  tb_tbl_prep <- prep_tb_data(tb_tbl)
+  out_log <- tb_tbl_prep |>
     dplyr::filter(country_code %in% c("AGO", "BRA", "IND")) |>
     get_recipe_tb(5,.25, dxgap_const$tb_vars) |>
     get_log_recipe_tb() |>

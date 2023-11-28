@@ -186,3 +186,4 @@ view_templates <- function() {
   valid_templates <- all_templates[!grepl("test\\.Rmd$", all_templates)]
   return(valid_templates)
 }
+
