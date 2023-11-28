@@ -44,8 +44,7 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 #' predictors with respect to a target variable. Optionally, the computation
 #' can be done by groups.
 #'
-#' @param data A tibble. If `by` is `NULL` all variables should be numeric
-#'   columns.
+#' @param data A tibble.
 #' @param target_var The variable against which the correlations needs to be
 #'   computed. For instance, `who_dx_gap`.
 #' @param by A character vector.
@@ -59,7 +58,7 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 #' car_tbl <- as_tibble(mtcars, rownames = "car_name")
 #' my_cars <- select(car_tbl, -all_of(c("vs", "am", "carb")))
 #' compute_correlation(my_cars, mpg, by = c("gear", "cyl"))
-#' compute_correlation(my_cars, mpg, by = NULL)
+#' compute_correlation(my_cars, mpg, by = NULL) # car_name is dropped by default
 #' }
 compute_correlation <- function(data, target_var, by = NULL, ...) {
   stopifnot(is.data.frame(data))

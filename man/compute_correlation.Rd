@@ -29,6 +29,6 @@ can be done by groups.
 car_tbl <- as_tibble(mtcars, rownames = "car_name")
 my_cars <- select(car_tbl, -all_of(c("vs", "am", "carb")))
 compute_correlation(my_cars, mpg, by = c("gear", "cyl"))
-compute_correlation(my_cars, mpg, by = NULL)
+compute_correlation(my_cars, mpg, by = NULL) # car_name is dropped by default
 }
 }
