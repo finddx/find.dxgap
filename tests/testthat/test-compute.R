@@ -20,4 +20,5 @@ test_that("compute_correlation() works", {
   expect_snapshot(constructive::construct(corr_df_by))
   corr_df_by2 <- compute_correlation(tbl_dxgap, who_dx_gap, by = c("year", "is_hbc"))
   expect_snapshot(constructive::construct(corr_df_by2))
+  expect_error(compute_correlation(tbl_dxgap), regexp = "absent")
 })
