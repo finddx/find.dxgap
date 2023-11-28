@@ -154,13 +154,12 @@ all_indicators_df |>
 
 ```{r}
 # Q: How does test type correlate with dx gap across all time points?
-corr_df_1 <- reframe(tbl, .by = year, compute_corr(pick(everything())))
+corr_df_1 <- compute_correlation(tbl, who_dx_gap, by = "year")
 ```
 
 
 ```{r}
-# credits: https://github.com/moodymudskipper
-corr_df <- reframe(tbl, .by = c(is_hbc, year), compute_corr(pick(everything())))
+corr_df <- compute_correlation(tbl, who_dx_gap, by = c("is_hbc", "year"))
 ```
 
 ```{r}
