@@ -28,8 +28,13 @@ NULL
 #'   Please, make sure the environment variable "DXGAP_DATADIR" is set in your
 #'   .Renviron.
 #' @param url_endpoint A string indicating the name of the data set to be
-#'   downloaded (e.g., "budget", "community", "labs"). Possible options can be
-#'   seen by calling the `who_url_endpoints` tibble.
+#'   downloaded. One of the following:
+#'   * budget
+#'   * community
+#'   * estimates
+#'   * expenditure_utilisation
+#'   * labs
+#'   * notifications
 #' @param download_date A string in the format "%Y-%m-%d". Defaults to today's
 #'   date.
 #' @param data_dir Defines the default destination folder at project level, from
@@ -95,8 +100,6 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
   invisible(normalizePath(file_path))
 }
 
-#' @export
-#' @keywords internal
 who_url_endpoints <- tibble::tribble(
   ~dataset,                   ~url_endpoint,
   "budget",                       "budget",

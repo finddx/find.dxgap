@@ -23,8 +23,15 @@ tidy_who(data, year = NULL, .shape = "long")
 \item{file_name}{A string containing the name of the file to be read.}
 
 \item{url_endpoint}{A string indicating the name of the data set to be
-downloaded (e.g., "budget", "community", "labs"). Possible options can be
-seen by calling the \code{who_url_endpoints} tibble.}
+downloaded. One of the following:
+\itemize{
+\item budget
+\item community
+\item estimates
+\item expenditure_utilisation
+\item labs
+\item notifications
+}}
 
 \item{download_date}{A string in the format "\%Y-\%m-\%d". Defaults to today's
 date.}
