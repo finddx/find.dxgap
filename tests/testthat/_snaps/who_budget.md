@@ -32,7 +32,7 @@
         value = numeric(0),
       )
 
-# `country_code` entries are not missing
+---
 
     Code
       dplyr::filter(dplyr::distinct(tidy, country_code, country), is.na(country_code))
