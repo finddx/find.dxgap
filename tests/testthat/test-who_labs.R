@@ -18,7 +18,7 @@ test_that("WHO labs data is read and tidied correctly", {
     constructive::construct(vctrs::vec_ptype(raw))
     constructive::construct(vctrs::vec_ptype(tidy))
   })
-  # `country_code` entries are not missing"
+  
   expect_snapshot(
     tidy |>
       dplyr::distinct(country_code, country) |>
