@@ -10,7 +10,7 @@
       Table: `wb_tot_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 192
+      Rows: 190
       Columns: 3
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS", "~
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
@@ -21,7 +21,7 @@
       Table: `wb_urb_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 192
+      Rows: 190
       Columns: 3
       $ country_code   <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS",~
       $ year           <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2~
@@ -32,7 +32,7 @@
       Table: `wb_density_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 192
+      Rows: 190
       Columns: 3
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS", "~
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
@@ -43,7 +43,7 @@
       Table: `wb_gdp`
       Primary key: (`year`, `country_code`)
       
-      Rows: 192
+      Rows: 190
       Columns: 3
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS", "~
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
@@ -54,19 +54,23 @@
       Table: `who_notifications`
       Primary key: (`year`, `country_code`)
       
-      Rows: 192
-      Columns: 4
-      $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS", "~
-      $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
-      $ c_newinc     <dbl> 52438, 412, 20879, 5, 74105, 11446, 621, 1502, 464, 4823,~
-      $ new_labconf  <dbl> 24358, 211, 5422, 4, 34887, 7226, 239, 771, 286, 1911, 19~
+      Rows: 190
+      Columns: 8
+      $ country_code    <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS"~
+      $ year            <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
+      $ conf_rrmdr_tx   <dbl> 396, 2, NA, 0, 1523, 222, 65, 29, NA, 815, 1, 1243, 10~
+      $ conf_xdr_tx     <dbl> 5, 0, NA, 0, 0, 4, 12, 1, NA, 186, 0, 7, 287, 0, 0, 1,~
+      $ new_clindx      <dbl> 13698, 88, 968, NA, 32278, 2379, 142, 109, 25, 872, 28~
+      $ ret_rel_labconf <dbl> 763, 14, 230, NA, 2299, 169, 31, 38, 16, 1000, 4, 6134~
+      $ c_newinc        <dbl> 52438, 412, 20879, 5, 74105, 11446, 621, 1502, 464, 48~
+      $ new_labconf     <dbl> 24358, 211, 5422, 4, 34887, 7226, 239, 771, 286, 1911,~
       
       --------------------------------------------------------------------------------
       
       Table: `who_estimates`
       Primary key: (`year`, `country_code`)
       
-      Rows: 192
+      Rows: 190
       Columns: 8
       $ country_code  <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS", ~
       $ year          <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 20~
@@ -82,7 +86,7 @@
       Table: `who_budget`
       Primary key: (`year`, `country_code`)
       
-      Rows: 192
+      Rows: 190
       Columns: 12
       $ country_code    <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AUS"~
       $ year            <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
@@ -119,7 +123,7 @@
       Table: `who_sites`
       Primary key: (`year`, `country_code`)
       
-      Rows: 192
+      Rows: 190
       Columns: 11
       $ country_code          <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM",~
       $ year                  <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
@@ -138,7 +142,7 @@
       Table: `who_expenditures`
       Primary key: (`year`, `country_code`)
       
-      Rows: 192
+      Rows: 190
       Columns: 9
       $ country_code      <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AU~
       $ year              <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019~
@@ -155,7 +159,7 @@
       Table: `gf_procurement`
       Primary key: (`year`, `country_code`)
       
-      Rows: 40
+      Rows: 39
       Columns: 3
       $ country_code      <chr> "ALB", "BDI", "BFA", "BLR", "BLZ", "BTN", "COG", "ER~
       $ year              <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019~
@@ -178,7 +182,7 @@
         (`year`, `country_code`) -> (`who_expenditures$year`, `who_expenditures$countr...
         (`year`, `country_code`) -> (`gf_procurement$year`, `gf_procurement$country_co...
       
-      Rows: 192
+      Rows: 190
       Columns: 4
       $ country_code <chr> "AGO", "BGD", "BRA", "CAF", "CHN", "COD", "COG", "ETH", "~
       $ country      <chr> "Angola", "Bangladesh", "Brazil", "Central African Republ~
@@ -218,7 +222,7 @@
       Table: `wb_tot_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 1,536
+      Rows: 1,520
       Columns: 3
       $ country_code <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "~
       $ year         <dbl> 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2022, 202~
@@ -229,7 +233,7 @@
       Table: `wb_urb_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 1,536
+      Rows: 1,520
       Columns: 3
       $ country_code   <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG",~
       $ year           <dbl> 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2022, 2~
@@ -240,7 +244,7 @@
       Table: `wb_density_pop`
       Primary key: (`year`, `country_code`)
       
-      Rows: 1,536
+      Rows: 1,520
       Columns: 3
       $ country_code <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "~
       $ year         <dbl> 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2022, 202~
@@ -251,7 +255,7 @@
       Table: `wb_gdp`
       Primary key: (`year`, `country_code`)
       
-      Rows: 1,536
+      Rows: 1,520
       Columns: 3
       $ country_code <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "~
       $ year         <dbl> 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2022, 202~
@@ -262,19 +266,23 @@
       Table: `who_notifications`
       Primary key: (`year`, `country_code`)
       
-      Rows: 7,961
-      Columns: 4
-      $ country_code <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "~
-      $ year         <dbl> 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 198~
-      $ c_newinc     <dbl> 71685, 71554, 41752, 52502, 18784, 10742, 14351, 18091, 1~
-      $ new_labconf  <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N~
+      Rows: 8,067
+      Columns: 8
+      $ country_code    <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG"~
+      $ year            <dbl> 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, ~
+      $ conf_rrmdr_tx   <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
+      $ conf_xdr_tx     <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
+      $ new_clindx      <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
+      $ ret_rel_labconf <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
+      $ c_newinc        <dbl> 71685, 71554, 41752, 52502, 18784, 10742, 14351, 18091~
+      $ new_labconf     <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
       
       --------------------------------------------------------------------------------
       
       Table: `who_estimates`
       Primary key: (`year`, `country_code`)
       
-      Rows: 4,201
+      Rows: 4,157
       Columns: 8
       $ country_code  <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", ~
       $ year          <dbl> 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 20~
@@ -290,7 +298,7 @@
       Table: `who_budget`
       Primary key: (`year`, `country_code`)
       
-      Rows: 960
+      Rows: 950
       Columns: 12
       $ country_code    <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "ALB", "ALB", "ALB"~
       $ year            <dbl> 2018, 2019, 2020, 2021, 2022, 2018, 2019, 2020, 2021, ~
@@ -310,7 +318,7 @@
       Table: `who_community`
       Primary key: (`year`, `country_code`)
       
-      Rows: 818
+      Rows: 814
       Columns: 9
       $ country_code           <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG"~
       $ year                   <dbl> 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020,~
@@ -327,7 +335,7 @@
       Table: `who_sites`
       Primary key: (`year`, `country_code`)
       
-      Rows: 2,494
+      Rows: 2,468
       Columns: 11
       $ country_code          <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "AFG", "AFG",~
       $ year                  <dbl> 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, ~
@@ -346,7 +354,7 @@
       Table: `who_expenditures`
       Primary key: (`year`, `country_code`)
       
-      Rows: 960
+      Rows: 950
       Columns: 9
       $ country_code      <chr> "AFG", "AFG", "AFG", "AFG", "AFG", "ALB", "ALB", "AL~
       $ year              <dbl> 2017, 2018, 2019, 2020, 2021, 2017, 2018, 2019, 2020~
@@ -363,7 +371,7 @@
       Table: `gf_procurement`
       Primary key: (`year`, `country_code`)
       
-      Rows: 197
+      Rows: 194
       Columns: 3
       $ country_code      <chr> "AFG", "AFG", "AGO", "AGO", "AGO", "ALB", "ARM", "AR~
       $ year              <dbl> 2020, 2021, 2020, 2021, 2022, 2019, 2020, 2023, 2021~
@@ -386,7 +394,7 @@
         (`year`, `country_code`) -> (`who_expenditures$year`, `who_expenditures$countr...
         (`year`, `country_code`) -> (`gf_procurement$year`, `gf_procurement$country_co...
       
-      Rows: 1,152
+      Rows: 1,140
       Columns: 4
       $ country_code <chr> "AGO", "AGO", "AGO", "AGO", "AGO", "AGO", "BGD", "BGD", "~
       $ country      <chr> "Angola", "Angola", "Angola", "Angola", "Angola", "Angola~

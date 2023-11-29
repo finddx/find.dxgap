@@ -4,20 +4,20 @@ write_data_dir()
 
 render_report(
   "missing.Rmd",
-  .year = NULL,
+  disease = "tb",
+  year = NULL,
   interactive = TRUE,
-  .vars = NULL
+  vars = NULL
 )
 
 # is recognized as the subset of variables that should be used in the lm
 dxgap_const$tb_vars
 
-render_report("eda.Rmd", .year = 2019, .vars = c(dxgap_const$tb_vars, "new_labconf"))
-render_bulk("eda.Rmd", year = 2018:2021, vars = dxgap_const$tb_vars)
+render_report("eda.Rmd", disease = "tb", year = 2019, vars = c(dxgap_const$tb_vars, "new_labconf"))
+render_bulk("eda.Rmd", disease = "tb", year = 2018:2021, vars = dxgap_const$tb_vars)
 
-
-render_report("explain_lm.Rmd", .year = 2019, .vars = dxgap_const$tb_vars)
-render_bulk("explain_lm.Rmd", year = 2016:2021, vars = dxgap_const$tb_vars)
+render_report("explain_lm.Rmd", disease = "tb", year = 2019, vars = dxgap_const$tb_vars)
+render_bulk("explain_lm.Rmd", disease = "tb", years = 2016:2021, vars = dxgap_const$tb_vars)
 
 read_who("who_2023-08-30_laboratories.csv") |>
   tidy_who() |>
@@ -26,4 +26,4 @@ read_who("who_2023-08-30_laboratories.csv") |>
   pull(year) |>
   range()
 
-render_report("eda_ts.Rmd", .vars = dxgap_const$tb_vars)
+render_report("eda_ts.Rmd", disease = "tb", vars = dxgap_const$tb_vars)

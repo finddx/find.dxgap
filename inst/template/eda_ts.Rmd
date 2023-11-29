@@ -23,10 +23,7 @@ data_tbl <- params$data_tbl
 
 ```{r}
 tbl <-
-  data_tbl |>
-  compute_dx_gap() |>
-  mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-  select(-any_of(c("country"))) |>
+  prep_tb_data(data_tbl, "country") |> 
   mutate(xpert = coalesce(xpert, m_wrd)) |>
   select(-c(m_wrd, c_newinc, e_inc_num, country_code))
 
@@ -154,13 +151,12 @@ all_indicators_df |>
 
 ```{r}
 # Q: How does test type correlate with dx gap across all time points?
-corr_df_1 <- reframe(tbl, .by = year, compute_corr(pick(everything())))
+corr_df_1 <- compute_correlation(tbl, who_dx_gap, by = "year")
 ```
 
 
 ```{r}
-# credits: https://github.com/moodymudskipper
-corr_df <- reframe(tbl, .by = c(is_hbc, year), compute_corr(pick(everything())))
+corr_df <- compute_correlation(tbl, who_dx_gap, by = c("is_hbc", "year"))
 ```
 
 ```{r}

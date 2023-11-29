@@ -23,6 +23,8 @@ is needed for the \verb{read_*()} family of functions to work, in particular whe
 running tests.
 }
 \examples{
+\dontrun{
 write_data_dir() # Create folder at same level as project
 write_data_dir("~/Documents/my_projects") # Specify specific folder
+}
 }

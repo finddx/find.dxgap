@@ -1,7 +1,7 @@
 #' Data from WHO
 #'
 #' These help pages document the lower-level API to individually download, read,
-#' and tidy WHO data. For a higher-level API that works across all data sets,
+#' and tidy data. For a higher-level API that works across all data sets,
 #' see:
 #' * [write_data_dir()] to download all data
 #' * [load_dx()] to load all data
@@ -46,8 +46,8 @@ NULL
 #' @examples
 #' \dontrun{
 #' notification <- download_who(
-#' file_name = compose_date_dataset_file_name("who", dataset = "notifications", file_ext = ".csv"),
-#' url_endpoint = "notifications"
+#'   file_name = compose_date_dataset_file_name("who", dataset = "notifications", file_ext = ".csv"),
+#'   url_endpoint = "notifications"
 #' )
 #' estimates <- download_who(
 #'   file_name = compose_date_dataset_file_name("who", dataset = "estimates", file_ext = ".csv"),
@@ -109,12 +109,11 @@ who_url_endpoints <- tibble::tribble(
 
 #' Read WHO data sets
 #'
-#' @param file_name A string containing the name of the WHO file to be read
+#' @param file_name A string containing the name of the file to be read.
 #' @param data_dir Path containing the directory to read the data from. Defaults
 #' to the path set by the environment variable `"DXGAP_DATADIR"`.
-#' @param ... Additional arguments passed to [readr::read_csv()]
 #'
-#' @return A tibble containing the who data set.
+#' @return `read_who()` returns a tibble containing the data set.
 #'
 #' @rdname who
 #'
@@ -131,13 +130,14 @@ read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
 #' Tidy WHO data sets
 #'
-#' @param data A tibble returned from the corresponding [read_()] function.
-#' @param year A year to filter the data by. Defaults to NULL, returning data
+#' @param data A tibble returned from the corresponding `read_()` function.
+#' @param year A year to filter the data by. Defaults to `NULL`, returning data
 #'   for all years.
 #' @param .shape A string indicating if the data should be in "wide", or "long"
 #'   format. Defaults to "long".
 #'
-#' @return A tibble. This is a tidied version of the input tibble.
+#' @return `tidy_who()` returns s tibble. This is a tidied version of the input
+#'   tibble.
 #'
 #' @rdname who
 #'
@@ -155,6 +155,16 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
   is_estimates <- is_ptype(data, ptype_who_estimates)
   is_expenditure <- is_ptype(data, ptype_who_expenditures)
   is_labs <- is_ptype(data, ptype_who_labs)
+  check_unique_ptype(
+    c(
+      is_notifications,
+      is_community,
+      is_budget,
+      is_estimates,
+      is_expenditure,
+      is_labs
+    )
+  )
 
   if (is_notifications) {
     tidy_who_notifications(data, .year = year, shape = .shape)
@@ -173,6 +183,36 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
       c("Cannot find a footprint for this data.", i = "Is this a new dataset?")
     )
   }
+}
+
+# TODO: understandable renaming
+tidy_who_notifications <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_budget <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_community <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_estimates <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_expenditures <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_labs <- function(data, .year = NULL, shape = "long") {
+  tidy_who_impl(data = data, .year = .year, shape = shape)
+}
+
+tidy_who_impl <- function(data, .year = NULL, shape = "long") {
+  shape <- rlang::arg_match(shape, values = c("long", "wide"))
+  tidy_who_core(data, year = .year, shape = shape)
 }
 
 tidy_who_core <- function(data, year, shape) {
@@ -209,35 +249,4 @@ tidy_who_shape <- function(data, .shape) {
     return(df)
   }
   data
-}
-
-# TODO: understandable renaming
-tidy_who_notifications <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
-}
-
-tidy_who_budget <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
-}
-
-tidy_who_community <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
-}
-
-tidy_who_estimates <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
-}
-
-tidy_who_expenditures <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
-}
-
-tidy_who_labs <- function(data, .year = NULL, shape = "long") {
-  shape <- rlang::arg_match(shape, values = c("long", "wide"))
-  tidy_who_core(data, year = .year, shape = shape)
 }

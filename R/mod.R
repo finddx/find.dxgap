@@ -1,14 +1,14 @@
 #' Run a suite of statistical models
 #'
-#' `run_mod()` runs a suite of statical models, returning a final model fit.
+#' `run_mod()` runs a suite of statistical models, returning a final model fit.
 #'
 #' @param tbl Input data frame containing the data to model.
 #' @param mod A list of models to run.
-#' @param preproc A list of preprocessing steps.
+#' @param preproc A list of pre-processing steps.
 #' @param folds An integer. The number of cross-validation folds.
 #' @param metrics A tibble containing the performance metrics to evaluate.
 #' @param rank_metric A metric from `metrics` to rank results by.
-#' @param cross A logical: should all combinations of the preprocessors and
+#' @param cross A logical: should all combinations of the pre-processors and
 #'   models be used to create the workflows? If FALSE, the length of preproc and
 #'   models should be equal.
 #' @param seed A single integer.
@@ -20,7 +20,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' tbl <- load_dx() |>
+#' tbl <- load_dx("tb") |>
 #'   build_dm(year = 2019) |>
 #'   build_tbl(vars = dxgap_const$tb_vars) |>
 #'   compute_dx_gap() |>
@@ -86,6 +86,12 @@ run_mod <- function(tbl,
     rank = rank,
     final_fit = final_fit,
   )
+}
+
+prepare_mod_tbl <- function(tbl) {
+  tbl |>
+    dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+    dplyr::select(-any_of(c("year", "country")))
 }
 
 finalize_mod <- function(.wset, .rank, .train) {
@@ -158,9 +164,3 @@ specify_mod <- function(.mode, .engine) {
   parsnip::linear_reg(mode = .mode) |>
     parsnip::set_engine(engine = .engine)
 }
-
-pull_mod_best <- function(rank_df) {
-  rank_df$wflow_id[[1]]
-}
-
-

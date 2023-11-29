@@ -2,22 +2,29 @@
 % Please edit documentation in R/load.R
 \name{load_dx}
 \alias{load_dx}
-\title{Load diagnostic gap data}
+\title{Load diagnostic gap data for given disease}
 \usage{
-load_dx()
+load_dx(disease)
+}
+\arguments{
+\item{disease}{A character of lenght one identifying the disease for which
+the user wants to build a wide table. The tibble \code{dxgap_diseases} shows the
+diseases that are currently supported.}
 }
 \value{
 A list of tibbles.
 }
 \description{
-\code{load_dx()} loads all files frames created by \code{\link[=write_data_dir]{write_data_dir()}} into a
+\code{load_dx()} loads all files for given disease into a
 list of tibbles.
 }
 \examples{
 \dontrun{
-load_dx()
+load_dx("tb")
 }
 }
 \seealso{
 \code{\link[=build_dm]{build_dm()}}
+
+\code{\link[=build_tbl]{build_tbl()}}
 }

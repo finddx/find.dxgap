@@ -1,3 +1,25 @@
+#' TB High-Burden Countries data from WHO
+#'
+#' WHO each five years lists the 20 + 10 countries classified as "High-Burden".
+#' * The first 20 account for roughly 80%
+#' of the share of global incidence for a given 5 years period.
+#' * The last 10 accounts for roughly 2%-3% of the share of global incidence for
+#' a given 5 years period.
+#'
+#' @name hbc
+NULL
+
+#' Download TB High-Burden Countries data set
+#'
+#' @inheritParams download_who
+#' @rdname hbc
+#' @return `download_hbc()` returns invisibly the file path in which data are
+#'   stored.
+#' @export
+#' @examples
+#' \dontrun{
+#' download_hbc("who_2023-07-28_hbc.pdf")
+#' }
 download_hbc <- function(file_name = tempfile("who_hbc_list", fileext = ".pdf"),
                          url = "https://cdn.who.int/media/docs/default-source/hq-tuberculosis/who_globalhbcliststb_2021-2025_backgrounddocument.pdf?sfvrsn=f6b854c2_9",
                          data_dir = Sys.getenv("DXGAP_DATADIR")) {
@@ -10,12 +32,40 @@ download_hbc <- function(file_name = tempfile("who_hbc_list", fileext = ".pdf"),
   invisible(normalizePath(file_path))
 }
 
+#' Read TB High-Burden Countries data set
+#'
+#' `read_hbc()` reads a file generated manually using the pdf downloaded from
+#' `download_hbc()`.
+#'
+#' @param file_name A string containing the name of the file to be read.
+#' @inheritParams read_who
+#' @rdname hbc
+#' @return `read_hbc()` returns a tibble containing the data set.
+#' @export
+#' @examples
+#' \dontrun{
+#' read_hbc("who_2023-07-28_hbc.csv")
+#' }
 read_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   # TODO: extract table from pdf pdftools::pdf_text(file_path)[[8]]
   dxgap_read_csv(file_name = file_name, data_dir = data_dir) |>
     tibble::as_tibble()
 }
 
+#' Tidy Global Fund data sets
+#'
+#' @inheritParams tidy_who
+#' @param all Whether to return the 20 + 10 subset, or just the first 20
+#'   countries. Default to `TRUE`.
+#' @rdname hbc
+#' @return `tidy_hbc()` returns a tibble. This is a tidied version of the input
+#'   tibble.
+#' @export
+#' @examples
+#' \dontrun{
+#' read_hbc("who_2023-07-28_hbc.csv") |>
+#'   tidy_hbc()
+#' }
 tidy_hbc <- function(data, year = NULL, all = TRUE) {
   df <-
     data |>
@@ -73,4 +123,14 @@ grow_hbc <- function(data) {
       )
     ) |>
     tidyr::unnest(hbc_data)
+}
+
+tidy_hbc2 <- function(data) {
+  data |>
+    dplyr::select(country_code, year) |>
+    dplyr::mutate(country = countrycode::countrycode(
+      country_code,
+      origin = "iso3c",
+      dest = "country.name"
+    ))
 }

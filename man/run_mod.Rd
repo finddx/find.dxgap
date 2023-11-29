@@ -20,7 +20,7 @@ run_mod(
 
 \item{mod}{A list of models to run.}
 
-\item{preproc}{A list of preprocessing steps.}
+\item{preproc}{A list of pre-processing steps.}
 
 \item{folds}{An integer. The number of cross-validation folds.}
 
@@ -28,7 +28,7 @@ run_mod(
 
 \item{rank_metric}{A metric from \code{metrics} to rank results by.}
 
-\item{cross}{A logical: should all combinations of the preprocessors and
+\item{cross}{A logical: should all combinations of the pre-processors and
 models be used to create the workflows? If FALSE, the length of preproc and
 models should be equal.}
 
@@ -39,11 +39,11 @@ A list containing a workset, ranked model results, and a final model
 fit.
 }
 \description{
-\code{run_mod()} runs a suite of statical models, returning a final model fit.
+\code{run_mod()} runs a suite of statistical models, returning a final model fit.
 }
 \examples{
 \dontrun{
-tbl <- load_dx() |>
+tbl <- load_dx("tb") |>
   build_dm(year = 2019) |>
   build_tbl(vars = dxgap_const$tb_vars) |>
   compute_dx_gap() |>
