@@ -6,7 +6,7 @@
 #' * [write_data_dir()] to download all data
 #' * [load_dx()] to load all data
 #'
-#' The data sets currently available from WHO in this package are:
+#' The data sets currently available from World Bank in this package are:
 #' * urban population
 #' * total population
 #' * population density
@@ -60,11 +60,11 @@ NULL
 download_wb <- function(file_name = tempfile(compose_file_name("wb", download_date, indicator), fileext = ".csv"),
                         indicator,
                         range_years,
+                        url = "https://api.worldbank.org/v2/country/all/indicator",
                         download_date = as.character(Sys.Date()),
                         data_dir = Sys.getenv("DXGAP_DATADIR")) {
-  base_url <- "https://api.worldbank.org/v2/country/all/indicator"
   req <-
-    httr2::request(base_url) |>
+    httr2::request(url) |>
     httr2::req_url_path_append(indicator) |>
     httr2::req_url_query(format = "json", date = range_years)
 

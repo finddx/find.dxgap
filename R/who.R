@@ -35,6 +35,7 @@ NULL
 #'   * expenditure_utilisation
 #'   * labs
 #'   * notifications
+#' @param url A string of the url source.
 #' @param download_date A string in the format "%Y-%m-%d". Defaults to today's
 #'   date.
 #' @param data_dir Defines the default destination folder at project level, from
@@ -77,10 +78,10 @@ NULL
 #' }
 download_who <- function(file_name = tempfile(compose_file_name("who", download_date, url_endpoint), fileext = ".csv"),
                          url_endpoint = "notification",
+                         url = "https://extranet.who.int/tme/generateCSV.asp?ds=",
                          download_date = as.character(Sys.Date()),
                          data_dir = Sys.getenv("DXGAP_DATADIR")) {
   url_endpoint <- rlang::arg_match(url_endpoint, who_url_endpoints$url_endpoint)
-  url <-  "https://extranet.who.int/tme/generateCSV.asp?ds="
   url_topic <- paste0(url, url_endpoint)
   file_path <- compose_file_path(file_name, data_dir)
 

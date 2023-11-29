@@ -11,6 +11,7 @@ download_who(
   file_name = tempfile(compose_file_name("who", download_date, url_endpoint), fileext =
     ".csv"),
   url_endpoint = "notification",
+  url = "https://extranet.who.int/tme/generateCSV.asp?ds=",
   download_date = as.character(Sys.Date()),
   data_dir = Sys.getenv("DXGAP_DATADIR")
 )
@@ -32,6 +33,8 @@ downloaded. One of the following:
 \item labs
 \item notifications
 }}
+
+\item{url}{A string of the url source.}
 
 \item{download_date}{A string in the format "\%Y-\%m-\%d". Defaults to today's
 date.}
