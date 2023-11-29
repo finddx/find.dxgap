@@ -39,7 +39,6 @@ Imports:
     rstudioapi,
     scales,
     stringr,
-    testthat,
     tibble,
     tidyr,
     tidyselect,
