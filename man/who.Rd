@@ -11,6 +11,7 @@ download_who(
   file_name = tempfile(compose_file_name("who", download_date, url_endpoint), fileext =
     ".csv"),
   url_endpoint = "notification",
+  url = "https://extranet.who.int/tme/generateCSV.asp?ds=",
   download_date = as.character(Sys.Date()),
   data_dir = Sys.getenv("DXGAP_DATADIR")
 )
@@ -23,8 +24,17 @@ tidy_who(data, year = NULL, .shape = "long")
 \item{file_name}{A string containing the name of the file to be read.}
 
 \item{url_endpoint}{A string indicating the name of the data set to be
-downloaded (e.g., "budget", "community", "labs"). Possible options can be
-seen by calling the \code{who_url_endpoints} tibble.}
+downloaded. One of the following:
+\itemize{
+\item budget
+\item community
+\item estimates
+\item expenditure_utilisation
+\item labs
+\item notifications
+}}
+
+\item{url}{A string of the url source.}
 
 \item{download_date}{A string in the format "\%Y-\%m-\%d". Defaults to today's
 date.}

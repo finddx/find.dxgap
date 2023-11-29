@@ -12,6 +12,7 @@ download_wb(
     ".csv"),
   indicator,
   range_years,
+  url = "https://api.worldbank.org/v2/country/all/indicator",
   download_date = as.character(Sys.Date()),
   data_dir = Sys.getenv("DXGAP_DATADIR")
 )
@@ -27,6 +28,8 @@ tidy_wb(data, year = NULL)
 in the World Bank API. For instance, "SP.POP.TOTL".}
 
 \item{range_years}{The range of the years to be downloaded as a string.}
+
+\item{url}{A string of the url source.}
 
 \item{download_date}{A string in the format "\%Y-\%m-\%d". Defaults to today's
 date.}
@@ -57,7 +60,7 @@ see:
 }
 }
 \details{
-The data sets currently available from WHO in this package are:
+The data sets currently available from World Bank in this package are:
 \itemize{
 \item urban population
 \item total population

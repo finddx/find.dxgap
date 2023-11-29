@@ -28,8 +28,14 @@ NULL
 #'   Please, make sure the environment variable "DXGAP_DATADIR" is set in your
 #'   .Renviron.
 #' @param url_endpoint A string indicating the name of the data set to be
-#'   downloaded (e.g., "budget", "community", "labs"). Possible options can be
-#'   seen by calling the `who_url_endpoints` tibble.
+#'   downloaded. One of the following:
+#'   * budget
+#'   * community
+#'   * estimates
+#'   * expenditure_utilisation
+#'   * labs
+#'   * notifications
+#' @param url A string of the url source.
 #' @param download_date A string in the format "%Y-%m-%d". Defaults to today's
 #'   date.
 #' @param data_dir Defines the default destination folder at project level, from
@@ -72,10 +78,10 @@ NULL
 #' }
 download_who <- function(file_name = tempfile(compose_file_name("who", download_date, url_endpoint), fileext = ".csv"),
                          url_endpoint = "notification",
+                         url = "https://extranet.who.int/tme/generateCSV.asp?ds=",
                          download_date = as.character(Sys.Date()),
                          data_dir = Sys.getenv("DXGAP_DATADIR")) {
   url_endpoint <- rlang::arg_match(url_endpoint, who_url_endpoints$url_endpoint)
-  url <-  "https://extranet.who.int/tme/generateCSV.asp?ds="
   url_topic <- paste0(url, url_endpoint)
   file_path <- compose_file_path(file_name, data_dir)
 
@@ -95,8 +101,6 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
   invisible(normalizePath(file_path))
 }
 
-#' @export
-#' @keywords internal
 who_url_endpoints <- tibble::tribble(
   ~dataset,                   ~url_endpoint,
   "budget",                       "budget",

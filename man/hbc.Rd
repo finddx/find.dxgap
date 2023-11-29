@@ -21,6 +21,8 @@ tidy_hbc(data, year = NULL, all = TRUE)
 \arguments{
 \item{file_name}{A string containing the name of the file to be read.}
 
+\item{url}{A string of the url source.}
+
 \item{data_dir}{Path containing the directory to read the data from. Defaults
 to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
 
