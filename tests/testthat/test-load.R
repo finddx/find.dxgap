@@ -1,4 +1,6 @@
 test_that("load_dx() works", {
+  skip_on_ci()
+  skip_if(Sys.getenv("DXGAP_DATADIR") == "")
   lst_df <- load_dx(disease = "tb")
   expect_type(lst_df, "list")
   expect_equal(length(lst_df), 12)

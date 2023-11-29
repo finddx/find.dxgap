@@ -1,6 +1,7 @@
-skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-data_list <- load_dx("tb")
 test_that("build_dm()", {
+  skip_on_ci()
+  skip_if(Sys.getenv("DXGAP_DATADIR") == "")
+  data_list <- load_dx("tb")
   dm <- build_dm(data_list, year = 2019)
   expect_snapshot(dm::glimpse(dm))
   expect_snapshot(dm::dm_examine_constraints(dm))
@@ -14,6 +15,9 @@ test_that("build_dm()", {
 })
 
 test_that("build_dm() works and returns a time series", {
+  skip_on_ci()
+  skip_if(Sys.getenv("DXGAP_DATADIR") == "")
+  data_list <- load_dx("tb")
   dm <- build_dm(data_list)
   expect_snapshot(dm::glimpse(dm))
   expect_snapshot(dm::dm_examine_constraints(dm))
@@ -27,12 +31,18 @@ test_that("build_dm() works and returns a time series", {
 })
 
 test_that("build_tbl() works", {
+  skip_on_ci()
+  skip_if(Sys.getenv("DXGAP_DATADIR") == "")
+  data_list <- load_dx("tb")
   dm <- build_dm(data_list)
   tbl <- build_tbl(dm)
   expect_s3_class(tbl, "data.frame")
 })
 
 test_that("build_tbl() returns accurate results", {
+  skip_on_ci()
+  skip_if(Sys.getenv("DXGAP_DATADIR") == "")
+  data_list <- load_dx("tb")
   dm <- build_dm(data_list)
   tbl <- build_tbl(dm)
 

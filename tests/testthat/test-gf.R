@@ -1,3 +1,4 @@
+skip_on_ci()
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
 file_name <- "gf_2023-07-26_procurement.csv"
 data <- read_gf_procurement(file_name)

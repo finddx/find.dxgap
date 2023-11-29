@@ -1,6 +1,7 @@
-skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-data_list <- load_dx("tb")
 test_that("get_cc_var_always_given_acrs_yrs() works", {
+  skip_on_ci()
+  skip_if(Sys.getenv("DXGAP_DATADIR") == "")
+  data_list <- load_dx("tb")
   who_notifications <- data_list$who_notifications
   core_df <-
     who_notifications |>
