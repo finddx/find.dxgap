@@ -45,7 +45,7 @@ fit.
 \dontrun{
 tbl <- load_dx("tb") |>
   build_dm(year = 2019) |>
-  build_tbl(vars = dxgap_const$tb_vars) |>
+  build_tbl_impl(vars = dxgap_const$tb_vars) |>
   compute_dx_gap() |>
   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
   dplyr::select(-any_of(c("year", "country")))

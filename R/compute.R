@@ -15,7 +15,7 @@
 #' \dontrun{
 #' data_list <- load_dx("tb")
 #' dm <- build_dm(data_list, year = 2019)
-#' tbl <- build_tbl(dm)
+#' tbl <- build_tbl_impl(dm)
 #' compute_completion_rate(tbl, id_vars = c("year", "is_hbc"))
 #'
 #' cars_df <- tibble::as_tibble(mtcars, rownames = "car_name")

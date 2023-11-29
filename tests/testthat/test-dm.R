@@ -26,15 +26,15 @@ test_that("build_dm() works and returns a time series", {
   })
 })
 
-test_that("build_tbl() works", {
+test_that("build_tbl_impl() works", {
   dm <- build_dm(data_list)
-  tbl <- build_tbl(dm)
+  tbl <- build_tbl_impl(dm)
   expect_s3_class(tbl, "data.frame")
 })
 
-test_that("build_tbl() returns accurate results", {
+test_that("build_tbl_impl() returns accurate results", {
   dm <- build_dm(data_list)
-  tbl <- build_tbl(dm)
+  tbl <- build_tbl_impl(dm)
 
   # consistent subset of countries per year
   n_distinct_years <-

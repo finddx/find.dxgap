@@ -105,7 +105,7 @@ pull_mod_fit <- function(mod_out_list) {
 #' tbl <-
 #'  load_dx("tb") |>
 #'  build_dm(year = NULL) |>
-#'  build_tbl(vars = vars) |>
+#'  build_tbl_impl(vars = vars) |>
 #'  compute_dx_gap() |>
 #'  dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
 #'  dplyr::select(-any_of(c("country")))

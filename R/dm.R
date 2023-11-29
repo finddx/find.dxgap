@@ -1,6 +1,6 @@
 #' Load all data for a disease into a single wide table
 #'
-#' `build_tbl()` loads all files for a given disease into a single dataframe. It
+#' `build_tbl_impl()` loads all files for a given disease into a single dataframe. It
 #' does this by flattening all of the tables into a single wide table by
 #' performing a series of cascading joins on matching keys.
 #'
@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' build_tbl("tb", 2019, c("year", "country", "pop_density"))
+#' build_tbl_impl("tb", 2019, c("year", "country", "pop_density"))
 #' }
 build_tbl <- function(disease, year = NULL, vars = NULL) {
   df_lst <- load_dx(disease)
