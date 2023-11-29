@@ -1,5 +1,5 @@
 Package: find.dxgap
-Title: Compute dxgap for different diseases.
+Title: Compute dxgap metric for different diseases
 Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Andrea",
@@ -39,7 +39,6 @@ Imports:
     rstudioapi,
     scales,
     stringr,
-    testthat,
     tibble,
     tidyr,
     tidyselect,
