@@ -1,3 +1,4 @@
+skip_on_ci()
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
 file_name <- "tb_find_variable_masterlist.csv"
 data <- read_masterlist(file_name)
