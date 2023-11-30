@@ -7,14 +7,7 @@
 \alias{tidy_who}
 \title{Data from WHO}
 \usage{
-download_who(
-  file_name = tempfile(compose_file_name("who", download_date, url_endpoint), fileext =
-    ".csv"),
-  url_endpoint = "notification",
-  url = "https://extranet.who.int/tme/generateCSV.asp?ds=",
-  download_date = as.character(Sys.Date()),
-  data_dir = Sys.getenv("DXGAP_DATADIR")
-)
+download_who(file_name, url_endpoint)
 
 read_who(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
 
@@ -33,11 +26,6 @@ downloaded. One of the following:
 \item labs
 \item notifications
 }}
-
-\item{url}{A string of the url source.}
-
-\item{download_date}{A string in the format "\%Y-\%m-\%d". Defaults to today's
-date.}
 
 \item{data_dir}{Path containing the directory to read the data from. Defaults
 to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
