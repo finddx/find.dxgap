@@ -19,7 +19,7 @@
 NULL
 
 
-#' Download data sets from the WHO
+#' Download data sets from the World Bank
 #'
 #' @inheritParams download_who
 #' @param indicator A string indicating the label of the data set as documented
@@ -106,7 +106,7 @@ unnest_wb_resp <- function(data) {
     tidyr::unnest_wider(indicator, names_sep = "_")
 }
 
-#' Read WHO data sets
+#' Read World Bank data sets
 #'
 #' @param file_name A string containing the name of the file to be read.
 #' @param data_dir Path containing the directory to read the data from. Defaults
@@ -127,7 +127,7 @@ read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
     tibble::as_tibble()
 }
 
-#' Tidy WHO data sets
+#' Tidy World Bank data sets
 #'
 #' @param data A tibble returned from the corresponding `read_()` function.
 #' @param year A year to filter the data by. Defaults to `NULL`, returning data
