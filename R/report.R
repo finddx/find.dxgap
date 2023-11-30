@@ -57,7 +57,7 @@ render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, over
 #' output can be viewed in RStudio.
 #'
 #' @inheritParams build_tbl
-#' @param year Integer matching the year of the report passed to [build_dm()].
+#' @param year Integer matching the year of the report passed to `build_dm()`.
 #' @param interactive Logical indicating whether to open the report with the
 #'   RStudio Viewer.
 #'

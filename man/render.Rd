@@ -41,7 +41,7 @@ used.}
 supported vars. Defaults to FALSE. If TRUE, consistent results are not
 guaranteed.}
 
-\item{year}{Integer matching the year of the report passed to \code{\link[=build_dm]{build_dm()}}.}
+\item{year}{Integer matching the year of the report passed to \code{build_dm()}.}
 
 \item{interactive}{Logical indicating whether to open the report with the
 RStudio Viewer.}
