@@ -97,7 +97,7 @@ download_wb_impl <- function(.file_name = tempfile(compose_file_name("wb", .down
     nested_out |>
     dplyr::select(page, json) |>
     unnest_wb_resp() |>
-    dplyr::mutate(download_date = download_date)
+    dplyr::mutate(download_date = .download_date)
 
   file_path <- compose_file_path(.file_name, .data_dir)
   readr::write_csv(out, file_path)
