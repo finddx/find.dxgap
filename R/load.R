@@ -13,6 +13,8 @@ list_dxgap_datadir <- function(.pattern, .data_dir = Sys.getenv("DXGAP_DATADIR")
 #' @seealso [build_dm()]
 #' @seealso [build_tbl()]
 #'
+#' @noRd
+#'
 #' @return A list of tibbles.
 #'
 #' @examples \dontrun{

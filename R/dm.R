@@ -40,6 +40,8 @@ build_tbl <- function(disease, year = NULL, vars = NULL) {
 #'
 #' @return A tibble.
 #'
+#' @noRd
+#'
 #' @examples
 #' \dontrun{
 #' dm_object <- load_dx() |>
@@ -79,6 +81,8 @@ build_tbl_impl <- function(dm, vars = NULL) {
 #'
 #' @return An object of class dm, containing the same number of tables as in the
 #' input `data_list`.
+#'
+#' @noRd
 #'
 #' @examples
 #' \dontrun{
