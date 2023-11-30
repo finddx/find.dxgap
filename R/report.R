@@ -15,7 +15,7 @@
 #'
 #' @param template_name String containing the name of the template to render.
 #'   Run [view_templates()] to see a list of valid options.
-#' @inheritParams load_dx
+#' @inheritParams build_tbl
 #' @param override_vars_check Logical indicating whether to override checks on
 #'   supported vars. Defaults to FALSE. If TRUE, consistent results are not
 #'   guaranteed.
@@ -56,7 +56,7 @@ render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, over
 #' `render_report()` generates a report for a given template and year. The final
 #' output can be viewed in RStudio.
 #'
-#' @inheritParams load_dx
+#' @inheritParams build_tbl
 #' @param year Integer matching the year of the report passed to [build_dm()].
 #' @param interactive Logical indicating whether to open the report with the
 #'   RStudio Viewer.
@@ -107,7 +107,7 @@ render_report_impl <- function(template_name,
 
   lst_df <- load_dx(disease)
   dm <- build_dm(lst_df, year = year)
-  data_tbl <- build_tbl(dm, vars = vars)
+  data_tbl <- build_tbl_impl(dm, vars = vars)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   if (interactive) {

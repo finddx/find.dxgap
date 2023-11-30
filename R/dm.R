@@ -1,14 +1,16 @@
-#' Join all data into a big table
+#' Load all data for a disease into a single wide table
 #'
-#' `build_tbl()` flattens all of the tables contained in a dm object created by
-#' [build_dm()] into a single wide table by performing a series of cascading
-#' joins.
+#' `build_tbl()` loads all files for a given disease into a single dataframe. It
+#' does this by flattening all of the tables into a single wide table by
+#' performing a series of cascading joins on matching keys.
 #'
-#' @param dm An object of class dm, created by [build_dm()].
-#' @param vars A vector of strings naming columns to subset the data on. Defaults
-#' to NULL, indicating all variables should be used.
-#'
-#' @seealso [build_dm()]
+#' @param disease A character of length one identifying the disease for which
+#'   the user wants to build a wide table. The tibble `dxgap_diseases` shows the
+#'   diseases that are currently supported.
+#' @param year An integer indicating a year to filter the data on. Defaults to
+#'   NULL, returning all years present in the data.
+#' @param vars A vector of strings naming columns to subset the data on.
+#'  Defaults to NULL, indicating all variables should be used.
 #'
 #' @return A tibble.
 #'
@@ -16,13 +18,37 @@
 #'
 #' @examples
 #' \dontrun{
+#' build_tbl("tb", 2019, c("year", "country", "pop_density"))
+#' }
+build_tbl <- function(disease, year = NULL, vars = NULL) {
+  df_lst <- load_dx_impl(disease)
+  dm <- build_dm(df_lst, year = year)
+  build_tbl_impl(dm, vars)
+}
+
+#' Join all data into a big table
+#'
+#' `build_tbl_impl()` flattens all of the tables contained in a dm object
+#' created by [build_dm()] into a single wide table by performing a series of
+#' cascading joins.
+#'
+#' @param dm An object of class dm, created by [build_dm()].
+#' @param vars A vector of strings naming columns to subset the data on.
+#'   Defaults to NULL, indicating all variables should be used.
+#'
+#' @seealso [build_dm()]
+#'
+#' @return A tibble.
+#'
+#' @examples
+#' \dontrun{
 #' dm_object <- load_dx() |>
 #'   build_dm()
 #'
-#' build_tbl(dm_object) # All cols
-#' build_tbl(dm_object, vars = c("year", "country", "pop_density")) # select cols
+#' build_tbl_impl(dm_object) # All cols
+#' build_tbl_impl(dm_object, vars = c("year", "country", "pop_density")) # select cols
 #' }
-build_tbl <- function(dm, vars = NULL) {
+build_tbl_impl <- function(dm, vars = NULL) {
   tbl <-
     dm |>
     dm::dm_flatten_to_tbl(.start = country) |>
@@ -53,8 +79,6 @@ build_tbl <- function(dm, vars = NULL) {
 #'
 #' @return An object of class dm, containing the same number of tables as in the
 #' input `data_list`.
-#'
-#' @export
 #'
 #' @examples
 #' \dontrun{

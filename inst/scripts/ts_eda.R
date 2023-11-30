@@ -5,7 +5,7 @@ df_lst <- load_dx("tb")
 
 # ---- Build dm ----
 dm <- build_dm(df_lst, year = NULL)
-data_tbl <- build_tbl(dm, vars = dxgap_const$tb_vars)
+data_tbl <- build_tbl_impl(dm, vars = dxgap_const$tb_vars)
 
 # ---- Prep data ----
 tbl <-

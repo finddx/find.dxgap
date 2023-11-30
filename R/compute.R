@@ -30,10 +30,8 @@
 #' @examples
 #' \dontrun{
 #' # Calculate diagnostic gap for 2019 TB data:
-#' load_dx() |>
-#'  build_dm(year = 2019) |>
-#'  build_tbl(vars = dxgap_const$tb_vars) |>
-#'  compute_dx_gap()
+#'  build_tbl("tb", 2019, vars = dxgap_const$tb_vars) |>
+#'     compute_dx_gap()
 #' }
 compute_dx_gap <- function(data) {
   data |>
@@ -58,9 +56,7 @@ compute_dx_gap <- function(data) {
 #'
 #' @examples
 #' \dontrun{
-#' data_list <- load_dx("tb")
-#' dm <- build_dm(data_list, year = 2019)
-#' tbl <- build_tbl(dm)
+#' tbl <- build_tbl("tb", 2019, vars = dxgap_const$tb_vars)
 #' compute_completion_rate(tbl, id_vars = c("year", "is_hbc"))
 #'
 #' cars_df <- tibble::as_tibble(mtcars, rownames = "car_name")

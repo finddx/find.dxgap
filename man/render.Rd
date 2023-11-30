@@ -26,7 +26,7 @@ render_report(
 \item{template_name}{String containing the name of the template to render.
 Run \code{\link[=view_templates]{view_templates()}} to see a list of valid options.}
 
-\item{disease}{A character of lenght one identifying the disease for which
+\item{disease}{A character of length one identifying the disease for which
 the user wants to build a wide table. The tibble \code{dxgap_diseases} shows the
 diseases that are currently supported.}
 

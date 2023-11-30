@@ -2,33 +2,31 @@
 % Please edit documentation in R/dm.R
 \name{build_tbl}
 \alias{build_tbl}
-\title{Join all data into a big table}
+\title{Load all data for a disease into a single wide table}
 \usage{
-build_tbl(dm, vars = NULL)
+build_tbl(disease, year = NULL, vars = NULL)
 }
 \arguments{
-\item{dm}{An object of class dm, created by \code{\link[=build_dm]{build_dm()}}.}
+\item{disease}{A character of length one identifying the disease for which
+the user wants to build a wide table. The tibble \code{dxgap_diseases} shows the
+diseases that are currently supported.}
 
-\item{vars}{A vector of strings naming columns to subset the data on. Defaults
-to NULL, indicating all variables should be used.}
+\item{year}{An integer indicating a year to filter the data on. Defaults to
+NULL, returning all years present in the data.}
+
+\item{vars}{A vector of strings naming columns to subset the data on.
+Defaults to NULL, indicating all variables should be used.}
 }
 \value{
 A tibble.
 }
 \description{
-\code{build_tbl()} flattens all of the tables contained in a dm object created by
-\code{\link[=build_dm]{build_dm()}} into a single wide table by performing a series of cascading
-joins.
+\code{build_tbl()} loads all files for a given disease into a single dataframe. It
+does this by flattening all of the tables into a single wide table by
+performing a series of cascading joins on matching keys.
 }
 \examples{
 \dontrun{
-dm_object <- load_dx() |>
-  build_dm()
-
-build_tbl(dm_object) # All cols
-build_tbl(dm_object, vars = c("year", "country", "pop_density")) # select cols
+build_tbl("tb", 2019, c("year", "country", "pop_density"))
 }
-}
-\seealso{
-\code{\link[=build_dm]{build_dm()}}
 }

@@ -15,8 +15,6 @@ list_dxgap_datadir <- function(.pattern, .data_dir = Sys.getenv("DXGAP_DATADIR")
 #'
 #' @return A list of tibbles.
 #'
-#' @export
-#'
 #' @examples \dontrun{
 #' load_dx("tb")
 #' }
