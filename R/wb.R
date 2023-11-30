@@ -21,7 +21,6 @@ NULL
 
 #' Download data sets from the World Bank
 #'
-#' @inheritParams download_who
 #' @param indicator A string indicating the label of the data set as documented
 #'   in the World Bank API. For instance, "SP.POP.TOTL".
 #' @param range_years The range of the years to be downloaded as a string.
