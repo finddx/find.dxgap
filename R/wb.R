@@ -64,7 +64,7 @@ download_wb <- function(file_name, indicator, range_years) {
   )
 }
 
-download_wb_impl <- function(.file_name = tempfile(compose_file_name("wb", .download_date, indicator), fileext = ".csv"),
+download_wb_impl <- function(.file_name = tempfile(compose_file_name("wb", .download_date, .indicator), fileext = ".csv"),
                              .indicator,
                              .range_years,
                              .url = "https://api.worldbank.org/v2/country/all/indicator",
