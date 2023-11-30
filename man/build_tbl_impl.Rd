@@ -9,24 +9,24 @@ build_tbl_impl(dm, vars = NULL)
 \arguments{
 \item{dm}{An object of class dm, created by \code{\link[=build_dm]{build_dm()}}.}
 
-\item{vars}{A vector of strings naming columns to subset the data on. Defaults
-to NULL, indicating all variables should be used.}
+\item{vars}{A vector of strings naming columns to subset the data on.
+Defaults to NULL, indicating all variables should be used.}
 }
 \value{
 A tibble.
 }
 \description{
-\code{build_tbl()} flattens all of the tables contained in a dm object created by
-\code{\link[=build_dm]{build_dm()}} into a single wide table by performing a series of cascading
-joins.
+\code{build_tbl_impl()} flattens all of the tables contained in a dm object
+created by \code{\link[=build_dm]{build_dm()}} into a single wide table by performing a series of
+cascading joins.
 }
 \examples{
 \dontrun{
 dm_object <- load_dx() |>
   build_dm()
 
-build_tbl(dm_object) # All cols
-build_tbl(dm_object, vars = c("year", "country", "pop_density")) # select cols
+build_tbl_impl(dm_object) # All cols
+build_tbl_impl(dm_object, vars = c("year", "country", "pop_density")) # select cols
 }
 }
 \seealso{

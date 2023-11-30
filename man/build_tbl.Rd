@@ -21,12 +21,12 @@ Defaults to NULL, indicating all variables should be used.}
 A tibble.
 }
 \description{
-\code{build_tbl_impl()} loads all files for a given disease into a single dataframe. It
+\code{build_tbl()} loads all files for a given disease into a single dataframe. It
 does this by flattening all of the tables into a single wide table by
 performing a series of cascading joins on matching keys.
 }
 \examples{
 \dontrun{
-build_tbl_impl("tb", 2019, c("year", "country", "pop_density"))
+build_tbl("tb", 2019, c("year", "country", "pop_density"))
 }
 }
