@@ -1,6 +1,6 @@
 #' Load all data for a disease into a single wide table
 #'
-#' `build_tbl_impl()` loads all files for a given disease into a single dataframe. It
+#' `build_tbl()` loads all files for a given disease into a single dataframe. It
 #' does this by flattening all of the tables into a single wide table by
 #' performing a series of cascading joins on matching keys.
 #'
@@ -18,7 +18,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' build_tbl_impl("tb", 2019, c("year", "country", "pop_density"))
+#' build_tbl("tb", 2019, c("year", "country", "pop_density"))
 #' }
 build_tbl <- function(disease, year = NULL, vars = NULL) {
   df_lst <- load_dx_impl(disease)
@@ -28,13 +28,13 @@ build_tbl <- function(disease, year = NULL, vars = NULL) {
 
 #' Join all data into a big table
 #'
-#' `build_tbl()` flattens all of the tables contained in a dm object created by
-#' [build_dm()] into a single wide table by performing a series of cascading
-#' joins.
+#' `build_tbl_impl()` flattens all of the tables contained in a dm object
+#' created by [build_dm()] into a single wide table by performing a series of
+#' cascading joins.
 #'
 #' @param dm An object of class dm, created by [build_dm()].
-#' @param vars A vector of strings naming columns to subset the data on. Defaults
-#' to NULL, indicating all variables should be used.
+#' @param vars A vector of strings naming columns to subset the data on.
+#'   Defaults to NULL, indicating all variables should be used.
 #'
 #' @seealso [build_dm()]
 #'
@@ -45,8 +45,8 @@ build_tbl <- function(disease, year = NULL, vars = NULL) {
 #' dm_object <- load_dx() |>
 #'   build_dm()
 #'
-#' build_tbl(dm_object) # All cols
-#' build_tbl(dm_object, vars = c("year", "country", "pop_density")) # select cols
+#' build_tbl_impl(dm_object) # All cols
+#' build_tbl_impl(dm_object, vars = c("year", "country", "pop_density")) # select cols
 #' }
 build_tbl_impl <- function(dm, vars = NULL) {
   tbl <-
