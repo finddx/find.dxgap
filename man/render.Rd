@@ -26,11 +26,15 @@ render_report(
 \item{template_name}{String containing the name of the template to render.
 Run \code{\link[=view_templates]{view_templates()}} to see a list of valid options.}
 
+\item{disease}{A character of length one identifying the disease for which
+the user wants to build a wide table. The tibble \code{dxgap_diseases} shows the
+diseases that are currently supported.}
+
 \item{years}{Integer matching the year(s) of the report to be rendered. Can be
 a single integer like \code{2019}, or a vector of integers such as \code{2019:2021}.}
 
 \item{vars}{A vector of strings naming columns to subset the data on. Passed
-to \code{\link[=build_tbl_impl]{build_tbl_impl()}}. Defaults to NULL, indicating all variables should be
+to \code{\link[=build_tbl]{build_tbl()}}. Defaults to NULL, indicating all variables should be
 used.}
 
 \item{override_vars_check}{Logical indicating whether to override checks on
