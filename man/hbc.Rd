@@ -7,12 +7,7 @@
 \alias{tidy_hbc}
 \title{TB High-Burden Countries data from WHO}
 \usage{
-download_hbc(
-  file_name = tempfile("who_hbc_list", fileext = ".pdf"),
-  url =
-    "https://cdn.who.int/media/docs/default-source/hq-tuberculosis/who_globalhbcliststb_2021-2025_backgrounddocument.pdf?sfvrsn=f6b854c2_9",
-  data_dir = Sys.getenv("DXGAP_DATADIR")
-)
+download_hbc(file_name)
 
 read_hbc(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
 
@@ -20,8 +15,6 @@ tidy_hbc(data, year = NULL, all = TRUE)
 }
 \arguments{
 \item{file_name}{A string containing the name of the file to be read.}
-
-\item{url}{A string of the url source.}
 
 \item{data_dir}{Path containing the directory to read the data from. Defaults
 to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
