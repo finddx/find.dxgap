@@ -6,7 +6,7 @@
 #' * [write_data_dir()] to download all data
 #' * [load_dx()] to load all data
 #'
-#' The data sets currently available from WHO in this package are:
+#' The data sets currently available from World Bank in this package are:
 #' * urban population
 #' * total population
 #' * population density
@@ -19,9 +19,8 @@
 NULL
 
 
-#' Download data sets from the WHO
+#' Download data sets from the World Bank
 #'
-#' @inheritParams download_who
 #' @param indicator A string indicating the label of the data set as documented
 #'   in the World Bank API. For instance, "SP.POP.TOTL".
 #' @param range_years The range of the years to be downloaded as a string.
@@ -57,16 +56,24 @@ NULL
 #'   range_years = "2015:2023"
 #' )
 #' }
-download_wb <- function(file_name = tempfile(compose_file_name("wb", download_date, indicator), fileext = ".csv"),
-                        indicator,
-                        range_years,
-                        download_date = as.character(Sys.Date()),
-                        data_dir = Sys.getenv("DXGAP_DATADIR")) {
-  base_url <- "https://api.worldbank.org/v2/country/all/indicator"
+download_wb <- function(file_name, indicator, range_years) {
+  download_wb_impl(
+    .file_name = file_name,
+    .indicator = indicator,
+    .range_years = range_years
+  )
+}
+
+download_wb_impl <- function(.file_name = tempfile(compose_file_name("wb", .download_date, .indicator), fileext = ".csv"),
+                             .indicator,
+                             .range_years,
+                             .url = "https://api.worldbank.org/v2/country/all/indicator",
+                             .download_date = as.character(Sys.Date()),
+                             .data_dir = Sys.getenv("DXGAP_DATADIR")) {
   req <-
-    httr2::request(base_url) |>
-    httr2::req_url_path_append(indicator) |>
-    httr2::req_url_query(format = "json", date = range_years)
+    httr2::request(.url) |>
+    httr2::req_url_path_append(.indicator) |>
+    httr2::req_url_query(format = "json", date = .range_years)
 
   resp <- httr2::req_perform(req)
   page_one <- httr2::resp_body_json(resp)
@@ -89,9 +96,9 @@ download_wb <- function(file_name = tempfile(compose_file_name("wb", download_da
     nested_out |>
     dplyr::select(page, json) |>
     unnest_wb_resp() |>
-    dplyr::mutate(download_date = download_date)
+    dplyr::mutate(download_date = .download_date)
 
-  file_path <- compose_file_path(file_name, data_dir)
+  file_path <- compose_file_path(.file_name, .data_dir)
   readr::write_csv(out, file_path)
   invisible(normalizePath(file_path))
 }
@@ -106,7 +113,7 @@ unnest_wb_resp <- function(data) {
     tidyr::unnest_wider(indicator, names_sep = "_")
 }
 
-#' Read WHO data sets
+#' Read World Bank data sets
 #'
 #' @param file_name A string containing the name of the file to be read.
 #' @param data_dir Path containing the directory to read the data from. Defaults
@@ -127,7 +134,7 @@ read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
     tibble::as_tibble()
 }
 
-#' Tidy WHO data sets
+#' Tidy World Bank data sets
 #'
 #' @param data A tibble returned from the corresponding `read_()` function.
 #' @param year A year to filter the data by. Defaults to `NULL`, returning data

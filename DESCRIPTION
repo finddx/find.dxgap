@@ -1,5 +1,5 @@
 Package: find.dxgap
-Title: Compute dxgap for different diseases.
+Title: Compute dxgap metric for different diseases
 Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Andrea",
@@ -11,8 +11,7 @@ Authors@R:
              role = c("aut"),
              email = "mike@cynkra.com"))
 Description: Compute dxgap for different diseases.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -21,7 +20,7 @@ Imports:
     corrr,
     countrycode,
     dm,
-    dplyr,
+    dplyr (>= 1.1.0),
     fs,
     ggplot2,
     gt,
@@ -35,12 +34,11 @@ Imports:
     readxl,
     recipes,
     rlang,
-    rmarkdown,
+    rmarkdown (>= 2.24),
     rsample,
     rstudioapi,
     scales,
     stringr,
-    testthat,
     tibble,
     tidyr,
     tidyselect,
@@ -48,11 +46,11 @@ Imports:
     withr,
     workflowsets
 Suggests: 
-    constructive,
+    constructive (>= 0.2.0),
     DiagrammeRsvg,
     forcats,
     htmltools,
-    testthat (>= 3.0.0),
+    testthat (>= 3.2.0),
     vdiffr
 Config/testthat/edition: 3
 Depends: 

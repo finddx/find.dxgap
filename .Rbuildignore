@@ -4,4 +4,6 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^data-raw$
+^\.github$
 ^inst$
+^LICENSE\.md$

@@ -1,4 +1,4 @@
-# World Bank data is read and tidied correctly
+# World Bank total population data is read and tidied correctly
 
     Code
       constructive::construct(vctrs::vec_ptype(raw))
@@ -30,7 +30,7 @@
         value = numeric(0),
       )
 
-# `country_code` entries are not missing
+---
 
     Code
       dplyr::filter(dplyr::distinct(tidy, country_code, country_value), is.na(

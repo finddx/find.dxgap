@@ -7,14 +7,7 @@
 \alias{tidy_wb}
 \title{Data from World Bank}
 \usage{
-download_wb(
-  file_name = tempfile(compose_file_name("wb", download_date, indicator), fileext =
-    ".csv"),
-  indicator,
-  range_years,
-  download_date = as.character(Sys.Date()),
-  data_dir = Sys.getenv("DXGAP_DATADIR")
-)
+download_wb(file_name, indicator, range_years)
 
 read_wb(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
 
@@ -27,9 +20,6 @@ tidy_wb(data, year = NULL)
 in the World Bank API. For instance, "SP.POP.TOTL".}
 
 \item{range_years}{The range of the years to be downloaded as a string.}
-
-\item{download_date}{A string in the format "\%Y-\%m-\%d". Defaults to today's
-date.}
 
 \item{data_dir}{Path containing the directory to read the data from. Defaults
 to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
@@ -57,7 +47,7 @@ see:
 }
 }
 \details{
-The data sets currently available from WHO in this package are:
+The data sets currently available from World Bank in this package are:
 \itemize{
 \item urban population
 \item total population
