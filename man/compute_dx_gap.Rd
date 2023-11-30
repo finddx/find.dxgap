@@ -41,7 +41,7 @@ system.
 # Calculate diagnostic gap for 2019 TB data:
 load_dx() |>
  build_dm(year = 2019) |>
- build_tbl_impl(vars = dxgap_const$tb_vars) |>
+ build_tbl(vars = dxgap_const$tb_vars) |>
  compute_dx_gap()
 }
 }
