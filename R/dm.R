@@ -22,7 +22,7 @@
 #' }
 build_tbl <- function(disease, year = NULL, vars = NULL) {
   df_lst <- load_dx_impl(disease)
-  dm <- build_dm(df_lst, year = 2019)
+  dm <- build_dm(df_lst, year = year)
   build_tbl_impl(dm, vars)
 }
 
