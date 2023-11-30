@@ -70,18 +70,27 @@ NULL
 #'   url_endpoint = "labs"
 #' )
 #' }
-download_who <- function(file_name = tempfile(compose_file_name("who", download_date, url_endpoint), fileext = ".csv"),
-                         url_endpoint = "notification",
-                         url = "https://extranet.who.int/tme/generateCSV.asp?ds=",
-                         download_date = as.character(Sys.Date()),
-                         data_dir = Sys.getenv("DXGAP_DATADIR")) {
-  url_endpoint <- rlang::arg_match(url_endpoint, who_url_endpoints$url_endpoint)
-  url_topic <- paste0(url, url_endpoint)
-  file_path <- compose_file_path(file_name, data_dir)
+download_who <- function(file_name, url_endpoint) {
+  download_who_impl(
+    .file_name = file_name,
+    .url_endpoint = url_endpoint
+  )
+}
+
+download_who_impl <- function(.file_name = tempfile(compose_file_name("who", .download_date, url_endpoint), fileext = ".csv"),
+                              .url_endpoint = "notification",
+                              .url = "https://extranet.who.int/tme/generateCSV.asp?ds=",
+                              .download_date = as.character(Sys.Date()),
+                              .data_dir = Sys.getenv("DXGAP_DATADIR"),
+                              .dxgap_master_list = dxgap_master_list,
+                              .who_url_endpoints = who_url_endpoints) {
+  url_endpoint <- rlang::arg_match(.url_endpoint, .who_url_endpoints$url_endpoint)
+  url_topic <- paste0(.url, url_endpoint)
+  file_path <- compose_file_path(.file_name, .data_dir)
 
   data <- readr::read_csv(url_topic, show_col_types = FALSE)
   subset_cols <-
-    dxgap_master_list |>
+    .dxgap_master_list |>
     dplyr::filter(data_source == "who") |>
     dplyr::filter(url_endpoint == !!url_endpoint) |>
     dplyr::pull(variable_name)
@@ -89,7 +98,7 @@ download_who <- function(file_name = tempfile(compose_file_name("who", download_
   data_subset <-
     data |>
     dplyr::select(tidyselect::all_of(relevant_cols)) |>
-    dplyr::mutate(download_date = download_date)
+    dplyr::mutate(download_date = .download_date)
 
   readr::write_csv(data_subset, file_path)
   invisible(normalizePath(file_path))
