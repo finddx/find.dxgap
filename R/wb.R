@@ -57,16 +57,24 @@ NULL
 #'   range_years = "2015:2023"
 #' )
 #' }
-download_wb <- function(file_name = tempfile(compose_file_name("wb", download_date, indicator), fileext = ".csv"),
-                        indicator,
-                        range_years,
-                        url = "https://api.worldbank.org/v2/country/all/indicator",
-                        download_date = as.character(Sys.Date()),
-                        data_dir = Sys.getenv("DXGAP_DATADIR")) {
+download_wb <- function(file_name, indicator, range_years) {
+  download_wb_impl(
+    .file_name = file_name,
+    .indicator = indicator,
+    .range_years = range_years
+  )
+}
+
+download_wb_impl <- function(.file_name = tempfile(compose_file_name("wb", .download_date, indicator), fileext = ".csv"),
+                             .indicator,
+                             .range_years,
+                             .url = "https://api.worldbank.org/v2/country/all/indicator",
+                             .download_date = as.character(Sys.Date()),
+                             .data_dir = Sys.getenv("DXGAP_DATADIR")) {
   req <-
-    httr2::request(url) |>
-    httr2::req_url_path_append(indicator) |>
-    httr2::req_url_query(format = "json", date = range_years)
+    httr2::request(.url) |>
+    httr2::req_url_path_append(.indicator) |>
+    httr2::req_url_query(format = "json", date = .range_years)
 
   resp <- httr2::req_perform(req)
   page_one <- httr2::resp_body_json(resp)
@@ -91,7 +99,7 @@ download_wb <- function(file_name = tempfile(compose_file_name("wb", download_da
     unnest_wb_resp() |>
     dplyr::mutate(download_date = download_date)
 
-  file_path <- compose_file_path(file_name, data_dir)
+  file_path <- compose_file_path(.file_name, .data_dir)
   readr::write_csv(out, file_path)
   invisible(normalizePath(file_path))
 }

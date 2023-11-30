@@ -35,12 +35,6 @@ NULL
 #'   * expenditure_utilisation
 #'   * labs
 #'   * notifications
-#' @param url A string of the url source.
-#' @param download_date A string in the format "%Y-%m-%d". Defaults to today's
-#'   date.
-#' @param data_dir Defines the default destination folder at project level, from
-#'   which data are stored and retrieved. This default path plays a role only
-#'   when a relative path is specified in `file_name`.
 #'
 #' @return `download_who()` returns invisibly the file path in which data are
 #'   stored.
