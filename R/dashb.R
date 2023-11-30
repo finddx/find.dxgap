@@ -13,11 +13,13 @@
 #'
 #' @returns A tibble
 #' @seealso [tidy_tb_dashboard()] to tidy this dashboard.
+#'
+#' @noRd
+#'
 #' @examples
 #' \dontrun{
 #' read_tb_dashboard()
 #' }
-#' @export
 read_tb_dashboard <- function(file_name,
                               data_dir = Sys.getenv("DXGAP_DATADIR")) {
   file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
@@ -40,6 +42,7 @@ read_tb_dashboard <- function(file_name,
 #'    returned. Defaults to `time_series`.
 #' @returns A tibble
 #' @seealso [read_tb_dashboard()]
+#' @noRd
 #' @examples
 #' \dontrun{
 #' # Returns the time series data by default
@@ -48,7 +51,6 @@ read_tb_dashboard <- function(file_name,
 #' # Return fixed data
 #' # tidy_tb_dashboard(time_series = FALSE)
 #' }
-#' @export
 tidy_tb_dashboard <- function(data, type = c("time_series", "fixed")) {
 
   type <- match.arg(type)
@@ -220,7 +222,8 @@ tidy_tb_dashboard <- function(data, type = c("time_series", "fixed")) {
 #' @return A plot.
 #' @seealso [read_tb_dashboard()]
 #' @seealso [tidy_tb_dashboard()]
-#' @export
+#'
+#' @noRd
 #'
 #' @examples
 #' \dontrun{

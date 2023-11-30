@@ -4,7 +4,6 @@
 #' and tidy data. For a higher-level API that works across all data sets,
 #' see:
 #' * [write_data_dir()] to download all data
-#' * [load_dx()] to load all data
 #'
 #' The data sets currently available from WHO in this package are:
 #' * notifications

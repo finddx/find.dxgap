@@ -43,7 +43,6 @@ and tidy data. For a higher-level API that works across all data sets,
 see:
 \itemize{
 \item \code{\link[=write_data_dir]{write_data_dir()}} to download all data
-\item \code{\link[=load_dx]{load_dx()}} to load all data
 }
 }
 \details{

@@ -29,16 +29,17 @@ build_tbl <- function(disease, year = NULL, vars = NULL) {
 #' Join all data into a big table
 #'
 #' `build_tbl_impl()` flattens all of the tables contained in a dm object
-#' created by [build_dm()] into a single wide table by performing a series of
+#' created by `build_dm()` into a single wide table by performing a series of
 #' cascading joins.
 #'
-#' @param dm An object of class dm, created by [build_dm()].
+#' @param dm An object of class dm, created by `build_dm()`.
 #' @param vars A vector of strings naming columns to subset the data on.
 #'   Defaults to NULL, indicating all variables should be used.
 #'
-#' @seealso [build_dm()]
 #'
 #' @return A tibble.
+#'
+#' @noRd
 #'
 #' @examples
 #' \dontrun{
@@ -79,6 +80,8 @@ build_tbl_impl <- function(dm, vars = NULL) {
 #'
 #' @return An object of class dm, containing the same number of tables as in the
 #' input `data_list`.
+#'
+#' @noRd
 #'
 #' @examples
 #' \dontrun{

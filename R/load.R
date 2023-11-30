@@ -10,8 +10,8 @@ list_dxgap_datadir <- function(.pattern, .data_dir = Sys.getenv("DXGAP_DATADIR")
 #' @param disease A character of lenght one identifying the disease for which
 #'   the user wants to build a wide table. The tibble `dxgap_diseases` shows the
 #'   diseases that are currently supported.
-#' @seealso [build_dm()]
-#' @seealso [build_tbl()]
+#'
+#' @noRd
 #'
 #' @return A list of tibbles.
 #'
