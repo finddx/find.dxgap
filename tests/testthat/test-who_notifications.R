@@ -2,7 +2,7 @@ test_that("WHO notifications data is downloaded correctly", {
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_available("https://extranet.who.int/tme/generateCSV.asp?ds=notifications")
-  path <- download_who(url_endpoint = "notifications")
+  path <- download_who_impl(.url_endpoint = "notifications")
   on.exit(file.remove(path), add = TRUE)
   expect_true(file.exists(path))
 })
