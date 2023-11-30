@@ -15,14 +15,14 @@
 #'
 #' @param template_name String containing the name of the template to render.
 #'   Run [view_templates()] to see a list of valid options.
-#' @inheritParams build_tbl_impl
+#' @inheritParams build_tbl
 #' @param override_vars_check Logical indicating whether to override checks on
 #'   supported vars. Defaults to FALSE. If TRUE, consistent results are not
 #'   guaranteed.
 #' @param years Integer matching the year(s) of the report to be rendered. Can be
 #'   a single integer like `2019`, or a vector of integers such as `2019:2021`.
 #' @param vars A vector of strings naming columns to subset the data on. Passed
-#'   to [build_tbl_impl()]. Defaults to NULL, indicating all variables should be
+#'   to [build_tbl()]. Defaults to NULL, indicating all variables should be
 #'   used.
 #'
 #' @rdname render
@@ -56,7 +56,7 @@ render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, over
 #' `render_report()` generates a report for a given template and year. The final
 #' output can be viewed in RStudio.
 #'
-#' @inheritParams build_tbl_impl
+#' @inheritParams build_tbl
 #' @param year Integer matching the year of the report passed to [build_dm()].
 #' @param interactive Logical indicating whether to open the report with the
 #'   RStudio Viewer.
