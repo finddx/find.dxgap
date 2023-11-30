@@ -135,7 +135,7 @@ all_indicators_df |>
   theme(
     legend.position = "top", 
     legend.title = element_blank(),
-    axis.text.y = element_text(size = rel(0.75))
+    axis.text.y = element_text(size = rel(0.7))
   ) + 
   scale_colour_viridis_d(
     alpha = 1,
