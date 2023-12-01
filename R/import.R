@@ -1,33 +1,23 @@
 #' Import tables in bulk
 #' @noRd
 #' @examples \dontrun{
-#' lst_df <- import_tbl(lst_df, "who_2023-07-28_hbc.csv")
+#' tbl_lst <- import_bulk(
+#'   c("gf_2023-07-26_procurement.csv", "wb_2023-07-28_pop_urban.csv")
+#' )
 #' }
-import_bulk <- function(data_lst,
-                           data_name,
-                           data_dir = Sys.getenv("DXGAP_DATADIR")) {
-  list_arg <- rlang::ensym(data_lst)
-  lst_df <- fetch_object(obj_name = !!list_arg, env = globalenv())
-  for (i in seq_along(data_name)) {
-    lst_df <- import_tbl(
-      .data_lst = lst_df,
-      .file_name = data_name[[i]],
-      .data_dir = data_dir
-    )
-  }
-
+import_bulk <- function(data_names) {
+  stopifnot(is.character(data_names) && length(data_names) >= 1)
+  names(data_names) <- extract_name(data_names)
+  lst_df <- purrr::map(data_names, ~ import_tbl(.file_name = .x))
   lst_df
 }
 
 #' Import table
 #' @noRd
 #' @examples \dontrun{
-#' lst_df <- import_tbl(lst_df, "who_2023-07-28_hbc.csv")
+#' tbl <- import_tbl("who_2023-07-28_hbc.csv")
 #' }
-import_tbl <- function(.data_lst,
-                          .file_name,
-                          .all = TRUE,
-                          .data_dir = Sys.getenv("DXGAP_DATADIR")) {
+import_tbl <- function(.file_name, .data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   # Extract file name ----------------------------------------------------------
   data_name <- extract_name(.file_name)
@@ -91,28 +81,5 @@ import_tbl <- function(.data_lst,
     data_tidy <- tidy_data(data_raw)
   }
 
-  list_arg <- rlang::ensym(.data_lst)
-  lst_df <- fetch_object(obj_name = !!list_arg, env = parent.frame())
-  lst_names <- rlang::names2(lst_df)
-
-  if (data_name %in% lst_names) {
-    lst_df[[data_name]] <- data_tidy
-  } else { # does not exist or first time
-    next_item_index <- length(lst_df) + 1
-    lst_df[[next_item_index]] <- data_tidy
-    rlang::names2(lst_df)[next_item_index] <- data_name
-  }
-
-  lst_df
-
+  data_tidy
 }
-
-fetch_object <- function(obj_name, env) {
-  obj <- rlang::ensym(obj_name)
-  if (exists(obj, envir = env)) {
-    get(obj, envir = env)
-  } else {
-    list()
-  }
-}
-
