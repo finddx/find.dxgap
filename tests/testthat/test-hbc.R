@@ -41,7 +41,7 @@ test_that("`country_code` entries are not missing", {
 
 test_that("primary key for given year", {
   skip_if_no_data(file_name)
-  df_lst <- purrr::map(2018:2023, ~ tidy_who_hbc(data, year = .x))
+  df_lst <- purrr::map(2018:2023, ~ tidy_who_hbc(data, .year = .x))
   check_pk <- purrr::map(df_lst, ~ dm::check_key(.x, country_code, year))
   expect_null(unlist(check_pk))
 })
