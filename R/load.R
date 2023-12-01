@@ -30,7 +30,7 @@ load_dx_impl <- function(.disease, .dxgap_diseases = dxgap_diseases, data_dir = 
   # TODO: listing files is not optimal. It might be as long as the data dir is kept clean.
   data_files <- list_dxgap_datadir(.data_dir = data_dir, .pattern = regex_pattern)
   check_clean_data_dir(data_files, .pattern = pattern)
-  lst_df <- import_bulk(data_name = data_files)
+  lst_df <- import_bulk(data_names = data_files)
 
   tbl_list <- switch(.disease,
     tb = tb_load(lst_df)
