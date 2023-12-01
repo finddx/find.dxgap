@@ -130,6 +130,11 @@ who_url_endpoints <- tibble::tribble(
 #' read_who("who_2023-08-30_laboratories.csv")
 #' }
 read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  is_who_hbc <- stringr::str_detect(file_name, "hbc")
+  if (is_who_hbc) {
+    who_hbc_df <- read_hbc(file_name, data_dir = data_dir)
+    return(who_hbc_df)
+  }
   dxgap_read_csv(file_name, col_types = readr::cols("download_date" = "c")) |>
     tibble::as_tibble()
 }
