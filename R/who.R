@@ -186,6 +186,8 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
     tidy_who_expenditures(data, .year = year, shape = .shape)
   } else if (is_labs) {
     tidy_who_labs(data, .year = year, shape = .shape)
+  } else if (is_hbc) {
+    tidy_who_hbc(data, .year = year)
   } else {
     rlang::abort(
       c("Cannot find a footprint for this data.", i = "Is this a new dataset?")
