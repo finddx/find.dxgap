@@ -45,7 +45,7 @@ download_hbc_impl <- function(.file_name = tempfile("who_hbc_list", fileext = ".
 #' @inheritParams read_who
 #' @rdname hbc
 #' @return `read_who_hbc()` returns a tibble containing the data set.
-#' @export
+#' @noRd
 #' @examples
 #' \dontrun{
 #' read_who_hbc("who_2023-07-28_hbc.csv")
@@ -64,7 +64,7 @@ read_who_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #' @rdname hbc
 #' @return `tidy_hbc()` returns a tibble. This is a tidied version of the input
 #'   tibble.
-#' @export
+#' @noRd
 #' @examples
 #' \dontrun{
 #' read_who_hbc("who_2023-07-28_hbc.csv") |>
