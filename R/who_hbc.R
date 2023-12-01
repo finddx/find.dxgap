@@ -62,13 +62,13 @@ read_who_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #' @param all Whether to return the 20 + 10 subset, or just the first 20
 #'   countries. Default to `TRUE`.
 #' @rdname hbc
-#' @return `tidy_hbc()` returns a tibble. This is a tidied version of the input
+#' @return `tidy_who_hbc()` returns a tibble. This is a tidied version of the input
 #'   tibble.
 #' @noRd
 #' @examples
 #' \dontrun{
 #' read_who_hbc("who_2023-07-28_hbc.csv") |>
-#'   tidy_hbc()
+#'   tidy_who_hbc()
 #' }
 tidy_who_hbc <- function(data, .year = NULL, all = TRUE) {
   df <-
