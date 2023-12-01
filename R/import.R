@@ -5,9 +5,10 @@
 #'   c("gf_2023-07-26_procurement.csv", "wb_2023-07-28_pop_urban.csv")
 #' )
 #' }
-import_bulk <- function(data_name) {
-  names(data_name) <- extract_name(data_name)
-  lst_df <- purrr::map(data_name, ~ import_tbl(.file_name = .x))
+import_bulk <- function(data_names) {
+  stopifnot(is.character(data_names) && length(data_names) >= 1)
+  names(data_names) <- extract_name(data_names)
+  lst_df <- purrr::map(data_names, ~ import_tbl(.file_name = .x))
   lst_df
 }
 
