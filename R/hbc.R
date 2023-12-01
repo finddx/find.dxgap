@@ -70,7 +70,7 @@ read_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #' read_hbc("who_2023-07-28_hbc.csv") |>
 #'   tidy_hbc()
 #' }
-tidy_hbc <- function(data, year = NULL, all = TRUE) {
+tidy_who_hbc <- function(data, year = NULL, all = TRUE) {
   df <-
     data |>
     dplyr::mutate(
