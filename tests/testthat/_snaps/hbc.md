@@ -1,7 +1,7 @@
 # `country_code` entries are not missing
 
     Code
-      dplyr::filter(dplyr::distinct(tidy_hbc(data), country_code, country), is.na(
+      dplyr::filter(dplyr::distinct(tidy_who_hbc(data), country_code, country), is.na(
         country_code))
     Output
       # A tibble: 0 x 2
