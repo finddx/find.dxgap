@@ -3,38 +3,16 @@
 \name{hbc}
 \alias{hbc}
 \alias{download_hbc}
-\alias{read_who_hbc}
-\alias{tidy_hbc}
 \title{TB High-Burden Countries data from WHO}
 \usage{
 download_hbc(file_name)
-
-read_who_hbc(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
-
-tidy_hbc(data, year = NULL, all = TRUE)
 }
 \arguments{
 \item{file_name}{A string containing the name of the file to be read.}
-
-\item{data_dir}{Path containing the directory to read the data from. Defaults
-to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
-
-\item{data}{A tibble returned from the corresponding \code{read_()} function.}
-
-\item{year}{A year to filter the data by. Defaults to \code{NULL}, returning data
-for all years.}
-
-\item{all}{Whether to return the 20 + 10 subset, or just the first 20
-countries. Default to \code{TRUE}.}
 }
 \value{
 \code{download_hbc()} returns invisibly the file path in which data are
 stored.
-
-\code{read_who_hbc()} returns a tibble containing the data set.
-
-\code{tidy_hbc()} returns a tibble. This is a tidied version of the input
-tibble.
 }
 \description{
 WHO each five years lists the 20 + 10 countries classified as "High-Burden".
@@ -44,19 +22,9 @@ of the share of global incidence for a given 5 years period.
 \item The last 10 accounts for roughly 2\%-3\% of the share of global incidence for
 a given 5 years period.
 }
-
-\code{read_who_hbc()} reads a file generated manually using the pdf downloaded from
-\code{download_hbc()}.
 }
 \examples{
 \dontrun{
 download_hbc("who_2023-07-28_hbc.pdf")
-}
-\dontrun{
-read_who_hbc("who_2023-07-28_hbc.csv")
-}
-\dontrun{
-read_who_hbc("who_2023-07-28_hbc.csv") |>
-  tidy_hbc()
 }
 }
