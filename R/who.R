@@ -161,6 +161,7 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
   is_estimates <- is_ptype(data, ptype_who_estimates)
   is_expenditure <- is_ptype(data, ptype_who_expenditures)
   is_labs <- is_ptype(data, ptype_who_labs)
+  is_hbc <- is_ptype(data, ptype_who_hbc)
   check_unique_ptype(
     c(
       is_notifications,
@@ -168,7 +169,8 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
       is_budget,
       is_estimates,
       is_expenditure,
-      is_labs
+      is_labs,
+      is_hbc
     )
   )
 
