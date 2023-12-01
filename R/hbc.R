@@ -38,19 +38,19 @@ download_hbc_impl <- function(.file_name = tempfile("who_hbc_list", fileext = ".
 
 #' Read TB High-Burden Countries data set
 #'
-#' `read_hbc()` reads a file generated manually using the pdf downloaded from
+#' `read_who_hbc()` reads a file generated manually using the pdf downloaded from
 #' `download_hbc()`.
 #'
 #' @param file_name A string containing the name of the file to be read.
 #' @inheritParams read_who
 #' @rdname hbc
-#' @return `read_hbc()` returns a tibble containing the data set.
+#' @return `read_who_hbc()` returns a tibble containing the data set.
 #' @export
 #' @examples
 #' \dontrun{
-#' read_hbc("who_2023-07-28_hbc.csv")
+#' read_who_hbc("who_2023-07-28_hbc.csv")
 #' }
-read_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+read_who_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   # TODO: extract table from pdf pdftools::pdf_text(file_path)[[8]]
   dxgap_read_csv(file_name = file_name, data_dir = data_dir) |>
     tibble::as_tibble()
@@ -67,7 +67,7 @@ read_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #' @export
 #' @examples
 #' \dontrun{
-#' read_hbc("who_2023-07-28_hbc.csv") |>
+#' read_who_hbc("who_2023-07-28_hbc.csv") |>
 #'   tidy_hbc()
 #' }
 tidy_who_hbc <- function(data, year = NULL, all = TRUE) {

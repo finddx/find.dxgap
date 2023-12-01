@@ -3,13 +3,13 @@
 \name{hbc}
 \alias{hbc}
 \alias{download_hbc}
-\alias{read_hbc}
+\alias{read_who_hbc}
 \alias{tidy_hbc}
 \title{TB High-Burden Countries data from WHO}
 \usage{
 download_hbc(file_name)
 
-read_hbc(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
+read_who_hbc(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
 
 tidy_hbc(data, year = NULL, all = TRUE)
 }
@@ -31,7 +31,7 @@ countries. Default to \code{TRUE}.}
 \code{download_hbc()} returns invisibly the file path in which data are
 stored.
 
-\code{read_hbc()} returns a tibble containing the data set.
+\code{read_who_hbc()} returns a tibble containing the data set.
 
 \code{tidy_hbc()} returns a tibble. This is a tidied version of the input
 tibble.
@@ -45,7 +45,7 @@ of the share of global incidence for a given 5 years period.
 a given 5 years period.
 }
 
-\code{read_hbc()} reads a file generated manually using the pdf downloaded from
+\code{read_who_hbc()} reads a file generated manually using the pdf downloaded from
 \code{download_hbc()}.
 }
 \examples{
@@ -53,10 +53,10 @@ a given 5 years period.
 download_hbc("who_2023-07-28_hbc.pdf")
 }
 \dontrun{
-read_hbc("who_2023-07-28_hbc.csv")
+read_who_hbc("who_2023-07-28_hbc.csv")
 }
 \dontrun{
-read_hbc("who_2023-07-28_hbc.csv") |>
+read_who_hbc("who_2023-07-28_hbc.csv") |>
   tidy_hbc()
 }
 }
