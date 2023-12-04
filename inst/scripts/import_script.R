@@ -1,6 +1,6 @@
 pkgload::load_all()
 
-lst_df <- import_bulk(
+lst_df <- import_tbls(
   c(
     "gf_procurement_2023-07-26.csv",
     "wb_pop_urban_2023-07-28.csv",
