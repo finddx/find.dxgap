@@ -70,7 +70,7 @@ read_who_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #' read_who_hbc("who_2023-07-28_hbc.csv") |>
 #'   tidy_who_hbc()
 #' }
-tidy_who_hbc <- function(data, .year = NULL, all = TRUE) {
+tidy_who_hbc <- function(data, .year = NULL) {
   df <-
     data |>
     dplyr::mutate(
@@ -91,12 +91,6 @@ tidy_who_hbc <- function(data, .year = NULL, all = TRUE) {
       dplyr::join_by(country_code, year_from == year_from_id)
     ) |>
     dplyr::select(-year_from)
-
-  if (!all) {
-    df <-
-      df |>
-      dplyr::filter(share_global_inc > 80)
-  }
 
   if (!is.null(.year)) {
     df_subset <-
