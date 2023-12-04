@@ -12,12 +12,30 @@ import_tbls <- function(data_names) {
   lst_df
 }
 
-#' Import table
-#' @noRd
+#' Read and tidy any table
+#'
+#' @param file_name A string containing the name of the file to be read.
+#'
+#' @export
 #' @examples \dontrun{
+#' tbl <- import_tbl("gf_procurement_2023-07-26.csv")
+#' tbl <- import_tbl("wb_pop_urban_2023-07-28.csv")
+#' tbl <- import_tbl("wb_pop_total_2023-08-31.csv")
+#' tbl <- import_tbl("wb_gdp_2023-09-07.csv")
+#' tbl <- import_tbl("wb_pop_density_2023-10-04.csv")
+#' tbl <- import_tbl("who_budget_2023-07-28.csv")
+#' tbl <- import_tbl("who_community_2023-07-28.csv")
+#' tbl <- import_tbl("who_estimates_2023-07-28.csv")
+#' tbl <- import_tbl("who_expenditures_2023-07-28.csv")
 #' tbl <- import_tbl("who_hbc_2023-07-28.csv")
+#' tbl <- import_tbl("who_laboratories_2023-08-30.csv")
+#' tbl <- import_tbl("who_notifications_2023-11-28.csv")
 #' }
-import_tbl <- function(.file_name, .data_dir = Sys.getenv("DXGAP_DATADIR")) {
+import_tbl <- function(file_name) {
+  import_tbl_impl(.file_name = file_name)
+}
+
+import_tbl_impl <- function(.file_name, .data_dir = Sys.getenv("DXGAP_DATADIR")) {
 
   # Extract file name ----------------------------------------------------------
   data_name <- extract_name(.file_name)
