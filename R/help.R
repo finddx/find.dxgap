@@ -55,7 +55,7 @@ compose_file_name <- function(..., sep = "_", file_ext = NULL) {
 
 extract_name <- function(path) {
   file_name <- basename(path)
-  stringr::str_remove_all(file_name, "\\.[a-zA-Z0-9]+$|\\d{4}-\\d{2}-\\d{2}\\_")
+  stringr::str_remove_all(file_name, "\\.[a-zA-Z0-9]+|\\_\\d{4}-\\d{2}-\\d{2}")
 }
 
 dxgap_read_csv <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"), ...) {
