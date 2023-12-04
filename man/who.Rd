@@ -63,7 +63,8 @@ The data sets currently available from WHO in this package are:
 \item budget
 \item community
 \item expenditures
-\item laboratories.
+\item laboratories
+\item hbc
 }
 }
 \examples{
@@ -95,6 +96,7 @@ laboratories <- download_who(
 }
 \dontrun{
 read_who("who_2023-08-30_laboratories.csv")
+read_who("who_2023-07-28_hbc.csv")
 }
 \dontrun{
 read_who("who_2023-08-30_laboratories.csv") |>

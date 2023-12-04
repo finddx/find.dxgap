@@ -11,7 +11,8 @@
 #' * budget
 #' * community
 #' * expenditures
-#' * laboratories.
+#' * laboratories
+#' * hbc
 #'
 #' @name who
 NULL
@@ -128,8 +129,14 @@ who_url_endpoints <- tibble::tribble(
 #' @examples
 #' \dontrun{
 #' read_who("who_2023-08-30_laboratories.csv")
+#' read_who("who_2023-07-28_hbc.csv")
 #' }
 read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  is_who_hbc <- stringr::str_detect(file_name, "hbc")
+  if (is_who_hbc) {
+    who_hbc_df <- read_who_hbc(file_name, data_dir = data_dir)
+    return(who_hbc_df)
+  }
   dxgap_read_csv(file_name, col_types = readr::cols("download_date" = "c")) |>
     tibble::as_tibble()
 }
@@ -161,6 +168,7 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
   is_estimates <- is_ptype(data, ptype_who_estimates)
   is_expenditure <- is_ptype(data, ptype_who_expenditures)
   is_labs <- is_ptype(data, ptype_who_labs)
+  is_hbc <- is_ptype(data, ptype_who_hbc)
   check_unique_ptype(
     c(
       is_notifications,
@@ -168,7 +176,8 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
       is_budget,
       is_estimates,
       is_expenditure,
-      is_labs
+      is_labs,
+      is_hbc
     )
   )
 
@@ -184,6 +193,8 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
     tidy_who_expenditures(data, .year = year, shape = .shape)
   } else if (is_labs) {
     tidy_who_labs(data, .year = year, shape = .shape)
+  } else if (is_hbc) {
+    tidy_who_hbc(data, .year = year)
   } else {
     rlang::abort(
       c("Cannot find a footprint for this data.", i = "Is this a new dataset?")

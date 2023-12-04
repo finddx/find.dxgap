@@ -38,19 +38,19 @@ download_hbc_impl <- function(.file_name = tempfile("who_hbc_list", fileext = ".
 
 #' Read TB High-Burden Countries data set
 #'
-#' `read_hbc()` reads a file generated manually using the pdf downloaded from
+#' `read_who_hbc()` reads a file generated manually using the pdf downloaded from
 #' `download_hbc()`.
 #'
 #' @param file_name A string containing the name of the file to be read.
 #' @inheritParams read_who
 #' @rdname hbc
-#' @return `read_hbc()` returns a tibble containing the data set.
-#' @export
+#' @return `read_who_hbc()` returns a tibble containing the data set.
+#' @noRd
 #' @examples
 #' \dontrun{
-#' read_hbc("who_2023-07-28_hbc.csv")
+#' read_who_hbc("who_2023-07-28_hbc.csv")
 #' }
-read_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+read_who_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   # TODO: extract table from pdf pdftools::pdf_text(file_path)[[8]]
   dxgap_read_csv(file_name = file_name, data_dir = data_dir) |>
     tibble::as_tibble()
@@ -62,15 +62,15 @@ read_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #' @param all Whether to return the 20 + 10 subset, or just the first 20
 #'   countries. Default to `TRUE`.
 #' @rdname hbc
-#' @return `tidy_hbc()` returns a tibble. This is a tidied version of the input
+#' @return `tidy_who_hbc()` returns a tibble. This is a tidied version of the input
 #'   tibble.
-#' @export
+#' @noRd
 #' @examples
 #' \dontrun{
-#' read_hbc("who_2023-07-28_hbc.csv") |>
-#'   tidy_hbc()
+#' read_who_hbc("who_2023-07-28_hbc.csv") |>
+#'   tidy_who_hbc()
 #' }
-tidy_hbc <- function(data, year = NULL, all = TRUE) {
+tidy_who_hbc <- function(data, .year = NULL) {
   df <-
     data |>
     dplyr::mutate(
@@ -92,16 +92,10 @@ tidy_hbc <- function(data, year = NULL, all = TRUE) {
     ) |>
     dplyr::select(-year_from)
 
-  if (!all) {
-    df <-
-      df |>
-      dplyr::filter(share_global_inc > 80)
-  }
-
-  if (!is.null(year)) {
+  if (!is.null(.year)) {
     df_subset <-
       df |>
-      dplyr::filter(year == !!year)
+      dplyr::filter(year == !!.year)
     return(df_subset)
   }
   df
@@ -129,7 +123,7 @@ grow_hbc <- function(data) {
     tidyr::unnest(hbc_data)
 }
 
-tidy_hbc2 <- function(data) {
+tidy_who_hbc2 <- function(data) {
   data |>
     dplyr::select(country_code, year) |>
     dplyr::mutate(country = countrycode::countrycode(

@@ -91,3 +91,9 @@ ptype_who_expenditures <- tibble::tibble(
   download_date = character(0),
 )
 
+ptype_who_hbc <- tibble::tibble(
+  country = character(0),
+  share_global_inc = numeric(0),
+  year_from = numeric(0)
+)
+
