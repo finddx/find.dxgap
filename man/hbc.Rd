@@ -25,6 +25,6 @@ a given 5 years period.
 }
 \examples{
 \dontrun{
-download_hbc("who_2023-07-28_hbc.pdf")
+download_hbc("who_hbc_2023-07-28.pdf")
 }
 }

@@ -18,7 +18,7 @@ NULL
 #' @export
 #' @examples
 #' \dontrun{
-#' download_hbc("who_2023-07-28_hbc.pdf")
+#' download_hbc("who_hbc_2023-07-28.pdf")
 #' }
 download_hbc <- function(file_name) {
   download_hbc_impl(.file_name = file_name)
