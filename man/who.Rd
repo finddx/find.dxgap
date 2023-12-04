@@ -95,11 +95,11 @@ laboratories <- download_who(
 )
 }
 \dontrun{
-read_who("who_2023-08-30_laboratories.csv")
-read_who("who_2023-07-28_hbc.csv")
+read_who("who_laboratories_2023-08-30.csv")
+read_who("who_hbc_2023-07-28.csv")
 }
 \dontrun{
-read_who("who_2023-08-30_laboratories.csv") |>
+read_who("who_laboratories_2023-08-30.csv") |>
   tidy_who()
 }
 }

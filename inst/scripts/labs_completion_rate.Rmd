@@ -15,7 +15,7 @@ Source: https://extranet.who.int/tme/generateCSV.asp?ds=labs
 
 ```{r}
 labs <- 
-  read_who("who_2023-08-30_laboratories.csv") |>
+  read_who("who_laboratories_2023-08-30.csv") |>
   tidy_who()
 ```
 

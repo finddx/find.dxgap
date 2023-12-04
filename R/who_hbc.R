@@ -48,7 +48,7 @@ download_hbc_impl <- function(.file_name = tempfile("who_hbc_list", fileext = ".
 #' @noRd
 #' @examples
 #' \dontrun{
-#' read_who_hbc("who_2023-07-28_hbc.csv")
+#' read_who_hbc("who_hbc_2023-07-28.csv")
 #' }
 read_who_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   # TODO: extract table from pdf pdftools::pdf_text(file_path)[[8]]
@@ -67,7 +67,7 @@ read_who_hbc <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #' @noRd
 #' @examples
 #' \dontrun{
-#' read_who_hbc("who_2023-07-28_hbc.csv") |>
+#' read_who_hbc("who_hbc_2023-07-28.csv") |>
 #'   tidy_who_hbc()
 #' }
 tidy_who_hbc <- function(data, .year = NULL) {

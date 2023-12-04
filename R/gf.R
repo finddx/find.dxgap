@@ -23,7 +23,7 @@ NULL
 #' @export
 #' @examples
 #' \dontrun{
-#' read_gf_procurement("gf_2023-07-26_procurement.csv")
+#' read_gf_procurement("gf_procurement_2023-07-26.csv")
 #' }
 read_gf_procurement <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   file_path <- compose_file_path(file_name = file_name, data_dir = data_dir)
@@ -43,7 +43,7 @@ read_gf_procurement <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"
 #' @export
 #' @examples
 #' \dontrun{
-#' read_gf_procurement("gf_2023-07-26_procurement.csv") |>
+#' read_gf_procurement("gf_procurement_2023-07-26.csv") |>
 #'   tidy_gf_procurement()
 #' }
 tidy_gf_procurement <- function(data, year = NULL) {

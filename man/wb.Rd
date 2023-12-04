@@ -84,10 +84,10 @@ gdp <- download_wb(
 )
 }
 \dontrun{
-read_wb("wb_2023-07-28_pop_urban.csv")
+read_wb("wb_pop_urban_2023-07-28.csv")
 }
 \dontrun{
-read_wb("wb_2023-07-28_pop_urban.csv") |>
+read_wb("wb_pop_urban_2023-07-28.csv") |>
   tidy_wb()
 }
 }

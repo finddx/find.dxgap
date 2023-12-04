@@ -126,7 +126,7 @@ unnest_wb_resp <- function(data) {
 #'
 #' @examples
 #' \dontrun{
-#' read_wb("wb_2023-07-28_pop_urban.csv")
+#' read_wb("wb_pop_urban_2023-07-28.csv")
 #' }
 read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   dxgap_read_csv(file_name = file_name, data_dir = data_dir) |>
@@ -147,7 +147,7 @@ read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'
 #' @examples
 #' \dontrun{
-#' read_wb("wb_2023-07-28_pop_urban.csv") |>
+#' read_wb("wb_pop_urban_2023-07-28.csv") |>
 #'   tidy_wb()
 #' }
 tidy_wb <- function(data, year = NULL) {

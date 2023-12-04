@@ -48,10 +48,10 @@ The data sets currently supported from Global Fund in this package are:
 
 \examples{
 \dontrun{
-read_gf_procurement("gf_2023-07-26_procurement.csv")
+read_gf_procurement("gf_procurement_2023-07-26.csv")
 }
 \dontrun{
-read_gf_procurement("gf_2023-07-26_procurement.csv") |>
+read_gf_procurement("gf_procurement_2023-07-26.csv") |>
   tidy_gf_procurement()
 }
 }

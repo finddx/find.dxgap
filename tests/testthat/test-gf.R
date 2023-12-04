@@ -1,6 +1,6 @@
 skip_on_ci()
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-file_name <- "gf_2023-07-26_procurement.csv"
+file_name <- "gf_procurement_2023-07-26.csv"
 data <- read_gf_procurement(file_name)
 test_that("a tibble is returned", {
   skip_if_no_data(file_name)
