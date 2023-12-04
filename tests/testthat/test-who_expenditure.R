@@ -1,4 +1,5 @@
 test_that("WHO expenditures data is downloaded correctly", {
+  skip_on_ci()
   skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_available("https://extranet.who.int/tme/generateCSV.asp?ds=expenditure_utilisation")
