@@ -123,7 +123,7 @@ grow_hbc <- function(data) {
     tidyr::unnest(hbc_data)
 }
 
-tidy_hbc2 <- function(data) {
+tidy_who_hbc2 <- function(data) {
   data |>
     dplyr::select(country_code, year) |>
     dplyr::mutate(country = countrycode::countrycode(
