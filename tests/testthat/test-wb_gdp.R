@@ -11,7 +11,7 @@ test_that("World Bank gdp data is downloaded correctly", {
 test_that("World Bank gdp data is read and tidied correctly", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-  path <- file.path(Sys.getenv("DXGAP_DATADIR"), "who_gdp_2023-09-07.csv")
+  path <- file.path(Sys.getenv("DXGAP_DATADIR"), "wb_gdp_2023-09-07.csv")
   skip_if(!file.exists(path))
   raw <- read_wb(path)
   tidy <- tidy_wb(raw)

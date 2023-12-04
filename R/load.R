@@ -46,8 +46,8 @@ generate_disease_pattern <- function(dxgap_diseases, disease, pattern) {
     dplyr::mutate(
       pattern = stringr::str_c(
         provider_id,
-        date_pattern,
         dataset_type,
+        date_pattern,
         sep = "_"
       )
     )

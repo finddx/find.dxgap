@@ -11,7 +11,7 @@ test_that("World Bank population density data is downloaded correctly", {
 test_that("World Bank population density data is read and tidied correctly", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-  path <- file.path(Sys.getenv("DXGAP_DATADIR"), "who_pop_density_2023-10-04.csv")
+  path <- file.path(Sys.getenv("DXGAP_DATADIR"), "wb_pop_density_2023-10-04.csv")
   skip_if(!file.exists(path))
   raw <- read_wb(path)
   tidy <- tidy_wb(raw)
