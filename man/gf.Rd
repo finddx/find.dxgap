@@ -2,31 +2,7 @@
 % Please edit documentation in R/gf.R
 \name{gf}
 \alias{gf}
-\alias{read_gf_procurement}
-\alias{tidy_gf_procurement}
 \title{Data from Global Fund}
-\usage{
-read_gf_procurement(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
-
-tidy_gf_procurement(data, year = NULL)
-}
-\arguments{
-\item{file_name}{A string containing the name of the file to be read.}
-
-\item{data_dir}{Path containing the directory to read the data from. Defaults
-to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
-
-\item{data}{A tibble returned from the corresponding \code{read_()} function.}
-
-\item{year}{A year to filter the data by. Defaults to \code{NULL}, returning data
-for all years.}
-}
-\value{
-\code{read_gf_procurement()} returns a tibble containing the data set.
-
-\code{tidy_gf_procurement()} returns a tibble. This is a tidied version of
-the input tibble.
-}
 \description{
 These help pages document the lower-level API to individually download, read,
 and tidy Global Fund data. For a higher-level API that works across all data
@@ -46,12 +22,3 @@ The data sets currently supported from Global Fund in this package are:
 \url{https://insights.theglobalfund.org/t/Public/views/PriceQualityReportingTransactionSummary/TransactionSummary?iframeSizedToWindow=true&\%3Aembed=y&\%3AshowAppBanner=false&\%3Adisplay_count=no&\%3AshowVizHome=no?}
 }
 
-\examples{
-\dontrun{
-read_gf_procurement("gf_procurement_2023-07-26.csv")
-}
-\dontrun{
-read_gf_procurement("gf_procurement_2023-07-26.csv") |>
-  tidy_gf_procurement()
-}
-}
