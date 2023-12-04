@@ -2,7 +2,7 @@
 #' @noRd
 #' @examples \dontrun{
 #' tbl_lst <- import_bulk(
-#'   c("gf_2023-07-26_procurement.csv", "wb_2023-07-28_pop_urban.csv")
+#'   c("gf_procurement_2023-07-26.csv", "wb_pop_urban_2023-07-28.csv")
 #' )
 #' }
 import_bulk <- function(data_names) {
@@ -15,7 +15,7 @@ import_bulk <- function(data_names) {
 #' Import table
 #' @noRd
 #' @examples \dontrun{
-#' tbl <- import_tbl("who_2023-07-28_hbc.csv")
+#' tbl <- import_tbl("who_hbc_2023-07-28.csv")
 #' }
 import_tbl <- function(.file_name, .data_dir = Sys.getenv("DXGAP_DATADIR")) {
 

@@ -34,23 +34,23 @@ NULL
 #' @examples
 #' \dontrun{
 #' pop_urban <- download_wb(
-#'   file_name = compose_date_dataset_file_name("wb", dataset = "pop_urban", file_ext = ".csv"),
+#'   file_name = paste_dataset_name_date("wb", dataset = "pop_urban", file_ext = ".csv"),
 #'   indicator = "SP.URB.TOTL.IN.ZS",
 #'   range_years = "2015:2023"
 #' )
 #' pop_density <-
 #'   download_wb(
-#'     file_name = compose_date_dataset_file_name("wb", dataset = "pop_density", file_ext = ".csv"),
+#'     file_name = paste_dataset_name_date("wb", dataset = "pop_density", file_ext = ".csv"),
 #'     indicator = "EN.POP.DNST",
 #'     range_years = "2015:2023"
 #'   )
 #' pop_total <- download_wb(
-#'   file_name = compose_date_dataset_file_name("wb", dataset = "pop_total", file_ext = ".csv"),
+#'   file_name = paste_dataset_name_date("wb", dataset = "pop_total", file_ext = ".csv"),
 #'   indicator = "SP.POP.TOTL",
 #'   range_years = "2015:2023"
 #' )
 #' gdp <- download_wb(
-#'   file_name = compose_date_dataset_file_name("wb", dataset = "gdp", file_ext = ".csv"),
+#'   file_name = paste_dataset_name_date("wb", dataset = "gdp", file_ext = ".csv"),
 #'   indicator = "NY.GDP.MKTP.CD",
 #'   range_years = "2015:2023"
 #' )
@@ -126,7 +126,7 @@ unnest_wb_resp <- function(data) {
 #'
 #' @examples
 #' \dontrun{
-#' read_wb("wb_2023-07-28_pop_urban.csv")
+#' read_wb("wb_pop_urban_2023-07-28.csv")
 #' }
 read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   dxgap_read_csv(file_name = file_name, data_dir = data_dir) |>
@@ -147,7 +147,7 @@ read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'
 #' @examples
 #' \dontrun{
-#' read_wb("wb_2023-07-28_pop_urban.csv") |>
+#' read_wb("wb_pop_urban_2023-07-28.csv") |>
 #'   tidy_wb()
 #' }
 tidy_wb <- function(data, year = NULL) {

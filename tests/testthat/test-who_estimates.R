@@ -11,7 +11,7 @@ test_that("WHO estimates data is downloaded correctly", {
 test_that("WHO estimates data is read and tidied correctly", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-  path <- file.path(Sys.getenv("DXGAP_DATADIR"), "who_2023-07-28_estimates.csv")
+  path <- file.path(Sys.getenv("DXGAP_DATADIR"), "who_estimates_2023-07-28.csv")
   skip_if(!file.exists(path))
   raw <- read_who(path)
   tidy <- tidy_who(raw)

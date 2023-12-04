@@ -46,27 +46,27 @@ NULL
 #' @examples
 #' \dontrun{
 #' notification <- download_who(
-#'   file_name = compose_date_dataset_file_name("who", dataset = "notifications", file_ext = ".csv"),
+#'   file_name = paste_dataset_name_date("who", dataset = "notifications", file_ext = ".csv"),
 #'   url_endpoint = "notifications"
 #' )
 #' estimates <- download_who(
-#'   file_name = compose_date_dataset_file_name("who", dataset = "estimates", file_ext = ".csv"),
+#'   file_name = paste_dataset_name_date("who", dataset = "estimates", file_ext = ".csv"),
 #'   url_endpoint = "estimates"
 #' )
 #' budget <- download_who(
-#'   file_name = compose_date_dataset_file_name("who", dataset = "budget", file_ext = ".csv"),
+#'   file_name = paste_dataset_name_date("who", dataset = "budget", file_ext = ".csv"),
 #'   url_endpoint = "budget"
 #' )
 #' community_engagement <- download_who(
-#'   file_name = compose_date_dataset_file_name("who", dataset = "community", file_ext = ".csv"),
+#'   file_name = paste_dataset_name_date("who", dataset = "community", file_ext = ".csv"),
 #'   url_endpoint = "community"
 #' )
 #' expenditure_and_utilisation <- download_who(
-#'   file_name = compose_date_dataset_file_name("who", dataset = "expenditures", file_ext = ".csv"),
+#'   file_name = paste_dataset_name_date("who", dataset = "expenditures", file_ext = ".csv"),
 #'   url_endpoint = "expenditure_utilisation"
 #' )
 #' laboratories <- download_who(
-#'   file_name = compose_date_dataset_file_name("who", dataset = "laboratories", file_ext = ".csv"),
+#'   file_name = paste_dataset_name_date("who", dataset = "laboratories", file_ext = ".csv"),
 #'   url_endpoint = "labs"
 #' )
 #' }
@@ -128,8 +128,8 @@ who_url_endpoints <- tibble::tribble(
 #'
 #' @examples
 #' \dontrun{
-#' read_who("who_2023-08-30_laboratories.csv")
-#' read_who("who_2023-07-28_hbc.csv")
+#' read_who("who_laboratories_2023-08-30.csv")
+#' read_who("who_hbc_2023-07-28.csv")
 #' }
 read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   is_who_hbc <- stringr::str_detect(file_name, "hbc")
@@ -158,7 +158,7 @@ read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'
 #' @examples
 #' \dontrun{
-#' read_who("who_2023-08-30_laboratories.csv") |>
+#' read_who("who_laboratories_2023-08-30.csv") |>
 #'   tidy_who()
 #' }
 tidy_who <- function(data, year = NULL, .shape = "long") {

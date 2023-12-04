@@ -1,6 +1,6 @@
 skip_on_ci()
 skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-file_name <- "who_2023-07-28_hbc.csv"
+file_name <- "who_hbc_2023-07-28.csv"
 data <- read_who_hbc(file_name)
 test_that("a tibble is returned", {
   skip_if_no_data(file_name)

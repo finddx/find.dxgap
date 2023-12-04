@@ -38,10 +38,10 @@ skip_if_no_data <- function(file_name,
   skip_if(!file.exists(path))
 }
 
-compose_date_dataset_file_name <- function(...,
-                                           download_date = as.character(Sys.Date()),
-                                           dataset = "notifications") {
-  compose_file_name(..., download_date, dataset)
+paste_dataset_name_date <- function(...,
+                                    dataset, # "notifications"
+                                    download_date = as.character(Sys.Date())) {
+  compose_file_name(..., dataset, download_date)
 }
 
 compose_file_name <- function(..., sep = "_", file_ext = NULL) {
@@ -55,7 +55,7 @@ compose_file_name <- function(..., sep = "_", file_ext = NULL) {
 
 extract_name <- function(path) {
   file_name <- basename(path)
-  stringr::str_remove_all(file_name, "\\d{4}-\\d{2}-\\d{2}\\_|\\.[a-zA-Z0-9]+$")
+  stringr::str_remove_all(file_name, "\\.[a-zA-Z0-9]+|\\_\\d{4}-\\d{2}-\\d{2}")
 }
 
 dxgap_read_csv <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"), ...) {
