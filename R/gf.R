@@ -3,7 +3,7 @@
 #' These help pages document the lower-level API to individually download, read,
 #' and tidy Global Fund data. For a higher-level API that works across all data
 #' sets, see:
-#' * [write_data_dir()] to download all data
+#' * [import_tbl()] to download all data
 #'
 #' The data sets currently supported from Global Fund in this package are:
 #' * procurement

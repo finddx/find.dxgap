@@ -8,7 +8,7 @@ These help pages document the lower-level API to individually download, read,
 and tidy Global Fund data. For a higher-level API that works across all data
 sets, see:
 \itemize{
-\item \code{\link[=write_data_dir]{write_data_dir()}} to download all data
+\item \code{\link[=import_tbl]{import_tbl()}} to download all data
 }
 }
 \details{
