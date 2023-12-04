@@ -25,6 +25,7 @@ downloaded. One of the following:
 \item expenditure_utilisation
 \item labs
 \item notifications
+\item hbc
 }}
 
 \item{data_dir}{Path containing the directory to read the data from. Defaults
