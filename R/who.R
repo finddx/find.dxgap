@@ -11,7 +11,8 @@
 #' * budget
 #' * community
 #' * expenditures
-#' * laboratories.
+#' * laboratories
+#' * hbc
 #'
 #' @name who
 NULL
@@ -128,6 +129,7 @@ who_url_endpoints <- tibble::tribble(
 #' @examples
 #' \dontrun{
 #' read_who("who_2023-08-30_laboratories.csv")
+#' read_who("who_2023-07-28_hbc.csv")
 #' }
 read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   is_who_hbc <- stringr::str_detect(file_name, "hbc")
