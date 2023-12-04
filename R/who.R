@@ -34,7 +34,6 @@ NULL
 #'   * expenditure_utilisation
 #'   * labs
 #'   * notifications
-#'   * hbc
 #'
 #' @return `download_who()` returns invisibly the file path in which data are
 #'   stored.
