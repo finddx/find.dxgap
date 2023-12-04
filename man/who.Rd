@@ -70,27 +70,27 @@ The data sets currently available from WHO in this package are:
 \examples{
 \dontrun{
 notification <- download_who(
-  file_name = compose_date_dataset_file_name("who", dataset = "notifications", file_ext = ".csv"),
+  file_name = paste_dataset_name_date("who", dataset = "notifications", file_ext = ".csv"),
   url_endpoint = "notifications"
 )
 estimates <- download_who(
-  file_name = compose_date_dataset_file_name("who", dataset = "estimates", file_ext = ".csv"),
+  file_name = paste_dataset_name_date("who", dataset = "estimates", file_ext = ".csv"),
   url_endpoint = "estimates"
 )
 budget <- download_who(
-  file_name = compose_date_dataset_file_name("who", dataset = "budget", file_ext = ".csv"),
+  file_name = paste_dataset_name_date("who", dataset = "budget", file_ext = ".csv"),
   url_endpoint = "budget"
 )
 community_engagement <- download_who(
-  file_name = compose_date_dataset_file_name("who", dataset = "community", file_ext = ".csv"),
+  file_name = paste_dataset_name_date("who", dataset = "community", file_ext = ".csv"),
   url_endpoint = "community"
 )
 expenditure_and_utilisation <- download_who(
-  file_name = compose_date_dataset_file_name("who", dataset = "expenditures", file_ext = ".csv"),
+  file_name = paste_dataset_name_date("who", dataset = "expenditures", file_ext = ".csv"),
   url_endpoint = "expenditure_utilisation"
 )
 laboratories <- download_who(
-  file_name = compose_date_dataset_file_name("who", dataset = "laboratories", file_ext = ".csv"),
+  file_name = paste_dataset_name_date("who", dataset = "laboratories", file_ext = ".csv"),
   url_endpoint = "labs"
 )
 }

@@ -38,7 +38,7 @@ skip_if_no_data <- function(file_name,
   skip_if(!file.exists(path))
 }
 
-compose_date_dataset_file_name <- function(...,
+paste_dataset_name_date <- function(...,
                                            download_date = as.character(Sys.Date()),
                                            dataset = "notifications") {
   compose_file_name(..., download_date, dataset)
