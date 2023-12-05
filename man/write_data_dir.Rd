@@ -18,7 +18,7 @@ the path to the folder, invisibly.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
-Data for the project are now stored in a directory called
+Data for the project are now stored in a repository called
 \href{https://github.com/finddx/find.dxgap.data}{\code{find.dxgap.data}}.
 }
 \details{

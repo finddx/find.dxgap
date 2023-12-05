@@ -1,7 +1,7 @@
 #' Create a folder containing data for the project.
 #'
 #' `r lifecycle::badge("deprecated")`
-#' Data for the project are now stored in a directory called
+#' Data for the project are now stored in a repository called
 #' [`find.dxgap.data`](https://github.com/finddx/find.dxgap.data).
 #'
 #' This function has side effects. It creates a folder storing data for the
