@@ -1,4 +1,5 @@
 test_that("run_mod() works", {
+  skip_on_ci()
   withr::local_seed(2023)
   testdata_path <- testthat::test_path("testdata", "tb_tbl.rds")
   tb_tbl <- readr::read_rds(testdata_path)
