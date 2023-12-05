@@ -7,3 +7,6 @@
 ^\.github$
 ^inst$
 ^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
