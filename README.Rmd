@@ -55,15 +55,7 @@ devtools::install_github("finddx/find.dxgap")
 
 ## find.dxgap.data
 
-Data for the project are stored in a directory called `find.dxgap.data`. Please,
-call `write_data_dir()` to create and populate such folder.
-
-The data available are:
-
-```{r echo=FALSE}
-tibble::tibble(data_file = list.files("inst/extdata", pattern = "csv")) |> 
-  knitr::kable()
-```
+Clone [`find.dxgap.data`](https://github.com/finddx/find.dxgap.data) to get data for the project.
 
 The below schema represents the flow of data in this package to aid with
 future developments:
