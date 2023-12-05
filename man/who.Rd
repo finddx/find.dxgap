@@ -37,7 +37,7 @@ These help pages document the lower-level API to individually download, read,
 and tidy data. For a higher-level API that works across all data sets,
 see:
 \itemize{
-\item \code{\link[=import_tbl]{import_tbl()}} to download all data
+\item \code{\link[=import_tbl]{import_tbl()}} to import any data
 }
 }
 \details{

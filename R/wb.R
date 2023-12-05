@@ -3,7 +3,7 @@
 #' These help pages document the lower-level API to individually download, read,
 #' and tidy data. For a higher-level API that works across all data sets,
 #' see:
-#' * [import_tbl()] to download all data
+#' * [import_tbl()] to import any data
 #'
 #' The data sets currently available from World Bank in this package are:
 #' * urban population
