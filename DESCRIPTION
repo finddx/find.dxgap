@@ -26,6 +26,7 @@ Imports:
     gt,
     here,
     httr2,
+    lifecycle,
     lubridate,
     parsnip,
     performance,
