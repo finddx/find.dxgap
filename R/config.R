@@ -18,6 +18,7 @@
 #' @return the path to the folder, invisibly.
 #'
 #' @export
+#' @keywords internal
 #'
 #' @examples \dontrun{
 #' write_data_dir() # Create folder at same level as project
