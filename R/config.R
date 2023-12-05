@@ -1,5 +1,10 @@
 #' Create a folder containing data for the project.
 #'
+#' `r lifecycle::badge("deprecated")`
+#' Data for the project are stored in a directory called
+#' [`find.dxgap.data`](https://github.com/finddx/find.dxgap.data).
+#' We clone that rather than create it using `write_data_dir()`.
+#'
 #' This function has side effects. It creates a folder storing data for the
 #' project. In addition it sets the `DXGAP_DATADIR` environment variable which
 #' is needed for the `read_*()` family of functions to work, in particular when
