@@ -52,6 +52,14 @@ devtools::install_github("finddx/find.dxgap")
 Clone [`find.dxgap.data`](https://github.com/finddx/find.dxgap.data) to
 get data for the project.
 
+The following env. variable needs to be set to establish connection
+between `find.dxgap` and `find.dxgap.data`:
+
+    DXGAP_DATADIR = "/<path_to>/find.dxgap.data"
+
+Please call, `usethis::edit_r_environ(scope = "user")` and place it in
+your .Renviron file.
+
 The below schema represents the flow of data in this package to aid with
 future developments:
 
