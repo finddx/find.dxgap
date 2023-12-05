@@ -1,5 +1,9 @@
 #' Create a folder containing data for the project.
 #'
+#' `r lifecycle::badge("deprecated")`
+#' Data for the project are now stored in a repository called
+#' [`find.dxgap.data`](https://github.com/finddx/find.dxgap.data).
+#'
 #' This function has side effects. It creates a folder storing data for the
 #' project. In addition it sets the `DXGAP_DATADIR` environment variable which
 #' is needed for the `read_*()` family of functions to work, in particular when
@@ -13,12 +17,18 @@
 #' @return the path to the folder, invisibly.
 #'
 #' @export
+#' @keywords internal
 #'
 #' @examples \dontrun{
 #' write_data_dir() # Create folder at same level as project
 #' write_data_dir("~/Documents/my_projects") # Specify specific folder
 #' }
 write_data_dir <- function(path = fs::path_dir(getwd()), dirs = character(0)) {
+  lifecycle::deprecate_stop(
+    "0.1.0",
+    "write_data_dir()",
+    details = "Please, get data from https://github.com/finddx/find.dxgap.data."
+  )
   if (!rlang::is_character(path) && length(path) != 1) {
     rlang::abort("Not a valid character path.")
   }

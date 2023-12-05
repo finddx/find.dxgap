@@ -49,26 +49,16 @@ devtools::install_github("finddx/find.dxgap")
 
 ## find.dxgap.data
 
-Data for the project are stored in a directory called `find.dxgap.data`.
-Please, call `write_data_dir()` to create and populate such folder.
+Clone [`find.dxgap.data`](https://github.com/finddx/find.dxgap.data) to
+get data for the project.
 
-The data available are:
+The following env. variable needs to be set to establish connection
+between `find.dxgap` and `find.dxgap.data`:
 
-| data_file                        |
-|:---------------------------------|
-| gf_2023-07-26_procurement.csv    |
-| tb_find_variable_masterlist.csv  |
-| wb_2023-07-28_pop_urban.csv      |
-| wb_2023-08-31_pop_total.csv      |
-| wb_2023-09-07_gdp.csv            |
-| wb_2023-10-04_pop_density.csv    |
-| who_2023-07-28_budget.csv        |
-| who_2023-07-28_community.csv     |
-| who_2023-07-28_estimates.csv     |
-| who_2023-07-28_expenditures.csv  |
-| who_2023-07-28_notifications.csv |
-| who_2023-08-30_laboratories.csv  |
-| who_2023-07-28_hbc.csv                      |
+    DXGAP_DATADIR = "/<path_to>/find.dxgap.data"
+
+Please call, `usethis::edit_r_environ(scope = "user")` and place it in
+your .Renviron file.
 
 The below schema represents the flow of data in this package to aid with
 future developments:
