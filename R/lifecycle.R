@@ -1,11 +1,12 @@
-deprecate_read_tidy <- function(.file_name, .call) {
+signal_superseded <- function(.call,
+                              .with,
+                              .env = rlang::caller_env()) {
   fn_name <- compose_good_what(.call = .call)
-  lifecycle::deprecate_warn(
-    "0.1.1",
+  lifecycle::signal_stage(
+    "superseded",
     what = fn_name,
-    with = "import_tbl()",
-    always = FALSE,
-    details = sprintf('Call, `import_tbl("%s")`.', .file_name)
+    with = .with,
+    env = .env
   )
 }
 
