@@ -17,6 +17,12 @@ additional sub-folders. Not yet in use.}
 the path to the folder, invisibly.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+Data for the project are stored in a directory called
+\href{https://github.com/finddx/find.dxgap.data}{\code{find.dxgap.data}}.
+We clone that rather than create it using \code{write_data_dir()}.
+}
+\details{
 This function has side effects. It creates a folder storing data for the
 project. In addition it sets the \code{DXGAP_DATADIR} environment variable which
 is needed for the \verb{read_*()} family of functions to work, in particular when
