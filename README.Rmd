@@ -96,6 +96,18 @@ An error is raised, if a disease is not supported yet:
 build_tbl("covid", year = NULL, vars = tb_vars)
 ```
 
+When is [#289](https://github.com/finddx/find.dxgap/pull/289) is merged, tables from different providers will all be accessible with a unique function. For instance:
+
+```{r eval=FALSE}
+import_tbl("who_hbc_2023-07-28.csv")
+```
+
+```{r eval=FALSE}
+import_tbl("gf_procurement_2023-07-26.csv")
+```
+
+Please, refer to [`find.dxgap.data`](https://github.com/finddx/find.dxgap.data) for the available tables.
+
 ### Report
 
 Few templates have been implemented for data exploration:
