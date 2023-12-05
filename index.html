@@ -136,19 +136,25 @@
 <span><span class="co">#&gt; Error in `check_supported_disease()` at find.dxgap/R/load.R:26:3:</span></span>
 <span><span class="co">#&gt; ! Cannot find `covid` in `dxgap_diseases`.</span></span>
 <span><span class="co">#&gt; ✖ Disease is not supported yet.</span></span></code></pre></div>
+<p>When is <a href="https://github.com/finddx/find.dxgap/pull/289" class="external-link">#289</a> is merged, tables from different providers will all be accessible with a unique function. For instance:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">import_tbl</span><span class="op">(</span><span class="st">"who_hbc_2023-07-28.csv"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">import_tbl</span><span class="op">(</span><span class="st">"gf_procurement_2023-07-26.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>Please, refer to <a href="https://github.com/finddx/find.dxgap.data" class="external-link"><code>find.dxgap.data</code></a> for the available tables.</p>
 </div>
 <div class="section level3">
 <h3 id="report">Report<a class="anchor" aria-label="anchor" href="#report"></a>
 </h3>
 <p>Few templates have been implemented for data exploration:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/view_templates.html">view_templates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; eda.Rmd</span></span>
 <span><span class="co">#&gt; eda_ts.Rmd</span></span>
 <span><span class="co">#&gt; explain_lm.Rmd</span></span>
 <span><span class="co">#&gt; missing.Rmd</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/render.html">render_report</a></span><span class="op">(</span></span>
 <span>  <span class="st">"eda_ts.Rmd"</span>, </span>
 <span>  disease <span class="op">=</span> <span class="st">"tb"</span>,</span>
@@ -156,7 +162,7 @@
 <span>  interactive <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  vars <span class="op">=</span> <span class="va">tb_vars</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/render.html">render_report</a></span><span class="op">(</span></span>
 <span>  <span class="st">"explain_lm.Rmd"</span>,</span>
 <span>  disease <span class="op">=</span> <span class="st">"tb"</span>,</span>
