@@ -53,28 +53,79 @@ version of find.dxgap from [GitHub](https://github.com/) with:
 devtools::install_github("finddx/find.dxgap")
 ```
 
+```{r}
+library(find.dxgap)
+```
+
+
 ## find.dxgap.data
 
 Clone [`find.dxgap.data`](https://github.com/finddx/find.dxgap.data) to get data for the project.
 
-The following env. variable needs to be set to establish connection between `find.dxgap` and `find.dxgap.data`:
+The following env. variable needs to be set to establish connection between `find.dxgap` and `find.dxgap.data`. Please call, `usethis::edit_r_environ(scope = "user")` and c/p the following in your .Renviron file:
 
 ```
 DXGAP_DATADIR = "/<path_to>/find.dxgap.data"
 ```
 
-Please call, `usethis::edit_r_environ(scope = "user")` and place it in your .Renviron file.
+## Usage
+
+### Tables
+
+Once `DXGAP_DATADIR` is set, build a wide table for given year and disease:
+
+```{r}
+tb_vars <- c(
+  "year", "country", "is_hbc", "country_code", "who_dx_gap", "pop_total",
+  "pop_urban_perc", "pop_density", "gdp", "c_newinc", "e_inc_num",
+  "e_mort_100k", "culture", "smear", "xpert", "m_wrd"
+)
+
+build_tbl("tb", year = 2019, vars = tb_vars)
+```
+
+Optionally, a time series can be build:
+
+```{r}
+build_tbl("tb", year = NULL, vars = tb_vars)
+```
+
+An error is raised, if a disease is not supported yet:
+
+```{r error=TRUE}
+build_tbl("covid", year = NULL, vars = tb_vars)
+```
+
+### Report
+
+Few templates have been implemented for data exploration:
+
+```{r}
+view_templates() |> 
+  writeLines()
+```
 
 
-The below schema represents the flow of data in this package to aid with
-future developments:
+```{r eval=FALSE}
+render_report(
+  "eda_ts.Rmd", 
+  disease = "tb",
+  year = NULL, # the template requires `NULL`
+  interactive = TRUE,
+  vars = tb_vars
+)
+```
 
-<img src='man/figures/data-schematic.png' align="centre"/>
+```{r eval=FALSE}
+render_report(
+  "explain_lm.Rmd",
+  disease = "tb",
+  year = 2019, # the template requires a year to be selected
+  interactive = TRUE,
+  vars = tb_vars
+)
+```
 
-## Report
-
-Call, `render_report(year = 2019)` to render a report for given year. Create new
-templates and render them using the `template_path` parameter.
 
 ## Objectives of the project
 
@@ -94,126 +145,12 @@ More specifically it will show:
   - Assess existing association between algorithms and *TB incidence* / % of
   cases bacteriologically confirmed
 
-## TB dignosis Crash Course
+## Schema
 
+The below schema represents the flow of data in this package to aid with
+future developments:
 
-### Tubercolosis 
-
-Tuberculosis (TB) is a disease caused by germs that are spread from person to
-person through the air. TB usually affects the lungs, but it can also affect
-other parts of the body, such as the brain, the kidneys, or the spine. A person
-with TB can die if they do not get treatment.
-
-### Process
-
-- Show symptoms (plus, so called *asymptomatic*)
-
-- Get tested
-
-### How to detect
-
-  - Blood tests
-  
-  - Skin tests
-  
-  - *Rapid tests*
-
-
-### Issues
-
-- "Latent TB infection"" vs "TB disease"
-
-- Gap between estimated and notified cases
-
-- DR-TB (**Drug-resistant TB**):
-
-  - multidrug or rifampicin-resistant TB (MDR / RR-TB)
-  - due to: *Mycobacterium tuberculosis complex bacteria (MTBC)*
-  
-- Needs for laboratories (DST)
-
-### Management of TB spread
-
-- Rapid diagnosis:
-
-  - *drug-susceptibility testing (DST)* 
-  
-  - fast and accurate detection tests
-
-- Rapid detection of DR-TB
-
-- Effective treatment regime
-
-### Policy
-
-WHO developed a global strategy for TB prevention (*End TB Strategy*) with goals to meet.
-
-### Metrics
-
-- point prevalence
-
-- period prevalence
-
-- incidence rate (or, *cumulative incidence rate*) = (numb. of new cases arising
-from a definined pop. in a specified time period) / (numb. in defined at-risk
-pop. over the same time period)
-
-- incidence density
-
-- illness duration
-
-
-### Glossary
-
-**POC: Point-of-care diagnostic tests for tuberculosis disease**
-
-They facilitate early detection, immediate treatment, and reduced transmission of TB disease.
-
-Types:
-
-- Oral Swab testing
-
-- GeneXpert® Systems technology by Cephid
-  - Workstation for molecular diagnostics
-  
-- Urine LF-LAM 
-
-- ...
-
-**WHO dashboard**
-
-https://www.who.int/teams/global-tuberculosis-programme/data
-
-**Model (diagnostic) algorithms**
-
-Effective and efficient TB diagnostic algorithms are key components of a
-diagnostic cascade designed to ensure that patients with TB are diagnosed
-accurately and rapidly, and are promptly placed on appropriate therapy.
-
-Objectives:
-
-- Screening
-
-- Diagnosis
-
-Example:
-
-![](https://tbksp.org/sites/default/files/inline-images/Fig4-2.gif)
-
-**WHO HBC**
-
-WHO render a list of High burden countries (HBCs) for TB, TB/HIV, etc.
-
-
-**Prevention**
-
-- primary
-
-- secondary
-
-- tertiary
-
-
+<img src='man/figures/data-schematic.png' align="centre"/>
 
 ### Source:
 
