@@ -131,7 +131,8 @@ who_url_endpoints <- tibble::tribble(
 #' read_who("who_laboratories_2023-08-30.csv")
 #' read_who("who_hbc_2023-07-28.csv")
 #' }
-read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+read_who <- function(file_name, call = rlang::current_call(), data_dir = Sys.getenv("DXGAP_DATADIR")) {
+  deprecate_read_tidy(.file_name = file_name, .call = call)
   is_who_hbc <- stringr::str_detect(file_name, "hbc")
   if (is_who_hbc) {
     who_hbc_df <- read_who_hbc(file_name, data_dir = data_dir)
