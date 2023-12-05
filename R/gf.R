@@ -20,7 +20,7 @@ NULL
 #' @inheritParams read_who
 #' @rdname gf
 #' @return `read_gf_procurement()` returns a tibble containing the data set.
-#' @noRd
+#' @export
 #' @examples
 #' \dontrun{
 #' read_gf_procurement("gf_procurement_2023-07-26.csv")
@@ -40,7 +40,7 @@ read_gf_procurement <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"
 #' @rdname gf
 #' @return `tidy_gf_procurement()` returns a tibble. This is a tidied version of
 #'   the input tibble.
-#' @noRd
+#' @export
 #' @examples
 #' \dontrun{
 #' read_gf_procurement("gf_procurement_2023-07-26.csv") |>

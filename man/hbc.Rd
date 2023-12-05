@@ -8,14 +8,7 @@
 download_hbc(file_name)
 }
 \arguments{
-\item{file_name}{A path to the file. By default, the file is downloaded into
-a temporary location (useful when running unit tests). Instead, a custom
-target directory can be set using an absolute path, for instance,
-"~/path_to/my_file.ext". In both cases the path specified in \code{data_dir}
-does not play a role. Alternatively, if a relative path is provided,
-function downloads the data into the the default folder "find.dxgap.data".
-Please, make sure the environment variable "DXGAP_DATADIR" is set in your
-.Renviron.}
+\item{file_name}{A string containing the name of the file to be read.}
 }
 \value{
 \code{download_hbc()} returns invisibly the file path in which data are

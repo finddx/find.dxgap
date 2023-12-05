@@ -3,19 +3,18 @@
 \name{who}
 \alias{who}
 \alias{download_who}
+\alias{read_who}
+\alias{tidy_who}
 \title{Data from WHO}
 \usage{
 download_who(file_name, url_endpoint)
+
+read_who(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"))
+
+tidy_who(data, year = NULL, .shape = "long")
 }
 \arguments{
-\item{file_name}{A path to the file. By default, the file is downloaded into
-a temporary location (useful when running unit tests). Instead, a custom
-target directory can be set using an absolute path, for instance,
-"~/path_to/my_file.ext". In both cases the path specified in \code{data_dir}
-does not play a role. Alternatively, if a relative path is provided,
-function downloads the data into the the default folder "find.dxgap.data".
-Please, make sure the environment variable "DXGAP_DATADIR" is set in your
-.Renviron.}
+\item{file_name}{A string containing the name of the file to be read.}
 
 \item{url_endpoint}{A string indicating the name of the data set to be
 downloaded. One of the following:
@@ -27,10 +26,26 @@ downloaded. One of the following:
 \item labs
 \item notifications
 }}
+
+\item{data_dir}{Path containing the directory to read the data from. Defaults
+to the path set by the environment variable \code{"DXGAP_DATADIR"}.}
+
+\item{data}{A tibble returned from the corresponding \code{read_()} function.}
+
+\item{year}{A year to filter the data by. Defaults to \code{NULL}, returning data
+for all years.}
+
+\item{.shape}{A string indicating if the data should be in "wide", or "long"
+format. Defaults to "long".}
 }
 \value{
 \code{download_who()} returns invisibly the file path in which data are
 stored.
+
+\code{read_who()} returns a tibble containing the data set.
+
+\code{tidy_who()} returns s tibble. This is a tidied version of the input
+tibble.
 }
 \description{
 These help pages document the lower-level API to individually download, read,
@@ -78,5 +93,13 @@ laboratories <- download_who(
   file_name = paste_dataset_name_date("who", dataset = "laboratories", file_ext = ".csv"),
   url_endpoint = "labs"
 )
+}
+\dontrun{
+read_who("who_laboratories_2023-08-30.csv")
+read_who("who_hbc_2023-07-28.csv")
+}
+\dontrun{
+read_who("who_laboratories_2023-08-30.csv") |>
+  tidy_who()
 }
 }

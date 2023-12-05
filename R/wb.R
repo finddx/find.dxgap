@@ -122,7 +122,7 @@ unnest_wb_resp <- function(data) {
 #'
 #' @rdname wb
 #'
-#' @noRd
+#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -143,7 +143,7 @@ read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'
 #' @rdname wb
 #'
-#' @noRd
+#' @export
 #'
 #' @examples
 #' \dontrun{

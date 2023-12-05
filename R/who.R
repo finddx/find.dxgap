@@ -124,7 +124,7 @@ who_url_endpoints <- tibble::tribble(
 #'
 #' @rdname who
 #'
-#' @noRd
+#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -154,7 +154,7 @@ read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'
 #' @rdname who
 #'
-#' @noRd
+#' @export
 #'
 #' @examples
 #' \dontrun{
