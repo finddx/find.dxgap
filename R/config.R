@@ -24,6 +24,11 @@
 #' write_data_dir("~/Documents/my_projects") # Specify specific folder
 #' }
 write_data_dir <- function(path = fs::path_dir(getwd()), dirs = character(0)) {
+  lifecycle::deprecate_stop(
+    "0.1.0",
+    "write_data_dir()",
+    details = "Please, get data from https://github.com/finddx/find.dxgap.data."
+  )
   if (!rlang::is_character(path) && length(path) != 1) {
     rlang::abort("Not a valid character path.")
   }
