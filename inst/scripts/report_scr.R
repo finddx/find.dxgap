@@ -1,5 +1,7 @@
 pkgload::load_all()
 
+write_data_dir()
+
 render_report(
   "missing.Rmd",
   disease = "tb",
