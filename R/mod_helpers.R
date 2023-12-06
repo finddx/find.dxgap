@@ -126,8 +126,7 @@ pull_mod_coeff_all <- function(tbl, mod_const = tb_mod_const) {
           .impute_vars = mod_const$impute_vars
         )
       )
-    ) |>
-    dplyr::mutate(mod = list(get_mod_mod(mod_const$mode, mod_const$engine)))
+    )
 
   tbl_mod_out <-
     tbl_nested_preproc |>
@@ -135,14 +134,12 @@ pull_mod_coeff_all <- function(tbl, mod_const = tb_mod_const) {
       mod_obj = purrr::pmap(
         list(
           disease_data,
-          preproc,
-          mod
+          preproc
         ),
-        .f = function(x, y, z) {
+        .f = function(x, y) {
           run_mod_lm(
             tbl = x,
             preproc = y,
-            mod = z,
             folds = mod_const$folds,
             metrics = mod_const$metrics,
             rank_metric = mod_const$rank_metric,
