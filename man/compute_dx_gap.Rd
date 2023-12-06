@@ -4,12 +4,16 @@
 \alias{compute_dx_gap}
 \title{Compute the diagnostic gap}
 \usage{
-compute_dx_gap(data)
+compute_dx_gap(data, notified, estimated, ...)
 }
 \arguments{
-\item{data}{Input data. It assumes the variables \code{e_inc_num} and \code{c_newinc}
-are present in the data, describing the number of estimated and notified
-cases respectively.}
+\item{data}{Input data.}
+
+\item{notified}{A name unquoted of the variable to be used for notified
+cases.}
+
+\item{estimated}{A name unquoted of the variable to be used for estimated
+cases.}
 }
 \value{
 A tibble, the same dimensions as the input data, but with one
@@ -40,6 +44,6 @@ system.
 \dontrun{
 # Calculate diagnostic gap for 2019 TB data:
  build_tbl("tb", 2019, vars = dxgap_const$tb_vars) |>
-    compute_dx_gap()
+    compute_dx_gap(e_inc_num, c_newinc)
 }
 }

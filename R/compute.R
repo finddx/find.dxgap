@@ -17,9 +17,11 @@
 #'   officially diagnosed, due to limitations or challenges in the healthcare
 #'   system.
 #'
-#' @param data Input data. It assumes the variables `e_inc_num` and `c_newinc`
-#'   are present in the data, describing the number of estimated and notified
-#'   cases respectively.
+#' @param data Input data.
+#' @param notified A name unquoted of the variable to be used for notified
+#'   cases.
+#' @param estimated A name unquoted of the variable to be used for estimated
+#'   cases.
 #'
 #' @return A tibble, the same dimensions as the input data, but with one
 #'   additional column called `who_dx_gap` containing the computed diagnostic
