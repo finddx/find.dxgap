@@ -79,7 +79,7 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
     dplyr::select(!!id_vars, var_name = name, completion_rate)
 }
 
-#' Compute correlations wrt to a target variable
+#' Compute correlations with a target variable
 #'
 #' `compute_correlation()` allows to compute correlation of several numerical
 #' predictors with respect to a target variable. Optionally, the computation

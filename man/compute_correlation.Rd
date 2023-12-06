@@ -2,7 +2,7 @@
 % Please edit documentation in R/compute.R
 \name{compute_correlation}
 \alias{compute_correlation}
-\title{Compute correlations wrt to a target variable}
+\title{Compute correlations with a target variable}
 \usage{
 compute_correlation(data, target_var, by = NULL, ...)
 }
