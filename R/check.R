@@ -167,6 +167,11 @@ check_any_zero <- function(data, var) {
   vec <- dplyr::pull(data, !!var_quote)
   any_zero <- any(vec == 0)
   if (any_zero) {
-    rlang::abort(sprintf("`0` values found in `%s`.", rlang::as_name(var_quote)))
+    rlang::abort(
+      c(
+        sprintf("`0` values found in `%s`.", rlang::as_name(var_quote)),
+        i = "Dividing by `0` generate `Inf` values."
+      )
+    )
   }
 }
