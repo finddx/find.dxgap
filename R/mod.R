@@ -140,7 +140,33 @@ split_mod <- function(tbl, .v) {
   )
 }
 
-# TODO: explode it with a do.call or rlang::exec?
+#' Get pre-processing recipes
+#'
+#' This function returns a list of pre-processing steps applied with
+#' [run_mod()].
+#'
+#' @inheritParams run_mod
+#' @inheritParams recipes::step_filter_missing
+#' @inheritParams recipes::step_impute_knn
+#'
+#' @return A list of items of class "recipe".
+#'
+#' @export
+#' @examples
+#' \dontrun{
+#' tbl <-
+#'   build_tbl("tb", 2019, vars = dxgap_const$tb_vars) |>
+#'   compute_dx_gap() |>
+#'   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+#'   dplyr::select(-any_of(c("year", "country")))
+#'
+#' get_mod_preproc(
+#'   .tbl = tbl,
+#'   .neighbors = 5,
+#'   .threshold = 0.25,
+#'   .impute_vars = c("gdp", "e_inc_num", "pop_total")
+#'  )
+#' }
 get_mod_preproc <- function(.tbl, .neighbors, .threshold, .impute_vars) {
   tibble::lst(
     simple = get_recipe_tb(
