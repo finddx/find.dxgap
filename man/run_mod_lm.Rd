@@ -6,7 +6,6 @@
 \usage{
 run_mod_lm(
   tbl,
-  mod,
   preproc,
   folds,
   metrics,
@@ -17,8 +16,6 @@ run_mod_lm(
 }
 \arguments{
 \item{tbl}{Input data frame containing the data to model.}
-
-\item{mod}{A list of models to run.}
 
 \item{preproc}{A list of pre-processing steps.}
 
@@ -56,12 +53,9 @@ preproc_list <- get_mod_preproc(
   .impute_with = c("gdp", "e_inc_num", "pop_total")
  )
 
-mod_list <- get_mod_mod("regression", "lm")
-
 run_mod_lm(
   tbl,
   preproc = preproc_list,
-  mod = mod_list,
   folds = 10,
   metrics = yardstick::metric_set(yardstick::rmse, yardstick::rsq),
   rank_metric = "rmse"
