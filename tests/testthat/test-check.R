@@ -10,3 +10,13 @@ test_that("check_clean_data_dir() works", {
   )
   expect_error(check_clean_data_dir(data_files, "\\d{4}-\\d{2}-\\d{2}"))
 })
+
+test_that("check_any_na() works", {
+  df <- datasets::airquality
+  expect_error(check_any_na(df, Ozone), "NA")
+})
+
+test_that("check_any_zero() works", {
+  df <- datasets::mtcars
+  expect_error(check_any_zero(df, am), regexp = "0")
+})
