@@ -42,6 +42,7 @@ compute_dx_gap <- function(data) {
 }
 
 compute_dx_gap_impl <- function(data, num, denom, ...) {
+  stopifnot(is.data.frame(data))
   data |>
     dplyr::mutate(who_dx_gap = ({{ num }} - {{ denom }}) / {{ denom }} * 100, ...)
 }
