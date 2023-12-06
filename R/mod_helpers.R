@@ -18,7 +18,6 @@ NULL
 #' mod_objects <- run_mod_lm(
 #'   tbl,
 #'   preproc = preproc_list,
-#'   mod = mod_list,
 #'   folds = tb_mod_const$folds,
 #'   metrics = tb_mod_const$metrics,
 #'   rank_metric = tb_mod_const$rank_metric,
