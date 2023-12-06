@@ -34,10 +34,18 @@
 #'     compute_dx_gap()
 #' }
 compute_dx_gap <- function(data) {
+  if ("country_code" %in% names(data)) {
+    df <-
+      data |>
+      dplyr::mutate(
+        who_dx_gap = (e_inc_num - c_newinc) / e_inc_num * 100,
+        .after = country_code
+      )
+    return(df)
+  }
   data |>
     dplyr::mutate(
-      who_dx_gap = (e_inc_num - c_newinc) / e_inc_num * 100,
-      .after = country_code
+      who_dx_gap = (e_inc_num - c_newinc) / e_inc_num * 100
     )
 }
 
