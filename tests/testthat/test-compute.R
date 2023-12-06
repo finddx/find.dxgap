@@ -32,4 +32,5 @@ test_that("compute_dx_gap_impl() works", {
   )
   tbl_gap <- compute_dx_gap_impl(tbl, c_newinc, e_inc_num)
   expect_s3_class(tbl_gap, "data.frame")
+  expect_equal(ncol(tbl_gap), 5)
 })
