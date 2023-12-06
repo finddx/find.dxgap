@@ -12,7 +12,7 @@ import_tbls <- function(data_names) {
   lst_df
 }
 
-#' Read and tidy any table
+#' Read and tidy any individual table
 #'
 #' @param file_name A string containing the name of the file to be read.
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/import.R
 \name{import_tbl}
 \alias{import_tbl}
-\title{Read and tidy any table}
+\title{Read and tidy any individual table}
 \usage{
 import_tbl(file_name)
 }
@@ -10,7 +10,7 @@ import_tbl(file_name)
 \item{file_name}{A string containing the name of the file to be read.}
 }
 \description{
-Read and tidy any table
+Read and tidy any individual table
 }
 \examples{
 \dontrun{
