@@ -13,7 +13,7 @@ get_recipe_tb <- function(tbl, neighbors, threshold, impute_vars) {
     recipes::step_filter_missing(recipes::all_predictors(), threshold = threshold) |>
     recipes::add_role(gdp, new_role = "impute_w_median") |>
     recipes::step_impute_median(recipes::has_role("impute_w_median")) |>
-    get_impute_with_recipe_tb(.neighbors = neighbors, .impute_vars = impute_vars) |>
+    get_impute_with_recipe_tb(.neighbors = neighbors, .impute_with = impute_vars) |>
     recipes::add_role(
       tidyselect::any_of(c("e_inc_num", "c_newinc")),
       new_role = "collinear_w_target"
@@ -22,10 +22,10 @@ get_recipe_tb <- function(tbl, neighbors, threshold, impute_vars) {
     recipes::step_zv(recipes::all_numeric_predictors())
 }
 
-get_impute_with_recipe_tb <- function(recipe, .impute_vars, .neighbors) {
+get_impute_with_recipe_tb <- function(recipe, .impute_with, .neighbors) {
   recipe |>
     recipes::add_role(
-      tidyselect::any_of(.impute_vars),
+      tidyselect::any_of(.impute_with),
       new_role = "imputer_knn"
     ) |>
     recipes::step_impute_knn(
