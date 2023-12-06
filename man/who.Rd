@@ -103,3 +103,8 @@ read_who("who_laboratories_2023-08-30.csv") |>
   tidy_who()
 }
 }
+\seealso{
+\code{\link[=import_tbl]{import_tbl()}}
+
+\code{\link[=import_tbl]{import_tbl()}}
+}

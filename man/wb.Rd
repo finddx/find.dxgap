@@ -91,3 +91,8 @@ read_wb("wb_pop_urban_2023-07-28.csv") |>
   tidy_wb()
 }
 }
+\seealso{
+\code{\link[=import_tbl]{import_tbl()}}
+
+\code{\link[=import_tbl]{import_tbl()}}
+}
