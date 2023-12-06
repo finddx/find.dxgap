@@ -4,7 +4,7 @@
 \alias{get_mod_preproc}
 \title{Get pre-processing recipes}
 \usage{
-get_mod_preproc(.tbl, .neighbors, .threshold, .impute_vars)
+get_mod_preproc(.tbl, .neighbors, .threshold, .impute_with)
 }
 \arguments{
 \item{.tbl}{Input data frame containing the data to model.}
@@ -14,6 +14,12 @@ get_mod_preproc(.tbl, .neighbors, .threshold, .impute_vars)
 \item{.threshold}{A value for the threshold of missing values in column. The
 step will remove the columns where the proportion of missing values
 exceeds the threshold.}
+
+\item{.impute_with}{A call to \code{imp_vars} to specify which variables are used
+to impute the variables that can include specific variable names separated
+by commas or different selectors (see \code{\link[recipes:selections]{selections()}}). If a column is
+included in both lists to be imputed and to be an imputation predictor, it
+will be removed from the latter and not used to impute itself.}
 }
 \value{
 A list of items of class "recipe".
@@ -34,7 +40,7 @@ get_mod_preproc(
   .tbl = tbl,
   .neighbors = 5,
   .threshold = 0.25,
-  .impute_vars = c("gdp", "e_inc_num", "pop_total")
+  .impute_with = c("gdp", "e_inc_num", "pop_total")
  )
 }
 }

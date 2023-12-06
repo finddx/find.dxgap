@@ -30,7 +30,7 @@
 #'   .tbl = tbl,
 #'   .neighbors = 5,
 #'   .threshold = 0.25,
-#'   .impute_vars = c("gdp", "e_inc_num", "pop_total")
+#'   .impute_with = c("gdp", "e_inc_num", "pop_total")
 #'  )
 #'
 #' mod_list <- get_mod_mod("regression", "lm")
@@ -164,16 +164,16 @@ split_mod <- function(tbl, .v) {
 #'   .tbl = tbl,
 #'   .neighbors = 5,
 #'   .threshold = 0.25,
-#'   .impute_vars = c("gdp", "e_inc_num", "pop_total")
+#'   .impute_with = c("gdp", "e_inc_num", "pop_total")
 #'  )
 #' }
-get_mod_preproc <- function(.tbl, .neighbors, .threshold, .impute_vars) {
+get_mod_preproc <- function(.tbl, .neighbors, .threshold, .impute_with) {
   tibble::lst(
     simple = get_recipe_tb(
       tbl = .tbl,
       neighbors = .neighbors,
       threshold = .threshold,
-      impute_vars = .impute_vars
+      impute_vars = .impute_with
     ),
     log_pop_total = get_log_recipe_tb(simple),
     norm_pop_total = get_normalize_recipe_tb(simple),
