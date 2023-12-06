@@ -18,10 +18,9 @@
 #'   system.
 #'
 #' @param data Input data.
-#' @param notified A name unquoted of the variable to be used for notified
-#'   cases.
-#' @param estimated A name unquoted of the variable to be used for estimated
-#'   cases.
+#' @param notified A name unquoted for notified cases.
+#' @param estimated A name unquoted for estimated cases.
+#' @param ... Further arguments passed to [mutate()].
 #'
 #' @return A tibble, the same dimensions as the input data, but with one
 #'   additional column called `dx_gap` containing the computed diagnostic
@@ -32,8 +31,9 @@
 #' @examples
 #' \dontrun{
 #' # Calculate diagnostic gap for 2019 TB data:
-#'  build_tbl("tb", 2019, vars = dxgap_const$tb_vars) |>
-#'     compute_dx_gap(e_inc_num, c_newinc)
+#' dx_gap_vars <- c("country_code", "year", "e_inc_num", "c_newinc")
+#' build_tbl("tb", 2019, vars = dx_gap_vars) |>
+#'   compute_dx_gap(c_newinc, e_inc_num)
 #' }
 compute_dx_gap <- function(data, notified, estimated, ...) {
   if ("country_code" %in% names(data)) {

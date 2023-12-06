@@ -32,7 +32,7 @@ This function returns a list of pre-processing steps applied with
 \dontrun{
 tbl <-
   build_tbl("tb", 2019, vars = dxgap_const$tb_vars) |>
-  compute_dx_gap() |>
+  compute_dx_gap(e_inc_num, c_newinc) |>
   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
   dplyr::select(-any_of(c("year", "country")))
 

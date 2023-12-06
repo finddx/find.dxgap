@@ -10,7 +10,7 @@ compute_correlation(data, target_var, by = NULL, ...)
 \item{data}{A tibble.}
 
 \item{target_var}{The variable against which the correlations needs to be
-computed. For instance, \code{who_dx_gap}.}
+computed. For instance, \code{dx_gap}.}
 
 \item{by}{A character vector.}
 
@@ -28,16 +28,16 @@ can be done by groups.
 \dontrun{
 tbl <-
   build_tbl("tb", NULL, vars = dxgap_const$tb_vars) |>
-  compute_dx_gap() |>
+  compute_dx_gap(e_inc_num, c_newinc) |>
   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
   dplyr::select(-any_of(c("country")))
 
 tbl |>
   dplyr::filter(year == 2019) |>
-  compute_correlation(who_dx_gap, by = "year")
+  compute_correlation(dx_gap, by = "year")
 
 tbl |>
-  compute_correlation(who_dx_gap, by = c("year", "is_hbc"))
+  compute_correlation(dx_gap, by = c("year", "is_hbc"))
 
 car_tbl <- tibble::as_tibble(mtcars, rownames = "car_name")
 my_cars <- dplyr::select(car_tbl, -dplyr::all_of(c("vs", "am", "carb")))

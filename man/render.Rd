@@ -66,13 +66,13 @@ part of the core subset, it should be added to the \code{dxgap_diseases} tibble.
 
 \examples{
 \dontrun{
-tb_vars <- c("year", "country", "is_hbc", "country_code", "who_dx_gap",
+tb_vars <- c("year", "country", "is_hbc", "country_code", "dx_gap",
              "pop_total", "pop_urban_perc", "pop_density", "gdp", "c_newinc",
              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
 render_bulk("eda.Rmd", disease = "tb", years = 2018:2021, vars = tb_vars)
 }
 \dontrun{
-tb_vars <- c("year", "country", "is_hbc", "country_code", "who_dx_gap",
+tb_vars <- c("year", "country", "is_hbc", "country_code", "dx_gap",
              "pop_total", "pop_urban_perc", "pop_density", "gdp", "c_newinc",
              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
 render_report("eda.Rmd", disease = "tb", year = 2019, vars = tb_vars)
