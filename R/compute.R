@@ -24,7 +24,7 @@
 #'   cases.
 #'
 #' @return A tibble, the same dimensions as the input data, but with one
-#'   additional column called `who_dx_gap` containing the computed diagnostic
+#'   additional column called `dx_gap` containing the computed diagnostic
 #'   gap values
 #'
 #' @export
@@ -63,7 +63,7 @@ compute_dx_gap_impl <- function(data, .notified, .estimated, ...) {
   not <- rlang::enquo(.notified)
   est <- rlang::enquo(.estimated)
   data |>
-    dplyr::mutate(who_dx_gap = (!!est - !!not) / !!est * 100, ...)
+    dplyr::mutate(dx_gap = (!!est - !!not) / !!est * 100, ...)
 }
 
 #' Compute completion rate
@@ -112,7 +112,7 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 #'
 #' @param data A tibble.
 #' @param target_var The variable against which the correlations needs to be
-#'   computed. For instance, `who_dx_gap`.
+#'   computed. For instance, `dx_gap`.
 #' @param by A character vector.
 #' @param ... Optional arguments passed to [correlate()]
 #'
@@ -129,10 +129,10 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 #'
 #' tbl |>
 #'   dplyr::filter(year == 2019) |>
-#'   compute_correlation(who_dx_gap, by = "year")
+#'   compute_correlation(dx_gap, by = "year")
 #'
 #' tbl |>
-#'   compute_correlation(who_dx_gap, by = c("year", "is_hbc"))
+#'   compute_correlation(dx_gap, by = c("year", "is_hbc"))
 #'
 #' car_tbl <- tibble::as_tibble(mtcars, rownames = "car_name")
 #' my_cars <- dplyr::select(car_tbl, -dplyr::all_of(c("vs", "am", "carb")))

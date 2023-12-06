@@ -6,7 +6,7 @@ prep_tb_data <- function(data, notified, estimated,  rm_vars = c("year", "countr
 }
 
 get_recipe_tb <- function(tbl, neighbors, threshold, impute_vars) {
-  recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
+  recipes::recipe(formula = dx_gap ~ ., x = tbl) |>
     recipes::update_role(country_code, new_role = "id") |>
     recipes::step_mutate(xpert = dplyr::coalesce(xpert, m_wrd)) |>
     recipes::step_rm(m_wrd) |>
