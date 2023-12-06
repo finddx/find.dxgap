@@ -7,20 +7,27 @@ NULL
 
 #' Extract lm model fit object
 #'
-#' `pull_mod_rank()` extracts a tibble summarising the ranking of
-#' pre-processing steps.
+#' `pull_mod_rank()` extracts a tibble summarising the ranking of pre-processing
+#' steps measured according to `rank_metric` chosen in [run_mod_lm()].
 #'
 #' @rdname mod_helpers
 #' @return `pull_mod_rank()` returns a tibble.
 #' @export
 #' @examples
 #' \dontrun{
+#' preproc_list <- get_mod_preproc(
+#'   .tbl = tbl,
+#'   .neighbors = 5,
+#'   .threshold = 0.25,
+#'   .impute_with = c("gdp", "e_inc_num", "pop_total")
+#'  )
+#'
 #' mod_objects <- run_mod_lm(
 #'   tbl,
 #'   preproc = preproc_list,
-#'   folds = tb_mod_const$folds,
-#'   metrics = tb_mod_const$metrics,
-#'   rank_metric = tb_mod_const$rank_metric,
+#'   folds = 10,
+#'   metrics = yardstick::metric_set(yardstick::rmse, yardstick::rsq),
+#'   rank_metric = "rmse"
 #' )
 #' pull_mod_rank(mod_objects)
 #' }
@@ -33,7 +40,7 @@ pull_mod_rank <- function(mod_out_list) {
 #'
 #' `pull_mod_best()` extract the best model id.
 #'
-#' @param rank_df A tibble as returned by [pull_mod_rank()]
+#' @param rank_df A tibble as returned by [pull_mod_rank()].
 #'
 #' @rdname mod_helpers
 #' @return `pull_mod_best()` returns a character of length one.

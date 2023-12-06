@@ -22,7 +22,7 @@ pull_mod_coeff_all(tbl, mod_const = tb_mod_const)
 \arguments{
 \item{mod_out_list}{A list object as returned by \code{\link[=run_mod_lm]{run_mod_lm()}}.}
 
-\item{rank_df}{A tibble as returned by \code{\link[=pull_mod_rank]{pull_mod_rank()}}}
+\item{rank_df}{A tibble as returned by \code{\link[=pull_mod_rank]{pull_mod_rank()}}.}
 
 \item{tbl}{Input data frame containing the data to model.}
 
@@ -42,8 +42,8 @@ pull_mod_coeff_all(tbl, mod_const = tb_mod_const)
 \description{
 The following helpers extract elements of the list returned by \code{\link[=run_mod_lm]{run_mod_lm()}}.
 
-\code{pull_mod_rank()} extracts a tibble summarising the ranking of
-pre-processing steps.
+\code{pull_mod_rank()} extracts a tibble summarising the ranking of pre-processing
+steps measured according to \code{rank_metric} chosen in \code{\link[=run_mod_lm]{run_mod_lm()}}.
 
 \code{pull_mod_best()} extract the best model id.
 
@@ -55,12 +55,19 @@ pre-processing steps.
 }
 \examples{
 \dontrun{
+preproc_list <- get_mod_preproc(
+  .tbl = tbl,
+  .neighbors = 5,
+  .threshold = 0.25,
+  .impute_with = c("gdp", "e_inc_num", "pop_total")
+ )
+
 mod_objects <- run_mod_lm(
   tbl,
   preproc = preproc_list,
-  folds = tb_mod_const$folds,
-  metrics = tb_mod_const$metrics,
-  rank_metric = tb_mod_const$rank_metric,
+  folds = 10,
+  metrics = yardstick::metric_set(yardstick::rmse, yardstick::rsq),
+  rank_metric = "rmse"
 )
 pull_mod_rank(mod_objects)
 }
