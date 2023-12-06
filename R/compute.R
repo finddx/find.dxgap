@@ -45,6 +45,7 @@ compute_dx_gap_impl <- function(data, .notified, .estimated, ...) {
   stopifnot(is.data.frame(data))
   rlang::check_required(.estimated)
   check_any_na(data, .estimated)
+  check_any_zero(data, .estimated)
   rlang::check_required(.notified)
   check_any_na(data, .notified)
   data |>
