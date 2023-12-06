@@ -65,7 +65,7 @@ between `find.dxgap` and `find.dxgap.data`. Please call,
 
 ## Usage
 
-### Tables
+#### Tables
 
 Once `DXGAP_DATADIR` is set, build a wide table for given year and
 disease:
@@ -143,7 +143,7 @@ Please, refer to
 [`find.dxgap.data`](https://github.com/finddx/find.dxgap.data) for the
 available tables.
 
-### Report
+#### Report
 
 Few templates have been implemented for data exploration:
 
