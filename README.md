@@ -123,7 +123,7 @@ An error is raised, if a disease is not supported yet:
 ``` r
 build_tbl("covid", year = NULL, vars = tb_vars)
 #> Error in `check_supported_disease()` at find.dxgap/R/load.R:26:3:
-#> ! Cannot find `covid` in `dxgap_diseases`.
+#> ! `covid` not in `dxgap_diseases`.
 #> ✖ Disease is not supported yet.
 ```
 

@@ -3,7 +3,7 @@ check_supported_disease <- function(disease, .dxgap_diseases = dxgap_diseases) {
   if (!disease %in% supported_diseases) {
     rlang::abort(
       c(
-        sprintf("Cannot find `%s` in `dxgap_diseases`.", disease),
+        sprintf("`%s` not in `dxgap_diseases`.", disease),
         x = "Disease is not supported yet."
       ),
       class = "dxgap_disease_not_supported"
