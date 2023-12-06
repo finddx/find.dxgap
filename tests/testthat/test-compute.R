@@ -29,10 +29,10 @@ test_that("compute_dx_gap() works", {
   tbl_estimates <- import_tbl_impl("who_estimates_2023-07-28.csv")
   tbl_notification <- import_tbl_impl("who_notifications_2023-11-28.csv")
   tbl <- dplyr::left_join(
-    tbl_estimates,
-    tbl_notification,
-    by = dplyr::join_by(country, country_code, g_whoregion, year)
+    dplyr::select(tbl_estimates, country_code, year, e_inc_num),
+    dplyr::select(tbl_notification, country_code, year, c_newinc),
+    by = dplyr::join_by(country_code, year)
   )
-  tbl_gap <- compute_dx_gap(tbl, c_newinc, e_inc_num)
+  tbl_gap <- compute_dx_gap_impl(tbl, c_newinc, e_inc_num)
   expect_s3_class(tbl_gap, "data.frame")
 })
