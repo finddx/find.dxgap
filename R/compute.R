@@ -35,18 +35,15 @@
 #' }
 compute_dx_gap <- function(data) {
   if ("country_code" %in% names(data)) {
-    df <-
-      data |>
-      dplyr::mutate(
-        who_dx_gap = (e_inc_num - c_newinc) / e_inc_num * 100,
-        .after = country_code
-      )
+    df <- compute_dx_gap_impl(data, .after = country_code)
     return(df)
   }
+  compute_dx_gap_impl(data)
+}
+
+compute_dx_gap_impl <- function(data, ...) {
   data |>
-    dplyr::mutate(
-      who_dx_gap = (e_inc_num - c_newinc) / e_inc_num * 100
-    )
+    dplyr::mutate(who_dx_gap = (e_inc_num - c_newinc) / e_inc_num * 100, ...)
 }
 
 #' Compute completion rate
