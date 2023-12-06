@@ -120,6 +120,8 @@ unnest_wb_resp <- function(data) {
 #'
 #' @return `read_wb()` a tibble containing the data set.
 #'
+#' @seealso [import_tbl()]
+#'
 #' @rdname wb
 #'
 #' @export
@@ -140,6 +142,8 @@ read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'   for all years.
 #'
 #' @return `tidy_wb()` a tibble. This is a tidied version of the input tibble.
+#'
+#' @seealso [import_tbl()]
 #'
 #' @rdname wb
 #'

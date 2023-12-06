@@ -122,6 +122,8 @@ who_url_endpoints <- tibble::tribble(
 #'
 #' @return `read_who()` returns a tibble containing the data set.
 #'
+#' @seealso [import_tbl()]
+#'
 #' @rdname who
 #'
 #' @export
@@ -152,6 +154,8 @@ read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'
 #' @return `tidy_who()` returns s tibble. This is a tidied version of the input
 #'   tibble.
+#'
+#' @seealso [import_tbl()]
 #'
 #' @rdname who
 #'
