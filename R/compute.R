@@ -60,11 +60,10 @@ compute_dx_gap_impl <- function(data, .notified, .estimated, ...) {
   check_any_zero(data, !!rlang::enquo(.estimated))
   rlang::check_required(.notified)
   check_any_na(data, !!rlang::enquo(.notified))
+  not <- rlang::enquo(.notified)
+  est <- rlang::enquo(.estimated)
   data |>
-    dplyr::mutate(
-      who_dx_gap = ({{ .estimated }} - {{ .notified }}) / {{ .estimated }} * 100,
-      ...
-    )
+    dplyr::mutate(who_dx_gap = (!!est - !!not) / !!est * 100, ...)
 }
 
 #' Compute completion rate
