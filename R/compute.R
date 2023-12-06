@@ -41,9 +41,9 @@ compute_dx_gap <- function(data) {
   compute_dx_gap_impl(data)
 }
 
-compute_dx_gap_impl <- function(data, ...) {
+compute_dx_gap_impl <- function(data, num, denom, ...) {
   data |>
-    dplyr::mutate(who_dx_gap = (e_inc_num - c_newinc) / e_inc_num * 100, ...)
+    dplyr::mutate(who_dx_gap = ({{ num }} - {{ denom }}) / {{ denom }} * 100, ...)
 }
 
 #' Compute completion rate
