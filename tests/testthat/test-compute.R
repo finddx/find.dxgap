@@ -22,3 +22,17 @@ test_that("compute_correlation() works", {
   expect_snapshot(constructive::construct(corr_df_by2))
   expect_error(compute_correlation(tbl_dxgap), regexp = "absent")
 })
+
+test_that("compute_dx_gap() works", {
+  skip_on_ci()
+  testdata_path <- testthat::test_path("testdata", "tb_tbl_ts.rds")
+  tbl_estimates <- import_tbl_impl("who_estimates_2023-07-28.csv")
+  tbl_notification <- import_tbl_impl("who_notifications_2023-11-28.csv")
+  tbl <- dplyr::left_join(
+    tbl_estimates,
+    tbl_notification,
+    by = dplyr::join_by(country, country_code, g_whoregion, year)
+  )
+  tbl_gap <- compute_dx_gap(tbl, c_newinc, e_inc_num)
+  expect_s3_class(tbl_gap, "data.frame")
+})
