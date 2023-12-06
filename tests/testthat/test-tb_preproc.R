@@ -1,7 +1,7 @@
 test_that("recipe is as expected", {
   testdata_path <- testthat::test_path("testdata", "tb_tbl.rds")
   tb_tbl <- readr::read_rds(testdata_path)
-  tb_tbl_prep <- prep_tb_data(tb_tbl, e_inc_num, c_newinc)
+  tb_tbl_prep <- prep_tb_data(tb_tbl, c_newinc, e_inc_num)
   recipe_tb <- tb_tbl_prep |>
     get_recipe_tb(5,.25, dxgap_const$tb_vars) |>
     get_log_recipe_tb()
@@ -11,7 +11,7 @@ test_that("recipe is as expected", {
 test_that("log transformation works for all the variables", {
   testdata_path <- testthat::test_path("testdata", "tb_tbl.rds")
   tb_tbl <- readr::read_rds(testdata_path)
-  tb_tbl_prep <- prep_tb_data(tb_tbl, e_inc_num, c_newinc)
+  tb_tbl_prep <- prep_tb_data(tb_tbl, c_newinc, e_inc_num)
   out_log <- tb_tbl_prep |>
     dplyr::filter(country_code %in% c("AGO", "BRA", "IND")) |>
     get_recipe_tb(5,.25, dxgap_const$tb_vars) |>
