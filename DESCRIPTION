@@ -9,7 +9,12 @@ Authors@R:
       person(given = "Mike",
              family = "John Page",
              role = c("aut"),
-             email = "mike@cynkra.com"))
+             email = "mike@cynkra.com"),
+      person(given = "Anna", 
+             family = "Mantsoki", 
+             email = "anna.mantsoki@finddx.org", 
+             role = c("aut")),
+      person("FIND", role = c("cph", "fnd")))
 Description: Compute dxgap for different diseases.
 License: MIT + file LICENSE
 Encoding: UTF-8
