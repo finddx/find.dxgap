@@ -116,10 +116,6 @@ who_url_endpoints <- tibble::tribble(
 
 #' Read WHO data sets
 #'
-#' @description
-#' `r lifecycle::badge("superseded")`
-#' We recommend switching to `import_tbl()`, which works across any file.
-#'
 #' @param file_name A string containing the name of the file to be read.
 #' @param data_dir Path containing the directory to read the data from. Defaults
 #' to the path set by the environment variable `"DXGAP_DATADIR"`.
@@ -147,10 +143,6 @@ read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 }
 
 #' Tidy WHO data sets
-#'
-#' @description
-#' `r lifecycle::badge("superseded")`
-#' We recommend switching to `import_tbl()`, which works across any file.
 #'
 #' @param data A tibble returned from the corresponding `read_()` function.
 #' @param year A year to filter the data by. Defaults to `NULL`, returning data
