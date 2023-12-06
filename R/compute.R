@@ -37,22 +37,27 @@ compute_dx_gap <- function(data, notified, estimated, ...) {
   if ("country_code" %in% names(data)) {
     df <- compute_dx_gap_impl(
       data,
-      .notified = notified,
-      .estimated = estimated,
+      !!rlang::enquo(notified),
+      !!rlang::enquo(estimated),
       .after = country_code
     )
     return(df)
   }
-  compute_dx_gap_impl(data, ...)
+  compute_dx_gap_impl(
+    data,
+    !!rlang::enquo(notified),
+    !!rlang::enquo(estimated),
+    ...
+  )
 }
 
 compute_dx_gap_impl <- function(data, .notified, .estimated, ...) {
   stopifnot(is.data.frame(data))
   rlang::check_required(.estimated)
-  check_any_na(data, .estimated)
-  check_any_zero(data, .estimated)
+  check_any_na(data, !!rlang::enquo(.estimated))
+  check_any_zero(data, !!rlang::enquo(.estimated))
   rlang::check_required(.notified)
-  check_any_na(data, .notified)
+  check_any_na(data, !!rlang::enquo(.notified))
   data |>
     dplyr::mutate(
       who_dx_gap = ({{ .estimated }} - {{ .notified }}) / {{ .estimated }} * 100,
