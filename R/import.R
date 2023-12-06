@@ -8,7 +8,7 @@
 import_tbls <- function(data_names) {
   stopifnot(is.character(data_names) && length(data_names) >= 1)
   names(data_names) <- extract_name(data_names)
-  lst_df <- purrr::map(data_names, ~ import_tbl(.file_name = .x))
+  lst_df <- purrr::map(data_names, ~ import_tbl_impl(.file_name = .x))
   lst_df
 }
 
