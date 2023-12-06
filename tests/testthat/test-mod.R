@@ -1,4 +1,4 @@
-test_that("run_mod() works", {
+test_that("run_mod_lm() works", {
   skip_on_ci()
   withr::local_seed(2023)
   testdata_path <- testthat::test_path("testdata", "tb_tbl.rds")
@@ -10,11 +10,9 @@ test_that("run_mod() works", {
     .threshold = tb_mod_const$threshold,
     .impute_with = tb_mod_const$impute_vars
   )
-  mod_list <- get_mod_mod(tb_mod_const$mode, tb_mod_const$engine)
-  mod_objects <- run_mod(
+  mod_objects <- run_mod_lm(
     tb_tbl_prep,
     preproc = preproc_list,
-    mod = mod_list,
     folds = tb_mod_const$folds,
     metrics = tb_mod_const$metrics,
     rank_metric = tb_mod_const$rank_metric,

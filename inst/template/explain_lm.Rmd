@@ -53,14 +53,12 @@ preproc_list <- get_mod_preproc(
   .threshold = tb_mod_const$threshold,
   .impute_with = tb_mod_const$impute_vars
 )
-mod_list <- get_mod_mod(tb_mod_const$mode, tb_mod_const$engine)
 ```
 
 ```{r run-model}
-mod_objects <- run_mod(
+mod_objects <- run_mod_lm(
   tbl, 
   preproc = preproc_list, 
-  mod = mod_list,
   folds = tb_mod_const$folds,
   metrics = tb_mod_const$metrics,
   rank_metric = tb_mod_const$rank_metric

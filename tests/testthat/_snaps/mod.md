@@ -1,4 +1,4 @@
-# run_mod() works
+# run_mod_lm() works
 
     Code
       mod_objects

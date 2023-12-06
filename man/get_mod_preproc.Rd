@@ -26,7 +26,7 @@ A list of items of class "recipe".
 }
 \description{
 This function returns a list of pre-processing steps applied with
-\code{\link[=run_mod]{run_mod()}}.
+\code{\link[=run_mod_lm]{run_mod_lm()}}.
 }
 \examples{
 \dontrun{

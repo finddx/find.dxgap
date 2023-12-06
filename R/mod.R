@@ -1,9 +1,8 @@
 #' Run a suite of statistical models
 #'
-#' `run_mod()` runs a suite of statistical models, returning a final model fit.
+#' `run_mod_lm()` runs a suite of statistical models, returning a final model fit.
 #'
 #' @param tbl Input data frame containing the data to model.
-#' @param mod A list of models to run.
 #' @param preproc A list of pre-processing steps.
 #' @param folds An integer. The number of cross-validation folds.
 #' @param metrics A tibble containing the performance metrics to evaluate.
@@ -33,25 +32,25 @@
 #'   .impute_with = c("gdp", "e_inc_num", "pop_total")
 #'  )
 #'
-#' mod_list <- get_mod_mod("regression", "lm")
-#'
-#' run_mod(
+#' run_mod_lm(
 #'   tbl,
 #'   preproc = preproc_list,
-#'   mod = mod_list,
 #'   folds = 10,
 #'   metrics = yardstick::metric_set(yardstick::rmse, yardstick::rsq),
 #'   rank_metric = "rmse"
 #' )
 #' }
-run_mod <- function(tbl,
-                    mod,
-                    preproc,
-                    folds,
-                    metrics,
-                    rank_metric,
-                    cross = TRUE,
-                    seed = 2023) {
+run_mod_lm <- function(tbl,
+                       preproc,
+                       folds,
+                       metrics,
+                       rank_metric,
+                       cross = TRUE,
+                       seed = 2023) {
+
+  # Linear model ---------------------------------------------------------------
+  mod <- get_mod_mod("regression", "lm")
+
   # Spending -------------------------------------------------------------------
   splits_list <- split_mod(tbl, .v = folds)
 
@@ -143,9 +142,9 @@ split_mod <- function(tbl, .v) {
 #' Get pre-processing recipes
 #'
 #' This function returns a list of pre-processing steps applied with
-#' [run_mod()].
+#' [run_mod_lm()].
 #'
-#' @inheritParams run_mod
+#' @inheritParams run_mod_lm
 #' @inheritParams recipes::step_filter_missing
 #' @inheritParams recipes::step_impute_knn
 #'

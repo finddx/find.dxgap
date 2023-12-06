@@ -7,7 +7,7 @@
 \alias{pull_mod_coeff}
 \alias{pull_mod_fit}
 \alias{pull_mod_coeff_all}
-\title{Helpers to work out \code{run_mod()}'s output}
+\title{Helpers to work out \code{run_mod_lm()}'s output}
 \usage{
 pull_mod_rank(mod_out_list)
 
@@ -20,7 +20,7 @@ pull_mod_fit(mod_out_list)
 pull_mod_coeff_all(tbl, mod_const = tb_mod_const)
 }
 \arguments{
-\item{mod_out_list}{A list object as returned by \code{\link[=run_mod]{run_mod()}}.}
+\item{mod_out_list}{A list object as returned by \code{\link[=run_mod_lm]{run_mod_lm()}}.}
 
 \item{rank_df}{A tibble as returned by \code{\link[=pull_mod_rank]{pull_mod_rank()}}}
 
@@ -40,7 +40,7 @@ pull_mod_coeff_all(tbl, mod_const = tb_mod_const)
 \code{pull_mod_coeff_all()} returns a tibble.
 }
 \description{
-The following helpers extract elements of the list returned by \code{\link[=run_mod]{run_mod()}}.
+The following helpers extract elements of the list returned by \code{\link[=run_mod_lm]{run_mod_lm()}}.
 
 \code{pull_mod_rank()} extracts a tibble summarising the ranking of
 pre-processing steps.
@@ -55,10 +55,9 @@ pre-processing steps.
 }
 \examples{
 \dontrun{
-mod_objects <- run_mod(
+mod_objects <- run_mod_lm(
   tbl,
   preproc = preproc_list,
-  mod = mod_list,
   folds = tb_mod_const$folds,
   metrics = tb_mod_const$metrics,
   rank_metric = tb_mod_const$rank_metric,
