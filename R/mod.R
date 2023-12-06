@@ -41,12 +41,12 @@
 #' )
 #' }
 run_mod_lm <- function(tbl,
-                    preproc,
-                    folds,
-                    metrics,
-                    rank_metric,
-                    cross = TRUE,
-                    seed = 2023) {
+                       preproc,
+                       folds,
+                       metrics,
+                       rank_metric,
+                       cross = TRUE,
+                       seed = 2023) {
 
   # Linear model ---------------------------------------------------------------
   mod <- get_mod_mod("regression", "lm")
