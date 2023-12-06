@@ -1,6 +1,6 @@
-#' Helpers to work out `run_mod()`'s output
+#' Helpers to work out `run_mod_lm()`'s output
 #'
-#' The following helpers extract elements of the list returned by [run_mod()].
+#' The following helpers extract elements of the list returned by [run_mod_lm()].
 #'
 #' @name mod_helpers
 NULL
@@ -15,7 +15,7 @@ NULL
 #' @export
 #' @examples
 #' \dontrun{
-#' mod_objects <- run_mod(
+#' mod_objects <- run_mod_lm(
 #'   tbl,
 #'   preproc = preproc_list,
 #'   mod = mod_list,
@@ -53,7 +53,7 @@ pull_mod_best <- function(rank_df) {
 #'
 #' `pull_mod_coeff()` extracts best model coefficient estimates.
 #'
-#' @param mod_out_list A list object as returned by [run_mod()].
+#' @param mod_out_list A list object as returned by [run_mod_lm()].
 #' @rdname mod_helpers
 #' @return `pull_mod_coeff()` returns a tibble.
 #' @export
@@ -93,7 +93,7 @@ pull_mod_fit <- function(mod_out_list) {
 #'
 #' `pull_mod_coeff_all()` extracts coefficients estimates referenced by year.
 #'
-#' @inheritParams run_mod
+#' @inheritParams run_mod_lm
 #' @param mod_const Default models specs as returned by the list `tb_mod_const`.
 #'
 #' @rdname mod_helpers
@@ -140,7 +140,7 @@ pull_mod_coeff_all <- function(tbl, mod_const = tb_mod_const) {
           mod
         ),
         .f = function(x, y, z) {
-          run_mod(
+          run_mod_lm(
             tbl = x,
             preproc = y,
             mod = z,

@@ -1,6 +1,6 @@
 #' Run a suite of statistical models
 #'
-#' `run_mod()` runs a suite of statistical models, returning a final model fit.
+#' `run_mod_lm()` runs a suite of statistical models, returning a final model fit.
 #'
 #' @param tbl Input data frame containing the data to model.
 #' @param preproc A list of pre-processing steps.
@@ -32,7 +32,7 @@
 #'   .impute_vars = c("gdp", "e_inc_num", "pop_total")
 #'  )
 #'
-#' run_mod(
+#' run_mod_lm(
 #'   tbl,
 #'   preproc = preproc_list,
 #'   folds = 10,
@@ -40,7 +40,7 @@
 #'   rank_metric = "rmse"
 #' )
 #' }
-run_mod <- function(tbl,
+run_mod_lm <- function(tbl,
                     preproc,
                     folds,
                     metrics,
@@ -142,9 +142,9 @@ split_mod <- function(tbl, .v) {
 #' Get pre-processing recipes
 #'
 #' This function returns a list of pre-processing steps applied with
-#' [run_mod()].
+#' [run_mod_lm()].
 #'
-#' @inheritParams run_mod
+#' @inheritParams run_mod_lm
 #' @inheritParams recipes::step_filter_missing
 #' @inheritParams recipes::step_impute_knn
 #'

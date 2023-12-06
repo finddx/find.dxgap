@@ -56,7 +56,7 @@ preproc_list <- get_mod_preproc(
 ```
 
 ```{r run-model}
-mod_objects <- run_mod(
+mod_objects <- run_mod_lm(
   tbl, 
   preproc = preproc_list, 
   folds = tb_mod_const$folds,
