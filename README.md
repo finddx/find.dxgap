@@ -127,16 +127,48 @@ build_tbl("covid", year = NULL, vars = tb_vars)
 #> ✖ Disease is not supported yet.
 ```
 
-When is [\#289](https://github.com/finddx/find.dxgap/pull/289) is
-merged, tables from different providers will all be accessible with a
-unique function. For instance:
+To read and tidy any table:
 
 ``` r
 import_tbl("who_hbc_2023-07-28.csv")
+#> # A tibble: 300 × 4
+#>    country    country_code share_global_inc  year
+#>    <chr>      <chr>                   <dbl> <dbl>
+#>  1 Angola     AGO                        83  2016
+#>  2 Angola     AGO                        83  2017
+#>  3 Angola     AGO                        83  2018
+#>  4 Angola     AGO                        83  2019
+#>  5 Angola     AGO                        83  2020
+#>  6 Bangladesh BGD                        83  2016
+#>  7 Bangladesh BGD                        83  2017
+#>  8 Bangladesh BGD                        83  2018
+#>  9 Bangladesh BGD                        83  2019
+#> 10 Bangladesh BGD                        83  2020
+#> # ℹ 290 more rows
 ```
 
 ``` r
 import_tbl("gf_procurement_2023-07-26.csv")
+#> # A tibble: 898 × 27
+#>    country_code  year country_territory grant_name supplier_agent_manufacturer…¹
+#>    <chr>        <dbl> <chr>             <chr>      <chr>                        
+#>  1 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              
+#>  2 AFG           2020 Afghanistan       AFG-T-UNDP Direct from Mfg              
+#>  3 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              
+#>  4 AFG           2020 Afghanistan       AFG-T-UNDP Direct from Mfg              
+#>  5 AFG           2020 Afghanistan       AFG-T-UNDP Direct from Mfg              
+#>  6 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              
+#>  7 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              
+#>  8 <NA>          2019 Africa            QPA-T-WHC  Direct from Mfg              
+#>  9 <NA>          2019 Africa            QPA-T-WHC  Direct from Mfg              
+#> 10 <NA>          2019 Africa            QPA-T-WHC  Direct from Mfg              
+#> # ℹ 888 more rows
+#> # ℹ abbreviated name: ¹​supplier_agent_manufacturer_intermediary
+#> # ℹ 22 more variables: manufacturer <chr>, product_category <chr>,
+#> #   product <chr>, description <chr>, product_pack <chr>, pack_quantity <dbl>,
+#> #   product_pack_unit_price_usd <dbl>, total_product_cost_usd <dbl>,
+#> #   purchase_order_date <date>, scheduled_delivery_date <date>,
+#> #   actual_delivery_date <date>, number_of_suom_in_pack <dbl>, …
 ```
 
 Please, refer to

@@ -3,7 +3,7 @@
 #' These help pages document the lower-level API to individually download, read,
 #' and tidy Global Fund data. For a higher-level API that works across all data
 #' sets, see:
-#' * [write_data_dir()] to download all data
+#' * [import_tbl()] to import any data
 #'
 #' The data sets currently supported from Global Fund in this package are:
 #' * procurement
@@ -19,8 +19,13 @@ NULL
 #'
 #' @inheritParams read_who
 #' @rdname gf
+#'
 #' @return `read_gf_procurement()` returns a tibble containing the data set.
+#'
+#' @seealso [import_tbl()]
+#'
 #' @export
+#'
 #' @examples
 #' \dontrun{
 #' read_gf_procurement("gf_procurement_2023-07-26.csv")
@@ -38,9 +43,14 @@ read_gf_procurement <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR"
 #'
 #' @inheritParams tidy_who
 #' @rdname gf
+#'
 #' @return `tidy_gf_procurement()` returns a tibble. This is a tidied version of
 #'   the input tibble.
+#'
+#' @seealso [import_tbl()]
+#'
 #' @export
+#'
 #' @examples
 #' \dontrun{
 #' read_gf_procurement("gf_procurement_2023-07-26.csv") |>

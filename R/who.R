@@ -3,7 +3,7 @@
 #' These help pages document the lower-level API to individually download, read,
 #' and tidy data. For a higher-level API that works across all data sets,
 #' see:
-#' * [write_data_dir()] to download all data
+#' * [import_tbl()] to import any data
 #'
 #' The data sets currently available from WHO in this package are:
 #' * notifications
@@ -122,6 +122,8 @@ who_url_endpoints <- tibble::tribble(
 #'
 #' @return `read_who()` returns a tibble containing the data set.
 #'
+#' @seealso [import_tbl()]
+#'
 #' @rdname who
 #'
 #' @export
@@ -151,6 +153,8 @@ read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'
 #' @return `tidy_who()` returns s tibble. This is a tidied version of the input
 #'   tibble.
+#'
+#' @seealso [import_tbl()]
 #'
 #' @rdname who
 #'

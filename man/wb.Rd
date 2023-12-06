@@ -42,7 +42,7 @@ These help pages document the lower-level API to individually download, read,
 and tidy data. For a higher-level API that works across all data sets,
 see:
 \itemize{
-\item \code{\link[=write_data_dir]{write_data_dir()}} to download all data
+\item \code{\link[=import_tbl]{import_tbl()}} to import any data
 }
 }
 \details{
@@ -90,4 +90,9 @@ read_wb("wb_pop_urban_2023-07-28.csv")
 read_wb("wb_pop_urban_2023-07-28.csv") |>
   tidy_wb()
 }
+}
+\seealso{
+\code{\link[=import_tbl]{import_tbl()}}
+
+\code{\link[=import_tbl]{import_tbl()}}
 }

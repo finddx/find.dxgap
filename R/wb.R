@@ -3,7 +3,7 @@
 #' These help pages document the lower-level API to individually download, read,
 #' and tidy data. For a higher-level API that works across all data sets,
 #' see:
-#' * [write_data_dir()] to download all data
+#' * [import_tbl()] to import any data
 #'
 #' The data sets currently available from World Bank in this package are:
 #' * urban population
@@ -120,6 +120,8 @@ unnest_wb_resp <- function(data) {
 #'
 #' @return `read_wb()` a tibble containing the data set.
 #'
+#' @seealso [import_tbl()]
+#'
 #' @rdname wb
 #'
 #' @export
@@ -140,6 +142,8 @@ read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'   for all years.
 #'
 #' @return `tidy_wb()` a tibble. This is a tidied version of the input tibble.
+#'
+#' @seealso [import_tbl()]
 #'
 #' @rdname wb
 #'

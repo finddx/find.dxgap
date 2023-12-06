@@ -32,7 +32,7 @@ These help pages document the lower-level API to individually download, read,
 and tidy Global Fund data. For a higher-level API that works across all data
 sets, see:
 \itemize{
-\item \code{\link[=write_data_dir]{write_data_dir()}} to download all data
+\item \code{\link[=import_tbl]{import_tbl()}} to import any data
 }
 }
 \details{
@@ -54,4 +54,9 @@ read_gf_procurement("gf_procurement_2023-07-26.csv")
 read_gf_procurement("gf_procurement_2023-07-26.csv") |>
   tidy_gf_procurement()
 }
+}
+\seealso{
+\code{\link[=import_tbl]{import_tbl()}}
+
+\code{\link[=import_tbl]{import_tbl()}}
 }
