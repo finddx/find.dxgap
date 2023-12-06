@@ -53,7 +53,7 @@ preproc_list <- get_mod_preproc(
   .tbl = tbl,
   .neighbors = 5,
   .threshold = 0.25,
-  .impute_vars = c("gdp", "e_inc_num", "pop_total")
+  .impute_with = c("gdp", "e_inc_num", "pop_total")
  )
 
 mod_list <- get_mod_mod("regression", "lm")
