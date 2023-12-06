@@ -13,7 +13,7 @@ test_that("compute_completion_rate() works", {
 test_that("compute_correlation() works", {
   testdata_path <- testthat::test_path("testdata", "tb_tbl_ts.rds")
   tb_tbl <- readr::read_rds(testdata_path)
-  tbl_dxgap <- compute_dx_gap(tb_tbl)
+  tbl_dxgap <- compute_dx_gap(tb_tbl, c_newinc, e_inc_num)
   corr_df <- compute_correlation(tbl_dxgap, who_dx_gap)
   expect_snapshot(constructive::construct(corr_df))
   corr_df_by <- compute_correlation(tbl_dxgap, who_dx_gap, by = "year")
