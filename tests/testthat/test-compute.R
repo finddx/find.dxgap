@@ -23,15 +23,12 @@ test_that("compute_correlation() works", {
   expect_error(compute_correlation(tbl_dxgap), regexp = "absent")
 })
 
-test_that("compute_dx_gap() works", {
-  skip_on_ci()
-  testdata_path <- testthat::test_path("testdata", "tb_tbl_ts.rds")
-  tbl_estimates <- import_tbl_impl("who_estimates_2023-07-28.csv")
-  tbl_notification <- import_tbl_impl("who_notifications_2023-11-28.csv")
-  tbl <- dplyr::left_join(
-    dplyr::select(tbl_estimates, country_code, year, e_inc_num),
-    dplyr::select(tbl_notification, country_code, year, c_newinc),
-    by = dplyr::join_by(country_code, year)
+test_that("compute_dx_gap_impl() works", {
+  tbl <- tibble::tibble(
+    country_code = c("EGY", "PLW", "MHL"),
+    year = c(2001, 2021, 2007),
+    e_inc_num = c(18000, 9, 190),
+    c_newinc = c(10549, 8, 158),
   )
   tbl_gap <- compute_dx_gap_impl(tbl, c_newinc, e_inc_num)
   expect_s3_class(tbl_gap, "data.frame")
