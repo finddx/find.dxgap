@@ -136,11 +136,45 @@
 <span><span class="co">#&gt; Error in `check_supported_disease()` at find.dxgap/R/load.R:26:3:</span></span>
 <span><span class="co">#&gt; ! Cannot find `covid` in `dxgap_diseases`.</span></span>
 <span><span class="co">#&gt; ✖ Disease is not supported yet.</span></span></code></pre></div>
-<p>When is <a href="https://github.com/finddx/find.dxgap/pull/289" class="external-link">#289</a> is merged, tables from different providers will all be accessible with a unique function. For instance:</p>
+<p>To read and tidy any table:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">import_tbl</span><span class="op">(</span><span class="st">"who_hbc_2023-07-28.csv"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/import_tbl.html">import_tbl</a></span><span class="op">(</span><span class="st">"who_hbc_2023-07-28.csv"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 300 × 4</span></span>
+<span><span class="co">#&gt;    country    country_code share_global_inc  year</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;                   &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Angola     AGO                        83  2016</span></span>
+<span><span class="co">#&gt;  2 Angola     AGO                        83  2017</span></span>
+<span><span class="co">#&gt;  3 Angola     AGO                        83  2018</span></span>
+<span><span class="co">#&gt;  4 Angola     AGO                        83  2019</span></span>
+<span><span class="co">#&gt;  5 Angola     AGO                        83  2020</span></span>
+<span><span class="co">#&gt;  6 Bangladesh BGD                        83  2016</span></span>
+<span><span class="co">#&gt;  7 Bangladesh BGD                        83  2017</span></span>
+<span><span class="co">#&gt;  8 Bangladesh BGD                        83  2018</span></span>
+<span><span class="co">#&gt;  9 Bangladesh BGD                        83  2019</span></span>
+<span><span class="co">#&gt; 10 Bangladesh BGD                        83  2020</span></span>
+<span><span class="co">#&gt; # ℹ 290 more rows</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">import_tbl</span><span class="op">(</span><span class="st">"gf_procurement_2023-07-26.csv"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/import_tbl.html">import_tbl</a></span><span class="op">(</span><span class="st">"gf_procurement_2023-07-26.csv"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 898 × 27</span></span>
+<span><span class="co">#&gt;    country_code  year country_territory grant_name supplier_agent_manufacturer…¹</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;                        </span></span>
+<span><span class="co">#&gt;  1 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              </span></span>
+<span><span class="co">#&gt;  2 AFG           2020 Afghanistan       AFG-T-UNDP Direct from Mfg              </span></span>
+<span><span class="co">#&gt;  3 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              </span></span>
+<span><span class="co">#&gt;  4 AFG           2020 Afghanistan       AFG-T-UNDP Direct from Mfg              </span></span>
+<span><span class="co">#&gt;  5 AFG           2020 Afghanistan       AFG-T-UNDP Direct from Mfg              </span></span>
+<span><span class="co">#&gt;  6 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              </span></span>
+<span><span class="co">#&gt;  7 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              </span></span>
+<span><span class="co">#&gt;  8 &lt;NA&gt;          2019 Africa            QPA-T-WHC  Direct from Mfg              </span></span>
+<span><span class="co">#&gt;  9 &lt;NA&gt;          2019 Africa            QPA-T-WHC  Direct from Mfg              </span></span>
+<span><span class="co">#&gt; 10 &lt;NA&gt;          2019 Africa            QPA-T-WHC  Direct from Mfg              </span></span>
+<span><span class="co">#&gt; # ℹ 888 more rows</span></span>
+<span><span class="co">#&gt; # ℹ abbreviated name: ¹​supplier_agent_manufacturer_intermediary</span></span>
+<span><span class="co">#&gt; # ℹ 22 more variables: manufacturer &lt;chr&gt;, product_category &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   product &lt;chr&gt;, description &lt;chr&gt;, product_pack &lt;chr&gt;, pack_quantity &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   product_pack_unit_price_usd &lt;dbl&gt;, total_product_cost_usd &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   purchase_order_date &lt;date&gt;, scheduled_delivery_date &lt;date&gt;,</span></span>
+<span><span class="co">#&gt; #   actual_delivery_date &lt;date&gt;, number_of_suom_in_pack &lt;dbl&gt;, …</span></span></code></pre></div>
 <p>Please, refer to <a href="https://github.com/finddx/find.dxgap.data" class="external-link"><code>find.dxgap.data</code></a> for the available tables.</p>
 </div>
 <div class="section level4">
