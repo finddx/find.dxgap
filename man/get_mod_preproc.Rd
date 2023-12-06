@@ -24,7 +24,13 @@ This function returns a list of pre-processing steps applied with
 }
 \examples{
 \dontrun{
-preproc_list <- get_mod_preproc(
+tbl <-
+  build_tbl("tb", 2019, vars = dxgap_const$tb_vars) |>
+  compute_dx_gap() |>
+  dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+  dplyr::select(-any_of(c("year", "country")))
+
+get_mod_preproc(
   .tbl = tbl,
   .neighbors = 5,
   .threshold = 0.25,

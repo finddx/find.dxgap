@@ -26,22 +26,22 @@
 #'   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
 #'   dplyr::select(-any_of(c("year", "country")))
 #'
-#'  preproc_list <- get_mod_preproc(
+#' preproc_list <- get_mod_preproc(
 #'   .tbl = tbl,
-#'   .neighbors = tb_mod_const$neighbors,
-#'   .threshold = tb_mod_const$threshold,
-#'   .impute_vars = tb_mod_const$impute_vars
+#'   .neighbors = 5,
+#'   .threshold = 0.25,
+#'   .impute_vars = c("gdp", "e_inc_num", "pop_total")
 #'  )
 #'
-#' mod_list <- get_mod_mod(tb_mod_const$mode, tb_mod_const$engine)
+#' mod_list <- get_mod_mod("regression", "lm")
 #'
 #' run_mod(
 #'   tbl,
 #'   preproc = preproc_list,
 #'   mod = mod_list,
-#'   folds = tb_mod_const$folds,
-#'   metrics = tb_mod_const$metrics,
-#'   rank_metric = tb_mod_const$rank_metric,
+#'   folds = 10,
+#'   metrics = yardstick::metric_set(yardstick::rmse, yardstick::rsq),
+#'   rank_metric = "rmse"
 #' )
 #' }
 run_mod <- function(tbl,
