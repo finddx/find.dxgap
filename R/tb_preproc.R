@@ -1,6 +1,6 @@
-prep_tb_data <- function(data, rm_vars = c("year", "country")) {
+prep_tb_data <- function(data, notified, estimated,  rm_vars = c("year", "country")) {
   data |>
-    compute_dx_gap() |>
+    compute_dx_gap_impl(.notified = notified, .estimated = estimated) |>
     dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
     dplyr::select(-tidyselect::any_of(rm_vars))
 }
