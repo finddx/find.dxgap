@@ -33,9 +33,14 @@
 #'  build_tbl("tb", 2019, vars = dxgap_const$tb_vars) |>
 #'     compute_dx_gap(e_inc_num, c_newinc)
 #' }
-compute_dx_gap <- function(data, ...) {
+compute_dx_gap <- function(data, notified, estimated, ...) {
   if ("country_code" %in% names(data)) {
-    df <- compute_dx_gap_impl(data, ..., .after = country_code)
+    df <- compute_dx_gap_impl(
+      data,
+      .notified = notified,
+      .estimated = estimated,
+      .after = country_code
+    )
     return(df)
   }
   compute_dx_gap_impl(data, ...)
