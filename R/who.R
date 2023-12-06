@@ -134,7 +134,6 @@ who_url_endpoints <- tibble::tribble(
 #' read_who("who_hbc_2023-07-28.csv")
 #' }
 read_who <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
-  signal_superseded(.call = rlang::current_call(), "import_tbl()")
   is_who_hbc <- stringr::str_detect(file_name, "hbc")
   if (is_who_hbc) {
     who_hbc_df <- read_who_hbc(file_name, data_dir = data_dir)
