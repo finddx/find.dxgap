@@ -51,7 +51,7 @@ preproc_list <- get_mod_preproc(
   .tbl = tbl,
   .neighbors = tb_mod_const$neighbors,
   .threshold = tb_mod_const$threshold,
-  .impute_vars = tb_mod_const$impute_vars
+  .impute_with = tb_mod_const$impute_vars
 )
 ```
 

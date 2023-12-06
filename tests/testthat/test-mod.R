@@ -8,7 +8,7 @@ test_that("run_mod_lm() works", {
     .tbl = tb_tbl_prep,
     .neighbors = tb_mod_const$neighbors,
     .threshold = tb_mod_const$threshold,
-    .impute_vars = tb_mod_const$impute_vars
+    .impute_with = tb_mod_const$impute_vars
   )
   mod_objects <- run_mod_lm(
     tb_tbl_prep,

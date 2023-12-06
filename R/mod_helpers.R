@@ -123,7 +123,7 @@ pull_mod_coeff_all <- function(tbl, mod_const = tb_mod_const) {
           .x,
           .neighbors = mod_const$neighbors,
           .threshold = mod_const$threshold,
-          .impute_vars = mod_const$impute_vars
+          .impute_with = mod_const$impute_vars
         )
       )
     )
