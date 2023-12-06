@@ -32,7 +32,7 @@
       out_log
     Output
       tibble::tibble(
-        who_dx_gap = c(35, 10.91, 26.95),
+        dx_gap = c(35, 10.91, 26.95),
         pop_total = c(17.29, 19.17, 21.05),
         pop_urban_perc = c(4.21, 4.48, 3.57),
         pop_density = c(3.29, 3.27, 6.14),
