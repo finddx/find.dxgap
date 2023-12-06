@@ -151,3 +151,12 @@ check_all_numeric <- function(data) {
 check_unique_ptype <- function(...) {
   stopifnot(sum(...) == 1)
 }
+
+check_any_na <- function(data, var) {
+  var_quote <- rlang::enquo(var)
+  vec <- dplyr::pull(data, !!var_quote)
+  any_na_in_var <- anyNA(vec)
+  if (any_na_in_var) {
+    rlang::abort(sprintf("`NA` values found in `%s`.", rlang::as_name(var_quote)))
+  }
+}

@@ -44,7 +44,9 @@ compute_dx_gap <- function(data, ...) {
 compute_dx_gap_impl <- function(data, .notified, .estimated, ...) {
   stopifnot(is.data.frame(data))
   rlang::check_required(.estimated)
+  check_any_na(data, .estimated)
   rlang::check_required(.notified)
+  check_any_na(data, .notified)
   data |>
     dplyr::mutate(
       who_dx_gap = ({{ .estimated }} - {{ .notified }}) / {{ .estimated }} * 100,
