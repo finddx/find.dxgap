@@ -96,8 +96,21 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 #'
 #' @examples
 #' \dontrun{
-#' car_tbl <- as_tibble(mtcars, rownames = "car_name")
-#' my_cars <- select(car_tbl, -all_of(c("vs", "am", "carb")))
+#' tbl <-
+#'   build_tbl("tb", NULL, vars = dxgap_const$tb_vars) |>
+#'   compute_dx_gap() |>
+#'   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
+#'   dplyr::select(-any_of(c("country")))
+#'
+#' tbl |>
+#'   dplyr::filter(year == 2019) |>
+#'   compute_correlation(who_dx_gap, by = "year")
+#'
+#' tbl |>
+#'   compute_correlation(who_dx_gap, by = c("year", "is_hbc"))
+#'
+#' car_tbl <- tibble::as_tibble(mtcars, rownames = "car_name")
+#' my_cars <- dplyr::select(car_tbl, -dplyr::all_of(c("vs", "am", "carb")))
 #' compute_correlation(my_cars, mpg, by = c("gear", "cyl"))
 #' compute_correlation(my_cars, mpg, by = NULL) # car_name is dropped by default
 #' }
