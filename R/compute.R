@@ -31,22 +31,25 @@
 #' \dontrun{
 #' # Calculate diagnostic gap for 2019 TB data:
 #'  build_tbl("tb", 2019, vars = dxgap_const$tb_vars) |>
-#'     compute_dx_gap()
+#'     compute_dx_gap(e_inc_num, c_newinc)
 #' }
-compute_dx_gap <- function(data) {
+compute_dx_gap <- function(data, ...) {
   if ("country_code" %in% names(data)) {
-    df <- compute_dx_gap_impl(data, .after = country_code)
+    df <- compute_dx_gap_impl(data, ..., .after = country_code)
     return(df)
   }
-  compute_dx_gap_impl(data)
+  compute_dx_gap_impl(data, ...)
 }
 
-compute_dx_gap_impl <- function(data, num, denom, ...) {
+compute_dx_gap_impl <- function(data, .notified, .estimated, ...) {
   stopifnot(is.data.frame(data))
-  rlang::check_required(num)
-  rlang::check_required(denum)
+  rlang::check_required(.estimated)
+  rlang::check_required(.notified)
   data |>
-    dplyr::mutate(who_dx_gap = ({{ num }} - {{ denom }}) / {{ denom }} * 100, ...)
+    dplyr::mutate(
+      who_dx_gap = ({{ .estimated }} - {{ .notified }}) / {{ .estimated }} * 100,
+      ...
+    )
 }
 
 #' Compute completion rate
