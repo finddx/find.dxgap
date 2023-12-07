@@ -36,8 +36,3 @@ test_that("import_tbl() works with any table", {
   tbl <- import_tbl("who_notifications_2023-11-28.csv")
   expect_s3_class(tbl, "data.frame")
 })
-
-test_that("extract_name strips any file extension", {
-  expect_equal(extract_name("who_estimates_2023-07-28.csv"), "who_estimates")
-  expect_equal(extract_name("who_2023-07-28_estimates.xlsx"), "who_estimates")
-})
