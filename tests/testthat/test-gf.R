@@ -20,15 +20,15 @@ test_that("a tibble is returned", {
 
 test_that("the tibble dimensions are as expected", {
   skip_if_no_data(file_name)
-  expect_equal(nrow(tidy_gf_procurement(data)), 898)
-  expect_equal(ncol(tidy_gf_procurement(data)), 27)
+  expect_equal(nrow(tidy_gf_procurement(data)), 199)
+  expect_equal(ncol(tidy_gf_procurement(data)), 3)
 })
 
 test_that("primary keys match across time series and fixed data", {
   skip_if_no_data(file_name)
   expect_equal(
-    unique(tidy_gf_procurement(data)$country_territory),
-    unique(tidy_gf_procurement(data)$country_territory)
+    unique(tidy_gf_procurement(data)$country_code),
+    unique(tidy_gf_procurement(data)$country_code)
   )
 })
 
@@ -36,15 +36,8 @@ test_that("`country_code` entries are not missing", {
   skip_if_no_data(file_name)
   expect_snapshot(
     tidy_gf_procurement(data) |>
-      dplyr::distinct(country_code, country_territory) |>
+      dplyr::distinct(country_code, year) |>
       dplyr::filter(is.na(country_code))
   )
 })
 
-test_that("only relevant products are considered", {
-  skip_if_no_data(file_name)
-  expect_snapshot(
-    tidy_gf_procurement(data) |>
-      dplyr::distinct(product)
-  )
-})

@@ -103,15 +103,18 @@ tidy_gf_procurement <- function(data, year = NULL) {
       ),
       total_numb_device = pack_quantity * number_of_suom_in_pack
     ) |>
+    dplyr::filter( # these cannot be assigned a unique country_code
+      !country_territory %in% c("Africa", "Caribbean", "Kosovo", "Oceania",
+                                "Southern Asia", "Western Asia", "Zanzibar")
+    ) |>
     dplyr::mutate(
-      country_code = suppressWarnings(
+      country_code =
         countrycode::countrycode(
         country_territory,
         origin = "country.name",
         dest = "iso3c"
       )
-    )
-  ) |>
+    ) |>
     dplyr::mutate(year = lubridate::year(actual_delivery_date)) |>
     dplyr::relocate(country_code, year) |>
     dplyr::filter(product %in% c("TB molecular diagnostics", "Tuberculin test")) |>
