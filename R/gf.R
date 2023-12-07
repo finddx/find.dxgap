@@ -114,7 +114,8 @@ tidy_gf_procurement <- function(data, year = NULL) {
   ) |>
     dplyr::mutate(year = lubridate::year(actual_delivery_date)) |>
     dplyr::relocate(country_code, year) |>
-    dplyr::filter(product %in% c("TB molecular diagnostics", "Tuberculin test"))
+    dplyr::filter(product %in% c("TB molecular diagnostics", "Tuberculin test")) |>
+    compute_gf_tot_devices()
 
   if (!is.null(year)) {
     df_subset <-
