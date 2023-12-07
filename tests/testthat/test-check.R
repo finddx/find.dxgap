@@ -10,3 +10,9 @@ test_that("check_clean_data_dir() works", {
   )
   expect_error(check_clean_data_dir(data_files, "\\d{4}-\\d{2}-\\d{2}"))
 })
+
+test_that("check_any_na() works", {
+  df <- datasets::airquality
+  expect_snapshot(check_any_na(df, Ozone), error = TRUE)
+  expect_no_error(check_any_na(df, Day))
+})
