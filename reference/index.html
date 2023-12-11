@@ -35,9 +35,9 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="download-data">Download data<a class="anchor" aria-label="anchor" href="#download-data"></a></h2>
       
-      
+      <p class="section-desc"></p><p>Verbs to download data to disk (e.g., from websites).</p>
 
       
     </div><div id="" class="section level2">
@@ -47,34 +47,45 @@
 
       <dl><dt>
           
-          <code><a href="build_tbl.html">build_tbl()</a></code> 
+          <code><a href="hbc.html">download_hbc()</a></code> 
         </dt>
-        <dd>Load all data for a disease into a single wide table</dd>
+        <dd>TB High-Burden Countries data from WHO</dd>
       </dl><dl><dt>
           
-          <code><a href="compute_completion_rate.html">compute_completion_rate()</a></code> 
+          <code><a href="wb.html">download_wb()</a></code> <code><a href="wb.html">read_wb()</a></code> <code><a href="wb.html">tidy_wb()</a></code> 
         </dt>
-        <dd>Compute completion rate</dd>
+        <dd>Data from World Bank</dd>
       </dl><dl><dt>
           
-          <code><a href="compute_correlation.html">compute_correlation()</a></code> 
+          <code><a href="who.html">download_who()</a></code> <code><a href="who.html">read_who()</a></code> <code><a href="who.html">tidy_who()</a></code> 
         </dt>
-        <dd>Compute correlations with a target variable</dd>
-      </dl><dl><dt>
-          
-          <code><a href="compute_dx_gap.html">compute_dx_gap()</a></code> 
-        </dt>
-        <dd>Compute the diagnostic gap</dd>
-      </dl><dl><dt>
+        <dd>Data from WHO</dd>
+      </dl></div><div class="section level2">
+      <h2 id="load-data">Load data<a class="anchor" aria-label="anchor" href="#load-data"></a></h2>
+      
+      <p class="section-desc"></p><p>Verbs to load and manage data on disk.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="dxgap_master_list.html">dxgap_master_list</a></code> 
         </dt>
         <dd>Data dictionary</dd>
       </dl><dl><dt>
           
-          <code><a href="get_mod_preproc.html">get_mod_preproc()</a></code> 
+          <code><a href="build_tbl.html">build_tbl()</a></code> 
         </dt>
-        <dd>Get pre-processing recipes</dd>
+        <dd>Load all data for a disease into a single wide table</dd>
+      </dl><dl><dt>
+          
+          <code><a href="import_tbl.html">import_tbl()</a></code> 
+        </dt>
+        <dd>Read and tidy any individual table</dd>
       </dl><dl><dt>
           
           <code><a href="gf.html">read_gf_procurement()</a></code> <code><a href="gf.html">tidy_gf_procurement()</a></code> 
@@ -82,14 +93,71 @@
         <dd>Data from Global Fund</dd>
       </dl><dl><dt>
           
-          <code><a href="hbc.html">download_hbc()</a></code> 
+          <code><a href="wb.html">download_wb()</a></code> <code><a href="wb.html">read_wb()</a></code> <code><a href="wb.html">tidy_wb()</a></code> 
         </dt>
-        <dd>TB High-Burden Countries data from WHO</dd>
+        <dd>Data from World Bank</dd>
       </dl><dl><dt>
           
-          <code><a href="import_tbl.html">import_tbl()</a></code> 
+          <code><a href="who.html">download_who()</a></code> <code><a href="who.html">read_who()</a></code> <code><a href="who.html">tidy_who()</a></code> 
         </dt>
-        <dd>Read and tidy any individual table</dd>
+        <dd>Data from WHO</dd>
+      </dl></div><div class="section level2">
+      <h2 id="clean-data">Clean data<a class="anchor" aria-label="anchor" href="#clean-data"></a></h2>
+      
+      <p class="section-desc"></p><p>Verbs to clean and transform data ready for analysis.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="who.html">download_who()</a></code> <code><a href="who.html">read_who()</a></code> <code><a href="who.html">tidy_who()</a></code> 
+        </dt>
+        <dd>Data from WHO</dd>
+      </dl><dl><dt>
+          
+          <code><a href="wb.html">download_wb()</a></code> <code><a href="wb.html">read_wb()</a></code> <code><a href="wb.html">tidy_wb()</a></code> 
+        </dt>
+        <dd>Data from World Bank</dd>
+      </dl><dl><dt>
+          
+          <code><a href="gf.html">read_gf_procurement()</a></code> <code><a href="gf.html">tidy_gf_procurement()</a></code> 
+        </dt>
+        <dd>Data from Global Fund</dd>
+      </dl></div><div class="section level2">
+      <h2 id="analyse-data">Analyse data<a class="anchor" aria-label="anchor" href="#analyse-data"></a></h2>
+      
+      <p class="section-desc"></p><p>Verbs to analyse data.</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="compute_correlation.html">compute_correlation()</a></code> 
+        </dt>
+        <dd>Compute correlations with a target variable</dd>
+      </dl><dl><dt>
+          
+          <code><a href="compute_completion_rate.html">compute_completion_rate()</a></code> 
+        </dt>
+        <dd>Compute completion rate</dd>
+      </dl><dl><dt>
+          
+          <code><a href="compute_dx_gap.html">compute_dx_gap()</a></code> 
+        </dt>
+        <dd>Compute the diagnostic gap</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_mod_preproc.html">get_mod_preproc()</a></code> 
+        </dt>
+        <dd>Get pre-processing recipes</dd>
       </dl><dl><dt>
           
           <code><a href="mod_helpers.html">pull_mod_rank()</a></code> <code><a href="mod_helpers.html">pull_mod_best()</a></code> <code><a href="mod_helpers.html">pull_mod_coeff()</a></code> <code><a href="mod_helpers.html">pull_mod_fit()</a></code> <code><a href="mod_helpers.html">pull_mod_coeff_all()</a></code> 
@@ -110,18 +178,9 @@
           <code><a href="view_templates.html">view_templates()</a></code> 
         </dt>
         <dd>List available templates</dd>
-      </dl><dl><dt>
-          
-          <code><a href="wb.html">download_wb()</a></code> <code><a href="wb.html">read_wb()</a></code> <code><a href="wb.html">tidy_wb()</a></code> 
-        </dt>
-        <dd>Data from World Bank</dd>
-      </dl><dl><dt>
-          
-          <code><a href="who.html">download_who()</a></code> <code><a href="who.html">read_who()</a></code> <code><a href="who.html">tidy_who()</a></code> 
-        </dt>
-        <dd>Data from WHO</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
