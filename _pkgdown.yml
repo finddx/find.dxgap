@@ -2,3 +2,44 @@ url: https://finddx.github.io/find.dxgap/
 template:
   bootstrap: 5
 
+reference:
+- title: Download data
+  desc: >
+    Verbs to download data to disk (e.g., from websites).
+  contents:
+  - download_hbc
+  - download_wb
+  - download_who
+
+- title: Load data
+  desc: >
+    Verbs to load and manage data on disk.
+  contents:
+  - dxgap_master_list
+  - build_tbl
+  - import_tbl
+  - read_gf_procurement
+  - read_wb
+  - read_who
+
+- title: Clean data
+  desc: >
+    Verbs to clean and transform data ready for analysis.
+  contents:
+  - tidy_who
+  - tidy_wb
+  - tidy_gf_procurement
+
+- title: Analyse data
+  desc: >
+    Verbs to analyse data.
+  contents:
+  - compute_correlation
+  - compute_completion_rate
+  - compute_dx_gap
+  - get_mod_preproc
+  - starts_with("pull_mod_")
+  - render_bulk
+  - render_report
+  - run_mod_lm
+  - view_templates

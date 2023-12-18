@@ -149,26 +149,20 @@ import_tbl("who_hbc_2023-07-28.csv")
 
 ``` r
 import_tbl("gf_procurement_2023-07-26.csv")
-#> # A tibble: 898 × 27
-#>    country_code  year country_territory grant_name supplier_agent_manufacturer…¹
-#>    <chr>        <dbl> <chr>             <chr>      <chr>                        
-#>  1 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              
-#>  2 AFG           2020 Afghanistan       AFG-T-UNDP Direct from Mfg              
-#>  3 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              
-#>  4 AFG           2020 Afghanistan       AFG-T-UNDP Direct from Mfg              
-#>  5 AFG           2020 Afghanistan       AFG-T-UNDP Direct from Mfg              
-#>  6 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              
-#>  7 AFG           2021 Afghanistan       AFG-T-UNDP Direct from Mfg              
-#>  8 <NA>          2019 Africa            QPA-T-WHC  Direct from Mfg              
-#>  9 <NA>          2019 Africa            QPA-T-WHC  Direct from Mfg              
-#> 10 <NA>          2019 Africa            QPA-T-WHC  Direct from Mfg              
-#> # ℹ 888 more rows
-#> # ℹ abbreviated name: ¹​supplier_agent_manufacturer_intermediary
-#> # ℹ 22 more variables: manufacturer <chr>, product_category <chr>,
-#> #   product <chr>, description <chr>, product_pack <chr>, pack_quantity <dbl>,
-#> #   product_pack_unit_price_usd <dbl>, total_product_cost_usd <dbl>,
-#> #   purchase_order_date <date>, scheduled_delivery_date <date>,
-#> #   actual_delivery_date <date>, number_of_suom_in_pack <dbl>, …
+#> # A tibble: 203 × 3
+#>    country_code  year total_numb_device
+#>    <chr>        <dbl>             <dbl>
+#>  1 AFG           2020             55000
+#>  2 AFG           2021             90800
+#>  3 AGO           2020             30000
+#>  4 AGO           2021             43890
+#>  5 AGO           2022             11000
+#>  6 ALB           2019              2002
+#>  7 ARM           2020               300
+#>  8 ARM           2023              4500
+#>  9 AZE           2021             16500
+#> 10 AZE           2022              9806
+#> # ℹ 193 more rows
 ```
 
 Please, refer to

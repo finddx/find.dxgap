@@ -98,6 +98,10 @@ tidy_who_hbc <- function(data, .year = NULL) {
       dplyr::filter(year == !!.year)
     return(df_subset)
   }
+
+  check_any_na(df, country_code)
+  check_any_na(df, year)
+
   df
 }
 

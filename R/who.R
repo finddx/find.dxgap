@@ -186,24 +186,29 @@ tidy_who <- function(data, year = NULL, .shape = "long") {
   )
 
   if (is_notifications) {
-    tidy_who_notifications(data, .year = year, shape = .shape)
+    df <- tidy_who_notifications(data, .year = year, shape = .shape)
   } else if (is_budget) {
-    tidy_who_budget(data, .year = year, shape = .shape)
+    df <- tidy_who_budget(data, .year = year, shape = .shape)
   } else if (is_community) {
-    tidy_who_community(data, .year = year, shape = .shape)
+    df <- tidy_who_community(data, .year = year, shape = .shape)
   } else if (is_estimates) {
-    tidy_who_estimates(data, .year = year, shape = .shape)
+    df <- tidy_who_estimates(data, .year = year, shape = .shape)
   } else if (is_expenditure) {
-    tidy_who_expenditures(data, .year = year, shape = .shape)
+    df <- tidy_who_expenditures(data, .year = year, shape = .shape)
   } else if (is_labs) {
-    tidy_who_labs(data, .year = year, shape = .shape)
+    df <- tidy_who_labs(data, .year = year, shape = .shape)
   } else if (is_hbc) {
-    tidy_who_hbc(data, .year = year)
+    df <- tidy_who_hbc(data, .year = year)
   } else {
     rlang::abort(
       c("Cannot find a footprint for this data.", i = "Is this a new dataset?")
     )
   }
+
+  check_any_na(df, country_code)
+  check_any_na(df, year)
+
+  df
 }
 
 # TODO: understandable renaming

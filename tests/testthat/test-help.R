@@ -5,6 +5,11 @@ test_that("compose_file_path() works", {
   expect_error(compose_file_path(c("my_file.csv", "a"), "my_data_dir/data"))
 })
 
+test_that("extract_name() strips any file extension", {
+  expect_equal(extract_name("who_estimates_2023-07-28.csv"), "who_estimates")
+  expect_equal(extract_name("who_2023-07-28_estimates.xlsx"), "who_estimates")
+})
+
 test_that("extract_name() works", {
   path_a <- "/Users/a_user/find.dxgap.data/who_hbc_2023-07-28.csv"
   expect_identical(extract_name(path_a), "who_hbc")

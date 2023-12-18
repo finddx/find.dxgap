@@ -54,8 +54,7 @@ tb_load <- function(lst_df) {
 
   # Global Fund Procurement ----------------------------------------------------
 
-  gf_procurement_df_ungrouped <- lst_df$gf_procurement
-  gf_procurement_df <- compute_gf_tot_devices(gf_procurement_df_ungrouped)
+  gf_procurement_df <- lst_df$gf_procurement
 
   tibble::lst(
     hbc = hbc_df,
