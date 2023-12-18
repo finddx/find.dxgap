@@ -8,6 +8,7 @@
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![R-CMD-check](https://github.com/finddx/find.dxgap/actions/workflows/check-standard.yaml/badge.svg?branch=main)](https://github.com/finddx/find.dxgap/actions/workflows/check-standard.yaml)
 <!-- badges: end -->
 
 ## Installation
@@ -122,7 +123,7 @@ An error is raised, if a disease is not supported yet:
 
 ``` r
 build_tbl("covid", year = NULL, vars = tb_vars)
-#> Error in `check_supported_disease()` at find.dxgap/R/load.R:26:3:
+#> Error in `check_supported_disease()`:
 #> ! `covid` not in `dxgap_diseases`.
 #> ✖ Disease is not supported yet.
 ```
@@ -149,7 +150,7 @@ import_tbl("who_hbc_2023-07-28.csv")
 
 ``` r
 import_tbl("gf_procurement_2023-07-26.csv")
-#> # A tibble: 203 × 3
+#> # A tibble: 199 × 3
 #>    country_code  year total_numb_device
 #>    <chr>        <dbl>             <dbl>
 #>  1 AFG           2020             55000
@@ -162,7 +163,7 @@ import_tbl("gf_procurement_2023-07-26.csv")
 #>  8 ARM           2023              4500
 #>  9 AZE           2021             16500
 #> 10 AZE           2022              9806
-#> # ℹ 193 more rows
+#> # ℹ 189 more rows
 ```
 
 Please, refer to
