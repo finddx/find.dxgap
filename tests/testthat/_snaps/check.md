@@ -13,4 +13,5 @@
     Condition
       Error in `check_any_zero()`:
       ! `0` values found in `am`.
-      i Dividing by `0` generate `Inf` values.
+      i Dividing by `0` generates `Inf` values.
+
