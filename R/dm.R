@@ -43,7 +43,7 @@ build_tbl <- function(disease, year = NULL, vars = NULL) {
 #'
 #' @examples
 #' \dontrun{
-#' dm_object <- load_dx() |>
+#' dm_object <- load_dx("tb") |>
 #'   build_dm()
 #'
 #' build_tbl_impl(dm_object) # All cols
@@ -85,8 +85,8 @@ build_tbl_impl <- function(dm, vars = NULL) {
 #'
 #' @examples
 #' \dontrun{
-#' build_dm(load_dx()) # all years
-#' build_dm(load_dx(), year = 2019) # only 2019
+#' build_dm(load_dx("tb")) # all years
+#' build_dm(load_dx("tb"), year = 2019) # only 2019
 #' }
 build_dm <- function(data_list, year = NULL) {
   # TODO: max year should be computed from the who estimates and notification data
