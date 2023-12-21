@@ -18,8 +18,8 @@
 #'   system.
 #'
 #' @param data Input data.
-#' @param notified A name unquoted for notified cases.
-#' @param estimated A name unquoted for estimated cases.
+#' @param notified An unquoted name for notified cases.
+#' @param estimated An unquoted name for estimated cases.
 #' @param ... Further arguments passed to [mutate()].
 #'
 #' @return A tibble, the same dimensions as the input data, but with one
