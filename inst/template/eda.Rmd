@@ -46,7 +46,7 @@ htmltools::HTML(dm_svg)
 ```{r}
 tbl <- 
   data_tbl |> 
-  compute_dx_gap() |>
+  compute_dx_gap(e_inc_num, c_newinc) |>
   mutate(is_hbc = as.character(is_hbc)) |> 
   select(-year, -country)
 ```
