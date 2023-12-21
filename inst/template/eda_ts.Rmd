@@ -25,7 +25,8 @@ data_tbl <- params$data_tbl
 tbl <-
   prep_tb_data(data_tbl, e_inc_num, c_newinc, "year") |> 
   mutate(xpert = coalesce(xpert, m_wrd)) |>
-  select(-c(m_wrd, c_newinc, e_inc_num))
+  select(-c(m_wrd, c_newinc, e_inc_num)) |> 
+  mutate_country()
 
 all_indicators_df <-
   data_tbl |>
