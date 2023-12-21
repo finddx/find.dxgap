@@ -1,4 +1,4 @@
-prep_tb_data <- function(data, estimated, notified, rm_vars = c("year", "country")) {
+prep_tb_data <- function(data, estimated, notified, rm_vars = c("year")) {
   data |>
     compute_dx_gap_impl(!!rlang::enquo(estimated), !!rlang::enquo(notified)) |>
     dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
