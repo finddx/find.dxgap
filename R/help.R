@@ -141,3 +141,13 @@ view_templates <- function() {
   return(valid_templates)
 }
 
+tidy_who_hbc2 <- function(data) {
+  data |>
+    dplyr::select(country_code, year) |>
+    dplyr::mutate(country = countrycode::countrycode(
+      country_code,
+      origin = "iso3c",
+      dest = "country.name"
+    ))
+}
+
