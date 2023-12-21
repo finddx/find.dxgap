@@ -141,3 +141,15 @@ view_templates <- function() {
   return(valid_templates)
 }
 
+mutate_country <- function(data) {
+  data |>
+    dplyr::mutate(
+      country = countrycode::countrycode(
+        country_code,
+        origin = "iso3c",
+        dest = "country.name"
+      ),
+      .before = everything()
+    )
+}
+

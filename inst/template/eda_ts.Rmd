@@ -23,16 +23,20 @@ data_tbl <- params$data_tbl
 
 ```{r}
 tbl <-
-  prep_tb_data(data_tbl, e_inc_num, c_newinc, "country") |> 
+  data_tbl |> 
+  mutate_country() |> 
+  prep_tb_data(e_inc_num, c_newinc, "country_code") |> 
   mutate(xpert = coalesce(xpert, m_wrd)) |>
-  select(-c(m_wrd, c_newinc, e_inc_num, country_code))
+  select(-c(m_wrd, c_newinc, e_inc_num))  
+  
 
 all_indicators_df <-
   data_tbl |>
   compute_dx_gap(e_inc_num, c_newinc) |>
   mutate(is_hbc = forcats::as_factor(is_hbc)) |>
   mutate(xpert = coalesce(xpert, m_wrd)) |>
-  select(-m_wrd)
+  mutate_country() |> 
+  select(-m_wrd, -country_code)
 ```
 
 ```{r fig.height=8}
@@ -97,7 +101,7 @@ all_indicators_df |>
 # Q: how do the predictor variables vary over time on average for HBC?
 all_indicators_df |>
   filter(is_hbc == 1) |>
-  select(-c(is_hbc, country_code, dx_gap, country)) |>
+  select(-c(is_hbc, country, dx_gap)) |>
   pivot_longer(!year) |>
   summarise(mean_value = mean(value, na.rm = TRUE), .by = c(year, name)) |>
   ggplot(aes(x = year, y = mean_value)) +
@@ -203,7 +207,7 @@ corr_df |>
 ts_model_prep <-
   all_indicators_df |>
   filter(is_hbc == 1) |>
-  select(-is_hbc, -country_code, -country, -c_newinc, -e_inc_num,) |>
+  select(-is_hbc, -country, -c_newinc, -e_inc_num,) |>
   mutate(dummy = 1) %>%
   pivot_wider(names_from = year, values_from = dummy, values_fill = 0) |>
   select(-`2016`) # create reference category
