@@ -41,9 +41,9 @@ compute_dx_gap <- function(data, estimated, notified, ...) {
   rlang::check_required(notified)
   est <- rlang::enquo(estimated)
   not <- rlang::enquo(notified)
+  check_any_zero(data, !!est)
   check_any_na(data, !!est)
   check_any_na(data, !!not)
-  check_any_zero(data, !!est)
 
   if ("country_code" %in% names(data)) {
     df <- compute_dx_gap_impl(data, !!est, !!not, .after = country_code)
