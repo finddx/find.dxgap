@@ -35,35 +35,29 @@
 #' build_tbl("tb", 2019, vars = dx_gap_vars) |>
 #'   compute_dx_gap(c_newinc, e_inc_num)
 #' }
-compute_dx_gap <- function(data, notified, estimated, ...) {
+compute_dx_gap <- function(data, estimated, notified, ...) {
+  stopifnot(is.data.frame(data))
+  rlang::check_required(estimated)
+  rlang::check_required(notified)
+  est <- rlang::enquo(estimated)
+  not <- rlang::enquo(notified)
+  check_any_na(data, !!est)
+  check_any_na(data, !!not)
+  check_any_zero(data, !!est)
+
   if ("country_code" %in% names(data)) {
-    df <- compute_dx_gap_impl(
-      data,
-      !!rlang::enquo(notified),
-      !!rlang::enquo(estimated),
-      .after = country_code
-    )
+    df <- compute_dx_gap_impl(data, !!est, !!not, .after = country_code)
     return(df)
   }
-  compute_dx_gap_impl(
-    data,
-    !!rlang::enquo(notified),
-    !!rlang::enquo(estimated),
-    ...
-  )
+  compute_dx_gap_impl(data, !!est, !!not, ...)
 }
 
-compute_dx_gap_impl <- function(data, .notified, .estimated, ...) {
-  stopifnot(is.data.frame(data))
-  rlang::check_required(.estimated)
-  check_any_na(data, !!rlang::enquo(.estimated))
-  check_any_zero(data, !!rlang::enquo(.estimated))
-  rlang::check_required(.notified)
-  check_any_na(data, !!rlang::enquo(.notified))
-  not <- rlang::enquo(.notified)
-  est <- rlang::enquo(.estimated)
+compute_dx_gap_impl <- function(data, .estimated, .notified, ...) {
   data |>
-    dplyr::mutate(dx_gap = (!!est - !!not) / !!est * 100, ...)
+    dplyr::mutate(
+      dx_gap = ({{ .estimated  }} - {{ .notified }}) / {{ .estimated }} * 100,
+      ...
+    )
 }
 
 #' Compute completion rate
