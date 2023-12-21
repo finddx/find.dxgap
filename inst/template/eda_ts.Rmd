@@ -23,10 +23,11 @@ data_tbl <- params$data_tbl
 
 ```{r}
 tbl <-
-  prep_tb_data(data_tbl, e_inc_num, c_newinc, "year") |> 
-  mutate(xpert = coalesce(xpert, m_wrd)) |>
+  data_tbl |> 
   mutate_country() |> 
-  select(-c(m_wrd, c_newinc, e_inc_num, country_code))  
+  prep_tb_data(e_inc_num, c_newinc, "country_code") |> 
+  mutate(xpert = coalesce(xpert, m_wrd)) |>
+  select(-c(m_wrd, c_newinc, e_inc_num))  
   
 
 all_indicators_df <-
@@ -34,17 +35,18 @@ all_indicators_df <-
   compute_dx_gap(e_inc_num, c_newinc) |>
   mutate(is_hbc = forcats::as_factor(is_hbc)) |>
   mutate(xpert = coalesce(xpert, m_wrd)) |>
-  select(-m_wrd)
+  mutate_country() |> 
+  select(-m_wrd, -country_code)
 ```
 
 ```{r fig.height=8}
-# Q: how does dx gap vary over time for each hb country_code?
+# Q: how does dx gap vary over time for each hb country?
 all_indicators_df |>
   filter(is_hbc == 1) |>
-  select(country_code, dx_gap, year) |>
+  select(country, dx_gap, year) |>
   ggplot(aes(x = year, y = dx_gap)) +
   geom_line(colour = "#1f65b7", linewidth = 1) +
-  facet_wrap(vars(country_code), ncol = 3) +
+  facet_wrap(vars(country), ncol = 3) +
   scale_y_continuous(labels = scales::label_percent(scale = 1)) +
   scale_x_continuous(
     breaks = seq(
@@ -99,7 +101,7 @@ all_indicators_df |>
 # Q: how do the predictor variables vary over time on average for HBC?
 all_indicators_df |>
   filter(is_hbc == 1) |>
-  select(-c(is_hbc, country_code, dx_gap)) |>
+  select(-c(is_hbc, country, dx_gap)) |>
   pivot_longer(!year) |>
   summarise(mean_value = mean(value, na.rm = TRUE), .by = c(year, name)) |>
   ggplot(aes(x = year, y = mean_value)) +
@@ -117,14 +119,14 @@ all_indicators_df |>
 
 
 ```{r fig.height=10}
-# Q: how does each test type vary over time for each hb country_code?
+# Q: how does each test type vary over time for each hb country?
 all_indicators_df |>
   filter(is_hbc == 1) |>
-  select(country_code, year, culture, smear, xpert) |>
-  pivot_longer(!c(country_code, year)) |>
+  select(country, year, culture, smear, xpert) |>
+  pivot_longer(!c(country, year)) |>
   ggplot(aes(x = year, y = value, colour = name)) +
   geom_line(linewidth = 1) +
-  facet_wrap(vars(country_code), scales = "free_y", ncol = 3) +
+  facet_wrap(vars(country), scales = "free_y", ncol = 3) +
   scale_y_log10(labels = scales::label_log(digits = 2)) +
   scale_x_continuous(
     breaks = seq(
@@ -205,7 +207,7 @@ corr_df |>
 ts_model_prep <-
   all_indicators_df |>
   filter(is_hbc == 1) |>
-  select(-is_hbc, -country_code, -c_newinc, -e_inc_num,) |>
+  select(-is_hbc, -country, -c_newinc, -e_inc_num,) |>
   mutate(dummy = 1) %>%
   pivot_wider(names_from = year, values_from = dummy, values_fill = 0) |>
   select(-`2016`) # create reference category
