@@ -97,12 +97,9 @@ build_dm <- function(data_list, year = NULL) {
   core_data <- get_core(data_list)
   core_list <- core_data$core_list
   can_compute_dxgap <- core_data$can_compute_dxgap
-  non_parent <- setdiff(names(core_list), "hbc")
-  subset_lst <- drop_cols(core_list, non_parent,  c("country", "g_whoregion"))
 
   hbc_df <-
     data_list$who_hbc |>
-    dplyr::semi_join(core_list$who_hbc, dplyr::join_by(country_code)) |>
     dplyr::select(country_code, year) |>
     forget_year_hbc() |>
     dplyr::mutate(is_hbc = 1)
@@ -118,10 +115,10 @@ build_dm <- function(data_list, year = NULL) {
     dplyr::bind_rows(non_hbc_df) |>
     dplyr::filter(year <= max_year)
 
-  subset_lst$who_hbc <- NULL
-  subset_lst$country <- country_df
+  core_list$who_hbc <- NULL
+  core_list$country <- country_df
 
-  dm_no_rel <- dm::dm(!!!subset_lst)
+  dm_no_rel <- dm::dm(!!!core_list)
   dm_col <- set_dm_colors(dm_no_rel)
   dm_ts <- set_dm_rels(dm_col)
 
