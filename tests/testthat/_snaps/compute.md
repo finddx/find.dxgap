@@ -221,3 +221,37 @@
         ),
       )
 
+# compute_dx_gap() fails correctly
+
+    Code
+      compute_dx_gap(tbl, e_inc_num)
+    Condition
+      Error in `compute_dx_gap()`:
+      ! `notified` is absent but must be supplied.
+
+---
+
+    Code
+      compute_dx_gap(tbl, c_newinc)
+    Condition
+      Error in `compute_dx_gap()`:
+      ! `notified` is absent but must be supplied.
+
+---
+
+    Code
+      compute_dx_gap(tbl, e_inc_num, c_newinc)
+    Condition
+      Error in `check_any_zero()`:
+      ! `0` values found in `e_inc_num`.
+      i Dividing by `0` generates `Inf` values.
+
+---
+
+    Code
+      compute_dx_gap(dplyr::mutate(tbl, e_inc_num = dplyr::na_if(e_inc_num, 0)),
+      e_inc_num, c_newinc)
+    Condition
+      Error in `check_any_na()`:
+      ! `NA` values found in `e_inc_num`.
+

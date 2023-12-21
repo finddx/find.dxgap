@@ -34,3 +34,23 @@ test_that("compute_dx_gap() works", {
   expect_s3_class(tbl_gap, "data.frame")
   expect_equal(ncol(tbl_gap), 5)
 })
+
+test_that("compute_dx_gap() fails correctly", {
+  tbl <- tibble::tibble(
+    country_code = c("EGY", "PLW", "MHL"),
+    year = c(2001, 2021, 2007),
+    e_inc_num = c(18000, 0, 190),
+    c_newinc = c(10549, 8, 158),
+  )
+  expect_snapshot(compute_dx_gap(tbl, e_inc_num), error = TRUE)
+  expect_snapshot(compute_dx_gap(tbl, c_newinc), error = TRUE)
+  expect_snapshot(compute_dx_gap(tbl, e_inc_num, c_newinc), error = TRUE)
+  expect_snapshot({
+    tbl |>
+      dplyr::mutate(e_inc_num = dplyr::na_if(e_inc_num, 0)) |>
+      compute_dx_gap(e_inc_num, c_newinc)
+  }, error = TRUE)
+})
+
+
+
