@@ -136,11 +136,6 @@ forget_year_hbc <- function(hbc_data) {
     tidyr::crossing(year = 2016:2021) # TODO: use start_year and end_year in dxgap_diseases
 }
 
-drop_cols <- function(data_list, at, cols_to_drop) {
-  data_list |>
-    purrr::map_at(.at = at, .f = ~ dplyr::select(.x, -tidyselect::any_of(cols_to_drop)))
-}
-
 get_non_hbc_country_code <- function(hbc_df) {
   countrycode::codelist |>
     dplyr::select(country_code = iso3c) |>
