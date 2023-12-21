@@ -160,3 +160,18 @@ check_any_na <- function(data, var) {
     rlang::abort(sprintf("`NA` values found in `%s`.", rlang::as_name(var_quote)))
   }
 }
+
+check_any_zero <- function(data, var) {
+  var_quote <- rlang::enquo(var)
+  check_any_na(data = data, var = !!var_quote)
+  vec <- dplyr::pull(data, !!var_quote)
+  any_zero <- any(vec == 0)
+  if (any_zero) {
+    rlang::abort(
+      c(
+        sprintf("`0` values found in `%s`.", rlang::as_name(var_quote)),
+        i = "Dividing by `0` generates `Inf` values."
+      )
+    )
+  }
+}

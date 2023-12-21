@@ -17,12 +17,13 @@
 #'   officially diagnosed, due to limitations or challenges in the healthcare
 #'   system.
 #'
-#' @param data Input data. It assumes the variables `e_inc_num` and `c_newinc`
-#'   are present in the data, describing the number of estimated and notified
-#'   cases respectively.
+#' @param data Input data.
+#' @param notified An unquoted name for notified cases.
+#' @param estimated An unquoted name for estimated cases.
+#' @param ... Further arguments passed to [mutate()].
 #'
 #' @return A tibble, the same dimensions as the input data, but with one
-#'   additional column called `who_dx_gap` containing the computed diagnostic
+#'   additional column called `dx_gap` containing the computed diagnostic
 #'   gap values
 #'
 #' @export
@@ -30,22 +31,32 @@
 #' @examples
 #' \dontrun{
 #' # Calculate diagnostic gap for 2019 TB data:
-#'  build_tbl("tb", 2019, vars = dxgap_const$tb_vars) |>
-#'     compute_dx_gap()
+#' dx_gap_vars <- c("country_code", "year", "e_inc_num", "c_newinc")
+#' build_tbl("tb", 2019, vars = dx_gap_vars) |>
+#'   compute_dx_gap(e_inc_num, c_newinc)
 #' }
-compute_dx_gap <- function(data) {
+compute_dx_gap <- function(data, estimated, notified, ...) {
+  stopifnot(is.data.frame(data))
+  rlang::check_required(estimated)
+  rlang::check_required(notified)
+  est <- rlang::enquo(estimated)
+  not <- rlang::enquo(notified)
+  check_any_zero(data, !!est)
+  check_any_na(data, !!est)
+  check_any_na(data, !!not)
+
   if ("country_code" %in% names(data)) {
-    df <-
-      data |>
-      dplyr::mutate(
-        who_dx_gap = (e_inc_num - c_newinc) / e_inc_num * 100,
-        .after = country_code
-      )
+    df <- compute_dx_gap_impl(data, !!est, !!not, .after = country_code)
     return(df)
   }
+  compute_dx_gap_impl(data, !!est, !!not, ...)
+}
+
+compute_dx_gap_impl <- function(data, .estimated, .notified, ...) {
   data |>
     dplyr::mutate(
-      who_dx_gap = (e_inc_num - c_newinc) / e_inc_num * 100
+      dx_gap = ({{ .estimated  }} - {{ .notified }}) / {{ .estimated }} * 100,
+      ...
     )
 }
 
@@ -95,7 +106,7 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 #'
 #' @param data A tibble.
 #' @param target_var The variable against which the correlations needs to be
-#'   computed. For instance, `who_dx_gap`.
+#'   computed. For instance, `dx_gap`.
 #' @param by A character vector.
 #' @param ... Optional arguments passed to [correlate()]
 #'
@@ -106,16 +117,16 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 #' \dontrun{
 #' tbl <-
 #'   build_tbl("tb", NULL, vars = dxgap_const$tb_vars) |>
-#'   compute_dx_gap() |>
+#'   compute_dx_gap(e_inc_num, c_newinc) |>
 #'   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
 #'   dplyr::select(-any_of(c("country")))
 #'
 #' tbl |>
 #'   dplyr::filter(year == 2019) |>
-#'   compute_correlation(who_dx_gap, by = "year")
+#'   compute_correlation(dx_gap, by = "year")
 #'
 #' tbl |>
-#'   compute_correlation(who_dx_gap, by = c("year", "is_hbc"))
+#'   compute_correlation(dx_gap, by = c("year", "is_hbc"))
 #'
 #' car_tbl <- tibble::as_tibble(mtcars, rownames = "car_name")
 #' my_cars <- dplyr::select(car_tbl, -dplyr::all_of(c("vs", "am", "carb")))

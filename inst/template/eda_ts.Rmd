@@ -23,13 +23,13 @@ data_tbl <- params$data_tbl
 
 ```{r}
 tbl <-
-  prep_tb_data(data_tbl, "country") |> 
+  prep_tb_data(data_tbl, e_inc_num, c_newinc, "country") |> 
   mutate(xpert = coalesce(xpert, m_wrd)) |>
   select(-c(m_wrd, c_newinc, e_inc_num, country_code))
 
 all_indicators_df <-
   data_tbl |>
-  compute_dx_gap() |>
+  compute_dx_gap(e_inc_num, c_newinc) |>
   mutate(is_hbc = forcats::as_factor(is_hbc)) |>
   mutate(xpert = coalesce(xpert, m_wrd)) |>
   select(-m_wrd)
@@ -39,8 +39,8 @@ all_indicators_df <-
 # Q: how does dx gap vary over time for each hb country?
 all_indicators_df |>
   filter(is_hbc == 1) |>
-  select(country, who_dx_gap, year) |>
-  ggplot(aes(x = year, y = who_dx_gap)) +
+  select(country, dx_gap, year) |>
+  ggplot(aes(x = year, y = dx_gap)) +
   geom_line(colour = "#1f65b7", linewidth = 1) +
   facet_wrap(vars(country), ncol = 3) +
   scale_y_continuous(labels = scales::label_percent(scale = 1)) +
@@ -61,7 +61,7 @@ all_indicators_df |>
 ```{r}
 # Q: how does dx gap vary over time on average?
 all_indicators_df |>
-  summarise(mean_dx_gap = mean(who_dx_gap), .by = c(is_hbc, year)) |>
+  summarise(mean_dx_gap = mean(dx_gap), .by = c(is_hbc, year)) |>
   ggplot(aes(x = year, y = mean_dx_gap, colour = is_hbc)) +
   geom_line(linewidth = 1) +
   geom_text(
@@ -97,7 +97,7 @@ all_indicators_df |>
 # Q: how do the predictor variables vary over time on average for HBC?
 all_indicators_df |>
   filter(is_hbc == 1) |>
-  select(-c(is_hbc, country_code, who_dx_gap, country)) |>
+  select(-c(is_hbc, country_code, dx_gap, country)) |>
   pivot_longer(!year) |>
   summarise(mean_value = mean(value, na.rm = TRUE), .by = c(year, name)) |>
   ggplot(aes(x = year, y = mean_value)) +
@@ -155,18 +155,18 @@ all_indicators_df |>
 
 ```{r}
 # Q: How does test type correlate with dx gap across all time points?
-corr_df_1 <- compute_correlation(tbl, who_dx_gap, by = "year")
+corr_df_1 <- compute_correlation(tbl, dx_gap, by = "year")
 ```
 
 
 ```{r}
-corr_df <- compute_correlation(tbl, who_dx_gap, by = c("is_hbc", "year"))
+corr_df <- compute_correlation(tbl, dx_gap, by = c("is_hbc", "year"))
 ```
 
 ```{r}
 corr_df |>
   mutate(is_hbc = if_else(is_hbc == 1, "High burden", "Low burden")) |> 
-  ggplot(aes(year, who_dx_gap, group = term, color = term)) +
+  ggplot(aes(year, dx_gap, group = term, color = term)) +
   geom_line() +
   scale_y_continuous(limits = c(-1, 1)) +
   theme_minimal() +
@@ -183,7 +183,7 @@ corr_df |>
 
 ```{r eval=FALSE}
 corr_df |>
-  pivot_wider(names_from = year, values_from = who_dx_gap) |>
+  pivot_wider(names_from = year, values_from = dx_gap) |>
   gt::gt(groupname_col = "is_hbc") |>
   gt::data_color(
     columns = dplyr::where(is.numeric),
@@ -195,7 +195,7 @@ corr_df |>
 
 ```{r fig.width=12}
 # Is time a signficant predictor of DX Gap in HBC?
-# who_dx_gap = (tb_estimated_cases - tb_notified_cases) / tb_estimated_cases
+# dx_gap = (tb_estimated_cases - tb_notified_cases) / tb_estimated_cases
 # As estimated and notified cases are included as part of the calculation of
 # the dx gap, the following variable are removed:
 #   - c_newinc = Total of new and relapse cases and cases with unknown previous TB treatment history
@@ -210,7 +210,7 @@ ts_model_prep <-
 
 ts_model_lm <-
   ts_model_prep |>
-  lm(formula = who_dx_gap ~ .)
+  lm(formula = dx_gap ~ .)
 
 # Result: no determinants detected
 ts_model_lm |>

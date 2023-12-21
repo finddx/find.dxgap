@@ -97,7 +97,7 @@
           "year", "is_hbc", "pop_total", "pop_urban_perc", "pop_density", "gdp",
           "c_newinc", "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd"
         ),
-        who_dx_gap = c(
+        dx_gap = c(
           0.11894738934080014, 0.2945113470785911, 0.037215462389324216,
           -0.38579886124964907, -0.09809073760759902, -0.13187939909994653,
           0.10933688854366293, 0.15446736485010745, 0.5790219726080416,
@@ -128,7 +128,7 @@
           "pop_urban_perc", "pop_density", "gdp", "c_newinc", "e_inc_num",
           "e_mort_100k", "culture", "smear", "m_wrd"
         ),
-        who_dx_gap = c(
+        dx_gap = c(
           0.4025233174631992, 0.06987241857071333, -0.47692110334355514,
           -0.10021042143955505, -0.14088709658436513, 0.17027086245294135,
           0.216291630348346, 0.6644868431442982, -0.1314258267772402,
@@ -177,7 +177,7 @@
           ),
           2
         ),
-        who_dx_gap = c(
+        dx_gap = c(
           -0.21687918259380382, -0.17366604501448663, -0.03299781358668422,
           -0.4603595043529857, -0.07149844168100176, 0.06706142591238386,
           0.4646059912395926, -0.42663808407134024, 0.07692115407366129,
@@ -220,4 +220,38 @@
           -0.19259513105946854, -0.01732739007021885, 0.08026418021820486
         ),
       )
+
+# compute_dx_gap() fails correctly
+
+    Code
+      compute_dx_gap(tbl, e_inc_num)
+    Condition
+      Error in `compute_dx_gap()`:
+      ! `notified` is absent but must be supplied.
+
+---
+
+    Code
+      compute_dx_gap(tbl, c_newinc)
+    Condition
+      Error in `compute_dx_gap()`:
+      ! `notified` is absent but must be supplied.
+
+---
+
+    Code
+      compute_dx_gap(tbl, e_inc_num, c_newinc)
+    Condition
+      Error in `check_any_zero()`:
+      ! `0` values found in `e_inc_num`.
+      i Dividing by `0` generates `Inf` values.
+
+---
+
+    Code
+      compute_dx_gap(dplyr::mutate(tbl, e_inc_num = dplyr::na_if(e_inc_num, 0)),
+      e_inc_num, c_newinc)
+    Condition
+      Error in `check_any_na()`:
+      ! `NA` values found in `e_inc_num`.
 

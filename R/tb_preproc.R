@@ -1,12 +1,12 @@
-prep_tb_data <- function(data, rm_vars = c("year", "country")) {
+prep_tb_data <- function(data, estimated, notified, rm_vars = c("year", "country")) {
   data |>
-    compute_dx_gap() |>
+    compute_dx_gap_impl(!!rlang::enquo(estimated), !!rlang::enquo(notified)) |>
     dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
     dplyr::select(-tidyselect::any_of(rm_vars))
 }
 
 get_recipe_tb <- function(tbl, neighbors, threshold, impute_vars) {
-  recipes::recipe(formula = who_dx_gap ~ ., x = tbl) |>
+  recipes::recipe(formula = dx_gap ~ ., x = tbl) |>
     recipes::update_role(country_code, new_role = "id") |>
     recipes::step_mutate(xpert = dplyr::coalesce(xpert, m_wrd)) |>
     recipes::step_rm(m_wrd) |>

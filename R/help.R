@@ -73,7 +73,7 @@ cook <- function(recipe) {
   recipe |>
     recipes::prep() |>
     recipes::juice() |>
-    dplyr::relocate(tidyselect::any_of(c("is_hbc", "country_code", "who_dx_gap")))
+    dplyr::relocate(tidyselect::any_of(c("is_hbc", "country_code", "dx_gap")))
 }
 
 mutate_is_significant <- function(data, threshold = 0.05) {

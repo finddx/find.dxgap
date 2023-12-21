@@ -13,12 +13,44 @@ test_that("compute_completion_rate() works", {
 test_that("compute_correlation() works", {
   testdata_path <- testthat::test_path("testdata", "tb_tbl_ts.rds")
   tb_tbl <- readr::read_rds(testdata_path)
-  tbl_dxgap <- compute_dx_gap(tb_tbl)
-  corr_df <- compute_correlation(tbl_dxgap, who_dx_gap)
+  tbl_dxgap <- compute_dx_gap(tb_tbl, e_inc_num, c_newinc)
+  corr_df <- compute_correlation(tbl_dxgap, dx_gap)
   expect_snapshot(constructive::construct(corr_df))
-  corr_df_by <- compute_correlation(tbl_dxgap, who_dx_gap, by = "year")
+  corr_df_by <- compute_correlation(tbl_dxgap, dx_gap, by = "year")
   expect_snapshot(constructive::construct(corr_df_by))
-  corr_df_by2 <- compute_correlation(tbl_dxgap, who_dx_gap, by = c("year", "is_hbc"))
+  corr_df_by2 <- compute_correlation(tbl_dxgap, dx_gap, by = c("year", "is_hbc"))
   expect_snapshot(constructive::construct(corr_df_by2))
   expect_error(compute_correlation(tbl_dxgap), regexp = "absent")
 })
+
+test_that("compute_dx_gap() works", {
+  tbl <- tibble::tibble(
+    country_code = c("EGY", "PLW", "MHL"),
+    year = c(2001, 2021, 2007),
+    e_inc_num = c(18000, 9, 190),
+    c_newinc = c(10549, 8, 158),
+  )
+  tbl_gap <- compute_dx_gap(tbl, e_inc_num, c_newinc)
+  expect_s3_class(tbl_gap, "data.frame")
+  expect_equal(ncol(tbl_gap), 5)
+})
+
+test_that("compute_dx_gap() fails correctly", {
+  tbl <- tibble::tibble(
+    country_code = c("EGY", "PLW", "MHL"),
+    year = c(2001, 2021, 2007),
+    e_inc_num = c(18000, 0, 190),
+    c_newinc = c(10549, 8, 158),
+  )
+  expect_snapshot(compute_dx_gap(tbl, e_inc_num), error = TRUE)
+  expect_snapshot(compute_dx_gap(tbl, c_newinc), error = TRUE)
+  expect_snapshot(compute_dx_gap(tbl, e_inc_num, c_newinc), error = TRUE)
+  expect_snapshot({
+    tbl |>
+      dplyr::mutate(e_inc_num = dplyr::na_if(e_inc_num, 0)) |>
+      compute_dx_gap(e_inc_num, c_newinc)
+  }, error = TRUE)
+})
+
+
+
