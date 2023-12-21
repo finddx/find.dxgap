@@ -43,7 +43,7 @@ data_tbl <- build_tbl(dm, vars = dxgap_const$tb_vars)
 ```{r data}
 tbl <- 
   data_tbl |> 
-  prep_tb_data()
+  prep_tb_data(e_inc_num, c_newinc)
 ```
 
 ```{r matrix}

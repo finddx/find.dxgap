@@ -23,13 +23,13 @@ data_tbl <- params$data_tbl
 
 ```{r}
 tbl <-
-  prep_tb_data(data_tbl, "country") |> 
+  prep_tb_data(data_tbl, e_inc_num, c_newinc, "country") |> 
   mutate(xpert = coalesce(xpert, m_wrd)) |>
   select(-c(m_wrd, c_newinc, e_inc_num, country_code))
 
 all_indicators_df <-
   data_tbl |>
-  compute_dx_gap() |>
+  compute_dx_gap(e_inc_num, c_newinc) |>
   mutate(is_hbc = forcats::as_factor(is_hbc)) |>
   mutate(xpert = coalesce(xpert, m_wrd)) |>
   select(-m_wrd)
