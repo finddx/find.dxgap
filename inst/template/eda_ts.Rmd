@@ -23,7 +23,7 @@ data_tbl <- params$data_tbl
 
 ```{r}
 tbl <-
-  prep_tb_data(data_tbl, e_inc_num, c_newinc, "year") |> 
+  prep_tb_data(data_tbl, e_inc_num, c_newinc, "country_code") |> 
   mutate(xpert = coalesce(xpert, m_wrd)) |>
   select(-c(m_wrd, c_newinc, e_inc_num))
 
