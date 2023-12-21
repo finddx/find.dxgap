@@ -103,7 +103,7 @@ build_dm <- function(data_list, year = NULL) {
   hbc_df <-
     data_list$hbc |>
     dplyr::semi_join(core_list$hbc, dplyr::join_by(country_code)) |>
-    dplyr::select(country_code, year, country) |>
+    dplyr::select(country_code, year) |>
     forget_year_hbc() |>
     dplyr::mutate(is_hbc = 1)
 
@@ -146,7 +146,7 @@ drop_cols <- function(data_list, at, cols_to_drop) {
 
 get_non_hbc_country_code <- function(hbc_df) {
   countrycode::codelist |>
-    dplyr::select(country_code = iso3c, country = country.name.en) |>
+    dplyr::select(country_code = iso3c) |>
     dplyr::filter(!is.na(country_code)) |>
     dplyr::anti_join(hbc_df, by = dplyr::join_by(country_code)) |>
     dplyr::anti_join(country_exclude_df, by = dplyr::join_by(country_code)) |>
