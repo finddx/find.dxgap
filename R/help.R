@@ -16,9 +16,8 @@ read_tidy_tb <- function(file_name = "tb_policy_dashboard_final_v1_14Nov22.xlsx"
     tidy_tb_dashboard(type = type)
 }
 
-get_distinct <- function(col,
-                         df = read_tidy_tb()) {
-  df |>
+get_distinct <- function(data, col) {
+  data |>
     dplyr::distinct({{ col }}) |>
     dplyr::pull()
 }
