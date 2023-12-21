@@ -89,8 +89,8 @@ build_tbl_impl <- function(dm, vars = NULL) {
 #' build_dm(load_dx("tb"), year = 2019) # only 2019
 #' }
 build_dm <- function(data_list, year = NULL) {
-  # TODO: max year should be computed from the who estimates and notification data
-  max_year <- lubridate::year(lubridate::today()) - 2
+  # TODO: max year should be taken from dxgap_diseases
+  max_year <- 2021
   if (!is.null(year) && year > max_year) {
     rlang::abort(sprintf("Data available up to %s.", max_year))
   }
@@ -133,7 +133,7 @@ build_dm <- function(data_list, year = NULL) {
 forget_year_hbc <- function(hbc_data) {
   hbc_data |>
     dplyr::select(-year) |>
-    tidyr::crossing(year = 2016:2021)
+    tidyr::crossing(year = 2016:2021) # TODO: use start_year and end_year in dxgap_diseases
 }
 
 drop_cols <- function(data_list, at, cols_to_drop) {
