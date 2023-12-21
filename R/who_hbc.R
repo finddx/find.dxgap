@@ -77,10 +77,11 @@ tidy_who_hbc <- function(data, .year = NULL) {
       country_code = countrycode::countrycode(
         country,
         origin = "country.name",
-        dest = "iso3c"
+        dest = "iso3c",
       ),
-      .after = country
-    )
+      share_global_inc
+    ) |>
+    dplyr::select(-country)
 
   grown_df <- grow_hbc(df)
 
