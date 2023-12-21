@@ -170,7 +170,7 @@ check_any_zero <- function(data, var) {
     rlang::abort(
       c(
         sprintf("`0` values found in `%s`.", rlang::as_name(var_quote)),
-        i = "Dividing by `0` generate `Inf` values."
+        i = "Dividing by `0` generates `Inf` values."
       )
     )
   }
