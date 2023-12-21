@@ -1,8 +1,7 @@
 tb_load <- function(lst_df) {
   # HBC countries --------------------------------------------------------------
-  hbc_df <-
-    lst_df$who_hbc |>
-    tidy_who_hbc2()
+  hbc_df <- lst_df$who_hbc
+
 
   # World Bank Population ------------------------------------------------------
 
