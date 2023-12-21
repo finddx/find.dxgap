@@ -183,9 +183,8 @@
         (`year`, `country_code`) -> (`gf_procurement$year`, `gf_procurement$country_co...
       
       Rows: 190
-      Columns: 4
+      Columns: 3
       $ country_code <chr> "AGO", "BGD", "BRA", "CAF", "CHN", "COD", "COG", "ETH", "~
-      $ country      <chr> "Angola", "Bangladesh", "Brazil", "Central African Republ~
       $ year         <int> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
       $ is_hbc       <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ~
       
@@ -395,9 +394,8 @@
         (`year`, `country_code`) -> (`gf_procurement$year`, `gf_procurement$country_co...
       
       Rows: 1,140
-      Columns: 4
+      Columns: 3
       $ country_code <chr> "AGO", "AGO", "AGO", "AGO", "AGO", "AGO", "BGD", "BGD", "~
-      $ country      <chr> "Angola", "Angola", "Angola", "Angola", "Angola", "Angola~
       $ year         <int> 2016, 2017, 2018, 2019, 2020, 2021, 2016, 2017, 2018, 201~
       $ is_hbc       <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ~
       
