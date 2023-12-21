@@ -96,12 +96,12 @@ corr_df_raw <-
 
 ```{r}
 corr_all <- 
-  compute_correlation(tbl, who_dx_gap) |> 
+  compute_correlation(tbl, dx_gap) |> 
   mutate(is_hbc = "99") # all
 ```
 
 ```{r}
-corr_by_type <- compute_correlation(tbl, who_dx_gap, by = "is_hbc")
+corr_by_type <- compute_correlation(tbl, dx_gap, by = "is_hbc")
 ```
 
 ```{r}
@@ -112,19 +112,19 @@ corr_all_df <-
     select(dxgap_master_list, variable_name, definition), 
     by = join_by(term == variable_name)
   ) |> 
-  relocate(definition, term, starts_with("who_dx_gap"))
+  relocate(definition, term, starts_with("dx_gap"))
 ```
 
 ```{r fig.height=12, fig.width=12}
 corr_names_vec_labels <- c(
-     "0" = "who_dx_gap_non_hbc", 
-     "99" = "who_dx_gap_all", 
-     "1" = "who_dx_gap_hbc"
+     "0" = "dx_gap_non_hbc", 
+     "99" = "dx_gap_all", 
+     "1" = "dx_gap_hbc"
 )
 corr_names_vec_levels <- c(
-    "who_dx_gap_non_hbc" = "0", 
-    "who_dx_gap_all" = "99", 
-    "who_dx_gap_hbc" = "1"
+    "dx_gap_non_hbc" = "0", 
+    "dx_gap_all" = "99", 
+    "dx_gap_hbc" = "1"
 )
 corr_all_df |> 
   # mutate(term = forcats::fct_reorder(term, corr, .na_rm = FALSE)) |> 
@@ -133,7 +133,7 @@ corr_all_df |>
     corr_cat = forcats::as_factor(is_hbc),
     corr_cat = forcats::fct_relevel(corr_cat, corr_names_vec_levels)
   ) |> 
-  ggplot(aes(term, who_dx_gap)) +
+  ggplot(aes(term, dx_gap)) +
   geom_col() +
   coord_flip() +
   theme_minimal() +
@@ -146,7 +146,7 @@ corr_all_df |>
   pivot_wider(
     id_cols = c(term, definition), 
     names_from = is_hbc,
-    values_from = who_dx_gap
+    values_from = dx_gap
   ) |> 
   rename(all_of(corr_names_vec_levels)) |> 
   arrange(term) |> 
@@ -167,9 +167,9 @@ $who\_dx\_gap = (e\_inc\_num - c\_newinc) / e\_inc\_num$
 
 ```{r fig.height=12, fig.width=12}
 tbl |> 
-  # mutate(country_code = forcats::fct_reorder(country_code, who_dx_gap, .na_rm = FALSE)) |> 
+  # mutate(country_code = forcats::fct_reorder(country_code, dx_gap, .na_rm = FALSE)) |> 
   mutate(country_code = forcats::fct_relevel(country_code, sort)) |> 
-  ggplot(aes(country_code, who_dx_gap, fill = is_hbc)) +
+  ggplot(aes(country_code, dx_gap, fill = is_hbc)) +
   geom_col() +
   scale_y_continuous(labels = scales::label_percent(scale = 1)) +
   theme_minimal() +
@@ -185,7 +185,7 @@ tbl |>
 ```{r}
 plot_density(
   tbl,
-  who_dx_gap,
+  dx_gap,
   is_hbc,
   params$year,
   "Dx Gap in",
@@ -199,7 +199,7 @@ plot_density(
 tbl <- 
   tbl |> 
   pivot_longer(
-    cols = -c(is_hbc, country_code, who_dx_gap), 
+    cols = -c(is_hbc, country_code, dx_gap), 
     names_to = "variable_name"
   )
 ```
@@ -243,7 +243,7 @@ tbl |>
   pivot_wider(names_from = variable_name, values_from = value) |> 
   plot_scatter(
     pop_density, 
-    who_dx_gap, 
+    dx_gap, 
     params$year, 
     is_hbc, 
     "Population density (people per sq. km of land area) in", 
@@ -276,7 +276,7 @@ tbl |>
   pivot_wider(names_from = variable_name, values_from = value) |> 
   plot_scatter(
     pop_urban_perc,
-    who_dx_gap,
+    dx_gap,
     params$year,
     is_hbc,
     "Urban population (% of total population) in",
@@ -310,7 +310,7 @@ tbl |>
   pivot_wider(names_from = variable_name, values_from = value) |>
   plot_scatter(
     gdp,
-    who_dx_gap,
+    dx_gap,
     params$year,
     is_hbc,
     "GDP (current US$) in",
@@ -360,7 +360,7 @@ plot_density(
 plot_scatter(
   budget_long,
   value,
-  who_dx_gap,
+  dx_gap,
   params$year,
   is_hbc,
   "Budget data in",
@@ -411,7 +411,7 @@ plot_density(
 plot_scatter(
   comm_long,
   value,
-  who_dx_gap,
+  dx_gap,
   params$year,
   is_hbc,
   "Community data in",
@@ -460,7 +460,7 @@ plot_density(
 plot_scatter(
   sites_long,
   value,
-  who_dx_gap,
+  dx_gap,
   params$year, 
   is_hbc,
   "Labs and site data in",
@@ -492,7 +492,7 @@ tbl |>
   filter(variable_name == "total_numb_device") |>
   plot_scatter(
     value,
-    who_dx_gap,
+    dx_gap,
     params$year, 
     is_hbc,
     "TB diagnostic devices in",
@@ -540,7 +540,7 @@ plot_density(
 plot_scatter(
   exp_long,
   value,
-  who_dx_gap,
+  dx_gap,
   params$year, 
   is_hbc,
   "Labs and site data in",
