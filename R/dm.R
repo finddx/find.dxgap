@@ -162,30 +162,30 @@ set_dm_rels <- function(dm) {
 
 set_dm_pk <- function(dm) {
   dm |>
-    dm::dm_add_pk(wb_tot_pop, c(year, country_code), check = TRUE) |>
-    dm::dm_add_pk(wb_urb_pop, c(year, country_code), check = TRUE) |>
-    dm::dm_add_pk(wb_density_pop, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(wb_pop_total, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(wb_pop_urban, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(wb_pop_density, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(wb_gdp, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(who_notifications, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(who_estimates, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(who_budget, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(who_community, c(year, country_code), check = TRUE) |>
-    dm::dm_add_pk(who_sites, c(year, country_code), check = TRUE) |>
+    dm::dm_add_pk(who_laboratories, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(who_expenditures, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(gf_procurement, c(year, country_code), check = TRUE)
 }
 
 set_dm_fk <- function(dm, parent_tbl) {
   dm |>
-    dm::dm_add_fk(country, c(year, country_code), wb_tot_pop) |>
-    dm::dm_add_fk(country, c(year, country_code), wb_urb_pop) |>
-    dm::dm_add_fk(country, c(year, country_code), wb_density_pop) |>
+    dm::dm_add_fk(country, c(year, country_code), wb_pop_total) |>
+    dm::dm_add_fk(country, c(year, country_code), wb_pop_urban) |>
+    dm::dm_add_fk(country, c(year, country_code), wb_pop_density) |>
     dm::dm_add_fk(country, c(year, country_code), wb_gdp) |>
     dm::dm_add_fk(country, c(year, country_code), who_notifications) |>
     dm::dm_add_fk(country, c(year, country_code), who_estimates) |>
     dm::dm_add_fk(country, c(year, country_code), who_budget) |>
     dm::dm_add_fk(country, c(year, country_code), who_community) |>
-    dm::dm_add_fk(country, c(year, country_code), who_sites) |>
+    dm::dm_add_fk(country, c(year, country_code), who_laboratories) |>
     dm::dm_add_fk(country, c(year, country_code), who_expenditures) |>
     dm::dm_add_fk(country, c(year, country_code), gf_procurement)
 }
