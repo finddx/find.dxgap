@@ -21,7 +21,7 @@ test_that("a tibble is returned", {
 test_that("the tibble dimensions are as expected", {
   skip_if_no_data(file_name)
   expect_equal(nrow(tidy_who_hbc(data)), 300)
-  expect_equal(ncol(tidy_who_hbc(data)), 4)
+  expect_equal(ncol(tidy_who_hbc(data)), 3)
 })
 
 test_that("primary key", {
@@ -34,7 +34,7 @@ test_that("`country_code` entries are not missing", {
   skip_if_no_data(file_name)
   expect_snapshot(
     tidy_who_hbc(data) |>
-      dplyr::distinct(country_code, country) |>
+      dplyr::distinct(country_code) |>
       dplyr::filter(is.na(country_code))
   )
 })

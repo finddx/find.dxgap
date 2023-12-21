@@ -155,15 +155,15 @@ read_wb <- function(file_name, data_dir = Sys.getenv("DXGAP_DATADIR")) {
 #'   tidy_wb()
 #' }
 tidy_wb <- function(data, year = NULL) {
+  var_to <- get_wb_var_to(data, indicator_id)
   df <-
     data |>
     dplyr::transmute(
-      indicator_value,
-      country_code = countryiso3code,
-      country_value,
       year = date,
+      country_code = countryiso3code,
       value
     ) |>
+    dplyr::rename("{var_to}" := value) |>
     dplyr::filter(!is.na(country_code))
   if (!is.null(year)) {
     df_subset <-
@@ -177,3 +177,24 @@ tidy_wb <- function(data, year = NULL) {
 
   df
 }
+
+get_wb_var_to <- function(data, .indicator_var, .indicator_df = wb_indicator_df) {
+  rlang::check_required(.indicator_var)
+  stopifnot(is.data.frame(.indicator_df))
+  id <- get_distinct(data, !!rlang::enquo(.indicator_var))
+  var_to <-
+    .indicator_df |>
+    dplyr::filter(indicator == id) |>
+    dplyr::pull(var_to)
+  stopifnot(length(var_to) == 1)
+  return(var_to)
+}
+
+wb_indicator_df <-
+  tibble::tribble(
+             ~indicator,          ~var_to,
+    "SP.URB.TOTL.IN.ZS", "pop_urban_perc",
+          "EN.POP.DNST",    "pop_density",
+          "SP.POP.TOTL",      "pop_total",
+       "NY.GDP.MKTP.CD",            "gdp"
+  )

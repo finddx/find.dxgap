@@ -21,7 +21,7 @@ test_that("World Bank urban population data is read and tidied correctly", {
   })
   expect_snapshot(
     tidy |>
-      dplyr::distinct(country_code, country_value) |>
+      dplyr::distinct(country_code) |>
       dplyr::filter(is.na(country_code))
   )
 })

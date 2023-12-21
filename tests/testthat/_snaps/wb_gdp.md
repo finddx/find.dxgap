@@ -22,20 +22,13 @@
     Code
       constructive::construct(vctrs::vec_ptype(tidy))
     Output
-      tibble::tibble(
-        indicator_value = character(0),
-        country_code = character(0),
-        country_value = character(0),
-        year = numeric(0),
-        value = numeric(0),
-      )
+      tibble::tibble(year = numeric(0), country_code = character(0), gdp = numeric(0))
 
 ---
 
     Code
-      dplyr::filter(dplyr::distinct(tidy, country_code, country_value), is.na(
-        country_code))
+      dplyr::filter(dplyr::distinct(tidy, country_code), is.na(country_code))
     Output
-      # A tibble: 0 x 2
-      # i 2 variables: country_code <chr>, country_value <chr>
+      # A tibble: 0 x 1
+      # i 1 variable: country_code <chr>
 

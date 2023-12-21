@@ -1,9 +1,9 @@
 # `country_code` entries are not missing
 
     Code
-      dplyr::filter(dplyr::distinct(tidy_who_hbc(data), country_code, country), is.na(
+      dplyr::filter(dplyr::distinct(tidy_who_hbc(data), country_code), is.na(
         country_code))
     Output
-      # A tibble: 0 x 2
-      # i 2 variables: country_code <chr>, country <chr>
+      # A tibble: 0 x 1
+      # i 1 variable: country_code <chr>
 

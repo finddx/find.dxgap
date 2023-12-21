@@ -243,6 +243,7 @@ tidy_who_impl <- function(data, .year = NULL, shape = "long") {
 
 tidy_who_core <- function(data, year, shape) {
   data |>
+    dplyr::select(-tidyselect::all_of(c("country", "g_whoregion", "download_date"))) |>
     tidy_who_rename() |>
     tidy_who_year(.year = year) |>
     tidy_who_shape(.shape = shape)
@@ -250,7 +251,6 @@ tidy_who_core <- function(data, year, shape) {
 
 tidy_who_rename <- function(data) {
   data |>
-    dplyr::select(-download_date) |>
     dplyr::rename(country_code = iso3)
 }
 
@@ -269,7 +269,7 @@ tidy_who_shape <- function(data, .shape) {
     df <-
       data |>
       tidyr::pivot_longer(
-        cols = -c(country, country_code, g_whoregion, year),
+        cols = -c(country_code, year),
         names_to = "variable"
     )
     return(df)

@@ -6,27 +6,19 @@ tb_load <- function(lst_df) {
 
   # World Bank Population ------------------------------------------------------
 
-  wb_tot_pop_df <-
-    lst_df$wb_pop_total |>
-    dplyr::select(country_code, year, pop_total = value)
+  wb_tot_pop_df <- lst_df$wb_pop_total
 
   # World Bank Urban Pop. ------------------------------------------------------
 
-  wb_urb_pop_df <-
-    lst_df$wb_pop_urban |>
-    dplyr::select(country_code, year, pop_urban_perc = value)
+  wb_urb_pop_df <- lst_df$wb_pop_urban
 
   # World Bank Density ---------------------------------------------------------
 
-  wb_density_pop_df <-
-    lst_df$wb_pop_density |>
-    dplyr::select(country_code, year, pop_density = value)
+  wb_density_pop_df <- lst_df$wb_pop_density
 
   # World Bank GDP ------------------------------------------------------------
 
-  wb_gdp_df <-
-    lst_df$wb_gdp |>
-    dplyr::select(country_code, year, gdp = value)
+  wb_gdp_df <- lst_df$wb_gdp
 
   # WHO notifications ----------------------------------------------------------
 
