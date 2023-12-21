@@ -34,7 +34,7 @@ test_that("`country_code` entries are not missing", {
   skip_if_no_data(file_name)
   expect_snapshot(
     tidy_who_hbc(data) |>
-      dplyr::distinct(country_code, country) |>
+      dplyr::distinct(country_code) |>
       dplyr::filter(is.na(country_code))
   )
 })
