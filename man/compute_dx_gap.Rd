@@ -4,14 +4,14 @@
 \alias{compute_dx_gap}
 \title{Compute the diagnostic gap}
 \usage{
-compute_dx_gap(data, notified, estimated, ...)
+compute_dx_gap(data, estimated, notified, ...)
 }
 \arguments{
 \item{data}{Input data.}
 
-\item{notified}{A name unquoted for notified cases.}
-
 \item{estimated}{A name unquoted for estimated cases.}
+
+\item{notified}{A name unquoted for notified cases.}
 
 \item{...}{Further arguments passed to \code{\link[=mutate]{mutate()}}.}
 }
@@ -45,6 +45,6 @@ system.
 # Calculate diagnostic gap for 2019 TB data:
 dx_gap_vars <- c("country_code", "year", "e_inc_num", "c_newinc")
 build_tbl("tb", 2019, vars = dx_gap_vars) |>
-  compute_dx_gap(c_newinc, e_inc_num)
+  compute_dx_gap(e_inc_num, c_newinc)
 }
 }
