@@ -158,10 +158,8 @@ tidy_wb <- function(data, year = NULL) {
   df <-
     data |>
     dplyr::transmute(
-      indicator_value,
-      country_code = countryiso3code,
-      country_value,
       year = date,
+      country_code = countryiso3code,
       value
     ) |>
     dplyr::filter(!is.na(country_code))
