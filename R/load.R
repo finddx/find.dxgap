@@ -33,7 +33,7 @@ load_dx_impl <- function(.disease, .dxgap_diseases = dxgap_diseases, data_dir = 
   lst_df <- import_tbls(data_names = data_files)
 
   tbl_list <- switch(.disease,
-    tb = tb_load(lst_df)
+    tb = lst_df
   )
   tbl_list
 }
