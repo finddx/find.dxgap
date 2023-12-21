@@ -148,7 +148,8 @@ mutate_country <- function(data) {
         country_code,
         origin = "iso3c",
         dest = "country.name"
-      )
+      ),
+      .before = everything()
     )
 }
 
