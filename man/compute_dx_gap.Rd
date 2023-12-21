@@ -9,9 +9,9 @@ compute_dx_gap(data, estimated, notified, ...)
 \arguments{
 \item{data}{Input data.}
 
-\item{estimated}{A name unquoted for estimated cases.}
+\item{estimated}{An unquoted name for estimated cases.}
 
-\item{notified}{A name unquoted for notified cases.}
+\item{notified}{An unquoted name for notified cases.}
 
 \item{...}{Further arguments passed to \code{\link[=mutate]{mutate()}}.}
 }
