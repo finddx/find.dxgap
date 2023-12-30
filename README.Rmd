@@ -85,7 +85,7 @@ tb_vars <- c(
 build_tbl("tb", year = 2019, vars = tb_vars)
 ```
 
-Optionally, a time series can be build:
+Optionally, a time series can be built:
 
 ```{r}
 build_tbl("tb", year = NULL, vars = tb_vars)

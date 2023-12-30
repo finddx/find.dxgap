@@ -97,7 +97,7 @@ build_tbl("tb", year = 2019, vars = tb_vars)
 #> #   e_mort_100k <dbl>, culture <dbl>, smear <dbl>, xpert <dbl>, m_wrd <dbl>
 ```
 
-Optionally, a time series can be build:
+Optionally, a time series can be built:
 
 ``` r
 build_tbl("tb", year = NULL, vars = tb_vars)
