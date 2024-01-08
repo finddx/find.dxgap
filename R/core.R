@@ -19,13 +19,13 @@ get_core <- function(data_list, estimated, notified) {
   country_notification_df <-
     data_list |>
     purrr::pluck(notified_tbl_name) |>
-    get_cc_var_always_given_acrs_yrs(notified_field_name)
+    get_cc_var_always_given_acrs_yrs(!!rlang::ensym(notified_field_name))
 
   country_estimate_df <-
     data_list |>
     purrr::pluck(estimated_tbl_name) |>
     dplyr::filter(!!rlang::ensym(estimated_field_name) != 0) |> # avoid dividing by zero
-    get_cc_var_always_given_acrs_yrs(estimated_field_name)
+    get_cc_var_always_given_acrs_yrs(!!rlang::ensym(estimated_field_name))
 
   in_common_dxgap <-
     country_notification_df |>
