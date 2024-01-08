@@ -40,3 +40,13 @@ test_that("is_significant() works", {
     }
   )
 })
+
+test_that("get_meta_dxgap() works", {
+  dxgap_meta_df <- get_meta_dxgap(
+    estimated = "who_estimates.e_inc_num",
+    notified = "who_notifications.c_newinc"
+  )
+  expect_s3_class(dxgap_meta_df, "data.frame")
+  expect_equal(nrow(dxgap_meta_df), 2)
+  expect_equal(ncol(dxgap_meta_df), 3)
+})
