@@ -19,7 +19,7 @@ dm <- build_dm(
   df_lst,
   estimated = "who_estimates.e_inc_num",
   notified = "who_notifications.c_newinc",
-  year = NULL,
+  year = NULL
 )
 data_tbl_ts <- build_tbl_impl(dm_ts, vars = dxgap_const$tb_vars)
 readr::write_rds(data_tbl_ts, "tests/testthat/testdata/tb_tbl_ts.rds")
