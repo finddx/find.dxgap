@@ -20,9 +20,9 @@
 #' \dontrun{
 #' build_tbl("tb", 2019, c("year", "country", "pop_density"))
 #' }
-build_tbl <- function(disease, year = NULL, vars = NULL) {
+build_tbl <- function(disease, notified, estimated, year = NULL, vars = NULL) {
   df_lst <- load_dx_impl(disease)
-  dm <- build_dm(df_lst, year = year)
+  dm <- build_dm(df_lst, year = year, notified = notified, estimated = estimated)
   build_tbl_impl(dm, vars)
 }
 
@@ -44,7 +44,10 @@ build_tbl <- function(disease, year = NULL, vars = NULL) {
 #' @examples
 #' \dontrun{
 #' dm_object <- load_dx("tb") |>
-#'   build_dm()
+#'   build_dm(
+#'     estimated = "who_estimates.e_inc_num",
+#'     notified = "who_notifications.c_newinc"
+#'   )
 #'
 #' build_tbl_impl(dm_object) # All cols
 #' build_tbl_impl(dm_object, vars = c("year", "country", "pop_density")) # select cols
@@ -85,16 +88,23 @@ build_tbl_impl <- function(dm, vars = NULL) {
 #'
 #' @examples
 #' \dontrun{
-#' build_dm(load_dx("tb")) # all years
-#' build_dm(load_dx("tb"), year = 2019) # only 2019
-#' }
-build_dm <- function(data_list, year = NULL, estimated, notified) {
+#' build_dm(
+#'   load_dx("tb"),
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc"
+#' ) # all years
+#' build_dm(
+#'   load_dx("tb"),
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
+#'   year = 2019 # only 2019
+build_dm <- function(data_list, estimated, notified, year = NULL) {
   # TODO: max year should be taken from dxgap_diseases
   max_year <- 2021
   if (!is.null(year) && year > max_year) {
     rlang::abort(sprintf("Data available up to %s.", max_year))
   }
-  core_data <- get_core(data_list)
+  core_data <- get_core(data_list, estimated = estimated, notified = notified)
   core_list <- core_data$core_list
   can_compute_dxgap <- core_data$can_compute_dxgap
 
