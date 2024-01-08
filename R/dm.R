@@ -18,12 +18,28 @@
 #'
 #' @examples
 #' \dontrun{
-#' build_tbl("tb", 2019, c("year", "country", "pop_density"))
+#' build_tbl(
+#'   "tb",
+#'   2019,
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
+#'   c("year", "country", "pop_density", "e_inc_num", "c_newinc")
+#' )
 #' }
-build_tbl <- function(disease, notified, estimated, year = NULL, vars = NULL) {
+build_tbl <- function(disease, estimated, notified, year = NULL, vars = NULL) {
+  dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
+  estimated_field_name <- extract_field_name(dxgap_meta_df, "estimated")
+  notified_field_name <- extract_field_name(dxgap_meta_df, "notified")
+
   df_lst <- load_dx_impl(disease)
-  dm <- build_dm(df_lst, year = year, notified = notified, estimated = estimated)
-  build_tbl_impl(dm, vars)
+  dm <- build_dm(df_lst, year = year, estimated = estimated, notified = notified)
+
+  tbl <- build_tbl_impl(dm, vars)
+  compute_dx_gap(
+    tbl,
+    !!rlang::ensym(estimated_field_name),
+    !!rlang::ensym(notified_field_name)
+  )
 }
 
 #' Join all data into a big table
