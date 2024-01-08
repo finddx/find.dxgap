@@ -168,3 +168,17 @@ get_meta_dxgap <- function(estimated, notified) {
   tbl_field_df <- tibble::as_tibble(mat, rownames = "type")
   tbl_field_df
 }
+
+extract_tbl_name <- function(dxgap_meta_df, type) {
+  type_match <- rlang::arg_match(type, c("estimated", "notified"))
+  dxgap_meta_df |>
+    dplyr::filter(type == !!type_match) |>
+    dplyr::pull(table)
+}
+
+extract_field_name <- function(dxgap_meta_df, type) {
+  type_match <- rlang::arg_match(type, c("estimated", "notified"))
+  dxgap_meta_df |>
+    dplyr::filter(type == !!type_match) |>
+    dplyr::pull(field)
+}
