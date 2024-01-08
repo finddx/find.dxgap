@@ -26,7 +26,7 @@
 #'   additional column called `dx_gap` containing the computed diagnostic
 #'   gap values
 #'
-#' @export
+#' @noRd
 #'
 #' @examples
 #' \dontrun{
