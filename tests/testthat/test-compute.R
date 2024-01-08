@@ -2,12 +2,21 @@ test_that("compute_completion_rate() works", {
   testdata_path <- testthat::test_path("testdata", "tb_tbl_ts.rds")
   tb_tbl <- readr::read_rds(testdata_path)
   complete_rate_df_country <- compute_completion_rate(tb_tbl, id_vars = "year")
-  expect_snapshot(constructive::construct(complete_rate_df_country))
-  complete_rate_df_is_hbc <- compute_completion_rate(tb_tbl, id_vars = c("year", "is_hbc"))
-  expect_snapshot(constructive::construct(complete_rate_df_is_hbc))
+  expect_snapshot(constructive::construct(
+    dplyr::arrange(complete_rate_df_country, year, var_name)
+  ))
+  complete_rate_df_is_hbc <- compute_completion_rate(
+    tb_tbl,
+    id_vars = c("year", "is_hbc")
+  )
+  expect_snapshot(constructive::construct(
+    dplyr::arrange(complete_rate_df_is_hbc, year, var_name)
+  ))
   cars_df <- tibble::as_tibble(mtcars, rownames = "car_name")
   complete_rate_df_cars <- compute_completion_rate(cars_df, id_vars = NULL)
-  expect_snapshot(constructive::construct(complete_rate_df_cars))
+  expect_snapshot(constructive::construct(
+    dplyr::arrange(complete_rate_df_cars, var_name)
+  ))
 })
 
 test_that("compute_correlation() works", {
@@ -15,11 +24,15 @@ test_that("compute_correlation() works", {
   tb_tbl <- readr::read_rds(testdata_path)
   tbl_dxgap <- compute_dx_gap(tb_tbl, e_inc_num, c_newinc)
   corr_df <- compute_correlation(tbl_dxgap, dx_gap)
-  expect_snapshot(constructive::construct(corr_df))
+  expect_snapshot(constructive::construct(dplyr::arrange(corr_df, term)))
   corr_df_by <- compute_correlation(tbl_dxgap, dx_gap, by = "year")
-  expect_snapshot(constructive::construct(corr_df_by))
+  expect_snapshot(constructive::construct(
+    dplyr::arrange(corr_df_by, year, term)
+  ))
   corr_df_by2 <- compute_correlation(tbl_dxgap, dx_gap, by = c("year", "is_hbc"))
-  expect_snapshot(constructive::construct(corr_df_by2))
+  expect_snapshot(constructive::construct(
+    dplyr::arrange(corr_df_by2, year, term, is_hbc)
+  ))
   expect_error(compute_correlation(tbl_dxgap), regexp = "absent")
 })
 
