@@ -88,7 +88,7 @@ build_tbl_impl <- function(dm, vars = NULL) {
 #' build_dm(load_dx("tb")) # all years
 #' build_dm(load_dx("tb"), year = 2019) # only 2019
 #' }
-build_dm <- function(data_list, year = NULL) {
+build_dm <- function(data_list, year = NULL, estimated, notified) {
   # TODO: max year should be taken from dxgap_diseases
   max_year <- 2021
   if (!is.null(year) && year > max_year) {
