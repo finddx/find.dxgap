@@ -153,3 +153,18 @@ mutate_country <- function(data) {
     )
 }
 
+get_meta_dxgap <- function(estimated, notified) {
+  stopifnot(rlang::is_bare_character(estimated, n = 1))
+  stopifnot(rlang::is_bare_character(notified, n = 1))
+  mat <- stringr::str_split_fixed(
+    c(estimated, notified),
+    pattern = "\\.",
+    n = 2
+  )
+  dimnames(mat) <- list(
+    c("estimated", "notified"),
+    c("table", "field")
+  )
+  tbl_field_df <- tibble::as_tibble(mat, rownames = "type")
+  tbl_field_df
+}
