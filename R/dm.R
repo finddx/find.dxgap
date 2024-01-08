@@ -7,6 +7,10 @@
 #' @param disease A character of length one identifying the disease for which
 #'   the user wants to build a wide table. The tibble `dxgap_diseases` shows the
 #'   diseases that are currently supported.
+#' @param estimated A dot-separated character giving information on which table
+#'   and field contains estimated cases for DX Gap computation.
+#' @param notified A dot-separated character giving information on which table
+#'   and field contains notified cases for DX Gap computation.
 #' @param year An integer indicating a year to filter the data on. Defaults to
 #'   NULL, returning all years present in the data.
 #' @param vars A vector of strings naming columns to subset the data on.
@@ -114,6 +118,8 @@ build_tbl_impl <- function(dm, vars = NULL) {
 #'   estimated = "who_estimates.e_inc_num",
 #'   notified = "who_notifications.c_newinc",
 #'   year = 2019 # only 2019
+#' )
+#' }
 build_dm <- function(data_list, estimated, notified, year = NULL) {
   # TODO: max year should be taken from dxgap_diseases
   max_year <- 2021

@@ -16,6 +16,8 @@ render_bulk(
 render_report(
   template_name,
   disease,
+  estimated,
+  notified,
   year = NULL,
   vars = NULL,
   interactive = TRUE,
@@ -40,6 +42,12 @@ used.}
 \item{override_vars_check}{Logical indicating whether to override checks on
 supported vars. Defaults to FALSE. If TRUE, consistent results are not
 guaranteed.}
+
+\item{estimated}{A dot-separated character giving information on which table
+and field contains estimated cases for DX Gap computation.}
+
+\item{notified}{A dot-separated character giving information on which table
+and field contains notified cases for DX Gap computation.}
 
 \item{year}{Integer matching the year of the report passed to \code{build_dm()}.}
 
@@ -75,6 +83,13 @@ render_bulk("eda.Rmd", disease = "tb", years = 2018:2021, vars = tb_vars)
 tb_vars <- c("year", "country", "is_hbc", "country_code", "dx_gap",
              "pop_total", "pop_urban_perc", "pop_density", "gdp", "c_newinc",
              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
-render_report("eda.Rmd", disease = "tb", year = 2019, vars = tb_vars)
+render_report(
+  template_name = "eda.Rmd",
+  disease = "tb",
+  estimated = "who_estimates.e_inc_num",
+  notified = "who_notifications.c_newinc",
+  year = 2019,
+  vars = tb_vars
+)
 }
 }

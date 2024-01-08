@@ -77,6 +77,7 @@ render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, over
 #'   year = 2019,
 #'   vars = tb_vars
 #' )
+#' }
 render_report <- function(template_name,
                           disease,
                           estimated,
