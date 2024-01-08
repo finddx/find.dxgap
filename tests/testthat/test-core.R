@@ -20,5 +20,12 @@ test_that("get_core() works", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
   data_list <- load_dx("tb")
-  expect_type(get_core(data_list), "list")
+  expect_type(
+    get_core(
+      data_list,
+      estimated = "who_estimates.e_inc_num",
+      notified = "who_notifications.c_newinc"
+    ),
+    "list"
+  )
 })

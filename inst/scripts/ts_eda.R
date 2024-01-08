@@ -4,7 +4,12 @@ pkgload::load_all()
 df_lst <- load_dx("tb")
 
 # ---- Build dm ----
-dm <- build_dm(df_lst, year = NULL)
+dm <- build_dm(
+  df_lst,
+  estimated = "who_estimates.e_inc_num",
+  notified = "who_notifications.c_newinc",
+  year = NULL,
+)
 data_tbl <- build_tbl_impl(dm, vars = dxgap_const$tb_vars)
 
 # ---- Prep data ----
