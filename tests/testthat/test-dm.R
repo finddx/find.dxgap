@@ -89,7 +89,7 @@ test_that("build_tbl_impl() works", {
     estimated = "who_estimates.e_inc_num",
     notified = "who_notifications.c_newinc"
   )
-  tbl <- build_tbl_impl(dm)
+  tbl <- build_tbl_impl(dm, estimated = "who_estimates.e_inc_num", notified = "who_notifications.c_newinc")
   expect_s3_class(tbl, "data.frame")
 })
 
@@ -102,7 +102,7 @@ test_that("build_tbl_impl() returns accurate results", {
     estimated = "who_estimates.e_inc_num",
     notified = "who_notifications.c_newinc"
   )
-  tbl <- build_tbl_impl(dm)
+  tbl <- build_tbl_impl(dm, estimated = "who_estimates.e_inc_num", notified = "who_notifications.c_newinc")
 
   # consistent subset of countries per year
   n_distinct_years <-
