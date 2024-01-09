@@ -25,7 +25,7 @@ A tibble.
 \dontrun{
 tbl <- build_tbl(
   "tb",
-  2019,
+  year = 2019,
   estimated = "who_estimates.e_inc_num",
   notified = "who_notifications.c_newinc",
   vars = dxgap_const$tb_vars
