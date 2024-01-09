@@ -95,8 +95,7 @@ tbl <-
     year = NULL,
     vars = dxgap_const$tb_vars
   ) |>
-  dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-  dplyr::select(-any_of(c("country")))
+  dplyr::mutate(is_hbc = forcats::as_factor(is_hbc))
 coeff_df <- pull_mod_coeff_all(tbl)
 }
 }

@@ -25,7 +25,6 @@ dxgap_tb_templates <- tibble::tribble(
 dxgap_const <- tibble::lst(
   start_year = 2015,
   tb_vars = c("year",
-           "country",
            "is_hbc",
            "country_code",
            "dx_gap",
@@ -44,7 +43,6 @@ dxgap_const <- tibble::lst(
 
 dxgap_tb_vars <- tibble::tibble(
   vars = c("year",
-           "country",
            "is_hbc",
            "country_code",
            "dx_gap",

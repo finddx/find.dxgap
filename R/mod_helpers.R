@@ -116,8 +116,7 @@ pull_mod_fit <- function(mod_out_list) {
 #'     year = NULL,
 #'     vars = dxgap_const$tb_vars
 #'   ) |>
-#'   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-#'   dplyr::select(-any_of(c("country")))
+#'   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc))
 #' coeff_df <- pull_mod_coeff_all(tbl)
 #' }
 pull_mod_coeff_all <- function(tbl, mod_const = tb_mod_const) {
