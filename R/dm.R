@@ -7,10 +7,16 @@
 #' @param disease A character of length one identifying the disease for which
 #'   the user wants to build a wide table. The tibble `dxgap_diseases` shows the
 #'   diseases that are currently supported.
-#' @param estimated A dot-separated character giving information on which table
-#'   and field contains estimated cases for DX Gap computation.
-#' @param notified A dot-separated character giving information on which table
-#'   and field contains notified cases for DX Gap computation.
+#' @param estimated Override the default `NULL` with a dot-separated character
+#'   indicating which field from which table should be used as estimated cases
+#'   for DX Gap computation. If kept to `NULL`, the function will use the value
+#'   `estimates_table.estimates_field` from the `notified` column in the
+#'   `dxgap_diseases` meta table.
+#' @param notified Override the default `NULL` with a dot-separated character
+#'   indicating which field from which table should be used as notified cases
+#'   for DX Gap computation. If kept to `NULL`, the function will use the value
+#'   `notifications_table.notifications_field` from the `notified` column in the
+#'   `dxgap_diseases` meta table.
 #' @param year An integer indicating a year to filter the data on. Defaults to
 #'   NULL, returning all years present in the data.
 #' @param vars A vector of strings naming columns to subset the data on.
