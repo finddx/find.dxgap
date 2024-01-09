@@ -94,7 +94,26 @@
 <span>  <span class="st">"e_mort_100k"</span>, <span class="st">"culture"</span>, <span class="st">"smear"</span>, <span class="st">"xpert"</span>, <span class="st">"m_wrd"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/build_tbl.html">build_tbl</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="reference/build_tbl.html">build_tbl</a></span><span class="op">(</span><span class="st">"tb"</span>, year <span class="op">=</span> <span class="fl">2019</span>, vars <span class="op">=</span> <span class="va">tb_vars</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 190 × 15</span></span>
+<span><span class="co">#&gt;     year is_hbc country_code dx_gap pop_total pop_urban_perc pop_density     gdp</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1  2019      1 AGO            35.0    3.24e7           66.2       26.0  6.93e10</span></span>
+<span><span class="co">#&gt;  2  2019      1 BGD            20.3    1.66e8           37.4     1272.   3.51e11</span></span>
+<span><span class="co">#&gt;  3  2019      1 BRA            10.9    2.12e8           86.8       25.3  1.87e12</span></span>
+<span><span class="co">#&gt;  4  2019      1 CAF            57.0    5.21e6           41.8        8.36 2.22e 9</span></span>
+<span><span class="co">#&gt;  5  2019      1 CHN            11.8    1.41e9           60.3      150.   1.43e13</span></span>
+<span><span class="co">#&gt;  6  2019      1 COD            38.0    8.99e7           45.0       39.7  5.18e10</span></span>
+<span><span class="co">#&gt;  7  2019      1 COG            43.8    5.57e6           67.4       16.3  1.28e10</span></span>
+<span><span class="co">#&gt;  8  2019      1 ETH            30.6    1.14e8           21.2      101.   9.59e10</span></span>
+<span><span class="co">#&gt;  9  2019      1 GAB            55.0    2.24e6           89.7        8.70 1.69e10</span></span>
+<span><span class="co">#&gt; 10  2019      1 IDN            33.5    2.70e8           56.0      144.   1.12e12</span></span>
+<span><span class="co">#&gt; # ℹ 180 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 7 more variables: c_newinc &lt;dbl&gt;, e_inc_num &lt;dbl&gt;, e_mort_100k &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   culture &lt;dbl&gt;, smear &lt;dbl&gt;, xpert &lt;dbl&gt;, m_wrd &lt;dbl&gt;</span></span></code></pre></div>
+<p>Alternatively, one can override the supported estimated and notified cases for given disease (allowed for future implementations).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/build_tbl.html">build_tbl</a></span><span class="op">(</span></span>
 <span>  <span class="st">"tb"</span>, </span>
 <span>  year <span class="op">=</span> <span class="fl">2019</span>, </span>
 <span>  estimated <span class="op">=</span> <span class="st">"who_estimates.e_inc_num"</span>,</span>
@@ -118,7 +137,7 @@
 <span><span class="co">#&gt; # ℹ 7 more variables: c_newinc &lt;dbl&gt;, e_inc_num &lt;dbl&gt;, e_mort_100k &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   culture &lt;dbl&gt;, smear &lt;dbl&gt;, xpert &lt;dbl&gt;, m_wrd &lt;dbl&gt;</span></span></code></pre></div>
 <p>Optionally, a time series can be built:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/build_tbl.html">build_tbl</a></span><span class="op">(</span></span>
 <span>  <span class="st">"tb"</span>, </span>
 <span>  year <span class="op">=</span> <span class="cn">NULL</span>, </span>
@@ -143,13 +162,18 @@
 <span><span class="co">#&gt; # ℹ 7 more variables: c_newinc &lt;dbl&gt;, e_inc_num &lt;dbl&gt;, e_mort_100k &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   culture &lt;dbl&gt;, smear &lt;dbl&gt;, xpert &lt;dbl&gt;, m_wrd &lt;dbl&gt;</span></span></code></pre></div>
 <p>An error is raised, if a disease is not supported yet:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/build_tbl.html">build_tbl</a></span><span class="op">(</span><span class="st">"covid"</span>, year <span class="op">=</span> <span class="cn">NULL</span>, vars <span class="op">=</span> <span class="va">tb_vars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in `check_supported_disease()` at find.dxgap/R/load.R:26:3:</span></span>
+<span><span class="co">#&gt; Error in `check_supported_disease()`:</span></span>
 <span><span class="co">#&gt; ! `covid` not in `dxgap_diseases`.</span></span>
 <span><span class="co">#&gt; ✖ Disease is not supported yet.</span></span></code></pre></div>
+<p>A “disease-table” returned from <code><a href="reference/build_tbl.html">build_tbl()</a></code> respects the following criteria:</p>
+<ul>
+<li>Contains only records for which is possible to compute the “dx_gap”.</li>
+<li>In case of time series, a consistent set of “high-burden” countries across years is returned.</li>
+</ul>
 <p>To read and tidy any table:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/import_tbl.html">import_tbl</a></span><span class="op">(</span><span class="st">"who_hbc_2023-07-28.csv"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 300 × 3</span></span>
 <span><span class="co">#&gt;    share_global_inc country_code  year</span></span>
@@ -165,7 +189,7 @@
 <span><span class="co">#&gt;  9               83 BGD           2019</span></span>
 <span><span class="co">#&gt; 10               83 BGD           2020</span></span>
 <span><span class="co">#&gt; # ℹ 290 more rows</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/import_tbl.html">import_tbl</a></span><span class="op">(</span><span class="st">"gf_procurement_2023-07-26.csv"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 199 × 3</span></span>
 <span><span class="co">#&gt;    country_code  year total_numb_device</span></span>
@@ -187,14 +211,14 @@
 <h4 id="report">Report<a class="anchor" aria-label="anchor" href="#report"></a>
 </h4>
 <p>Few templates have been implemented for data exploration:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/view_templates.html">view_templates</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; eda.Rmd</span></span>
 <span><span class="co">#&gt; eda_ts.Rmd</span></span>
 <span><span class="co">#&gt; explain_lm.Rmd</span></span>
 <span><span class="co">#&gt; missing.Rmd</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/render.html">render_report</a></span><span class="op">(</span></span>
 <span>  <span class="st">"eda_ts.Rmd"</span>, </span>
 <span>  disease <span class="op">=</span> <span class="st">"tb"</span>,</span>
@@ -202,7 +226,7 @@
 <span>  interactive <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  vars <span class="op">=</span> <span class="va">tb_vars</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/render.html">render_report</a></span><span class="op">(</span></span>
 <span>  <span class="st">"explain_lm.Rmd"</span>,</span>
 <span>  disease <span class="op">=</span> <span class="st">"tb"</span>,</span>
