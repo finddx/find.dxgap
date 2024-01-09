@@ -185,20 +185,20 @@ extract_field_name <- function(dxgap_meta_df, type) {
 
 extract_default_dxgap_tbl_field <- function(disease,
                                             dxgap_field,
-                                            component = "asis",
+                                            output = "asis",
                                            .dxgap_diseases = dxgap_diseases) {
   check_supported_disease(disease = disease)
   dxgap_field_match <- rlang::arg_match(dxgap_field, c("estimated", "notified"))
-  component_match <- rlang::arg_match(component, c("asis", "tbl", "field"))
+  output_match <- rlang::arg_match(output, c("asis", "tbl", "field"))
 
   tbl_field <-
     .dxgap_diseases |>
     dplyr::filter(disease == !!disease) |>
     dplyr::pull(dxgap_field_match)
 
-  if (component_match == "tbl") {
+  if (output_match == "tbl") {
     stringr::str_split_i(tbl_field, "\\.", i = 1)
-  } else if (component_match == "field") {
+  } else if (output_match == "field") {
     stringr::str_split_i(tbl_field, "\\.", i = 2)
   } else {
     tbl_field

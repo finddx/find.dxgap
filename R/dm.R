@@ -49,7 +49,7 @@ build_tbl <- function(disease,
     estimated <- extract_default_dxgap_tbl_field(
       disease = disease,
       dxgap_field = "estimated",
-      component = "asis"
+      output = "asis"
     )
   }
 
@@ -57,7 +57,7 @@ build_tbl <- function(disease,
     notified <- extract_default_dxgap_tbl_field(
       disease = disease,
       dxgap_field = "notified",
-      component = "asis"
+      output = "asis"
     )
   }
 
@@ -158,14 +158,14 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
   if (is.null(estimated)) {
     estimated <- extract_default_dxgap_tbl_field(
       disease = disease,
-      component = "asis",
+      output = "asis",
       dxgap_field = "estimated"
     )
   }
   if (is.null(notified)) {
     notified <- extract_default_dxgap_tbl_field(
       disease = disease,
-      component = "asis",
+      output = "asis",
       dxgap_field = "notified"
     )
   }

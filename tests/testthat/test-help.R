@@ -55,38 +55,38 @@ test_that("extract_default_dxgap_tbl_field() works", {
   disease <- "tb"
   asis <- extract_default_dxgap_tbl_field(
     disease = disease,
-    component = "asis",
+    output = "asis",
     dxgap_field = "notified"
   )
   expect_equal(asis, "who_notifications.c_newinc")
   tbl <- extract_default_dxgap_tbl_field(
     disease = disease,
-    component = "tbl",
+    output = "tbl",
     dxgap_field = "notified"
   )
   expect_equal(tbl, "who_notifications")
   field <- extract_default_dxgap_tbl_field(
     disease = disease,
-    component = "field",
+    output = "field",
     dxgap_field = "notified"
   )
   expect_equal(field, "c_newinc")
   disease <- "tb"
   asis <- extract_default_dxgap_tbl_field(
     disease = disease,
-    component = "asis",
+    output = "asis",
     dxgap_field = "estimated"
   )
   expect_equal(asis, "who_estimates.e_inc_num")
   tbl <- extract_default_dxgap_tbl_field(
     disease = disease,
-    component = "tbl",
+    output = "tbl",
     dxgap_field = "estimated"
   )
   expect_equal(tbl, "who_estimates")
   field <- extract_default_dxgap_tbl_field(
     disease = disease,
-    component = "field",
+    output = "field",
     dxgap_field = "estimated"
   )
   expect_equal(field, "e_inc_num")
