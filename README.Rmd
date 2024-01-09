@@ -82,6 +82,12 @@ tb_vars <- c(
   "e_mort_100k", "culture", "smear", "xpert", "m_wrd"
 )
 
+build_tbl("tb", year = 2019, vars = tb_vars)
+```
+
+Alternatively, one can override the supported estimated and notified cases for given disease (allowed for future implementations).
+
+```{r}
 build_tbl(
   "tb", 
   year = 2019, 
@@ -108,6 +114,11 @@ An error is raised, if a disease is not supported yet:
 ```{r error=TRUE}
 build_tbl("covid", year = NULL, vars = tb_vars)
 ```
+
+A "disease-table" returned from `build_tbl()` respects the following criteria:
+
+- Contains only records for which is possible to compute the "dx_gap".
+- In case of time series, a consistent set of "high-burden" countries across years is returned.
 
 To read and tidy any table:
 
