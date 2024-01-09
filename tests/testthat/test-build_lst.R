@@ -1,10 +1,10 @@
-test_that("load_dx() works", {
+test_that("build_lst() works", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-  lst_df <- load_dx(disease = "tb")
+  lst_df <- build_lst(disease = "tb")
   expect_type(lst_df, "list")
   expect_equal(length(lst_df), 12)
   expect_true(all(purrr::map_int(lst_df, nrow) > 0))
   expect_snapshot(attributes(lst_df))
-  expect_error(load_dx(disease = "covid"))
+  expect_error(build_lst(disease = "covid"))
 })

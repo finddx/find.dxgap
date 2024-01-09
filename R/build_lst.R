@@ -4,7 +4,7 @@ list_dxgap_datadir <- function(.pattern, .data_dir = Sys.getenv("DXGAP_DATADIR")
 
 #' Load diagnostic gap data for given disease
 #'
-#' `load_dx()` loads all files for given disease into a
+#' `build_lst()` loads all files for given disease into a
 #' list of tibbles.
 #'
 #' @param disease A character of lenght one identifying the disease for which
@@ -16,13 +16,13 @@ list_dxgap_datadir <- function(.pattern, .data_dir = Sys.getenv("DXGAP_DATADIR")
 #' @return A list of tibbles.
 #'
 #' @examples \dontrun{
-#' load_dx("tb")
+#' build_lst("tb")
 #' }
-load_dx <- function(disease) {
-  load_dx_impl(.disease = disease)
+build_lst <- function(disease) {
+  build_lst_impl(.disease = disease)
 }
 
-load_dx_impl <- function(.disease, .dxgap_diseases = dxgap_diseases, data_dir = Sys.getenv("DXGAP_DATADIR")) {
+build_lst_impl <- function(.disease, .dxgap_diseases = dxgap_diseases, data_dir = Sys.getenv("DXGAP_DATADIR")) {
   check_supported_disease(.disease, .dxgap_diseases)
   pattern <- "\\d{4}-\\d{2}-\\d{2}"
   disease_df <- generate_disease_pattern(.dxgap_diseases, .disease, pattern)

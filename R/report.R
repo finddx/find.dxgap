@@ -126,7 +126,7 @@ render_report_impl <- function(template_name,
 
   template_path <- compose_file_path(template_name, template_dir)
 
-  lst_df <- load_dx(disease)
+  lst_df <- build_lst(disease)
   dm <- build_dm(lst_df, year = year, estimated = estimated, notified = notified)
 
   # Here and not in `build_tbl_impl` since I don't have the disease there

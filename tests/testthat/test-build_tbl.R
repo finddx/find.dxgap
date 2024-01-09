@@ -1,7 +1,7 @@
 test_that("build_tbl_impl() works", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-  data_list <- load_dx("tb")
+  data_list <- build_lst("tb")
   dm <- build_dm(
     data_list,
     estimated = "who_estimates.e_inc_num",
@@ -18,7 +18,7 @@ test_that("build_tbl_impl() works", {
 test_that("build_tbl_impl() returns accurate results", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-  data_list <- load_dx("tb")
+  data_list <- build_lst("tb")
   dm <- build_dm(
     data_list,
     estimated = "who_estimates.e_inc_num",
