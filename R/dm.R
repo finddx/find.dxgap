@@ -42,14 +42,17 @@ build_tbl <- function(disease,
                       year = NULL,
                       vars = NULL) {
   df_lst <- load_dx_impl(disease)
+
+  if (is.null(estimated)) {
+    estimated <- extract_default_dxgap_tbl_field(disease = disease, "estimated")
+  }
+  if (is.null(notified)) {
+    notified <- extract_default_dxgap_tbl_field(disease = disease, "notified")
+  }
   dm <- build_dm(df_lst, year = year, estimated = estimated, notified = notified)
 
-  tbl <- build_tbl_impl(dm, vars)
-  compute_dx_gap(
-    tbl,
-    !!rlang::ensym(estimated_field_name),
-    !!rlang::ensym(notified_field_name)
-  )
+  build_tbl_impl(dm, vars, estimated = estimated, notified = notified)
+
 }
 
 #' Join all data into a big table
@@ -141,19 +144,6 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
   max_year <- 2021
   if (!is.null(year) && year > max_year) {
     rlang::abort(sprintf("Data available up to %s.", max_year))
-  }
-  disease <- attr(data_list, "disease")
-  if (is.null(estimated)) {
-    estimated <-
-      dxgap_diseases |>
-      dplyr::filter(disease == !!disease) |>
-      dplyr::pull(estimated)
-  }
-  if (is.null(notified)) {
-    notified <-
-      dxgap_diseases |>
-      dplyr::filter(disease == !!disease) |>
-      dplyr::pull(notified)
   }
   core_data <- get_core(
     data_list,
