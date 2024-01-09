@@ -36,7 +36,6 @@ reference:
   contents:
   - compute_correlation
   - compute_completion_rate
-  - compute_dx_gap
   - get_mod_preproc
   - starts_with("pull_mod_")
   - render_bulk
