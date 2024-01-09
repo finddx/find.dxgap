@@ -132,6 +132,7 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
   if (!is.null(year) && year > max_year) {
     rlang::abort(sprintf("Data available up to %s.", max_year))
   }
+  disease <- attr(data_list, "disease")
   if (is.null(estimated)) {
     estimated <-
       dxgap_diseases |>
