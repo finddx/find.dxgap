@@ -36,11 +36,19 @@
 #'              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
 #' render_bulk("eda.Rmd", disease = "tb", years = 2018:2021, vars = tb_vars)
 #' }
-render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, override_vars_check = FALSE) {
+render_bulk <- function(template_name,
+                        disease,
+                        estimated = NULL,
+                        notified = NULL,
+                        years = NULL,
+                        vars = NULL,
+                        override_vars_check = FALSE) {
   years <- purrr::walk(
     years,
     ~ render_report(
       disease = disease,
+      estimated = estimated,
+      notified = notified,
       template_name = template_name,
       year = .x,
       vars = vars,
