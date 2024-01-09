@@ -78,22 +78,32 @@ build_tbl <- function(disease,
 #' build_tbl_impl(dm_object) # All cols
 #' build_tbl_impl(dm_object, vars = c("year", "country", "pop_density")) # select cols
 #' }
-build_tbl_impl <- function(dm, vars = NULL) {
+build_tbl_impl <- function(dm, estimated, notified, vars = NULL) {
   tbl <-
     dm |>
     dm::dm_flatten_to_tbl(.start = country) |>
     dplyr::filter(!dplyr::if_all(-c(country_code), is.na))
 
-  tbl <- tbl |>
+  estimated_field <- stringr::str_split_i(estimated, "\\.", i = 2)
+  notified_field <- stringr::str_split_i(notified, "\\.", i = 2)
+  tbl_dx_gap <- compute_dx_gap(
+    tbl,
+    estimated = !!rlang::sym(estimated_field),
+    notified = !!rlang::sym(notified_field)
+  )
+
+  tbl <- tbl_dx_gap |>
     dplyr::relocate(is_hbc, country_code, year, .before = everything())
 
   if (!is.null(vars)) {
+    vars_dx_gap <- c(vars, "dx_gap")
     tbl <-
       tbl |>
-      dplyr::select(tidyselect::any_of(vars))
+      dplyr::select(tidyselect::any_of(vars_dx_gap))
+    return(tbl)
   }
 
-  return(tbl)
+  tbl
 }
 
 #' Build a dm model object
