@@ -184,11 +184,23 @@ extract_field_name <- function(dxgap_meta_df, type) {
 }
 
 extract_default_dxgap_tbl_field <- function(disease,
-                                            type,
+                                            dxgap_field,
+                                            component = "all",
                                            .dxgap_diseases = dxgap_diseases) {
   check_supported_disease(disease = disease)
-  type_match <- rlang::arg_match(type, c("estimated", "notified"))
-  .dxgap_diseases |>
+  dxgap_field_match <- rlang::arg_match(dxgap_field, c("estimated", "notified"))
+  component_match <- rlang::arg_match(component, c("all", "tbl", "field"))
+
+  tbl_field <-
+    .dxgap_diseases |>
     dplyr::filter(disease == !!disease) |>
-    dplyr::pull(type_match)
+    dplyr::pull(dxgap_field_match)
+
+  if (component_match == "tbl") {
+    stringr::str_split_i(tbl_field, "\\.", i = 1)
+  } else if (component_match == "field") {
+    stringr::str_split_i(tbl_field, "\\.", i = 2)
+  } else {
+    tbl_field
+  }
 }
