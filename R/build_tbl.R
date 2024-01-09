@@ -41,7 +41,7 @@ build_tbl <- function(disease,
                       notified = NULL,
                       year = NULL,
                       vars = NULL) {
-  df_lst <- load_dx_impl(disease)
+  df_lst <- build_lst_impl(disease)
 
   dm <- build_dm(df_lst, year = year, estimated = estimated, notified = notified)
 
@@ -82,7 +82,7 @@ build_tbl <- function(disease,
 #'
 #' @examples
 #' \dontrun{
-#' dm_object <- load_dx("tb") |>
+#' dm_object <- build_lst("tb") |>
 #'   build_dm(
 #'     estimated = "who_estimates.e_inc_num",
 #'     notified = "who_notifications.c_newinc"

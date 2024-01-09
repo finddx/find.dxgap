@@ -1,9 +1,9 @@
 #' Get core countries
 #' @noRd
-#' @param data_list A list of tibbles as returned by `load_dx()`.
+#' @param data_list A list of tibbles as returned by `build_lst()`.
 #' @examples \dontrun{
 #' get_core(
-#'   load_dx("tb"),
+#'   build_lst("tb"),
 #'   estimated = "who_estimates.e_inc_num",
 #'   notified = "who_notifications.c_newinc"
 #' )

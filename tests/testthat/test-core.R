@@ -1,7 +1,7 @@
 test_that("get_cc_var_always_given_acrs_yrs() works", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-  data_list <- load_dx("tb")
+  data_list <- build_lst("tb")
   who_notifications <- data_list$who_notifications
   core_df <-
     who_notifications |>
@@ -19,7 +19,7 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
 test_that("get_core() works", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
-  data_list <- load_dx("tb")
+  data_list <- build_lst("tb")
   expect_type(
     get_core(
       data_list,

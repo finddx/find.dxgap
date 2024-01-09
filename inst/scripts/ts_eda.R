@@ -1,7 +1,7 @@
 # ---- Load libs and data ----
 library(tidyverse)
 pkgload::load_all()
-df_lst <- load_dx("tb")
+df_lst <- build_lst("tb")
 
 # ---- Build dm ----
 dm <- build_dm(
