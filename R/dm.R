@@ -43,14 +43,14 @@ build_tbl <- function(disease,
                       vars = NULL) {
   df_lst <- load_dx_impl(disease)
 
+  dm <- build_dm(df_lst, year = year, estimated = estimated, notified = notified)
+
   if (is.null(estimated)) {
     estimated <- extract_default_dxgap_tbl_field(disease = disease, "estimated")
   }
   if (is.null(notified)) {
     notified <- extract_default_dxgap_tbl_field(disease = disease, "notified")
   }
-  dm <- build_dm(df_lst, year = year, estimated = estimated, notified = notified)
-
   build_tbl_impl(dm, vars, estimated = estimated, notified = notified)
 
 }
@@ -144,6 +144,13 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
   max_year <- 2021
   if (!is.null(year) && year > max_year) {
     rlang::abort(sprintf("Data available up to %s.", max_year))
+  }
+  disease <- attr(data_list, "disease")
+  if (is.null(estimated)) {
+    estimated <- extract_default_dxgap_tbl_field(disease = disease, "estimated")
+  }
+  if (is.null(notified)) {
+    notified <- extract_default_dxgap_tbl_field(disease = disease, "notified")
   }
   core_data <- get_core(
     data_list,
