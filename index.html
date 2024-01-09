@@ -95,41 +95,41 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/build_tbl.html">build_tbl</a></span><span class="op">(</span><span class="st">"tb"</span>, year <span class="op">=</span> <span class="fl">2019</span>, vars <span class="op">=</span> <span class="va">tb_vars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 190 × 15</span></span>
-<span><span class="co">#&gt;     year country        is_hbc country_code pop_total pop_urban_perc pop_density</span></span>
-<span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1  2019 Angola              1 AGO             3.24e7           66.2       26.0 </span></span>
-<span><span class="co">#&gt;  2  2019 Bangladesh          1 BGD             1.66e8           37.4     1272.  </span></span>
-<span><span class="co">#&gt;  3  2019 Brazil              1 BRA             2.12e8           86.8       25.3 </span></span>
-<span><span class="co">#&gt;  4  2019 Central Afric…      1 CAF             5.21e6           41.8        8.36</span></span>
-<span><span class="co">#&gt;  5  2019 China               1 CHN             1.41e9           60.3      150.  </span></span>
-<span><span class="co">#&gt;  6  2019 Congo - Kinsh…      1 COD             8.99e7           45.0       39.7 </span></span>
-<span><span class="co">#&gt;  7  2019 Congo - Brazz…      1 COG             5.57e6           67.4       16.3 </span></span>
-<span><span class="co">#&gt;  8  2019 Ethiopia            1 ETH             1.14e8           21.2      101.  </span></span>
-<span><span class="co">#&gt;  9  2019 Indonesia           1 IDN             2.70e8           56.0      144.  </span></span>
-<span><span class="co">#&gt; 10  2019 India               1 IND             1.38e9           34.5      465.  </span></span>
+<span><span class="co">#&gt; # A tibble: 190 × 14</span></span>
+<span><span class="co">#&gt;     year is_hbc country_code  pop_total pop_urban_perc pop_density     gdp</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1  2019      1 AGO            32353588           66.2       26.0  6.93e10</span></span>
+<span><span class="co">#&gt;  2  2019      1 BGD           165516222           37.4     1272.   3.51e11</span></span>
+<span><span class="co">#&gt;  3  2019      1 BRA           211782878           86.8       25.3  1.87e12</span></span>
+<span><span class="co">#&gt;  4  2019      1 CAF             5209324           41.8        8.36 2.22e 9</span></span>
+<span><span class="co">#&gt;  5  2019      1 CHN          1407745000           60.3      150.   1.43e13</span></span>
+<span><span class="co">#&gt;  6  2019      1 COD            89906890           45.0       39.7  5.18e10</span></span>
+<span><span class="co">#&gt;  7  2019      1 COG             5570733           67.4       16.3  1.28e10</span></span>
+<span><span class="co">#&gt;  8  2019      1 ETH           114120594           21.2      101.   9.59e10</span></span>
+<span><span class="co">#&gt;  9  2019      1 GAB             2242785           89.7        8.70 1.69e10</span></span>
+<span><span class="co">#&gt; 10  2019      1 IDN           269582878           56.0      144.   1.12e12</span></span>
 <span><span class="co">#&gt; # ℹ 180 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 8 more variables: gdp &lt;dbl&gt;, c_newinc &lt;dbl&gt;, e_inc_num &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   e_mort_100k &lt;dbl&gt;, culture &lt;dbl&gt;, smear &lt;dbl&gt;, xpert &lt;dbl&gt;, m_wrd &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 7 more variables: c_newinc &lt;dbl&gt;, e_inc_num &lt;dbl&gt;, e_mort_100k &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   culture &lt;dbl&gt;, smear &lt;dbl&gt;, xpert &lt;dbl&gt;, m_wrd &lt;dbl&gt;</span></span></code></pre></div>
 <p>Optionally, a time series can be built:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/build_tbl.html">build_tbl</a></span><span class="op">(</span><span class="st">"tb"</span>, year <span class="op">=</span> <span class="cn">NULL</span>, vars <span class="op">=</span> <span class="va">tb_vars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1,140 × 15</span></span>
-<span><span class="co">#&gt;     year country    is_hbc country_code pop_total pop_urban_perc pop_density</span></span>
-<span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1  2016 Angola          1 AGO           29154746           64.1        23.4</span></span>
-<span><span class="co">#&gt;  2  2017 Angola          1 AGO           30208628           64.8        24.2</span></span>
-<span><span class="co">#&gt;  3  2018 Angola          1 AGO           31273533           65.5        25.1</span></span>
-<span><span class="co">#&gt;  4  2019 Angola          1 AGO           32353588           66.2        26.0</span></span>
-<span><span class="co">#&gt;  5  2020 Angola          1 AGO           33428486           66.8        26.8</span></span>
-<span><span class="co">#&gt;  6  2021 Angola          1 AGO           34503774           67.5        27.7</span></span>
-<span><span class="co">#&gt;  7  2016 Bangladesh      1 BGD          159784568           35.1      1228. </span></span>
-<span><span class="co">#&gt;  8  2017 Bangladesh      1 BGD          161793964           35.9      1243. </span></span>
-<span><span class="co">#&gt;  9  2018 Bangladesh      1 BGD          163683958           36.6      1257. </span></span>
-<span><span class="co">#&gt; 10  2019 Bangladesh      1 BGD          165516222           37.4      1272. </span></span>
+<span><span class="co">#&gt; # A tibble: 1,140 × 14</span></span>
+<span><span class="co">#&gt;     year is_hbc country_code pop_total pop_urban_perc pop_density           gdp</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1  2016      1 AGO           29154746           64.1        23.4  49840491178.</span></span>
+<span><span class="co">#&gt;  2  2017      1 AGO           30208628           64.8        24.2  68972769396.</span></span>
+<span><span class="co">#&gt;  3  2018      1 AGO           31273533           65.5        25.1  77792944472.</span></span>
+<span><span class="co">#&gt;  4  2019      1 AGO           32353588           66.2        26.0  69309110146.</span></span>
+<span><span class="co">#&gt;  5  2020      1 AGO           33428486           66.8        26.8  50241368244.</span></span>
+<span><span class="co">#&gt;  6  2021      1 AGO           34503774           67.5        27.7  65685435100.</span></span>
+<span><span class="co">#&gt;  7  2016      1 BGD          159784568           35.1      1228.  265236389199.</span></span>
+<span><span class="co">#&gt;  8  2017      1 BGD          161793964           35.9      1243.  293754769935.</span></span>
+<span><span class="co">#&gt;  9  2018      1 BGD          163683958           36.6      1257.  321379163136.</span></span>
+<span><span class="co">#&gt; 10  2019      1 BGD          165516222           37.4      1272.  351238397264.</span></span>
 <span><span class="co">#&gt; # ℹ 1,130 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 8 more variables: gdp &lt;dbl&gt;, c_newinc &lt;dbl&gt;, e_inc_num &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   e_mort_100k &lt;dbl&gt;, culture &lt;dbl&gt;, smear &lt;dbl&gt;, xpert &lt;dbl&gt;, m_wrd &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 7 more variables: c_newinc &lt;dbl&gt;, e_inc_num &lt;dbl&gt;, e_mort_100k &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   culture &lt;dbl&gt;, smear &lt;dbl&gt;, xpert &lt;dbl&gt;, m_wrd &lt;dbl&gt;</span></span></code></pre></div>
 <p>An error is raised, if a disease is not supported yet:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/build_tbl.html">build_tbl</a></span><span class="op">(</span><span class="st">"covid"</span>, year <span class="op">=</span> <span class="cn">NULL</span>, vars <span class="op">=</span> <span class="va">tb_vars</span><span class="op">)</span></span>
@@ -139,19 +139,19 @@
 <p>To read and tidy any table:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/import_tbl.html">import_tbl</a></span><span class="op">(</span><span class="st">"who_hbc_2023-07-28.csv"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 300 × 4</span></span>
-<span><span class="co">#&gt;    country    country_code share_global_inc  year</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;                   &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 Angola     AGO                        83  2016</span></span>
-<span><span class="co">#&gt;  2 Angola     AGO                        83  2017</span></span>
-<span><span class="co">#&gt;  3 Angola     AGO                        83  2018</span></span>
-<span><span class="co">#&gt;  4 Angola     AGO                        83  2019</span></span>
-<span><span class="co">#&gt;  5 Angola     AGO                        83  2020</span></span>
-<span><span class="co">#&gt;  6 Bangladesh BGD                        83  2016</span></span>
-<span><span class="co">#&gt;  7 Bangladesh BGD                        83  2017</span></span>
-<span><span class="co">#&gt;  8 Bangladesh BGD                        83  2018</span></span>
-<span><span class="co">#&gt;  9 Bangladesh BGD                        83  2019</span></span>
-<span><span class="co">#&gt; 10 Bangladesh BGD                        83  2020</span></span>
+<span><span class="co">#&gt; # A tibble: 300 × 3</span></span>
+<span><span class="co">#&gt;    share_global_inc country_code  year</span></span>
+<span><span class="co">#&gt;               &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1               83 AGO           2016</span></span>
+<span><span class="co">#&gt;  2               83 AGO           2017</span></span>
+<span><span class="co">#&gt;  3               83 AGO           2018</span></span>
+<span><span class="co">#&gt;  4               83 AGO           2019</span></span>
+<span><span class="co">#&gt;  5               83 AGO           2020</span></span>
+<span><span class="co">#&gt;  6               83 BGD           2016</span></span>
+<span><span class="co">#&gt;  7               83 BGD           2017</span></span>
+<span><span class="co">#&gt;  8               83 BGD           2018</span></span>
+<span><span class="co">#&gt;  9               83 BGD           2019</span></span>
+<span><span class="co">#&gt; 10               83 BGD           2020</span></span>
 <span><span class="co">#&gt; # ℹ 290 more rows</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/import_tbl.html">import_tbl</a></span><span class="op">(</span><span class="st">"gf_procurement_2023-07-26.csv"</span><span class="op">)</span></span>
