@@ -46,13 +46,22 @@ build_tbl <- function(disease,
   dm <- build_dm(df_lst, year = year, estimated = estimated, notified = notified)
 
   if (is.null(estimated)) {
-    estimated <- extract_default_dxgap_tbl_field(disease = disease, "estimated")
+    estimated <- extract_default_dxgap_tbl_field(
+      disease = disease,
+      dxgap_field = "estimated",
+      component = "asis"
+    )
   }
-  if (is.null(notified)) {
-    notified <- extract_default_dxgap_tbl_field(disease = disease, "notified")
-  }
-  build_tbl_impl(dm, vars, estimated = estimated, notified = notified)
 
+  if (is.null(notified)) {
+    notified <- extract_default_dxgap_tbl_field(
+      disease = disease,
+      dxgap_field = "notified",
+      component = "asis"
+    )
+  }
+
+  build_tbl_impl(dm, vars, estimated = estimated, notified = notified)
 }
 
 #' Join all data into a big table
@@ -87,6 +96,8 @@ build_tbl_impl <- function(dm, estimated, notified, vars = NULL) {
     dm::dm_flatten_to_tbl(.start = country) |>
     dplyr::filter(!dplyr::if_all(-c(country_code), is.na))
 
+  estimated <- stringr::str_split_i(estimated, pattern = "\\.", i = 2)
+  notified <- stringr::str_split_i(notified, pattern = "\\.", i = 2)
   tbl_dx_gap <- compute_dx_gap(
     tbl,
     estimated = !!rlang::sym(estimated),
