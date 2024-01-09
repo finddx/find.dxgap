@@ -30,7 +30,23 @@
 #'   c("year", "country", "pop_density", "e_inc_num", "c_newinc")
 #' )
 #' }
-build_tbl <- function(disease, estimated, notified, year = NULL, vars = NULL) {
+build_tbl <- function(disease,
+                      estimated = NULL,
+                      notified = NULL,
+                      year = NULL,
+                      vars = NULL) {
+  if (is.null(estimated)) {
+    estimated <-
+      dxgap_diseases |>
+      dplyr::filter(disease == !!disease) |>
+      dplyr::pull(estimated)
+  }
+  if (is.null(notified)) {
+    notified <-
+      dxgap_diseases |>
+      dplyr::filter(disease == !!disease) |>
+      dplyr::pull(notified)
+  }
   dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
   estimated_field_name <- extract_field_name(dxgap_meta_df, "estimated")
   notified_field_name <- extract_field_name(dxgap_meta_df, "notified")
