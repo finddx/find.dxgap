@@ -128,7 +128,24 @@ render_report_impl <- function(template_name,
 
   lst_df <- load_dx(disease)
   dm <- build_dm(lst_df, year = year, estimated = estimated, notified = notified)
-  data_tbl <- build_tbl_impl(dm, vars = vars)
+
+  # Here and not in `build_tbl_impl` since I don't have the disease there
+  if (is.null(estimated)) {
+    estimated <- extract_default_dxgap_tbl_field(
+      disease = disease,
+      dxgap_field = "estimated",
+      output = "asis"
+    )
+  }
+
+  if (is.null(notified)) {
+    notified <- extract_default_dxgap_tbl_field(
+      disease = disease,
+      dxgap_field = "notified",
+      output = "asis"
+    )
+  }
+  data_tbl <- build_tbl_impl(dm, estimated = estimated, notified = notified, vars = vars)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser
   if (interactive) {
