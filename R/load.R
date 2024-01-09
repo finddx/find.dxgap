@@ -35,6 +35,7 @@ load_dx_impl <- function(.disease, .dxgap_diseases = dxgap_diseases, data_dir = 
   tbl_list <- switch(.disease,
     tb = lst_df
   )
+  attr(tbl_list, "disease") <- .disease
   tbl_list
 }
 
