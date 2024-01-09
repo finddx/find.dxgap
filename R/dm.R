@@ -113,10 +113,10 @@ build_tbl_impl <- function(dm, estimated, notified, vars = NULL) {
     tbl <-
       tbl |>
       dplyr::select(tidyselect::any_of(vars_dx_gap))
-    return(tbl)
+    return(relocate_dx_gap(tbl))
   }
 
-  tbl
+  relocate_dx_gap(tbl)
 }
 
 #' Build a dm model object

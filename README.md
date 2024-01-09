@@ -135,7 +135,9 @@ An error is raised, if a disease is not supported yet:
 
 ``` r
 build_tbl("covid", year = NULL, vars = tb_vars)
-#> Error in get_meta_dxgap(estimated = estimated, notified = notified): rlang::is_bare_character(estimated, n = 1) is not TRUE
+#> Error in `check_supported_disease()` at find.dxgap/R/load.R:26:3:
+#> ! `covid` not in `dxgap_diseases`.
+#> ✖ Disease is not supported yet.
 ```
 
 To read and tidy any table:

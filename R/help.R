@@ -204,3 +204,7 @@ extract_default_dxgap_tbl_field <- function(disease,
     tbl_field
   }
 }
+
+relocate_dx_gap <- function(tbl) {
+  dplyr::relocate(tbl, dx_gap, .after = country_code)
+}
