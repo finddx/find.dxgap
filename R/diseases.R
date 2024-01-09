@@ -62,7 +62,7 @@ dxgap_tb_vars <- tibble::tibble(
 )
 
 dxgap_diseases <- tibble::tribble(
-  ~disease, ~start_year, ~end_year, ~tables,         ~template,         ~vars,
-  "tb",     2016,         2021,     dxgap_tb_tables, dxgap_tb_templates, dxgap_tb_vars
+  ~disease, ~start_year, ~end_year, ~tables,         ~template,         ~vars,          ~estimated,                  ~notified,
+  "tb",     2016,         2021,     dxgap_tb_tables, dxgap_tb_templates, dxgap_tb_vars, "who_estimates.e_inc_num", "who_notifications.c_newinc"
 )
 
