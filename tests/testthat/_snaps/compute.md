@@ -4,26 +4,28 @@
       constructive::construct(dplyr::arrange(complete_rate_df_country, year, var_name))
     Output
       tibble::tibble(
-        year = rep(c("2016", "2017", "2018", "2019", "2020", "2021"), each = 12L),
+        year = rep(c("2016", "2017", "2018", "2019", "2020", "2021"), each = 13L),
         var_name = c(
-          "c_newinc", "country_code", "culture", "e_inc_num", "e_mort_100k", "gdp",
-          "is_hbc", "pop_density", "pop_total", "pop_urban_perc", "smear", "xpert",
-          "c_newinc", "country_code", "culture", "e_inc_num", "e_mort_100k", "gdp",
-          "is_hbc", "pop_density", "pop_total", "pop_urban_perc", "smear", "xpert",
-          "c_newinc", "country_code", "culture", "e_inc_num", "e_mort_100k", "gdp",
-          "is_hbc", "pop_density", "pop_total", "pop_urban_perc", "smear", "xpert",
-          "c_newinc", "country_code", "culture", "e_inc_num", "e_mort_100k", "gdp",
-          "is_hbc", "pop_density", "pop_total", "pop_urban_perc", "smear", "xpert",
-          "c_newinc", "country_code", "culture", "e_inc_num", "e_mort_100k", "gdp",
-          "is_hbc", "m_wrd", "pop_density", "pop_total", "pop_urban_perc", "smear",
-          "c_newinc", "country_code", "culture", "e_inc_num", "e_mort_100k", "gdp",
+          "c_newinc", "country_code", "culture", "dx_gap", "e_inc_num", "e_mort_100k",
+          "gdp", "is_hbc", "pop_density", "pop_total", "pop_urban_perc", "smear",
+          "xpert", "c_newinc", "country_code", "culture", "dx_gap", "e_inc_num",
+          "e_mort_100k", "gdp", "is_hbc", "pop_density", "pop_total", "pop_urban_perc",
+          "smear", "xpert", "c_newinc", "country_code", "culture", "dx_gap",
+          "e_inc_num", "e_mort_100k", "gdp", "is_hbc", "pop_density", "pop_total",
+          "pop_urban_perc", "smear", "xpert", "c_newinc", "country_code", "culture",
+          "dx_gap", "e_inc_num", "e_mort_100k", "gdp", "is_hbc", "pop_density",
+          "pop_total", "pop_urban_perc", "smear", "xpert", "c_newinc", "country_code",
+          "culture", "dx_gap", "e_inc_num", "e_mort_100k", "gdp", "is_hbc", "m_wrd",
+          "pop_density", "pop_total", "pop_urban_perc", "smear", "c_newinc",
+          "country_code", "culture", "dx_gap", "e_inc_num", "e_mort_100k", "gdp",
           "is_hbc", "m_wrd", "pop_density", "pop_total", "pop_urban_perc", "smear"
         ),
         completion_rate = c(
-          1, 1, 0.84, 1, 0.99, 0.98, 1, 1, 1, 1, 0.84, 0.82, 1, 1, 0.83, 1, 0.99, 0.98,
-          1, 1, 1, 1, 0.82, 0.81, 1, 1, 0.83, 1, 0.99, 0.98, 1, 1, 1, 1, 0.83, 0.81, 1,
-          1, 0.83, 1, 0.99, 0.97, 1, 1, 1, 1, 0.82, 0.81, 1, 1, 0.82, 1, 0.99, 0.97, 1,
-          0.79, 1, 1, 1, 0.81, 1, 1, 0.79, 1, 0.99, 0.95, 1, 0.79, 1, 1, 1, 0.79
+          1, 1, 0.84, 1, 1, 0.99, 0.98, 1, 1, 1, 1, 0.84, 0.82, 1, 1, 0.83, 1, 1, 0.99,
+          0.98, 1, 1, 1, 1, 0.82, 0.81, 1, 1, 0.83, 1, 1, 0.99, 0.98, 1, 1, 1, 1, 0.83,
+          0.81, 1, 1, 0.83, 1, 1, 0.99, 0.97, 1, 1, 1, 1, 0.82, 0.81, 1, 1, 0.82, 1, 1,
+          0.99, 0.97, 1, 0.79, 1, 1, 1, 0.81, 1, 1, 0.79, 1, 1, 0.99, 0.95, 1, 0.79, 1,
+          1, 1, 0.79
         ),
       )
 
@@ -33,22 +35,22 @@
       constructive::construct(dplyr::arrange(complete_rate_df_is_hbc, year, var_name))
     Output
       tibble::tibble(
-        year = rep(c("2016", "2017", "2018", "2019", "2020", "2021"), each = 22L),
-        is_hbc = rep(c("0", "1"), 66),
+        year = rep(c("2016", "2017", "2018", "2019", "2020", "2021"), each = 24L),
+        is_hbc = rep(c("0", "1"), 72),
         var_name = rep(
           c(
-            "c_newinc", "country_code", "culture", "e_inc_num", "e_mort_100k", "gdp",
-            "pop_density", "pop_total", "pop_urban_perc", "smear", "xpert", "c_newinc",
-            "country_code", "culture", "e_inc_num", "e_mort_100k", "gdp", "pop_density",
-            "pop_total", "pop_urban_perc", "smear", "xpert", "c_newinc", "country_code",
-            "culture", "e_inc_num", "e_mort_100k", "gdp", "pop_density", "pop_total",
-            "pop_urban_perc", "smear", "xpert", "c_newinc", "country_code", "culture",
-            "e_inc_num", "e_mort_100k", "gdp", "pop_density", "pop_total",
-            "pop_urban_perc", "smear", "xpert", "c_newinc", "country_code", "culture",
-            "e_inc_num", "e_mort_100k", "gdp", "m_wrd", "pop_density", "pop_total",
-            "pop_urban_perc", "smear", "c_newinc", "country_code", "culture", "e_inc_num",
-            "e_mort_100k", "gdp", "m_wrd", "pop_density", "pop_total", "pop_urban_perc",
-            "smear"
+            "c_newinc", "country_code", "culture", "dx_gap", "e_inc_num", "e_mort_100k",
+            "gdp", "pop_density", "pop_total", "pop_urban_perc", "smear", "xpert",
+            "c_newinc", "country_code", "culture", "dx_gap", "e_inc_num", "e_mort_100k",
+            "gdp", "pop_density", "pop_total", "pop_urban_perc", "smear", "xpert",
+            "c_newinc", "country_code", "culture", "dx_gap", "e_inc_num", "e_mort_100k",
+            "gdp", "pop_density", "pop_total", "pop_urban_perc", "smear", "xpert",
+            "c_newinc", "country_code", "culture", "dx_gap", "e_inc_num", "e_mort_100k",
+            "gdp", "pop_density", "pop_total", "pop_urban_perc", "smear", "xpert",
+            "c_newinc", "country_code", "culture", "dx_gap", "e_inc_num", "e_mort_100k",
+            "gdp", "m_wrd", "pop_density", "pop_total", "pop_urban_perc", "smear",
+            "c_newinc", "country_code", "culture", "dx_gap", "e_inc_num", "e_mort_100k",
+            "gdp", "m_wrd", "pop_density", "pop_total", "pop_urban_perc", "smear"
           ),
           each = 2L
         ),
@@ -59,10 +61,10 @@
             0.97, 1, 0.78, 1, 0.77, 1, 0.78, 1, 0.97, 0.75, 1, 0.77, 1, 0.75, 0.97, 1,
             0.97, 0.95, 0.97, 0.75, 1, 0.75, 1
           ),
-          c(4L, 1L, 4L, 1L, 1L, 1L, 6L, 1L, 1L, 1L, 5L, 1L, 4L, 1L, 1L, 
-          1L, 6L, 1L, 1L, 1L, 5L, 1L, 4L, 1L, 1L, 1L, 6L, 1L, 1L, 1L, 5L, 
-          1L, 4L, 3L, 6L, 1L, 1L, 1L, 5L, 1L, 4L, 3L, 1L, 7L, 1L, 5L, 1L, 
-          1L, 3L, 1L, 1L, 1L, 1L, 7L, 1L, 1L)
+          c(4L, 1L, 6L, 1L, 1L, 1L, 6L, 1L, 1L, 1L, 5L, 1L, 6L, 1L, 1L, 
+          1L, 6L, 1L, 1L, 1L, 5L, 1L, 6L, 1L, 1L, 1L, 6L, 1L, 1L, 1L, 5L, 
+          1L, 6L, 3L, 6L, 1L, 1L, 1L, 5L, 1L, 6L, 3L, 1L, 7L, 1L, 5L, 1L, 
+          1L, 5L, 1L, 1L, 1L, 1L, 7L, 1L, 1L)
         ),
       )
 

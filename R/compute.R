@@ -32,7 +32,7 @@
 #' \dontrun{
 #' # Calculate diagnostic gap for 2019 TB data:
 #' dx_gap_vars <- c("country_code", "year", "e_inc_num", "c_newinc")
-#' build_tbl("tb", 2019, vars = dx_gap_vars) |>
+#' build_tbl("tb", year = 2019, vars = dx_gap_vars) |>
 #'   compute_dx_gap(e_inc_num, c_newinc)
 #' }
 compute_dx_gap <- function(data, estimated, notified, ...) {
@@ -75,7 +75,13 @@ compute_dx_gap_impl <- function(data, .estimated, .notified, ...) {
 #'
 #' @examples
 #' \dontrun{
-#' tbl <- build_tbl("tb", 2019, vars = dxgap_const$tb_vars)
+#' tbl <- build_tbl(
+#'   "tb",
+#'   year = 2019,
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
+#'   vars = dxgap_const$tb_vars
+#' )
 #' compute_completion_rate(tbl, id_vars = c("year", "is_hbc"))
 #'
 #' cars_df <- tibble::as_tibble(mtcars, rownames = "car_name")
@@ -116,8 +122,13 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 #' @examples
 #' \dontrun{
 #' tbl <-
-#'   build_tbl("tb", NULL, vars = dxgap_const$tb_vars) |>
-#'   compute_dx_gap(e_inc_num, c_newinc) |>
+#'   build_tbl(
+#'     "tb",
+#'     year = NULL,
+#'     estimated = "who_estimates.e_inc_num",
+#'     notified = "who_notifications.c_newinc",
+#'     vars = dxgap_const$tb_vars
+#'   ) |>
 #'   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
 #'   dplyr::select(-any_of(c("country")))
 #'

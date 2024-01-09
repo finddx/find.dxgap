@@ -44,7 +44,7 @@ system.
 \dontrun{
 # Calculate diagnostic gap for 2019 TB data:
 dx_gap_vars <- c("country_code", "year", "e_inc_num", "c_newinc")
-build_tbl("tb", 2019, vars = dx_gap_vars) |>
+build_tbl("tb", year = 2019, vars = dx_gap_vars) |>
   compute_dx_gap(e_inc_num, c_newinc)
 }
 }

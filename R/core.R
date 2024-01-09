@@ -2,17 +2,30 @@
 #' @noRd
 #' @param data_list A list of tibbles as returned by `load_dx()`.
 #' @examples \dontrun{
-#' get_core(load_dx("tb"))
+#' get_core(
+#'   load_dx("tb"),
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc"
+#' )
 #' }
-get_core <- function(data_list) {
+get_core <- function(data_list, estimated, notified) {
+  dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
+
+  estimated_tbl_name <- extract_tbl_name(dxgap_meta_df, "estimated")
+  estimated_field_name <- extract_field_name(dxgap_meta_df, "estimated")
+  notified_tbl_name <- extract_tbl_name(dxgap_meta_df, "notified")
+  notified_field_name <- extract_field_name(dxgap_meta_df, "notified")
+
   country_notification_df <-
-    data_list$who_notifications |>
-    get_cc_var_always_given_acrs_yrs(c_newinc)
+    data_list |>
+    purrr::pluck(notified_tbl_name) |>
+    get_cc_var_always_given_acrs_yrs(!!rlang::ensym(notified_field_name))
 
   country_estimate_df <-
-    data_list$who_estimates |>
-    dplyr::filter(e_inc_num != 0) |> # avoid dividing by zero
-    get_cc_var_always_given_acrs_yrs(e_inc_num)
+    data_list |>
+    purrr::pluck(estimated_tbl_name) |>
+    dplyr::filter(!!rlang::ensym(estimated_field_name) != 0) |> # avoid dividing by zero
+    get_cc_var_always_given_acrs_yrs(!!rlang::ensym(estimated_field_name))
 
   in_common_dxgap <-
     country_notification_df |>

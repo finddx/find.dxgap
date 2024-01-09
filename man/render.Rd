@@ -8,6 +8,8 @@
 render_bulk(
   template_name,
   disease,
+  estimated = NULL,
+  notified = NULL,
   years = NULL,
   vars = NULL,
   override_vars_check = FALSE
@@ -16,6 +18,8 @@ render_bulk(
 render_report(
   template_name,
   disease,
+  estimated = NULL,
+  notified = NULL,
   year = NULL,
   vars = NULL,
   interactive = TRUE,
@@ -29,6 +33,18 @@ Run \code{\link[=view_templates]{view_templates()}} to see a list of valid optio
 \item{disease}{A character of length one identifying the disease for which
 the user wants to build a wide table. The tibble \code{dxgap_diseases} shows the
 diseases that are currently supported.}
+
+\item{estimated}{Override the default \code{NULL} with a dot-separated character
+indicating which field from which table should be used as estimated cases
+for DX Gap computation. If kept to \code{NULL}, the function will use the value
+\code{estimates_table.estimates_field} from the \code{notified} column in the
+\code{dxgap_diseases} meta table.}
+
+\item{notified}{Override the default \code{NULL} with a dot-separated character
+indicating which field from which table should be used as notified cases
+for DX Gap computation. If kept to \code{NULL}, the function will use the value
+\code{notifications_table.notifications_field} from the \code{notified} column in the
+\code{dxgap_diseases} meta table.}
 
 \item{years}{Integer matching the year(s) of the report to be rendered. Can be
 a single integer like \code{2019}, or a vector of integers such as \code{2019:2021}.}
@@ -75,6 +91,13 @@ render_bulk("eda.Rmd", disease = "tb", years = 2018:2021, vars = tb_vars)
 tb_vars <- c("year", "country", "is_hbc", "country_code", "dx_gap",
              "pop_total", "pop_urban_perc", "pop_density", "gdp", "c_newinc",
              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
-render_report("eda.Rmd", disease = "tb", year = 2019, vars = tb_vars)
+render_report(
+  template_name = "eda.Rmd",
+  disease = "tb",
+  estimated = "who_estimates.e_inc_num",
+  notified = "who_notifications.c_newinc",
+  year = 2019,
+  vars = tb_vars
+)
 }
 }

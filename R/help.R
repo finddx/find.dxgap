@@ -153,3 +153,58 @@ mutate_country <- function(data) {
     )
 }
 
+get_meta_dxgap <- function(estimated, notified) {
+  stopifnot(rlang::is_bare_character(estimated, n = 1))
+  stopifnot(rlang::is_bare_character(notified, n = 1))
+  mat <- stringr::str_split_fixed(
+    c(estimated, notified),
+    pattern = "\\.",
+    n = 2
+  )
+  dimnames(mat) <- list(
+    c("estimated", "notified"),
+    c("table", "field")
+  )
+  tbl_field_df <- tibble::as_tibble(mat, rownames = "type")
+  tbl_field_df
+}
+
+extract_tbl_name <- function(dxgap_meta_df, type) {
+  type_match <- rlang::arg_match(type, c("estimated", "notified"))
+  dxgap_meta_df |>
+    dplyr::filter(type == !!type_match) |>
+    dplyr::pull(table)
+}
+
+extract_field_name <- function(dxgap_meta_df, type) {
+  type_match <- rlang::arg_match(type, c("estimated", "notified"))
+  dxgap_meta_df |>
+    dplyr::filter(type == !!type_match) |>
+    dplyr::pull(field)
+}
+
+extract_default_dxgap_tbl_field <- function(disease,
+                                            dxgap_field,
+                                            output = "asis",
+                                           .dxgap_diseases = dxgap_diseases) {
+  check_supported_disease(disease = disease)
+  dxgap_field_match <- rlang::arg_match(dxgap_field, c("estimated", "notified"))
+  output_match <- rlang::arg_match(output, c("asis", "tbl", "field"))
+
+  tbl_field <-
+    .dxgap_diseases |>
+    dplyr::filter(disease == !!disease) |>
+    dplyr::pull(dxgap_field_match)
+
+  if (output_match == "tbl") {
+    stringr::str_split_i(tbl_field, "\\.", i = 1)
+  } else if (output_match == "field") {
+    stringr::str_split_i(tbl_field, "\\.", i = 2)
+  } else {
+    tbl_field
+  }
+}
+
+relocate_dx_gap <- function(tbl) {
+  dplyr::relocate(tbl, dx_gap, .after = country_code)
+}

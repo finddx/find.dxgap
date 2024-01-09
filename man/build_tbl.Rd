@@ -4,12 +4,24 @@
 \alias{build_tbl}
 \title{Load all data for a disease into a single wide table}
 \usage{
-build_tbl(disease, year = NULL, vars = NULL)
+build_tbl(disease, estimated = NULL, notified = NULL, year = NULL, vars = NULL)
 }
 \arguments{
 \item{disease}{A character of length one identifying the disease for which
 the user wants to build a wide table. The tibble \code{dxgap_diseases} shows the
 diseases that are currently supported.}
+
+\item{estimated}{Override the default \code{NULL} with a dot-separated character
+indicating which field from which table should be used as estimated cases
+for DX Gap computation. If kept to \code{NULL}, the function will use the value
+\code{estimates_table.estimates_field} from the \code{notified} column in the
+\code{dxgap_diseases} meta table.}
+
+\item{notified}{Override the default \code{NULL} with a dot-separated character
+indicating which field from which table should be used as notified cases
+for DX Gap computation. If kept to \code{NULL}, the function will use the value
+\code{notifications_table.notifications_field} from the \code{notified} column in the
+\code{dxgap_diseases} meta table.}
 
 \item{year}{An integer indicating a year to filter the data on. Defaults to
 NULL, returning all years present in the data.}
@@ -27,6 +39,12 @@ performing a series of cascading joins on matching keys.
 }
 \examples{
 \dontrun{
-build_tbl("tb", 2019, c("year", "country", "pop_density"))
+build_tbl(
+  "tb",
+  2019,
+  estimated = "who_estimates.e_inc_num",
+  notified = "who_notifications.c_newinc",
+  c("year", "country", "pop_density", "e_inc_num", "c_newinc")
+)
 }
 }

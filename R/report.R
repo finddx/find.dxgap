@@ -36,11 +36,19 @@
 #'              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
 #' render_bulk("eda.Rmd", disease = "tb", years = 2018:2021, vars = tb_vars)
 #' }
-render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, override_vars_check = FALSE) {
+render_bulk <- function(template_name,
+                        disease,
+                        estimated = NULL,
+                        notified = NULL,
+                        years = NULL,
+                        vars = NULL,
+                        override_vars_check = FALSE) {
   years <- purrr::walk(
     years,
     ~ render_report(
       disease = disease,
+      estimated = estimated,
+      notified = notified,
       template_name = template_name,
       year = .x,
       vars = vars,
@@ -69,10 +77,19 @@ render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, over
 #' tb_vars <- c("year", "country", "is_hbc", "country_code", "dx_gap",
 #'              "pop_total", "pop_urban_perc", "pop_density", "gdp", "c_newinc",
 #'              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
-#' render_report("eda.Rmd", disease = "tb", year = 2019, vars = tb_vars)
+#' render_report(
+#'   template_name = "eda.Rmd",
+#'   disease = "tb",
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
+#'   year = 2019,
+#'   vars = tb_vars
+#' )
 #' }
 render_report <- function(template_name,
                           disease,
+                          estimated = NULL,
+                          notified = NULL,
                           year = NULL,
                           vars = NULL,
                           interactive = TRUE,
@@ -81,6 +98,8 @@ render_report <- function(template_name,
   render_report_impl(
     template_name,
     disease,
+    estimated = estimated,
+    notified = notified,
     year = year,
     vars = vars,
     interactive = interactive,
@@ -90,6 +109,8 @@ render_report <- function(template_name,
 
 render_report_impl <- function(template_name,
                                disease,
+                               estimated,
+                               notified,
                                year,
                                vars,
                                interactive,
@@ -106,7 +127,7 @@ render_report_impl <- function(template_name,
   template_path <- compose_file_path(template_name, template_dir)
 
   lst_df <- load_dx(disease)
-  dm <- build_dm(lst_df, year = year)
+  dm <- build_dm(lst_df, year = year, estimated = estimated, notified = notified)
   data_tbl <- build_tbl_impl(dm, vars = vars)
 
   # if output_file is NULL knit to temp file and open with Viewer/Rstudio browser

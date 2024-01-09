@@ -4,13 +4,17 @@ pkgload::load_all()
 df_lst <- load_dx("tb")
 
 # ---- Build dm ----
-dm <- build_dm(df_lst, year = NULL)
+dm <- build_dm(
+  df_lst,
+  estimated = "who_estimates.e_inc_num",
+  notified = "who_notifications.c_newinc",
+  year = NULL,
+)
 data_tbl <- build_tbl_impl(dm, vars = dxgap_const$tb_vars)
 
 # ---- Prep data ----
 tbl <-
   data_tbl |>
-  compute_dx_gap(e_inc_num, c_newinc) |>
   mutate(is_hbc = forcats::as_factor(is_hbc)) |>
   select(-any_of(c("country"))) |>
   mutate(xpert = coalesce(xpert, m_wrd)) |>
@@ -18,7 +22,6 @@ tbl <-
 
 all_indicators_df <-
   data_tbl |>
-  compute_dx_gap(e_inc_num, c_newinc) |>
   mutate(is_hbc = forcats::as_factor(is_hbc)) |>
   mutate(xpert = coalesce(xpert, m_wrd)) |>
   select(-m_wrd)

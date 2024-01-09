@@ -40,3 +40,54 @@ test_that("is_significant() works", {
     }
   )
 })
+
+test_that("get_meta_dxgap() works", {
+  dxgap_meta_df <- get_meta_dxgap(
+    estimated = "who_estimates.e_inc_num",
+    notified = "who_notifications.c_newinc"
+  )
+  expect_s3_class(dxgap_meta_df, "data.frame")
+  expect_equal(nrow(dxgap_meta_df), 2)
+  expect_equal(ncol(dxgap_meta_df), 3)
+})
+
+test_that("extract_default_dxgap_tbl_field() works", {
+  disease <- "tb"
+  asis <- extract_default_dxgap_tbl_field(
+    disease = disease,
+    output = "asis",
+    dxgap_field = "notified"
+  )
+  expect_equal(asis, "who_notifications.c_newinc")
+  tbl <- extract_default_dxgap_tbl_field(
+    disease = disease,
+    output = "tbl",
+    dxgap_field = "notified"
+  )
+  expect_equal(tbl, "who_notifications")
+  field <- extract_default_dxgap_tbl_field(
+    disease = disease,
+    output = "field",
+    dxgap_field = "notified"
+  )
+  expect_equal(field, "c_newinc")
+  disease <- "tb"
+  asis <- extract_default_dxgap_tbl_field(
+    disease = disease,
+    output = "asis",
+    dxgap_field = "estimated"
+  )
+  expect_equal(asis, "who_estimates.e_inc_num")
+  tbl <- extract_default_dxgap_tbl_field(
+    disease = disease,
+    output = "tbl",
+    dxgap_field = "estimated"
+  )
+  expect_equal(tbl, "who_estimates")
+  field <- extract_default_dxgap_tbl_field(
+    disease = disease,
+    output = "field",
+    dxgap_field = "estimated"
+  )
+  expect_equal(field, "e_inc_num")
+})

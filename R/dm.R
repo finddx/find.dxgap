@@ -7,6 +7,16 @@
 #' @param disease A character of length one identifying the disease for which
 #'   the user wants to build a wide table. The tibble `dxgap_diseases` shows the
 #'   diseases that are currently supported.
+#' @param estimated Override the default `NULL` with a dot-separated character
+#'   indicating which field from which table should be used as estimated cases
+#'   for DX Gap computation. If kept to `NULL`, the function will use the value
+#'   `estimates_table.estimates_field` from the `notified` column in the
+#'   `dxgap_diseases` meta table.
+#' @param notified Override the default `NULL` with a dot-separated character
+#'   indicating which field from which table should be used as notified cases
+#'   for DX Gap computation. If kept to `NULL`, the function will use the value
+#'   `notifications_table.notifications_field` from the `notified` column in the
+#'   `dxgap_diseases` meta table.
 #' @param year An integer indicating a year to filter the data on. Defaults to
 #'   NULL, returning all years present in the data.
 #' @param vars A vector of strings naming columns to subset the data on.
@@ -18,12 +28,41 @@
 #'
 #' @examples
 #' \dontrun{
-#' build_tbl("tb", 2019, c("year", "country", "pop_density"))
+#' build_tbl(
+#'   "tb",
+#'   2019,
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
+#'   c("year", "country", "pop_density", "e_inc_num", "c_newinc")
+#' )
 #' }
-build_tbl <- function(disease, year = NULL, vars = NULL) {
+build_tbl <- function(disease,
+                      estimated = NULL,
+                      notified = NULL,
+                      year = NULL,
+                      vars = NULL) {
   df_lst <- load_dx_impl(disease)
-  dm <- build_dm(df_lst, year = year)
-  build_tbl_impl(dm, vars)
+
+  dm <- build_dm(df_lst, year = year, estimated = estimated, notified = notified)
+
+  # Here and not in `build_tbl_impl` since I don't have the disease there
+  if (is.null(estimated)) {
+    estimated <- extract_default_dxgap_tbl_field(
+      disease = disease,
+      dxgap_field = "estimated",
+      output = "asis"
+    )
+  }
+
+  if (is.null(notified)) {
+    notified <- extract_default_dxgap_tbl_field(
+      disease = disease,
+      dxgap_field = "notified",
+      output = "asis"
+    )
+  }
+
+  build_tbl_impl(dm, vars, estimated = estimated, notified = notified)
 }
 
 #' Join all data into a big table
@@ -44,27 +83,40 @@ build_tbl <- function(disease, year = NULL, vars = NULL) {
 #' @examples
 #' \dontrun{
 #' dm_object <- load_dx("tb") |>
-#'   build_dm()
+#'   build_dm(
+#'     estimated = "who_estimates.e_inc_num",
+#'     notified = "who_notifications.c_newinc"
+#'   )
 #'
 #' build_tbl_impl(dm_object) # All cols
 #' build_tbl_impl(dm_object, vars = c("year", "country", "pop_density")) # select cols
 #' }
-build_tbl_impl <- function(dm, vars = NULL) {
+build_tbl_impl <- function(dm, estimated, notified, vars = NULL) {
   tbl <-
     dm |>
     dm::dm_flatten_to_tbl(.start = country) |>
     dplyr::filter(!dplyr::if_all(-c(country_code), is.na))
 
-  tbl <- tbl |>
+  estimated <- stringr::str_split_i(estimated, pattern = "\\.", i = 2)
+  notified <- stringr::str_split_i(notified, pattern = "\\.", i = 2)
+  tbl_dx_gap <- compute_dx_gap(
+    tbl,
+    estimated = !!rlang::sym(estimated),
+    notified = !!rlang::sym(notified)
+  )
+
+  tbl <- tbl_dx_gap |>
     dplyr::relocate(is_hbc, country_code, year, .before = everything())
 
   if (!is.null(vars)) {
+    vars_dx_gap <- c(vars, "dx_gap")
     tbl <-
       tbl |>
-      dplyr::select(tidyselect::any_of(vars))
+      dplyr::select(tidyselect::any_of(vars_dx_gap))
+    return(relocate_dx_gap(tbl))
   }
 
-  return(tbl)
+  relocate_dx_gap(tbl)
 }
 
 #' Build a dm model object
@@ -85,16 +137,44 @@ build_tbl_impl <- function(dm, vars = NULL) {
 #'
 #' @examples
 #' \dontrun{
-#' build_dm(load_dx("tb")) # all years
-#' build_dm(load_dx("tb"), year = 2019) # only 2019
+#' build_dm(
+#'   load_dx("tb"),
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc"
+#' ) # all years
+#' build_dm(
+#'   load_dx("tb"),
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
+#'   year = 2019 # only 2019
+#' )
 #' }
-build_dm <- function(data_list, year = NULL) {
+build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) {
   # TODO: max year should be taken from dxgap_diseases
   max_year <- 2021
   if (!is.null(year) && year > max_year) {
     rlang::abort(sprintf("Data available up to %s.", max_year))
   }
-  core_data <- get_core(data_list)
+  disease <- attr(data_list, "disease")
+  if (is.null(estimated)) {
+    estimated <- extract_default_dxgap_tbl_field(
+      disease = disease,
+      output = "asis",
+      dxgap_field = "estimated"
+    )
+  }
+  if (is.null(notified)) {
+    notified <- extract_default_dxgap_tbl_field(
+      disease = disease,
+      output = "asis",
+      dxgap_field = "notified"
+    )
+  }
+  core_data <- get_core(
+    data_list,
+    estimated = estimated,
+    notified = notified
+  )
   core_list <- core_data$core_list
   can_compute_dxgap <- core_data$can_compute_dxgap
 

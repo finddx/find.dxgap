@@ -82,13 +82,25 @@ tb_vars <- c(
   "e_mort_100k", "culture", "smear", "xpert", "m_wrd"
 )
 
-build_tbl("tb", year = 2019, vars = tb_vars)
+build_tbl(
+  "tb", 
+  year = 2019, 
+  estimated = "who_estimates.e_inc_num",
+  notified = "who_notifications.c_newinc",
+  vars = tb_vars
+)
 ```
 
 Optionally, a time series can be built:
 
 ```{r}
-build_tbl("tb", year = NULL, vars = tb_vars)
+build_tbl(
+  "tb", 
+  year = NULL, 
+  estimated = "who_estimates.e_inc_num",
+  notified = "who_notifications.c_newinc",
+  vars = tb_vars
+)
 ```
 
 An error is raised, if a disease is not supported yet:
