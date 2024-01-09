@@ -9,6 +9,7 @@ test_that("build_tbl() works with non-NULL args.", {
     vars = c("year", "country", "pop_density", "e_inc_num", "c_newinc")
   )
   expect_s3_class(tbl, "data.frame")
+  expect_in("dx_gap", names(tbl))
 })
 
 test_that("build_tbl() works with `NULL` args.", {
@@ -22,4 +23,5 @@ test_that("build_tbl() works with `NULL` args.", {
     vars = c("year", "country", "pop_density", "e_inc_num", "c_newinc")
   )
   expect_s3_class(tbl, "data.frame")
+  expect_in("dx_gap", names(tbl))
 })
