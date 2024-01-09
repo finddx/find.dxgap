@@ -185,11 +185,11 @@ extract_field_name <- function(dxgap_meta_df, type) {
 
 extract_default_dxgap_tbl_field <- function(disease,
                                             dxgap_field,
-                                            component = "all",
+                                            component = "asis",
                                            .dxgap_diseases = dxgap_diseases) {
   check_supported_disease(disease = disease)
   dxgap_field_match <- rlang::arg_match(dxgap_field, c("estimated", "notified"))
-  component_match <- rlang::arg_match(component, c("all", "tbl", "field"))
+  component_match <- rlang::arg_match(component, c("asis", "tbl", "field"))
 
   tbl_field <-
     .dxgap_diseases |>

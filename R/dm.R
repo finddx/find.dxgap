@@ -87,12 +87,10 @@ build_tbl_impl <- function(dm, estimated, notified, vars = NULL) {
     dm::dm_flatten_to_tbl(.start = country) |>
     dplyr::filter(!dplyr::if_all(-c(country_code), is.na))
 
-  estimated_field <- stringr::str_split_i(estimated, "\\.", i = 2)
-  notified_field <- stringr::str_split_i(notified, "\\.", i = 2)
   tbl_dx_gap <- compute_dx_gap(
     tbl,
-    estimated = !!rlang::sym(estimated_field),
-    notified = !!rlang::sym(notified_field)
+    estimated = !!rlang::sym(estimated),
+    notified = !!rlang::sym(notified)
   )
 
   tbl <- tbl_dx_gap |>
@@ -147,10 +145,18 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
   }
   disease <- attr(data_list, "disease")
   if (is.null(estimated)) {
-    estimated <- extract_default_dxgap_tbl_field(disease = disease, "estimated")
+    estimated <- extract_default_dxgap_tbl_field(
+      disease = disease,
+      component = "asis",
+      dxgap_field = "estimated"
+    )
   }
   if (is.null(notified)) {
-    notified <- extract_default_dxgap_tbl_field(disease = disease, "notified")
+    notified <- extract_default_dxgap_tbl_field(
+      disease = disease,
+      component = "asis",
+      dxgap_field = "notified"
+    )
   }
   core_data <- get_core(
     data_list,
