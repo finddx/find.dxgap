@@ -33,7 +33,7 @@
 #'   2019,
 #'   estimated = "who_estimates.e_inc_num",
 #'   notified = "who_notifications.c_newinc",
-#'   c("year", "country", "pop_density", "e_inc_num", "c_newinc")
+#'   c("year", "country_code", "pop_density", "e_inc_num", "c_newinc")
 #' )
 #' }
 build_tbl <- function(disease,
@@ -89,7 +89,7 @@ build_tbl <- function(disease,
 #'   )
 #'
 #' build_tbl_impl(dm_object) # All cols
-#' build_tbl_impl(dm_object, vars = c("year", "country", "pop_density")) # select cols
+#' build_tbl_impl(dm_object, vars = c("year", "country_code", "pop_density")) # select cols
 #' }
 build_tbl_impl <- function(dm, estimated, notified, vars = NULL) {
   tbl <-

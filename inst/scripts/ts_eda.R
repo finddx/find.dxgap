@@ -16,7 +16,6 @@ data_tbl <- build_tbl_impl(dm, vars = dxgap_const$tb_vars)
 tbl <-
   data_tbl |>
   mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-  select(-any_of(c("country"))) |>
   mutate(xpert = coalesce(xpert, m_wrd)) |>
   select(-c(m_wrd, c_newinc, e_inc_num, country_code))
 

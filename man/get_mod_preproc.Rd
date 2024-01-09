@@ -39,7 +39,7 @@ tbl <-
     vars = dxgap_const$tb_vars
   ) |>
   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-  dplyr::select(-any_of(c("year", "country")))
+  dplyr::select(-any_of(c("year")))
 
 get_mod_preproc(
   .tbl = tbl,

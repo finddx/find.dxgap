@@ -34,8 +34,7 @@ tbl <-
     notified = "who_notifications.c_newinc",
     vars = dxgap_const$tb_vars
   ) |>
-  dplyr::mutate(is_hbc = forcats::as_factor(is_hbc)) |>
-  dplyr::select(-any_of(c("country")))
+  dplyr::mutate(is_hbc = forcats::as_factor(is_hbc))
 
 tbl |>
   dplyr::filter(year == 2019) |>
