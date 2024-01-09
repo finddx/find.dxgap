@@ -78,73 +78,83 @@ tb_vars <- c(
   "e_mort_100k", "culture", "smear", "xpert", "m_wrd"
 )
 
-build_tbl("tb", year = 2019, vars = tb_vars)
+build_tbl(
+  "tb", 
+  year = 2019, 
+  estimated = "who_estimates.e_inc_num",
+  notified = "who_notifications.c_newinc",
+  vars = tb_vars
+)
 #> # A tibble: 190 × 15
-#>     year country        is_hbc country_code pop_total pop_urban_perc pop_density
-#>    <dbl> <chr>           <dbl> <chr>            <dbl>          <dbl>       <dbl>
-#>  1  2019 Angola              1 AGO             3.24e7           66.2       26.0 
-#>  2  2019 Bangladesh          1 BGD             1.66e8           37.4     1272.  
-#>  3  2019 Brazil              1 BRA             2.12e8           86.8       25.3 
-#>  4  2019 Central Afric…      1 CAF             5.21e6           41.8        8.36
-#>  5  2019 China               1 CHN             1.41e9           60.3      150.  
-#>  6  2019 Congo - Kinsh…      1 COD             8.99e7           45.0       39.7 
-#>  7  2019 Congo - Brazz…      1 COG             5.57e6           67.4       16.3 
-#>  8  2019 Ethiopia            1 ETH             1.14e8           21.2      101.  
-#>  9  2019 Indonesia           1 IDN             2.70e8           56.0      144.  
-#> 10  2019 India               1 IND             1.38e9           34.5      465.  
+#>     year is_hbc country_code dx_gap pop_total pop_urban_perc pop_density     gdp
+#>    <dbl>  <dbl> <chr>         <dbl>     <dbl>          <dbl>       <dbl>   <dbl>
+#>  1  2019      1 AGO            35.0    3.24e7           66.2       26.0  6.93e10
+#>  2  2019      1 BGD            20.3    1.66e8           37.4     1272.   3.51e11
+#>  3  2019      1 BRA            10.9    2.12e8           86.8       25.3  1.87e12
+#>  4  2019      1 CAF            57.0    5.21e6           41.8        8.36 2.22e 9
+#>  5  2019      1 CHN            11.8    1.41e9           60.3      150.   1.43e13
+#>  6  2019      1 COD            38.0    8.99e7           45.0       39.7  5.18e10
+#>  7  2019      1 COG            43.8    5.57e6           67.4       16.3  1.28e10
+#>  8  2019      1 ETH            30.6    1.14e8           21.2      101.   9.59e10
+#>  9  2019      1 GAB            55.0    2.24e6           89.7        8.70 1.69e10
+#> 10  2019      1 IDN            33.5    2.70e8           56.0      144.   1.12e12
 #> # ℹ 180 more rows
-#> # ℹ 8 more variables: gdp <dbl>, c_newinc <dbl>, e_inc_num <dbl>,
-#> #   e_mort_100k <dbl>, culture <dbl>, smear <dbl>, xpert <dbl>, m_wrd <dbl>
+#> # ℹ 7 more variables: c_newinc <dbl>, e_inc_num <dbl>, e_mort_100k <dbl>,
+#> #   culture <dbl>, smear <dbl>, xpert <dbl>, m_wrd <dbl>
 ```
 
 Optionally, a time series can be built:
 
 ``` r
-build_tbl("tb", year = NULL, vars = tb_vars)
+build_tbl(
+  "tb", 
+  year = NULL, 
+  estimated = "who_estimates.e_inc_num",
+  notified = "who_notifications.c_newinc",
+  vars = tb_vars
+)
 #> # A tibble: 1,140 × 15
-#>     year country    is_hbc country_code pop_total pop_urban_perc pop_density
-#>    <dbl> <chr>       <dbl> <chr>            <dbl>          <dbl>       <dbl>
-#>  1  2016 Angola          1 AGO           29154746           64.1        23.4
-#>  2  2017 Angola          1 AGO           30208628           64.8        24.2
-#>  3  2018 Angola          1 AGO           31273533           65.5        25.1
-#>  4  2019 Angola          1 AGO           32353588           66.2        26.0
-#>  5  2020 Angola          1 AGO           33428486           66.8        26.8
-#>  6  2021 Angola          1 AGO           34503774           67.5        27.7
-#>  7  2016 Bangladesh      1 BGD          159784568           35.1      1228. 
-#>  8  2017 Bangladesh      1 BGD          161793964           35.9      1243. 
-#>  9  2018 Bangladesh      1 BGD          163683958           36.6      1257. 
-#> 10  2019 Bangladesh      1 BGD          165516222           37.4      1272. 
+#>     year is_hbc country_code dx_gap pop_total pop_urban_perc pop_density     gdp
+#>    <dbl>  <dbl> <chr>         <dbl>     <dbl>          <dbl>       <dbl>   <dbl>
+#>  1  2016      1 AGO            43.9  29154746           64.1        23.4 4.98e10
+#>  2  2017      1 AGO            49.6  30208628           64.8        24.2 6.90e10
+#>  3  2018      1 AGO            40.4  31273533           65.5        25.1 7.78e10
+#>  4  2019      1 AGO            35.0  32353588           66.2        26.0 6.93e10
+#>  5  2020      1 AGO            42.6  33428486           66.8        26.8 5.02e10
+#>  6  2021      1 AGO            44.9  34503774           67.5        27.7 6.57e10
+#>  7  2016      1 BGD            37.0 159784568           35.1      1228.  2.65e11
+#>  8  2017      1 BGD            32.2 161793964           35.9      1243.  2.94e11
+#>  9  2018      1 BGD            26.2 163683958           36.6      1257.  3.21e11
+#> 10  2019      1 BGD            20.3 165516222           37.4      1272.  3.51e11
 #> # ℹ 1,130 more rows
-#> # ℹ 8 more variables: gdp <dbl>, c_newinc <dbl>, e_inc_num <dbl>,
-#> #   e_mort_100k <dbl>, culture <dbl>, smear <dbl>, xpert <dbl>, m_wrd <dbl>
+#> # ℹ 7 more variables: c_newinc <dbl>, e_inc_num <dbl>, e_mort_100k <dbl>,
+#> #   culture <dbl>, smear <dbl>, xpert <dbl>, m_wrd <dbl>
 ```
 
 An error is raised, if a disease is not supported yet:
 
 ``` r
 build_tbl("covid", year = NULL, vars = tb_vars)
-#> Error in `check_supported_disease()`:
-#> ! `covid` not in `dxgap_diseases`.
-#> ✖ Disease is not supported yet.
+#> Error in get_meta_dxgap(estimated = estimated, notified = notified): rlang::is_bare_character(estimated, n = 1) is not TRUE
 ```
 
 To read and tidy any table:
 
 ``` r
 import_tbl("who_hbc_2023-07-28.csv")
-#> # A tibble: 300 × 4
-#>    country    country_code share_global_inc  year
-#>    <chr>      <chr>                   <dbl> <dbl>
-#>  1 Angola     AGO                        83  2016
-#>  2 Angola     AGO                        83  2017
-#>  3 Angola     AGO                        83  2018
-#>  4 Angola     AGO                        83  2019
-#>  5 Angola     AGO                        83  2020
-#>  6 Bangladesh BGD                        83  2016
-#>  7 Bangladesh BGD                        83  2017
-#>  8 Bangladesh BGD                        83  2018
-#>  9 Bangladesh BGD                        83  2019
-#> 10 Bangladesh BGD                        83  2020
+#> # A tibble: 300 × 3
+#>    share_global_inc country_code  year
+#>               <dbl> <chr>        <dbl>
+#>  1               83 AGO           2016
+#>  2               83 AGO           2017
+#>  3               83 AGO           2018
+#>  4               83 AGO           2019
+#>  5               83 AGO           2020
+#>  6               83 BGD           2016
+#>  7               83 BGD           2017
+#>  8               83 BGD           2018
+#>  9               83 BGD           2019
+#> 10               83 BGD           2020
 #> # ℹ 290 more rows
 ```
 
