@@ -45,6 +45,7 @@ build_tbl <- function(disease,
 
   dm <- build_dm(df_lst, year = year, estimated = estimated, notified = notified)
 
+  # Here and not in `build_tbl_impl` since I don't have the disease there
   if (is.null(estimated)) {
     estimated <- extract_default_dxgap_tbl_field(
       disease = disease,
