@@ -41,22 +41,6 @@ build_tbl <- function(disease,
                       notified = NULL,
                       year = NULL,
                       vars = NULL) {
-  if (is.null(estimated)) {
-    estimated <-
-      dxgap_diseases |>
-      dplyr::filter(disease == !!disease) |>
-      dplyr::pull(estimated)
-  }
-  if (is.null(notified)) {
-    notified <-
-      dxgap_diseases |>
-      dplyr::filter(disease == !!disease) |>
-      dplyr::pull(notified)
-  }
-  dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
-  estimated_field_name <- extract_field_name(dxgap_meta_df, "estimated")
-  notified_field_name <- extract_field_name(dxgap_meta_df, "notified")
-
   df_lst <- load_dx_impl(disease)
   dm <- build_dm(df_lst, year = year, estimated = estimated, notified = notified)
 
@@ -142,13 +126,29 @@ build_tbl_impl <- function(dm, vars = NULL) {
 #'   year = 2019 # only 2019
 #' )
 #' }
-build_dm <- function(data_list, estimated, notified, year = NULL) {
+build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) {
   # TODO: max year should be taken from dxgap_diseases
   max_year <- 2021
   if (!is.null(year) && year > max_year) {
     rlang::abort(sprintf("Data available up to %s.", max_year))
   }
-  core_data <- get_core(data_list, estimated = estimated, notified = notified)
+  if (is.null(estimated)) {
+    estimated <-
+      dxgap_diseases |>
+      dplyr::filter(disease == !!disease) |>
+      dplyr::pull(estimated)
+  }
+  if (is.null(notified)) {
+    notified <-
+      dxgap_diseases |>
+      dplyr::filter(disease == !!disease) |>
+      dplyr::pull(notified)
+  }
+  core_data <- get_core(
+    data_list,
+    estimated = estimated,
+    notified = notified
+  )
   core_list <- core_data$core_list
   can_compute_dxgap <- core_data$can_compute_dxgap
 
