@@ -80,8 +80,8 @@ render_bulk <- function(template_name, disease,  years = NULL, vars = NULL, over
 #' }
 render_report <- function(template_name,
                           disease,
-                          estimated,
-                          notified,
+                          estimated = NULL,
+                          notified = NULL,
                           year = NULL,
                           vars = NULL,
                           interactive = TRUE,
