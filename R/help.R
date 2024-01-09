@@ -182,3 +182,13 @@ extract_field_name <- function(dxgap_meta_df, type) {
     dplyr::filter(type == !!type_match) |>
     dplyr::pull(field)
 }
+
+extract_default_dxgap_tbl_field <- function(disease,
+                                            type,
+                                           .dxgap_diseases = dxgap_diseases) {
+  check_supported_disease(disease = disease)
+  type_match <- rlang::arg_match(type, c("estimated", "notified"))
+  .dxgap_diseases |>
+    dplyr::filter(disease == !!disease) |>
+    dplyr::pull(type_match)
+}
