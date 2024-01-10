@@ -28,6 +28,9 @@
     <loc>https://finddx.github.io/find.dxgap/reference/dxgap_master_list.html</loc>
   </url>
   <url>
+    <loc>https://finddx.github.io/find.dxgap/reference/find.dxgap-package.html</loc>
+  </url>
+  <url>
     <loc>https://finddx.github.io/find.dxgap/reference/get_mod_preproc.html</loc>
   </url>
   <url>
@@ -46,7 +49,7 @@
     <loc>https://finddx.github.io/find.dxgap/reference/mod_helpers.html</loc>
   </url>
   <url>
-    <loc>https://finddx.github.io/find.dxgap/reference/render.html</loc>
+    <loc>https://finddx.github.io/find.dxgap/reference/render_report.html</loc>
   </url>
   <url>
     <loc>https://finddx.github.io/find.dxgap/reference/run_mod_lm.html</loc>
