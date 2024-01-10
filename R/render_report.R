@@ -43,7 +43,7 @@ render_bulk <- function(template_name,
                         years = NULL,
                         vars = NULL,
                         override_vars_check = FALSE) {
-  years <- purrr::walk(
+  paths <- purrr::map(
     years,
     ~ render_report(
       disease = disease,
@@ -56,7 +56,7 @@ render_bulk <- function(template_name,
       interactive = FALSE
     )
   )
-  invisible(years)
+  invisible(unlist(paths))
 }
 
 #' Render a template report for a single year
@@ -165,11 +165,18 @@ render_report_impl <- function(template_name,
     return(invisible(temp_file))
   }
 
-  file_name <- compose_file_name(
-    fs::path_ext_remove(template_name),
-    year,
-    file_ext = ".html"
-  )
+  if (is.null(year)) {
+    file_name <- compose_file_name(
+      fs::path_ext_remove(template_name),
+      file_ext = ".html"
+    )
+  } else {
+    file_name <- compose_file_name(
+      fs::path_ext_remove(template_name),
+      year,
+      file_ext = ".html"
+    )
+  }
 
   out_path <- compose_file_path(file_name, file.path(data_dir, "report"))
 
