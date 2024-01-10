@@ -96,7 +96,7 @@ render_report <- function(template_name,
                           override_vars_check = FALSE) {
   check_interactive_render(year = year, interactive = interactive)
   if (length(year) > 1) {
-    render_bulk(
+    paths <- render_bulk(
       template_name = template_name,
       disease = disease,
       estimated = estimated,
@@ -105,6 +105,7 @@ render_report <- function(template_name,
       vars = vars,
       override_vars_check = override_vars_check
     )
+    invisible(paths)
   }
 
   render_report_impl(
