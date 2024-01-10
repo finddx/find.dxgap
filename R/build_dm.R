@@ -31,7 +31,7 @@
 build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) {
   # TODO: max year should be taken from dxgap_diseases
   max_year <- 2021
-  if (!is.null(year) && year > max_year) {
+  if (!is.null(year) && max(year) > max_year) {
     rlang::abort(sprintf("Data available up to %s.", max_year))
   }
   disease <- attr(data_list, "disease")
