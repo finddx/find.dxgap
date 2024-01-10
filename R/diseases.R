@@ -59,6 +59,7 @@ dxgap_tb_vars <- tibble::tibble(
            "m_wrd")
 )
 
+# start_year should take into account hbc classification. What if a disease has not hbc classification as TB?
 dxgap_diseases <- tibble::tribble(
   ~disease, ~start_year, ~end_year, ~tables,         ~template,         ~vars,          ~estimated,                  ~notified,
   "tb",     2016,         2021,     dxgap_tb_tables, dxgap_tb_templates, dxgap_tb_vars, "who_estimates.e_inc_num", "who_notifications.c_newinc"
