@@ -43,7 +43,7 @@ render_bulk <- function(template_name,
                         years = NULL,
                         vars = NULL,
                         override_vars_check = FALSE) {
-  years <- purrr::walk(
+  paths <- purrr::map(
     years,
     ~ render_report(
       disease = disease,
@@ -56,7 +56,7 @@ render_bulk <- function(template_name,
       interactive = FALSE
     )
   )
-  invisible(years)
+  invisible(unlist(paths))
 }
 
 #' Render a template report for a single year
