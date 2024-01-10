@@ -9,6 +9,8 @@
 #' )
 #' }
 get_core <- function(data_list, estimated, notified) {
+  disease <- attr(data_list, "disease")
+  min_year <- extract_start_year(disease = disease)
   dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
 
   estimated_tbl_name <- extract_tbl_name(dxgap_meta_df, "estimated")
@@ -19,13 +21,19 @@ get_core <- function(data_list, estimated, notified) {
   country_notification_df <-
     data_list |>
     purrr::pluck(notified_tbl_name) |>
-    get_cc_var_always_given_acrs_yrs(!!rlang::ensym(notified_field_name))
+    get_cc_var_always_given_acrs_yrs(
+      !!rlang::ensym(notified_field_name),
+      start_year = min_year
+    )
 
   country_estimate_df <-
     data_list |>
     purrr::pluck(estimated_tbl_name) |>
     dplyr::filter(!!rlang::ensym(estimated_field_name) != 0) |> # avoid dividing by zero
-    get_cc_var_always_given_acrs_yrs(!!rlang::ensym(estimated_field_name))
+    get_cc_var_always_given_acrs_yrs(
+      !!rlang::ensym(estimated_field_name),
+      start_year = min_year
+    )
 
   in_common_dxgap <-
     country_notification_df |>

@@ -92,7 +92,7 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
 forget_year_hbc <- function(hbc_data, year_range) {
   hbc_data |>
     dplyr::select(-year) |>
-    tidyr::crossing(year = !!year_range)
+    tidyr::crossing(year = year_range)
 }
 
 get_non_hbc_country_code <- function(hbc_df, min_year) {
