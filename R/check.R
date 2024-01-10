@@ -13,6 +13,9 @@ check_supported_disease <- function(disease, .dxgap_diseases = dxgap_diseases) {
 
 check_supported_templates <- function(template, disease, .dxgap_diseases = dxgap_diseases) {
   template_strip_ext <- stringr::str_remove(template, "\\..*$")
+  if (template_strip_ext == "test") {
+    return(NULL)
+  }
   supported_template <-
     .dxgap_diseases |>
     dplyr::filter(disease == !!disease) |>
