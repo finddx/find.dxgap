@@ -22,24 +22,6 @@ dxgap_tb_templates <- tibble::tribble(
   "missing"
 )
 
-dxgap_const <- tibble::lst(
-  tb_vars = c("year",
-           "is_hbc",
-           "country_code",
-           "dx_gap",
-           "pop_total",
-           "pop_urban_perc",
-           "pop_density",
-           "gdp",
-           "c_newinc",
-           "e_inc_num",
-           "e_mort_100k",
-           "culture",
-           "smear",
-           "xpert",
-           "m_wrd")
-)
-
 dxgap_tb_vars <- tibble::tibble(
   vars = c("year",
            "is_hbc",

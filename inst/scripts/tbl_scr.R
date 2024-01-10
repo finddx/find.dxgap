@@ -6,7 +6,7 @@ data_tbl <- build_tbl(
   year = 2019,
   estimated = "who_estimates.e_inc_num",
   notified = "who_notifications.c_newinc",
-  vars = dxgap_const$tb_vars
+  vars = extract_vars("tb")
 )
 readr::write_rds(data_tbl, "tests/testthat/testdata/tb_tbl.rds")
 
@@ -15,6 +15,6 @@ data_tbl_ts <- build_tbl(
   year = NULL,
   estimated = "who_estimates.e_inc_num",
   notified = "who_notifications.c_newinc",
-  vars = dxgap_const$tb_vars
+  vars = extract_vars("tb")
 )
 readr::write_rds(data_tbl_ts, "tests/testthat/testdata/tb_tbl_ts.rds")

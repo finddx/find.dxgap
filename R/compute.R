@@ -80,7 +80,7 @@ compute_dx_gap_impl <- function(data, .estimated, .notified, ...) {
 #'   year = 2019,
 #'   estimated = "who_estimates.e_inc_num",
 #'   notified = "who_notifications.c_newinc",
-#'   vars = dxgap_const$tb_vars
+#'   vars = extract_vars("tb")
 #' )
 #' compute_completion_rate(tbl, id_vars = c("year", "is_hbc"))
 #'
@@ -127,7 +127,7 @@ compute_completion_rate <- function(data, id_vars = NULL, digits = 2) {
 #'     year = NULL,
 #'     estimated = "who_estimates.e_inc_num",
 #'     notified = "who_notifications.c_newinc",
-#'     vars = dxgap_const$tb_vars
+#'     vars = extract_vars("tb")
 #'   ) |>
 #'   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc))
 #'

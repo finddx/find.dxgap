@@ -32,7 +32,7 @@ tbl <-
     year = NULL,
     estimated = "who_estimates.e_inc_num",
     notified = "who_notifications.c_newinc",
-    vars = dxgap_const$tb_vars
+    vars = extract_vars("tb")
   ) |>
   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc))
 

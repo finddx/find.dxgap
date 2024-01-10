@@ -42,4 +42,8 @@ reference:
   - render_bulk
   - render_report
   - run_mod_lm
+
+- title: Helpers
+  contents:
   - view_templates
+  - extract_vars
