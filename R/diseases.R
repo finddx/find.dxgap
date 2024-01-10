@@ -23,7 +23,6 @@ dxgap_tb_templates <- tibble::tribble(
 )
 
 dxgap_const <- tibble::lst(
-  start_year = 2015,
   tb_vars = c("year",
            "is_hbc",
            "country_code",
