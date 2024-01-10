@@ -6,9 +6,10 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
   core_df <-
     who_notifications |>
     get_cc_var_always_given_acrs_yrs(c_newinc)
+  start_year <- dxgap_diseases[dxgap_diseases$disease == "tb", ]$start_year
   numb_na <-
     who_notifications |>
-    dplyr::filter(year >= dxgap_const$start_year) |>
+    dplyr::filter(year >= start_year) |>
     dplyr::semi_join(core_df, dplyr::join_by(country_code)) |>
     dplyr::filter(is.na(c_newinc)) |>
     dplyr::count() |>
