@@ -29,12 +29,10 @@
 #' )
 #' }
 build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) {
-  # TODO: max year should be taken from dxgap_diseases
-  max_year <- 2021
-  if (!is.null(year) && max(year) > max_year) {
-    rlang::abort(sprintf("Data available up to %s.", max_year))
-  }
   disease <- attr(data_list, "disease")
+  check_supported_year(year = year, disease = disease)
+  # # TODO: max year should be taken from dxgap_diseases
+  max_year <- 2021
   if (is.null(estimated)) {
     estimated <- extract_default_dxgap_tbl_field(
       disease = disease,
