@@ -17,8 +17,8 @@
 #'   for DX Gap computation. If kept to `NULL`, the function will use the value
 #'   `notifications_table.notifications_field` from the `notified` column in the
 #'   `dxgap_diseases` meta table.
-#' @param year An integer indicating a year to filter the data on. Defaults to
-#'   NULL, returning all years present in the data.
+#' @param year An integer vector indicating consecutive years to filter the
+#'   data on. Defaults to NULL, returning all years present in the data.
 #' @param vars A vector of strings naming columns to subset the data on.
 #'  Defaults to NULL, indicating all variables should be used.
 #'
