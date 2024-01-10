@@ -44,7 +44,7 @@ render_bulk <- function(template_name,
                         vars = NULL,
                         override_vars_check = FALSE) {
   paths <- purrr::map(
-    years,
+    year,
     ~ render_report(
       disease = disease,
       estimated = estimated,
