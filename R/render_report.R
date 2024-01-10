@@ -43,6 +43,11 @@ render_bulk <- function(template_name,
                         year = NULL,
                         vars = NULL,
                         override_vars_check = FALSE) {
+  lifecycle::deprecate_stop(
+    "0.1.1",
+    "render_bulk()",
+    details = "Please, use render_report()."
+  )
   paths <- purrr::map(
     year,
     ~ render_report(
