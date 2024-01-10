@@ -76,8 +76,8 @@ for DX Gap computation. If kept to <code>NULL</code>, the function will use the 
 
 
 <dt>year</dt>
-<dd><p>An integer indicating a year to filter the data on. Defaults to
-NULL, returning all years present in the data.</p></dd>
+<dd><p>An integer vector indicating consecutive years to filter the
+data on. Defaults to NULL, returning all years present in the data.</p></dd>
 
 
 <dt>vars</dt>
@@ -97,7 +97,14 @@ Defaults to NULL, indicating all variables should be used.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu">build_tbl</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="st">"tb"</span>,</span></span>
-<span class="r-in"><span>  <span class="fl">2019</span>,</span></span>
+<span class="r-in"><span>  year <span class="op">=</span> <span class="fl">2019</span>,</span></span>
+<span class="r-in"><span>  estimated <span class="op">=</span> <span class="st">"who_estimates.e_inc_num"</span>,</span></span>
+<span class="r-in"><span>  notified <span class="op">=</span> <span class="st">"who_notifications.c_newinc"</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"country_code"</span>, <span class="st">"pop_density"</span>, <span class="st">"e_inc_num"</span>, <span class="st">"c_newinc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">build_tbl</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"tb"</span>,</span></span>
+<span class="r-in"><span>  year <span class="op">=</span> <span class="fl">2019</span><span class="op">:</span><span class="fl">2018</span>,</span></span>
 <span class="r-in"><span>  estimated <span class="op">=</span> <span class="st">"who_estimates.e_inc_num"</span>,</span></span>
 <span class="r-in"><span>  notified <span class="op">=</span> <span class="st">"who_notifications.c_newinc"</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"country_code"</span>, <span class="st">"pop_density"</span>, <span class="st">"e_inc_num"</span>, <span class="st">"c_newinc"</span><span class="op">)</span></span></span>
