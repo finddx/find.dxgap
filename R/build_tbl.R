@@ -30,7 +30,14 @@
 #' \dontrun{
 #' build_tbl(
 #'   "tb",
-#'   2019,
+#'   year = 2019,
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
+#'   c("year", "country_code", "pop_density", "e_inc_num", "c_newinc")
+#' )
+#' build_tbl(
+#'   "tb",
+#'   year = 2019:2018,
 #'   estimated = "who_estimates.e_inc_num",
 #'   notified = "who_notifications.c_newinc",
 #'   c("year", "country_code", "pop_density", "e_inc_num", "c_newinc")
