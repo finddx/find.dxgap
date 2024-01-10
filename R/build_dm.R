@@ -85,7 +85,7 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
     return(dm_ts)
   }
 
-  dm::dm_filter(dm_ts, country = (year == !!year))
+  dm::dm_filter(dm_ts, country = (year %in% !!year))
 
 }
 
