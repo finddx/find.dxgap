@@ -46,7 +46,9 @@ for DX Gap computation. If kept to \code{NULL}, the function will use the value
 \code{notifications_table.notifications_field} from the \code{notified} column in the
 \code{dxgap_diseases} meta table.}
 
-\item{year}{Integer matching the year of the report passed to \code{build_dm()}.}
+\item{year}{Integer matching the year(s) of the report to be rendered. Can be
+a single integer like \code{2019}, or a vector of integers such as \code{2019:2021}.
+The argument is to passed to \code{build_dm()} under the hood.}
 
 \item{vars}{A vector of strings naming columns to subset the data on. Passed
 to \code{\link[=build_tbl]{build_tbl()}}. Defaults to NULL, indicating all variables should be
@@ -58,9 +60,6 @@ guaranteed.}
 
 \item{interactive}{Logical indicating whether to open the report with the
 RStudio Viewer.}
-
-\item{years}{Integer matching the year(s) of the report to be rendered. Can be
-a single integer like \code{2019}, or a vector of integers such as \code{2019:2021}.}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
@@ -68,7 +67,8 @@ a single integer like \code{2019}, or a vector of integers such as \code{2019:20
 allows you to render templates across multiple years.
 
 \code{render_report()} generates a report for a given template and year. The final
-output can be viewed in RStudio.
+output can be viewed interactively in RStudio. Reports can also be rendered
+across multiple years.
 }
 \section{Vars Check}{
 

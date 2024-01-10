@@ -20,8 +20,6 @@
 #' @param override_vars_check Logical indicating whether to override checks on
 #'   supported vars. Defaults to FALSE. If TRUE, consistent results are not
 #'   guaranteed.
-#' @param years Integer matching the year(s) of the report to be rendered. Can be
-#'   a single integer like `2019`, or a vector of integers such as `2019:2021`.
 #' @param vars A vector of strings naming columns to subset the data on. Passed
 #'   to [build_tbl()]. Defaults to NULL, indicating all variables should be
 #'   used.
@@ -88,13 +86,16 @@ render_bulk_impl <- function(template_name,
   invisible(unlist(paths))
 }
 
-#' Render a template report for a single year
+#' Render a template report
 #'
 #' `render_report()` generates a report for a given template and year. The final
-#' output can be viewed in RStudio.
+#' output can be viewed interactively in RStudio. Reports can also be rendered
+#' across multiple years.
 #'
 #' @inheritParams build_tbl
-#' @param year Integer matching the year of the report passed to `build_dm()`.
+#' @param year Integer matching the year(s) of the report to be rendered. Can be
+#'   a single integer like `2019`, or a vector of integers such as `2019:2021`.
+#'   The argument is to passed to `build_dm()` under the hood.
 #' @param interactive Logical indicating whether to open the report with the
 #'   RStudio Viewer.
 #'
