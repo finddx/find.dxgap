@@ -58,19 +58,48 @@ check_supported_year <- function(year, disease, .dxgap_diseases = dxgap_diseases
   if (is.null(year)) {
     invisible(year)
   }
+
   supported_years <-
     .dxgap_diseases |>
     dplyr::filter(disease == !!disease) |>
     dplyr::select(start_year, end_year) |>
     as.list() |>
     purrr::reduce(.f = seq)
-  if (!all(year %in% supported_years)) {
+
+  all_not_supported <- !all(year %in% supported_years)
+  any_supported <- any(year %in% supported_years)
+
+  out_of_range <- setdiff(year, supported_years)
+  msg <- "`%s` not in supported year range for disease `%s`."
+  if (all_not_supported && !any_supported) {
     rlang::abort(
       c(
-        sprintf("`year` is out of supported range for disease `%s`.", disease)
+        sprintf(
+          msg,
+          paste(out_of_range, collapse = ", "),
+          disease
+        )
       ),
-      class = "dxgap_year_not_supported"
+      class = "dxgap_year_supported_range"
     )
+  } else if (any_supported && all_not_supported) {
+    fall_back_range <- intersect(supported_years, year)
+    rlang::inform(
+      c(
+        sprintf(
+          msg,
+          paste(out_of_range, collapse = ", "),
+          disease
+        ),
+        i = sprintf(
+          "Fallback on: `%s`.",
+          paste(fall_back_range, collapse = ", ")
+        )
+      ),
+      class = "dxgap_year_supported_range"
+    )
+  } else {
+    invisible(year)
   }
 }
 

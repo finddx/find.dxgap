@@ -34,8 +34,8 @@ for DX Gap computation. If kept to \code{NULL}, the function will use the value
 \code{notifications_table.notifications_field} from the \code{notified} column in the
 \code{dxgap_diseases} meta table.}
 
-\item{year}{An integer indicating a year to filter the data on. Defaults to
-NULL, returning all years present in the data.}
+\item{year}{An integer vector indicating consecutive years to filter the
+data on. Defaults to NULL, returning all years present in the data.}
 
 \item{vars}{A vector of strings naming columns to subset the data on. Passed
 to \code{\link[=build_tbl]{build_tbl()}}. Defaults to NULL, indicating all variables should be

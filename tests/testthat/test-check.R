@@ -20,3 +20,10 @@ test_that("check_any_zero() works", {
   df <- datasets::mtcars
   expect_snapshot(check_any_zero(df, am), error = TRUE)
 })
+
+test_that("check_supported_year() works", {
+  expect_snapshot(check_supported_year(2014:2015, "tb"), error = TRUE)
+  expect_snapshot(check_supported_year(2014:2016, "tb"))
+  expect_snapshot(check_supported_year(2020:2023, "tb"))
+  expect_snapshot(check_supported_year(2016:2021, "tb"))
+})

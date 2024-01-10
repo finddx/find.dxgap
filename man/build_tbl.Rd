@@ -23,8 +23,8 @@ for DX Gap computation. If kept to \code{NULL}, the function will use the value
 \code{notifications_table.notifications_field} from the \code{notified} column in the
 \code{dxgap_diseases} meta table.}
 
-\item{year}{An integer indicating a year to filter the data on. Defaults to
-NULL, returning all years present in the data.}
+\item{year}{An integer vector indicating consecutive years to filter the
+data on. Defaults to NULL, returning all years present in the data.}
 
 \item{vars}{A vector of strings naming columns to subset the data on.
 Defaults to NULL, indicating all variables should be used.}
@@ -41,7 +41,14 @@ performing a series of cascading joins on matching keys.
 \dontrun{
 build_tbl(
   "tb",
-  2019,
+  year = 2019,
+  estimated = "who_estimates.e_inc_num",
+  notified = "who_notifications.c_newinc",
+  c("year", "country_code", "pop_density", "e_inc_num", "c_newinc")
+)
+build_tbl(
+  "tb",
+  year = 2019:2018,
   estimated = "who_estimates.e_inc_num",
   notified = "who_notifications.c_newinc",
   c("year", "country_code", "pop_density", "e_inc_num", "c_newinc")
