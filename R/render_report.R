@@ -24,8 +24,6 @@
 #'   to [build_tbl()]. Defaults to NULL, indicating all variables should be
 #'   used.
 #'
-#' @rdname render_report
-#'
 #' @export
 #'
 #' @examples
@@ -98,8 +96,6 @@ render_bulk_impl <- function(template_name,
 #'   The argument is to passed to `build_dm()` under the hood.
 #' @param interactive Logical indicating whether to open the report with the
 #'   RStudio Viewer.
-#'
-#' @rdname render_report
 #'
 #' @export
 #'
