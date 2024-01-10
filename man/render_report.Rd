@@ -10,7 +10,7 @@ render_bulk(
   disease,
   estimated = NULL,
   notified = NULL,
-  years = NULL,
+  year = NULL,
   vars = NULL,
   override_vars_check = FALSE
 )
@@ -46,8 +46,7 @@ for DX Gap computation. If kept to \code{NULL}, the function will use the value
 \code{notifications_table.notifications_field} from the \code{notified} column in the
 \code{dxgap_diseases} meta table.}
 
-\item{years}{Integer matching the year(s) of the report to be rendered. Can be
-a single integer like \code{2019}, or a vector of integers such as \code{2019:2021}.}
+\item{year}{Integer matching the year of the report passed to \code{build_dm()}.}
 
 \item{vars}{A vector of strings naming columns to subset the data on. Passed
 to \code{\link[=build_tbl]{build_tbl()}}. Defaults to NULL, indicating all variables should be
@@ -57,12 +56,14 @@ used.}
 supported vars. Defaults to FALSE. If TRUE, consistent results are not
 guaranteed.}
 
-\item{year}{Integer matching the year of the report passed to \code{build_dm()}.}
-
 \item{interactive}{Logical indicating whether to open the report with the
 RStudio Viewer.}
+
+\item{years}{Integer matching the year(s) of the report to be rendered. Can be
+a single integer like \code{2019}, or a vector of integers such as \code{2019:2021}.}
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 \code{render_bulk()} is a convenience wrapper around \code{render_report()} that
 allows you to render templates across multiple years.
 

@@ -1,5 +1,6 @@
 #' Render templates across multiple years
 #'
+#' `r lifecycle::badge("deprecated")`
 #' `render_bulk()` is a convenience wrapper around `render_report()` that
 #' allows you to render templates across multiple years.
 #'
