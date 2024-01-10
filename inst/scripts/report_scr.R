@@ -14,10 +14,12 @@ render_report(
 dxgap_const$tb_vars
 
 render_report("eda.Rmd", disease = "tb", year = 2019, vars = dxgap_const$tb_vars)
+render_report("eda.Rmd", disease = "tb", year = 2016:2021, vars = dxgap_const$tb_vars, interactive = FALSE)
 render_bulk("eda.Rmd", disease = "tb", year = 2016:2021, vars = dxgap_const$tb_vars)
 
 render_report("explain_lm.Rmd", disease = "tb", year = 2019, vars = dxgap_const$tb_vars)
-render_bulk("explain_lm.Rmd", disease = "tb", years = 2016:2021, vars = dxgap_const$tb_vars)
+render_report("explain_lm.Rmd", disease = "tb", year = 2016:2021, vars = dxgap_const$tb_vars, interactive = FALSE)
+render_bulk("explain_lm.Rmd", disease = "tb", year = 2016:2021, vars = dxgap_const$tb_vars)
 
 read_who("who_laboratories_2023-08-30.csv") |>
   tidy_who() |>
