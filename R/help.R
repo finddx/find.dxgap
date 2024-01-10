@@ -213,6 +213,10 @@ extract_supported_year <- function(disease, .dxgap_diseases = dxgap_diseases) {
     purrr::reduce(.f = seq)
 }
 
+extract_start_year <- function(disease, .dxgap_diseases = dxgap_diseases) {
+  .dxgap_diseases[.dxgap_diseases$disease == disease, ]$start_year
+}
+
 relocate_dx_gap <- function(tbl) {
   dplyr::relocate(tbl, dx_gap, .after = country_code)
 }
