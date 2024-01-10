@@ -5,8 +5,8 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
   who_notifications <- data_list$who_notifications
   core_df <-
     who_notifications |>
-    get_cc_var_always_given_acrs_yrs(c_newinc)
-  start_year <- dxgap_diseases[dxgap_diseases$disease == "tb", ]$start_year
+    get_cc_var_always_given_acrs_yrs(c_newinc, start_year = extract_start_year("tb"))
+  start_year <- extract_start_year("tb")
   numb_na <-
     who_notifications |>
     dplyr::filter(year >= start_year) |>
