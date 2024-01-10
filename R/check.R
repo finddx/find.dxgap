@@ -178,3 +178,9 @@ check_any_zero <- function(data, var) {
     )
   }
 }
+
+check_interactive_render <- function(year, interactive) {
+  if (length(year) > 1 && interactive) {
+    rlang::abort("Cannot render reports interactively for multiple years.")
+  }
+}

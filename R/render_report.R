@@ -34,13 +34,13 @@
 #' tb_vars <- c("year", "is_hbc", "country_code", "dx_gap",
 #'              "pop_total", "pop_urban_perc", "pop_density", "gdp", "c_newinc",
 #'              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
-#' render_bulk("eda.Rmd", disease = "tb", years = 2018:2021, vars = tb_vars)
+#' render_bulk("eda.Rmd", disease = "tb", year = 2018:2021, vars = tb_vars)
 #' }
 render_bulk <- function(template_name,
                         disease,
                         estimated = NULL,
                         notified = NULL,
-                        years = NULL,
+                        year = NULL,
                         vars = NULL,
                         override_vars_check = FALSE) {
   paths <- purrr::map(
@@ -94,6 +94,18 @@ render_report <- function(template_name,
                           vars = NULL,
                           interactive = TRUE,
                           override_vars_check = FALSE) {
+  check_interactive_render(year = year, interactive = interactive)
+  if (length(year) > 1) {
+    render_bulk(
+      template_name = template_name,
+      disease = disease,
+      estimated = estimated,
+      notified = notified,
+      year = year,
+      vars = vars,
+      override_vars_check = override_vars_check
+    )
+  }
 
   render_report_impl(
     template_name,
