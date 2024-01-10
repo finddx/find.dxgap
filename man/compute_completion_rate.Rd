@@ -28,7 +28,7 @@ tbl <- build_tbl(
   year = 2019,
   estimated = "who_estimates.e_inc_num",
   notified = "who_notifications.c_newinc",
-  vars = dxgap_const$tb_vars
+  vars = extract_vars("tb")
 )
 compute_completion_rate(tbl, id_vars = c("year", "is_hbc"))
 
