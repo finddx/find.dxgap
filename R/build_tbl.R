@@ -105,7 +105,8 @@ build_tbl_impl <- function(dm, estimated, notified, vars = NULL) {
     notified = !!rlang::sym(notified)
   )
 
-  tbl <- tbl_dx_gap |>
+  tbl <-
+    tbl_dx_gap |>
     dplyr::relocate(is_hbc, country_code, year, .before = everything())
 
   if (!is.null(vars)) {
