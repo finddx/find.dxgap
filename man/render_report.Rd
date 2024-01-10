@@ -16,6 +16,9 @@ render_report(
 )
 }
 \arguments{
+\item{template_name}{String containing the name of the template to render.
+Run \code{\link[=view_templates]{view_templates()}} to see a list of valid options.}
+
 \item{disease}{A character of length one identifying the disease for which
 the user wants to build a wide table. The tibble \code{dxgap_diseases} shows the
 diseases that are currently supported.}
@@ -41,6 +44,10 @@ Defaults to NULL, indicating all variables should be used.}
 
 \item{interactive}{Logical indicating whether to open the report with the
 RStudio Viewer.}
+
+\item{override_vars_check}{Logical indicating whether to override checks on
+supported vars. Defaults to FALSE. If TRUE, consistent results are not
+guaranteed.}
 }
 \description{
 \code{render_report()} generates a report for a given template and year. The final

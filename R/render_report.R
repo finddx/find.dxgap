@@ -91,11 +91,16 @@ render_bulk_impl <- function(template_name,
 #' across multiple years.
 #'
 #' @inheritParams build_tbl
+#' @param template_name String containing the name of the template to render.
+#'   Run [view_templates()] to see a list of valid options.
 #' @param year Integer matching the year(s) of the report to be rendered. Can be
 #'   a single integer like `2019`, or a vector of integers such as `2019:2021`.
 #'   The argument is to passed to `build_dm()` under the hood.
 #' @param interactive Logical indicating whether to open the report with the
 #'   RStudio Viewer.
+#' @param override_vars_check Logical indicating whether to override checks on
+#'   supported vars. Defaults to FALSE. If TRUE, consistent results are not
+#'   guaranteed.
 #'
 #' @export
 #'
