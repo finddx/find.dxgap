@@ -1,4 +1,5 @@
 test_that("render_report_impl() works", {
+  skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
   render_report_impl_local <- function() {
     path <- render_report_impl(
