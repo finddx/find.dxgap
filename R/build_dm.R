@@ -31,8 +31,10 @@
 build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) {
   disease <- attr(data_list, "disease")
   check_supported_year(year = year, disease = disease)
-  # # TODO: max year should be taken from dxgap_diseases
-  max_year <- 2021
+  supported_year_range <- extract_supported_year(disease = disease)
+  max_year <- max(supported_year_range)
+  min_year <- min(supported_year_range)
+
   if (is.null(estimated)) {
     estimated <- extract_default_dxgap_tbl_field(
       disease = disease,
@@ -58,11 +60,11 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
   hbc_df <-
     data_list$who_hbc |>
     dplyr::select(country_code, year) |>
-    forget_year_hbc() |>
+    forget_year_hbc(year_range = supported_year_range) |>
     dplyr::mutate(is_hbc = 1)
 
   non_hbc_df <-
-    get_non_hbc_country_code(hbc_df) |>
+    get_non_hbc_country_code(hbc_df, min_year = min_year) |>
     dplyr::semi_join(can_compute_dxgap, dplyr::join_by(country_code)) |>
     dplyr::mutate(is_hbc = 0)
 
@@ -87,19 +89,19 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
 
 }
 
-forget_year_hbc <- function(hbc_data) {
+forget_year_hbc <- function(hbc_data, year_range) {
   hbc_data |>
     dplyr::select(-year) |>
-    tidyr::crossing(year = 2016:2021) # TODO: use start_year and end_year in dxgap_diseases
+    tidyr::crossing(year = !!year_range)
 }
 
-get_non_hbc_country_code <- function(hbc_df) {
+get_non_hbc_country_code <- function(hbc_df, min_year) {
   countrycode::codelist |>
     dplyr::select(country_code = iso3c) |>
     dplyr::filter(!is.na(country_code)) |>
     dplyr::anti_join(hbc_df, by = dplyr::join_by(country_code)) |>
     dplyr::anti_join(country_exclude_df, by = dplyr::join_by(country_code)) |>
-    tidyr::crossing(year = 2016:2099) # start from the min year available in hbc list
+    tidyr::crossing(year = min_year:2099) # start from the min year available in hbc list
 }
 
 set_dm_rels <- function(dm) {
