@@ -1,5 +1,6 @@
 #' Render templates across multiple years
 #'
+#' `r lifecycle::badge("deprecated")`
 #' `render_bulk()` is a convenience wrapper around `render_report()` that
 #' allows you to render templates across multiple years.
 #'
@@ -19,13 +20,9 @@
 #' @param override_vars_check Logical indicating whether to override checks on
 #'   supported vars. Defaults to FALSE. If TRUE, consistent results are not
 #'   guaranteed.
-#' @param years Integer matching the year(s) of the report to be rendered. Can be
-#'   a single integer like `2019`, or a vector of integers such as `2019:2021`.
 #' @param vars A vector of strings naming columns to subset the data on. Passed
 #'   to [build_tbl()]. Defaults to NULL, indicating all variables should be
 #'   used.
-#'
-#' @rdname render
 #'
 #' @export
 #'
@@ -34,17 +31,22 @@
 #' tb_vars <- c("year", "is_hbc", "country_code", "dx_gap",
 #'              "pop_total", "pop_urban_perc", "pop_density", "gdp", "c_newinc",
 #'              "e_inc_num", "e_mort_100k", "culture", "smear", "xpert", "m_wrd")
-#' render_bulk("eda.Rmd", disease = "tb", years = 2018:2021, vars = tb_vars)
+#' render_bulk("eda.Rmd", disease = "tb", year = 2018:2021, vars = tb_vars)
 #' }
 render_bulk <- function(template_name,
                         disease,
                         estimated = NULL,
                         notified = NULL,
-                        years = NULL,
+                        year = NULL,
                         vars = NULL,
                         override_vars_check = FALSE) {
+  lifecycle::deprecate_stop(
+    "0.1.1",
+    "render_bulk()",
+    details = "Please, use render_report()."
+  )
   paths <- purrr::map(
-    years,
+    year,
     ~ render_report(
       disease = disease,
       estimated = estimated,
@@ -59,17 +61,55 @@ render_bulk <- function(template_name,
   invisible(unlist(paths))
 }
 
-#' Render a template report for a single year
+render_bulk_impl <- function(template_name,
+                             disease,
+                             estimated = NULL,
+                             notified = NULL,
+                             year = NULL,
+                             vars = NULL,
+                             override_vars_check = FALSE) {
+  paths <- purrr::map(
+    year,
+    ~ render_report(
+      disease = disease,
+      estimated = estimated,
+      notified = notified,
+      template_name = template_name,
+      year = .x,
+      vars = vars,
+      override_vars_check = override_vars_check,
+      interactive = FALSE
+    )
+  )
+  invisible(unlist(paths))
+}
+
+#' Render a template report
 #'
 #' `render_report()` generates a report for a given template and year. The final
-#' output can be viewed in RStudio.
+#' output can be viewed interactively in RStudio. Reports can also be rendered
+#' across multiple years.
 #'
 #' @inheritParams build_tbl
-#' @param year Integer matching the year of the report passed to `build_dm()`.
+#' @param template_name String containing the name of the template to render.
+#'   Run [view_templates()] to see a list of valid options.
+#' @param year Integer matching the year(s) of the report to be rendered. Can be
+#'   a single integer like `2019`, or a vector of integers such as `2019:2021`.
+#'   The argument is to passed to `build_dm()` under the hood.
 #' @param interactive Logical indicating whether to open the report with the
 #'   RStudio Viewer.
-#'
-#' @rdname render
+#' @param override_vars_check Logical indicating whether to override checks on
+#'   supported vars. Defaults to FALSE. If TRUE, consistent results are not
+#'   guaranteed.
+
+#' @section On `override_vars_check`:
+#' This check consists in comparing the character vector of variable names
+#' supplied by the user through the `vars` argument, with those that were
+#' selected in light of the exploratory data analysis. If some of the provided
+#' variables are not part of the original subset, the function will throw an
+#' error. However, new variables names can always be added overriding the check
+#' by setting `override_vars_check = TRUE`. If a new variable name should be
+#' part of the core subset, it should be added to the `dxgap_diseases` tibble.
 #'
 #' @export
 #'
@@ -94,6 +134,19 @@ render_report <- function(template_name,
                           vars = NULL,
                           interactive = TRUE,
                           override_vars_check = FALSE) {
+  check_interactive_render(year = year, interactive = interactive)
+  if (length(year) > 1) {
+    paths <- render_bulk_impl(
+      template_name = template_name,
+      disease = disease,
+      estimated = estimated,
+      notified = notified,
+      year = year,
+      vars = vars,
+      override_vars_check = override_vars_check
+    )
+    invisible(paths)
+  }
 
   render_report_impl(
     template_name,
