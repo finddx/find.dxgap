@@ -64,7 +64,7 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
     dplyr::mutate(is_hbc = 1)
 
   non_hbc_df <-
-    get_non_hbc_country_code(hbc_df, min_year = min_year) |>
+    get_non_hbc_country_code(hbc_df, start_year = min_year) |>
     dplyr::semi_join(can_compute_dxgap, dplyr::join_by(country_code)) |>
     dplyr::mutate(is_hbc = 0)
 
@@ -95,13 +95,13 @@ forget_year_hbc <- function(hbc_data, year_range) {
     tidyr::crossing(year = year_range)
 }
 
-get_non_hbc_country_code <- function(hbc_df, min_year) {
+get_non_hbc_country_code <- function(hbc_df, start_year) {
   countrycode::codelist |>
     dplyr::select(country_code = iso3c) |>
     dplyr::filter(!is.na(country_code)) |>
     dplyr::anti_join(hbc_df, by = dplyr::join_by(country_code)) |>
     dplyr::anti_join(country_exclude_df, by = dplyr::join_by(country_code)) |>
-    tidyr::crossing(year = min_year:2099) # start from the min year available in hbc list
+    tidyr::crossing(year = start_year:2099) # start from the min year available in hbc list
 }
 
 set_dm_rels <- function(dm) {
