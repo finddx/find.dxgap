@@ -217,6 +217,13 @@ extract_start_year <- function(disease, .dxgap_diseases = dxgap_diseases) {
   .dxgap_diseases[.dxgap_diseases$disease == disease, ]$start_year
 }
 
+#' Extract supported variables from `dxgap_diseases` meta table
+#'
+#' @param disease The disease identifier.
+#' @param .dxgap_diseases The `dxgap_diseases` table.
+#'
+#' @return A character vector of supported variables.
+#' @export
 extract_vars <- function(disease, .dxgap_diseases = dxgap_diseases) {
   .dxgap_diseases[.dxgap_diseases$disease == disease, ]$vars[[1]]$vars
 }
