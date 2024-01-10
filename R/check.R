@@ -59,12 +59,10 @@ check_supported_year <- function(year, disease, .dxgap_diseases = dxgap_diseases
     invisible(year)
   }
 
-  supported_years <-
-    .dxgap_diseases |>
-    dplyr::filter(disease == !!disease) |>
-    dplyr::select(start_year, end_year) |>
-    as.list() |>
-    purrr::reduce(.f = seq)
+  supported_years <- extract_supported_year(
+    disease = disease,
+    .dxgap_diseases = .dxgap_diseases
+  )
 
   all_not_supported <- !all(year %in% supported_years)
   any_supported <- any(year %in% supported_years)

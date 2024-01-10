@@ -205,6 +205,14 @@ extract_default_dxgap_tbl_field <- function(disease,
   }
 }
 
+extract_supported_year <- function(disease, .dxgap_diseases = dxgap_diseases) {
+  .dxgap_diseases |>
+    dplyr::filter(disease == !!disease) |>
+    dplyr::select(start_year, end_year) |>
+    as.list() |>
+    purrr::reduce(.f = seq)
+}
+
 relocate_dx_gap <- function(tbl) {
   dplyr::relocate(tbl, dx_gap, .after = country_code)
 }
