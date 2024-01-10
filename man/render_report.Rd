@@ -54,6 +54,17 @@ guaranteed.}
 output can be viewed interactively in RStudio. Reports can also be rendered
 across multiple years.
 }
+\section{On \code{override_vars_check}}{
+
+This check consists in comparing the character vector of variable names
+supplied by the user through the \code{vars} argument, with those that were
+selected in light of the exploratory data analysis. If some of the provided
+variables are not part of the original subset, the function will throw an
+error. However, new variables names can always be added overriding the check
+by setting \code{override_vars_check = TRUE}. If a new variable name should be
+part of the core subset, it should be added to the \code{dxgap_diseases} tibble.
+}
+
 \examples{
 \dontrun{
 tb_vars <- c("year", "is_hbc", "country_code", "dx_gap",

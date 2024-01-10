@@ -101,6 +101,15 @@ render_bulk_impl <- function(template_name,
 #' @param override_vars_check Logical indicating whether to override checks on
 #'   supported vars. Defaults to FALSE. If TRUE, consistent results are not
 #'   guaranteed.
+
+#' @section On `override_vars_check`:
+#' This check consists in comparing the character vector of variable names
+#' supplied by the user through the `vars` argument, with those that were
+#' selected in light of the exploratory data analysis. If some of the provided
+#' variables are not part of the original subset, the function will throw an
+#' error. However, new variables names can always be added overriding the check
+#' by setting `override_vars_check = TRUE`. If a new variable name should be
+#' part of the core subset, it should be added to the `dxgap_diseases` tibble.
 #'
 #' @export
 #'
