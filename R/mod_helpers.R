@@ -114,7 +114,7 @@ pull_mod_fit <- function(mod_out_list) {
 #'     estimated = "who_estimates.e_inc_num",
 #'     notified = "who_notifications.c_newinc",
 #'     year = NULL,
-#'     vars = dxgap_const$tb_vars
+#'     vars = extract_vars("tb")
 #'   ) |>
 #'   dplyr::mutate(is_hbc = forcats::as_factor(is_hbc))
 #' coeff_df <- pull_mod_coeff_all(tbl)

@@ -217,6 +217,10 @@ extract_start_year <- function(disease, .dxgap_diseases = dxgap_diseases) {
   .dxgap_diseases[.dxgap_diseases$disease == disease, ]$start_year
 }
 
+extract_vars <- function(disease, .dxgap_diseases = dxgap_diseases) {
+  .dxgap_diseases[.dxgap_diseases$disease == disease, ]$vars[[1]]$vars
+}
+
 relocate_dx_gap <- function(tbl) {
   dplyr::relocate(tbl, dx_gap, .after = country_code)
 }

@@ -10,7 +10,7 @@ dm <- build_dm(
   notified = "who_notifications.c_newinc",
   year = NULL,
 )
-data_tbl <- build_tbl_impl(dm, vars = dxgap_const$tb_vars)
+data_tbl <- build_tbl_impl(dm, vars = extract_vars("tb"))
 
 # ---- Prep data ----
 tbl <-
