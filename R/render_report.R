@@ -64,6 +64,29 @@ render_bulk <- function(template_name,
   invisible(unlist(paths))
 }
 
+render_bulk_impl <- function(template_name,
+                             disease,
+                             estimated = NULL,
+                             notified = NULL,
+                             year = NULL,
+                             vars = NULL,
+                             override_vars_check = FALSE) {
+  paths <- purrr::map(
+    year,
+    ~ render_report(
+      disease = disease,
+      estimated = estimated,
+      notified = notified,
+      template_name = template_name,
+      year = .x,
+      vars = vars,
+      override_vars_check = override_vars_check,
+      interactive = FALSE
+    )
+  )
+  invisible(unlist(paths))
+}
+
 #' Render a template report for a single year
 #'
 #' `render_report()` generates a report for a given template and year. The final
@@ -101,7 +124,7 @@ render_report <- function(template_name,
                           override_vars_check = FALSE) {
   check_interactive_render(year = year, interactive = interactive)
   if (length(year) > 1) {
-    paths <- render_bulk(
+    paths <- render_bulk_impl(
       template_name = template_name,
       disease = disease,
       estimated = estimated,
