@@ -22,6 +22,10 @@ dm <- params$dm
 data_tbl <- params$data_tbl
 ```
 
+```{r start-year}
+start_year <- min(data_tbl$year)
+```
+
 ```{r}
 tbl <-
   data_tbl |> 

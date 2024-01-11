@@ -31,7 +31,7 @@ disease <- disease
 ```
 
 ```{r start-year}
-start_year <- extract_start_year(disease = disease)
+start_year <- min(data_tbl$year)
 ```
 
 # Completion rate - overview across years
