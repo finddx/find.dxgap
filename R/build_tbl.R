@@ -117,7 +117,7 @@ build_tbl_impl <- function(dm, estimated, notified, vars = NULL) {
     dplyr::relocate(is_hbc, country_code, year, .before = everything())
 
   if (!is.null(vars)) {
-    vars_dx_gap <- c(vars, "dx_gap", estimated, notified)
+    vars_dx_gap <- unique(c(vars, "dx_gap", estimated, notified))
     tbl <-
       tbl |>
       dplyr::select(tidyselect::any_of(vars_dx_gap))
