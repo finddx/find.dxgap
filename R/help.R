@@ -231,3 +231,7 @@ extract_vars <- function(disease, .dxgap_diseases = dxgap_diseases) {
 relocate_dx_gap <- function(tbl) {
   dplyr::relocate(tbl, dx_gap, .after = country_code)
 }
+
+strip_ext <- function(file_name) {
+  stringr::str_remove(file_name, "\\..*$")
+}
