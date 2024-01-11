@@ -3,6 +3,7 @@ title: "Missing values analysis"
 output: html_document
 date: "`r Sys.Date()`"
 params:
+  disease: disease
   dm: dm
   data_tbl: data_tbl
   year: year
