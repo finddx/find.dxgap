@@ -223,3 +223,11 @@ check_interactive_render <- function(year, interactive) {
     )
   }
 }
+
+check_override_core_check <- function(override_core_check) {
+  stopifnot(length(override_core_check) == 2)
+  stopifnot(rlang::is_named(override_core_check))
+  vec <- unlist(override_core_check)
+  stopifnot(is.logical(vec))
+}
+

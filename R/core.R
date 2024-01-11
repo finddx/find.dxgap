@@ -26,6 +26,8 @@ get_core <- function(data_list, estimated, notified) {
       start_year = min_year
     )
 
+  check_override_core_check(override_core_check = override_core_check)
+
   if (!override_core_check$notified) {
     check_valid_core_subset(country_notification_df, var = notified_field_name)
   }
