@@ -8,7 +8,7 @@
 #'   notified = "who_notifications.c_newinc"
 #' )
 #' }
-get_core <- function(data_list, estimated, notified) {
+get_core <- function(data_list, estimated, notified, override_core_check) {
   disease <- attr(data_list, "disease")
   min_year <- extract_start_year(disease = disease)
   dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)

@@ -4,7 +4,14 @@
 \alias{build_tbl}
 \title{Load all data for a disease into a single wide table}
 \usage{
-build_tbl(disease, estimated = NULL, notified = NULL, year = NULL, vars = NULL)
+build_tbl(
+  disease,
+  estimated = NULL,
+  notified = NULL,
+  year = NULL,
+  vars = NULL,
+  override_core_check = list(notified = FALSE, estimated = FALSE)
+)
 }
 \arguments{
 \item{disease}{A character of length one identifying the disease for which
@@ -28,6 +35,9 @@ data on. Defaults to NULL, returning all years present in the data.}
 
 \item{vars}{A vector of strings naming columns to subset the data on.
 Defaults to NULL, indicating all variables should be used.}
+
+\item{override_core_check}{A list as \code{list("notified" = FALSE, "estimated" = FALSE)} indicating whether to override the checks on variables chosen for
+dx_gap computation.}
 }
 \value{
 A tibble.
