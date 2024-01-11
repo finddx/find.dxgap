@@ -1,4 +1,69 @@
 test_that("get_cc_var_always_given_acrs_yrs() works", {
+  df1 <-
+    tibble::tibble(
+      country_code = rep(c("FRA", "ITA", "CHE"), 3),
+      year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
+      var = rep(1, 3 * 3)
+    )
+  out <- get_cc_var_always_given_acrs_yrs(df1, var, 2016)
+  expect_equal(out$country_code, c("FRA", "ITA", "CHE"))
+
+  df2 <-
+    tibble::tibble(
+      country_code = rep(c("FRA", "ITA", "CHE"), 3),
+      year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
+      var = c(NA, 1, 1, 1, 1, 1, 1, 1, 1)
+    )
+  out <- get_cc_var_always_given_acrs_yrs(df2, var, 2016)
+  expect_equal(out$country_code, c("ITA", "CHE"))
+
+  df3 <-
+    tibble::tibble(
+      country_code = rep(c("FRA", "ITA", "CHE"), 3),
+      year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
+      var = c(NA, 1, 1, 1, NA, 1, 1, 1, NA)
+    )
+  out <- get_cc_var_always_given_acrs_yrs(df3, var, 2016)
+  expect_equal(out$country_code, character(0))
+
+  df4 <-
+    tibble::tibble(
+      country_code = rep(c("FRA", "ITA", "CHE"), 3),
+      year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
+      var = c(NA, NA, NA, 1, 1, 1, 1, 1, 1)
+    )
+  out <- get_cc_var_always_given_acrs_yrs(df4, var, 2016)
+  expect_equal(out$country_code, character(0))
+
+  df5 <-
+    tibble::tibble(
+      country_code = rep(c("FRA", "ITA", "CHE"), 3),
+      year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
+      var = c(NA, NA, NA, 1, 1, 1, 1, 1, 1)
+    )
+  out <- get_cc_var_always_given_acrs_yrs(df5, var, 2017)
+  expect_equal(out$country_code, c("FRA", "ITA", "CHE"))
+
+  df6 <-
+    tibble::tibble(
+      country_code = rep(c("FRA", "ITA", "CHE"), 3),
+      year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
+      var = c(1, 1, 1, 1, NA, 1, 1, 1, 1)
+    )
+  out <- get_cc_var_always_given_acrs_yrs(df6, var, 2016)
+  expect_equal(out$country_code, c("FRA", "CHE"))
+
+  df7 <-
+    tibble::tibble(
+      country_code = rep(c("FRA", "ITA", "CHE"), 3),
+      year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
+      var = c(1, 1, 1, 1, NA, 1, 1, 1, 1)
+    )
+  out <- get_cc_var_always_given_acrs_yrs(df7, var, 2018)
+  expect_equal(out$country_code, c("FRA", "ITA", "CHE"))
+})
+
+test_that("get_cc_var_always_given_acrs_yrs() works", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
   data_list <- build_lst("tb")
