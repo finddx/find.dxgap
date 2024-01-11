@@ -223,3 +223,19 @@ check_interactive_render <- function(year, interactive) {
     )
   }
 }
+
+check_valid_core_subset <- function(data, var) {
+  if (nrow(data) == 0) {
+    rlang::abort(
+      c(
+        sprintf(
+          "Cannot find a valid 'core' subset for which `%s` is given simultaneously across years and country.",
+          var
+        ),
+        i = sprintf("Possible reason is `%s`'s low completion rate.", var),
+        i = "Set `override_core = TRUE` if you want to skip this check."
+      ),
+      class = "dxgap_data"
+    )
+  }
+}

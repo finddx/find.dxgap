@@ -26,6 +26,8 @@ get_core <- function(data_list, estimated, notified) {
       start_year = min_year
     )
 
+  check_valid_core_subset(country_notification_df, var = notified_field_name)
+
   country_estimate_df <-
     data_list |>
     purrr::pluck(estimated_tbl_name) |>
