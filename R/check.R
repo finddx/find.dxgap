@@ -12,7 +12,7 @@ check_supported_disease <- function(disease, .dxgap_diseases = dxgap_diseases) {
 }
 
 check_supported_templates <- function(template, disease, .dxgap_diseases = dxgap_diseases) {
-  template_strip_ext <- stringr::str_remove(template, "\\..*$")
+  template_strip_ext <- strip_ext(template)
   if (template_strip_ext == "test") {
     return(NULL)
   }
@@ -98,6 +98,13 @@ check_supported_year <- function(year, disease, .dxgap_diseases = dxgap_diseases
     )
   } else {
     invisible(year)
+  }
+}
+
+check_multi_year <- function(year) {
+  is_year_vec <- length(year) <= 1
+  if (is_year_vec) {
+    rlang::abort("`year` has insufficient length.")
   }
 }
 

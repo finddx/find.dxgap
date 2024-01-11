@@ -48,8 +48,21 @@ render_report <- function(template_name,
                           vars = NULL,
                           interactive = TRUE,
                           override_vars_check = FALSE) {
-  check_interactive_render(year = year, interactive = interactive)
-  if (length(year) > 1) {
+  template_nm <- strip_ext(template_name)
+  accept_ts <- extract_type_template(
+    disease = disease,
+    template_name = template_nm
+  )
+  multiple_years <- length(year) > 1
+  does_not_accept_ts <- !accept_ts
+  multi_cross_sectional <- multiple_years && does_not_accept_ts
+  if (does_not_accept_ts) {
+    check_interactive_render(year = year, interactive = interactive)
+  }
+  if (accept_ts && !is.null(year) && template_nm != "missing") {
+    check_multi_year(year = year)
+  }
+  if (multi_cross_sectional) {
     paths <- render_bulk_impl(
       template_name = template_name,
       disease = disease,
@@ -61,7 +74,7 @@ render_report <- function(template_name,
     )
     return(invisible(paths))
   }
-
+  # either a ts-dm or a single_year-dm
   render_report_impl(
     template_name,
     disease,

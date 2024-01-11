@@ -217,6 +217,14 @@ extract_start_year <- function(disease, .dxgap_diseases = dxgap_diseases) {
   .dxgap_diseases[.dxgap_diseases$disease == disease, ]$start_year
 }
 
+extract_type_template <- function(disease, template_name, .dxgap_diseases = dxgap_diseases) {
+  .dxgap_diseases |>
+    dplyr::filter(disease == !!disease) |>
+    tidyr::unnest(template) |>
+    dplyr::filter(template_id == !!template_name) |>
+    dplyr::pull(accept_ts)
+}
+
 #' Extract supported variables from `dxgap_diseases` meta table
 #'
 #' @param disease The disease identifier.
@@ -230,4 +238,8 @@ extract_vars <- function(disease, .dxgap_diseases = dxgap_diseases) {
 
 relocate_dx_gap <- function(tbl) {
   dplyr::relocate(tbl, dx_gap, .after = country_code)
+}
+
+strip_ext <- function(file_name) {
+  stringr::str_remove(file_name, "\\..*$")
 }

@@ -15,11 +15,11 @@ dxgap_tb_tables <- tibble::tribble(
 )
 
 dxgap_tb_templates <- tibble::tribble(
-  ~template_id,
-  "explain_lm",
-  "eda_ts",
-  "eda",
-  "missing"
+  ~template_id, ~accept_ts,
+  "explain_lm",  FALSE,
+  "eda_ts",      TRUE,
+  "eda",         FALSE,
+  "missing",     TRUE
 )
 
 dxgap_tb_vars <- tibble::tibble(
