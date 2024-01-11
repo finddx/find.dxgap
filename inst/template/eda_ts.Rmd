@@ -22,6 +22,10 @@ dm <- params$dm
 data_tbl <- params$data_tbl
 ```
 
+```{r start-year}
+start_year <- min(data_tbl$year)
+```
+
 ```{r}
 tbl <-
   data_tbl |> 
@@ -211,7 +215,7 @@ ts_model_prep <-
   select(-is_hbc, -country, -c_newinc, -e_inc_num) |>
   mutate(dummy = 1) %>%
   pivot_wider(names_from = year, values_from = dummy, values_fill = 0) |>
-  select(-`2016`) # create reference category
+  select(-all_of(toString(start_year))) # create reference category
 
 ts_model_lm <-
   ts_model_prep |>
