@@ -49,7 +49,12 @@ render_report <- function(template_name,
                           interactive = TRUE,
                           override_vars_check = FALSE) {
   check_interactive_render(year = year, interactive = interactive)
-  if (length(year) > 1) {
+  template_nm <- strip_ext(template_name)
+  accept_ts <- extract_type_template(
+    disease = disease,
+    template_name = template_nm
+  )
+  if (length(year) > 1 && !accept_ts) {
     paths <- render_bulk_impl(
       template_name = template_name,
       disease = disease,
