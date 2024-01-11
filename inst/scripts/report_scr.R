@@ -23,7 +23,7 @@ extract_vars("tb")
 
 render_report("eda.Rmd", disease = "tb", year = 2019, vars = extract_vars("tb"), interactive = TRUE)
 render_report("eda.Rmd", disease = "tb", year = 2016:2017, vars = extract_vars("tb"), interactive = FALSE)
-render_report("eda.Rmd", disease = "tb", year = 2016:2017, vars = extract_vars("tb"), interactive = TRUE)
+try(render_report("eda.Rmd", disease = "tb", year = 2016:2017, vars = extract_vars("tb"), interactive = TRUE))
 render_bulk("eda.Rmd", disease = "tb", year = 2016:2021, vars = extract_vars("tb"))
 
 render_report("explain_lm.Rmd", disease = "tb", year = 2019, vars = extract_vars("tb"))
