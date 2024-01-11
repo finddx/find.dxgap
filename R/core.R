@@ -26,14 +26,22 @@ get_core <- function(data_list, estimated, notified) {
       start_year = min_year
     )
 
+  if (!override_core_check$notified) {
+    check_valid_core_subset(country_notification_df, var = notified_field_name)
+  }
+
   country_estimate_df <-
     data_list |>
     purrr::pluck(estimated_tbl_name) |>
-    dplyr::filter(!!rlang::ensym(estimated_field_name) != 0) |> # avoid dividing by zero
+    dplyr::filter(!!rlang::ensym(estimated_field_name) != 0) |> # avoid dividing dx_gap by zero
     get_cc_var_always_given_acrs_yrs(
       !!rlang::ensym(estimated_field_name),
       start_year = min_year
     )
+
+  if (!override_core_check$estimated) {
+    check_valid_core_subset(country_notification_df, var = estimated_field_name)
+  }
 
   in_common_dxgap <-
     country_notification_df |>
