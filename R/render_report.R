@@ -122,6 +122,7 @@ render_report_impl <- function(template_name,
       output_file = temp_file,
       output_format = "html_document",
       params = list(
+        disease = disease,
         dm = dm,
         data_tbl = data_tbl,
         year = year
@@ -153,6 +154,7 @@ render_report_impl <- function(template_name,
     output_dir = dirname(out_path),
     output_format = "html_document",
     params = list(
+      disease = disease,
       dm = dm,
       data_tbl = data_tbl,
       year = year
