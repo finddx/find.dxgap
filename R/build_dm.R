@@ -28,7 +28,11 @@
 #'   year = 2019 # only 2019
 #' )
 #' }
-build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) {
+build_dm <- function(data_list,
+                     estimated = NULL,
+                     notified = NULL,
+                     year = NULL,
+                     override_core_check = list("notified" = FALSE, "estimated" = FALSE)) {
   disease <- attr(data_list, "disease")
   check_supported_year(year = year, disease = disease)
   supported_year_range <- extract_supported_year(disease = disease)
@@ -52,7 +56,8 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
   core_data <- get_core(
     data_list,
     estimated = estimated,
-    notified = notified
+    notified = notified,
+    override_core_check = override_core_check
   )
   core_list <- core_data$core_list
   can_compute_dxgap <- core_data$can_compute_dxgap
