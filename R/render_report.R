@@ -59,7 +59,7 @@ render_report <- function(template_name,
   if (does_not_accept_ts) {
     check_interactive_render(year = year, interactive = interactive)
   }
-  if (accept_ts) {
+  if (accept_ts && !is.null(year)) {
     check_multi_year(year = year)
   }
   if (multi_cross_sectional) {
