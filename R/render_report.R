@@ -59,6 +59,9 @@ render_report <- function(template_name,
   if (does_not_accept_ts) {
     check_interactive_render(year = year, interactive = interactive)
   }
+  if (accept_ts) {
+    check_multi_year(year = year)
+  }
   if (multi_cross_sectional) {
     paths <- render_bulk_impl(
       template_name = template_name,
