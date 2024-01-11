@@ -47,10 +47,20 @@ build_tbl <- function(disease,
                       estimated = NULL,
                       notified = NULL,
                       year = NULL,
-                      vars = NULL) {
+                      vars = NULL,
+                      override_core_check = list(
+                        "notified" = FALSE,
+                        "estimated" = FALSE
+                      )) {
   df_lst <- build_lst_impl(disease)
 
-  dm <- build_dm(df_lst, year = year, estimated = estimated, notified = notified)
+  dm <- build_dm(
+    df_lst,
+    year = year,
+    estimated = estimated,
+    notified = notified,
+    override_core_check = override_core_check
+  )
 
   # Here and not in `build_tbl_impl` since I don't have the disease there
   if (is.null(estimated)) {
