@@ -21,9 +21,10 @@
 #'   data on. Defaults to NULL, returning all years present in the data.
 #' @param vars A vector of strings naming columns to subset the data on.
 #'  Defaults to NULL, indicating all variables should be used.
-#' @param override_core_check A list as `list("notified" = FALSE, "estimated" =
-#'   FALSE)` indicating whether to override the checks on variables chosen for
-#'   dx_gap computation.
+#' @param override_core_check A named list of logical as `list("notified" =
+#'   FALSE, "estimated" = FALSE)` indicating whether to override the checks on
+#'   variables chosen for dx_gap computation. By default check is not override
+#'   on both variables.
 #'
 #' @return A tibble.
 #'
