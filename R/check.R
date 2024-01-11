@@ -101,6 +101,13 @@ check_supported_year <- function(year, disease, .dxgap_diseases = dxgap_diseases
   }
 }
 
+check_multi_year <- function(year) {
+  is_year_vec <- length(year) <= 1
+  if (is_year_vec) {
+    rlang::abort("`year` has insufficient length.")
+  }
+}
+
 check_clean_data_dir <- function(data_files, .pattern) {
   pattern <- paste0(c(.pattern, "\\..*$"), collapse = "|")
   core_pattern <- stringr::str_remove_all(
