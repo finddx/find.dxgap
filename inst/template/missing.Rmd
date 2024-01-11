@@ -40,7 +40,7 @@ start_year <- extract_start_year(disease = disease)
 complete_by_year <- 
   data_tbl |> 
   compute_completion_rate("year") |> 
-  filter(year > start_year)
+  filter(year >= start_year)
 ```
 
 ```{r}
@@ -83,7 +83,7 @@ for_tab <-
   data_tbl |> 
   compute_completion_rate(c("year", "is_hbc")) |> 
   filter(var_name %in% vars_focus) |> 
-  filter(year > start_year) |> 
+  filter(year >= start_year) |>
   select(year, var_name, is_hbc, completion_rate) |> 
   pivot_wider(names_from = year, values_from = completion_rate)
 ```
