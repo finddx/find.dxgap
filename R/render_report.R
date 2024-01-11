@@ -59,7 +59,7 @@ render_report <- function(template_name,
       vars = vars,
       override_vars_check = override_vars_check
     )
-    invisible(paths)
+    return(invisible(paths))
   }
 
   render_report_impl(
