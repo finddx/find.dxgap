@@ -43,7 +43,7 @@ get_core <- function(data_list, estimated, notified) {
     to_nest_df(data_list) |>
     dplyr::mutate( # get core set of consistently hbc across year
       consistently_hbc = dplyr::if_else(
-        name == "hbc",
+        stringr::str_detect(name, "hbc"),
         purrr::map(data, get_cc_always_given_acrs_yrs),
         data
       )
