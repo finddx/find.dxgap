@@ -52,7 +52,8 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
   core_data <- get_core(
     data_list,
     estimated = estimated,
-    notified = notified
+    notified = notified,
+    year = year
   )
   core_list <- core_data$core_list
   can_compute_dxgap <- core_data$can_compute_dxgap
