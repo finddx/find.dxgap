@@ -57,7 +57,7 @@ build_tbl(
 try(
   build_tbl(
     "tb",
-    vars = my_vars,
+    vars = c("year", "country_code"),
     estimated = dxgap_diseases$estimated,
     notified = "who_notifications.conf_rrmdr_tx",
   )
