@@ -4,7 +4,7 @@ pkgload::load_all()
 
 # deprecated: clone find.dxgap.data instead and set `DXGAP_DATADIR`
 # see README for instructions
-write_data_dir()
+try(write_data_dir())
 
 # Disease meta table -----------------------------------------------------------
 # contains supported year range, vars and templates plus default fields to be used
