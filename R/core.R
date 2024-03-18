@@ -26,6 +26,8 @@ get_core <- function(data_list, estimated, notified) {
       start_year = min_year
     )
 
+  check_valid_core_subset(country_notification_df, var = notified_field_name, start_year = min_year)
+
   country_estimate_df <-
     data_list |>
     purrr::pluck(estimated_tbl_name) |>
@@ -34,6 +36,8 @@ get_core <- function(data_list, estimated, notified) {
       !!rlang::ensym(estimated_field_name),
       start_year = min_year
     )
+
+  check_valid_core_subset(country_estimate_df, var = notified_field_name, start_year = min_year)
 
   in_common_dxgap <-
     country_notification_df |>
