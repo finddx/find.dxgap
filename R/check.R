@@ -223,3 +223,21 @@ check_interactive_render <- function(year, interactive) {
     )
   }
 }
+
+check_valid_core_subset <- function(data, var, start_year) {
+  vec <- data$country_code
+  if (rlang::is_bare_character(vec, 0)) {
+    rlang::abort(
+      c(
+        sprintf(
+          "Cannot find a valid 'core' subset of countries for which `%s` is consecutively not `NA` from `%s`.",
+          var,
+          start_year
+        ),
+        i = sprintf("Possible reason is `%s` low completion rate.", var),
+        i = "A 'core' valid subset may still be found tweaking the `year` range."
+      ),
+      class = "dxgap_data"
+    )
+  }
+}
