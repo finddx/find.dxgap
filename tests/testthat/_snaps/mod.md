@@ -17,8 +17,8 @@
          rank wflow_id            model      .metric  mean
         <int> <chr>               <chr>      <chr>   <dbl>
       1     1 log_pop_total_lm    linear_reg rmse     10.2
-      2     2 norm_pop_total_lm   linear_reg rmse     16.5
-      3     3 simple_lm           linear_reg rmse     16.5
+      2     2 simple_lm           linear_reg rmse     16.5
+      3     3 norm_pop_total_lm   linear_reg rmse     16.5
       4     4 is_hbc_pop_total_lm linear_reg rmse     40.0
       
       $final_fit
