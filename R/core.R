@@ -13,7 +13,6 @@ get_core <- function(data_list, estimated, notified, year) {
   disease <- attr(data_list, "disease")
   if (is.null(year)) {
     year <- extract_supported_year(disease = disease)
-    min_year <- min(year)
   }
   min_year <- min(year)
   dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
@@ -28,7 +27,7 @@ get_core <- function(data_list, estimated, notified, year) {
     purrr::pluck(notified_tbl_name) |>
     get_cc_var_always_given_acrs_yrs(
       !!rlang::ensym(notified_field_name),
-      start_year = min_year
+      year_range = year
     )
 
   check_valid_core_subset(country_notification_df, var = notified_field_name, year = year)
@@ -39,7 +38,7 @@ get_core <- function(data_list, estimated, notified, year) {
     dplyr::filter(!!rlang::ensym(estimated_field_name) != 0) |> # avoid dividing by zero
     get_cc_var_always_given_acrs_yrs(
       !!rlang::ensym(estimated_field_name),
-      start_year = min_year
+      year_range = year
     )
 
   check_valid_core_subset(country_estimate_df, var = estimated_field_name, year = year)
