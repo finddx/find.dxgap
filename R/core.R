@@ -5,7 +5,8 @@
 #' get_core(
 #'   build_lst("tb"),
 #'   estimated = "who_estimates.e_inc_num",
-#'   notified = "who_notifications.c_newinc"
+#'   notified = "who_notifications.c_newinc",
+#'   year = NULL
 #' )
 #' }
 get_core <- function(data_list, estimated, notified, year) {
