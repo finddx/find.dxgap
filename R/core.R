@@ -37,7 +37,7 @@ get_core <- function(data_list, estimated, notified, year) {
       start_year = min_year
     )
 
-  check_valid_core_subset(country_estimate_df, var = notified_field_name, year = year)
+  check_valid_core_subset(country_estimate_df, var = estimated_field_name, year = year)
 
   in_common_dxgap <-
     country_notification_df |>
