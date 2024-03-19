@@ -21,6 +21,7 @@ get_core <- function(data_list, estimated, notified, year) {
   notified_tbl_name <- extract_tbl_name(dxgap_meta_df, "notified")
   notified_field_name <- extract_field_name(dxgap_meta_df, "notified")
 
+  # Subset of countries for which dx_gap can be computed in `year` range -------
   country_notification_df <-
     data_list |>
     purrr::pluck(notified_tbl_name) |>
@@ -48,7 +49,7 @@ get_core <- function(data_list, estimated, notified, year) {
 
   subset_df <-
     to_nest_df(data_list) |>
-    dplyr::mutate( # get core set of consistently hbc across year
+    dplyr::mutate( # get core set of consistently hbc countries across year
       consistently_hbc = dplyr::if_else(
         stringr::str_detect(name, "hbc"),
         purrr::map(data, get_cc_always_given_acrs_yrs),
