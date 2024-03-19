@@ -10,7 +10,11 @@
 #' }
 get_core <- function(data_list, estimated, notified, year) {
   disease <- attr(data_list, "disease")
-  min_year <- extract_start_year(disease = disease)
+  if (is.null(year)) {
+    year <- extract_supported_year(disease = disease)
+    min_year <- min(year)
+  }
+  min_year <- min(year)
   dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
 
   estimated_tbl_name <- extract_tbl_name(dxgap_meta_df, "estimated")
