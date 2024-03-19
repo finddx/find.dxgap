@@ -5,7 +5,7 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
       year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
       var = rep(1, 3 * 3)
     )
-  out <- get_cc_var_always_given_acrs_yrs(df1, var, 2016)
+  out <- get_cc_var_always_given_acrs_yrs(df1, var, year_range = 2016:2018)
   expect_equal(out$country_code, c("FRA", "ITA", "CHE"))
 
   df2 <-
@@ -14,7 +14,7 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
       year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
       var = c(NA, 1, 1, 1, 1, 1, 1, 1, 1)
     )
-  out <- get_cc_var_always_given_acrs_yrs(df2, var, 2016)
+  out <- get_cc_var_always_given_acrs_yrs(df2, var, year_range = 2016:2018)
   expect_equal(out$country_code, c("ITA", "CHE"))
 
   df3 <-
@@ -23,7 +23,7 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
       year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
       var = c(NA, 1, 1, 1, NA, 1, 1, 1, NA)
     )
-  out <- get_cc_var_always_given_acrs_yrs(df3, var, 2016)
+  out <- get_cc_var_always_given_acrs_yrs(df3, var, year_range = 2016:2018)
   expect_equal(out$country_code, character(0))
 
   df4 <-
@@ -32,7 +32,7 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
       year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
       var = c(NA, NA, NA, 1, 1, 1, 1, 1, 1)
     )
-  out <- get_cc_var_always_given_acrs_yrs(df4, var, 2016)
+  out <- get_cc_var_always_given_acrs_yrs(df4, var, year_range = 2016:2018)
   expect_equal(out$country_code, character(0))
 
   df5 <-
@@ -41,7 +41,7 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
       year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
       var = c(NA, NA, NA, 1, 1, 1, 1, 1, 1)
     )
-  out <- get_cc_var_always_given_acrs_yrs(df5, var, 2017)
+  out <- get_cc_var_always_given_acrs_yrs(df5, var, year_range = 2017:2018)
   expect_equal(out$country_code, c("FRA", "ITA", "CHE"))
 
   df6 <-
@@ -50,7 +50,7 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
       year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
       var = c(1, 1, 1, 1, NA, 1, 1, 1, 1)
     )
-  out <- get_cc_var_always_given_acrs_yrs(df6, var, 2016)
+  out <- get_cc_var_always_given_acrs_yrs(df6, var, year_range = 2016:2018)
   expect_equal(out$country_code, c("FRA", "CHE"))
 
   df7 <-
@@ -59,7 +59,7 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
       year = c(2016, 2016, 2016, 2017, 2017, 2017, 2018, 2018, 2018),
       var = c(1, 1, 1, 1, NA, 1, 1, 1, 1)
     )
-  out <- get_cc_var_always_given_acrs_yrs(df7, var, 2018)
+  out <- get_cc_var_always_given_acrs_yrs(df7, var, year_range = 2018)
   expect_equal(out$country_code, c("FRA", "ITA", "CHE"))
 })
 
