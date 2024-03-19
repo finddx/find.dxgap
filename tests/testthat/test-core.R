@@ -61,6 +61,24 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
     )
   out <- get_cc_var_always_given_acrs_yrs(df7, var, year_range = 2018)
   expect_equal(out$country_code, c("FRA", "ITA", "CHE"))
+
+  df8 <-
+    tibble::tibble(
+      country_code = rep(c("FRA", "ITA", "CHE"), 4),
+      year = c(rep(2016, 3), rep(2017, 3), rep(2018, 3), rep(2019, 3)),
+      var = c(1, 1, 1, 1, NA, 1, 1, 1, 1, 1, 1, 1)
+    )
+  out <- get_cc_var_always_given_acrs_yrs(df8, var, year_range = 2018:2019)
+  expect_equal(out$country_code, c("FRA", "ITA", "CHE"))
+
+  df9 <-
+    tibble::tibble(
+      country_code = rep(c("FRA", "ITA", "CHE"), 4),
+      year = c(rep(2016, 3), rep(2017, 3), rep(2018, 3), rep(2019, 3)),
+      var = c(1, 1, 1, 1, NA, 1, 1, 1, 1, 1, 1, 1)
+    )
+  out <- get_cc_var_always_given_acrs_yrs(df8, var, year_range = 2017:2019)
+  expect_equal(out$country_code, c("FRA", "CHE"))
 })
 
 test_that("get_cc_var_always_given_acrs_yrs() works", {
