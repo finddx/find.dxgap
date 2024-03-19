@@ -21,7 +21,7 @@
       Table: `wb_gdp`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 194
       Columns: 3
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW", "~
@@ -32,7 +32,7 @@
       Table: `wb_pop_density`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 194
       Columns: 3
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW", "~
@@ -43,7 +43,7 @@
       Table: `wb_pop_total`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 194
       Columns: 3
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW", "~
@@ -54,7 +54,7 @@
       Table: `wb_pop_urban`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 194
       Columns: 3
       $ year           <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2~
       $ country_code   <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW",~
@@ -65,7 +65,7 @@
       Table: `who_budget`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 195
       Columns: 12
       $ country_code    <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW"~
       $ year            <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
@@ -102,7 +102,7 @@
       Table: `who_estimates`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 195
       Columns: 8
       $ country_code  <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW", ~
       $ year          <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 20~
@@ -118,7 +118,7 @@
       Table: `who_expenditures`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 195
       Columns: 9
       $ country_code      <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AB~
       $ year              <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019~
@@ -135,7 +135,7 @@
       Table: `who_laboratories`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 195
       Columns: 11
       $ country_code          <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM",~
       $ year                  <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
@@ -154,7 +154,7 @@
       Table: `who_notifications`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 195
       Columns: 8
       $ country_code    <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW"~
       $ year            <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
@@ -182,7 +182,7 @@
         (`year`, `country_code`) -> (`who_laboratories$year`, `who_laboratories$countr...
         (`year`, `country_code`) -> (`who_notifications$year`, `who_notifications$coun...
       
-      Rows: 193
+      Rows: 195
       Columns: 3
       $ country_code <chr> "AGO", "BGD", "BRA", "CAF", "CHN", "COD", "COG", "ETH", "~
       $ year         <int> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
@@ -198,6 +198,10 @@
       ! Unsatisfied constraints:
     Output
       * Table `country`: foreign key `year`, `country_code` into table `gf_procurement`: values of `country$year`, `country$country_code` not in `gf_procurement$year`, `gf_procurement$country_code`: 2019, ABW (1), 2019, AFG (1), 2019, AGO (1), 2019, AND (1), 2019, ARE (1), ...
+      * Table `country`: foreign key `year`, `country_code` into table `wb_gdp`: values of `country$year`, `country$country_code` not in `wb_gdp$year`, `wb_gdp$country_code`: 2019, COK (1)
+      * Table `country`: foreign key `year`, `country_code` into table `wb_pop_density`: values of `country$year`, `country$country_code` not in `wb_pop_density$year`, `wb_pop_density$country_code`: 2019, COK (1)
+      * Table `country`: foreign key `year`, `country_code` into table `wb_pop_total`: values of `country$year`, `country$country_code` not in `wb_pop_total$year`, `wb_pop_total$country_code`: 2019, COK (1)
+      * Table `country`: foreign key `year`, `country_code` into table `wb_pop_urban`: values of `country$year`, `country$country_code` not in `wb_pop_urban$year`, `wb_pop_urban$country_code`: 2019, COK (1)
       * Table `country`: foreign key `year`, `country_code` into table `who_community`: values of `country$year`, `country$country_code` not in `who_community$year`, `who_community$country_code`: 2019, ABW (1), 2019, ALB (1), 2019, AND (1), 2019, ARE (1), 2019, ARG (1), ...
 
 ---
@@ -207,6 +211,10 @@
         dm)), problem != ""), problem))
     Output
       values of `country$year`, `country$country_code` not in `gf_procurement$year`, `gf_procurement$country_code`: 2019, ABW (1), 2019, AFG (1), 2019, AGO (1), 2019, AND (1), 2019, ARE (1), ...
+      values of `country$year`, `country$country_code` not in `wb_gdp$year`, `wb_gdp$country_code`: 2019, COK (1)
+      values of `country$year`, `country$country_code` not in `wb_pop_density$year`, `wb_pop_density$country_code`: 2019, COK (1)
+      values of `country$year`, `country$country_code` not in `wb_pop_total$year`, `wb_pop_total$country_code`: 2019, COK (1)
+      values of `country$year`, `country$country_code` not in `wb_pop_urban$year`, `wb_pop_urban$country_code`: 2019, COK (1)
       values of `country$year`, `country$country_code` not in `who_community$year`, `who_community$country_code`: 2019, ABW (1), 2019, ALB (1), 2019, AND (1), 2019, ARE (1), 2019, ARG (1), ...
 
 # build_dm() works and returns a time series
@@ -447,7 +455,7 @@
       Table: `wb_gdp`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 194
       Columns: 3
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW", "~
@@ -458,7 +466,7 @@
       Table: `wb_pop_density`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 194
       Columns: 3
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW", "~
@@ -469,7 +477,7 @@
       Table: `wb_pop_total`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 194
       Columns: 3
       $ year         <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
       $ country_code <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW", "~
@@ -480,7 +488,7 @@
       Table: `wb_pop_urban`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 194
       Columns: 3
       $ year           <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2~
       $ country_code   <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW",~
@@ -491,7 +499,7 @@
       Table: `who_budget`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 195
       Columns: 12
       $ country_code    <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW"~
       $ year            <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
@@ -528,7 +536,7 @@
       Table: `who_estimates`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 195
       Columns: 8
       $ country_code  <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW", ~
       $ year          <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 20~
@@ -544,7 +552,7 @@
       Table: `who_expenditures`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 195
       Columns: 9
       $ country_code      <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "AB~
       $ year              <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019~
@@ -561,7 +569,7 @@
       Table: `who_laboratories`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 195
       Columns: 11
       $ country_code          <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM",~
       $ year                  <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
@@ -580,7 +588,7 @@
       Table: `who_notifications`
       Primary key: (`year`, `country_code`)
       
-      Rows: 193
+      Rows: 195
       Columns: 8
       $ country_code    <chr> "AFG", "ALB", "DZA", "AND", "AGO", "ARG", "ARM", "ABW"~
       $ year            <dbl> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, ~
@@ -608,7 +616,7 @@
         (`year`, `country_code`) -> (`who_laboratories$year`, `who_laboratories$countr...
         (`year`, `country_code`) -> (`who_notifications$year`, `who_notifications$coun...
       
-      Rows: 193
+      Rows: 195
       Columns: 3
       $ country_code <chr> "AGO", "BGD", "BRA", "CAF", "CHN", "COD", "COG", "ETH", "~
       $ year         <int> 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 201~
@@ -624,6 +632,10 @@
       ! Unsatisfied constraints:
     Output
       * Table `country`: foreign key `year`, `country_code` into table `gf_procurement`: values of `country$year`, `country$country_code` not in `gf_procurement$year`, `gf_procurement$country_code`: 2019, ABW (1), 2019, AFG (1), 2019, AGO (1), 2019, AND (1), 2019, ARE (1), ...
+      * Table `country`: foreign key `year`, `country_code` into table `wb_gdp`: values of `country$year`, `country$country_code` not in `wb_gdp$year`, `wb_gdp$country_code`: 2019, COK (1)
+      * Table `country`: foreign key `year`, `country_code` into table `wb_pop_density`: values of `country$year`, `country$country_code` not in `wb_pop_density$year`, `wb_pop_density$country_code`: 2019, COK (1)
+      * Table `country`: foreign key `year`, `country_code` into table `wb_pop_total`: values of `country$year`, `country$country_code` not in `wb_pop_total$year`, `wb_pop_total$country_code`: 2019, COK (1)
+      * Table `country`: foreign key `year`, `country_code` into table `wb_pop_urban`: values of `country$year`, `country$country_code` not in `wb_pop_urban$year`, `wb_pop_urban$country_code`: 2019, COK (1)
       * Table `country`: foreign key `year`, `country_code` into table `who_community`: values of `country$year`, `country$country_code` not in `who_community$year`, `who_community$country_code`: 2019, ABW (1), 2019, ALB (1), 2019, AND (1), 2019, ARE (1), 2019, ARG (1), ...
 
 ---
@@ -633,6 +645,10 @@
         dm)), problem != ""), problem))
     Output
       values of `country$year`, `country$country_code` not in `gf_procurement$year`, `gf_procurement$country_code`: 2019, ABW (1), 2019, AFG (1), 2019, AGO (1), 2019, AND (1), 2019, ARE (1), ...
+      values of `country$year`, `country$country_code` not in `wb_gdp$year`, `wb_gdp$country_code`: 2019, COK (1)
+      values of `country$year`, `country$country_code` not in `wb_pop_density$year`, `wb_pop_density$country_code`: 2019, COK (1)
+      values of `country$year`, `country$country_code` not in `wb_pop_total$year`, `wb_pop_total$country_code`: 2019, COK (1)
+      values of `country$year`, `country$country_code` not in `wb_pop_urban$year`, `wb_pop_urban$country_code`: 2019, COK (1)
       values of `country$year`, `country$country_code` not in `who_community$year`, `who_community$country_code`: 2019, ABW (1), 2019, ALB (1), 2019, AND (1), 2019, ARE (1), 2019, ARG (1), ...
 
 # build_dm() works and returns a time series with `NULL` args.
