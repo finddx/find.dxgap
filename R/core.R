@@ -82,10 +82,10 @@ get_cc_always_given_acrs_yrs <- function(data) {
 }
 
 
-get_cc_var_always_given_acrs_yrs <- function(data, var, start_year) {
+get_cc_var_always_given_acrs_yrs <- function(data, var, year_range) {
   check_is_ts(data)
   data |>
-    dplyr::filter(year >= !!start_year) |>
+    dplyr::filter(dplyr::between(year, min(year_range), max(year_range))) |>
     dplyr::mutate(is_given = !is.na({{ var }})) |>
     dplyr::select(country_code, year, is_given) |>
     dplyr::group_split(year, .keep = FALSE) |>
