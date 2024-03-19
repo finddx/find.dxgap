@@ -243,3 +243,9 @@ relocate_dx_gap <- function(tbl) {
 strip_ext <- function(file_name) {
   stringr::str_remove(file_name, "\\..*$")
 }
+
+to_chr_range <- function(num_vec) {
+  min_yr <- min(num_vec)
+  max_yr <- max(num_vec)
+  paste(c(min_yr, max_yr), collapse = " - ")
+}

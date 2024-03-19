@@ -8,7 +8,7 @@
 #'   notified = "who_notifications.c_newinc"
 #' )
 #' }
-get_core <- function(data_list, estimated, notified) {
+get_core <- function(data_list, estimated, notified, year) {
   disease <- attr(data_list, "disease")
   min_year <- extract_start_year(disease = disease)
   dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
@@ -26,6 +26,8 @@ get_core <- function(data_list, estimated, notified) {
       start_year = min_year
     )
 
+  check_valid_core_subset(country_notification_df, var = notified_field_name, year = year)
+
   country_estimate_df <-
     data_list |>
     purrr::pluck(estimated_tbl_name) |>
@@ -34,6 +36,8 @@ get_core <- function(data_list, estimated, notified) {
       !!rlang::ensym(estimated_field_name),
       start_year = min_year
     )
+
+  check_valid_core_subset(country_estimate_df, var = notified_field_name, year = year)
 
   in_common_dxgap <-
     country_notification_df |>
