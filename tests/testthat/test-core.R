@@ -90,7 +90,8 @@ test_that("get_core() works", {
     get_core(
       data_list,
       estimated = "who_estimates.e_inc_num",
-      notified = "who_notifications.c_newinc"
+      notified = "who_notifications.c_newinc",
+      year = NULL
     ),
     "list"
   )
