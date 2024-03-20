@@ -53,39 +53,88 @@ get_core <- function(data_list, estimated, notified, year) {
       year_range = year
     )
 
-  check_valid_core_subset(country_estimate_df, var = estimated_field_name, year = year)
+  check_valid_core_subset(cc_estimate_df, var = estimated_field_name, year = year)
 
-  in_common_dxgap <-
-    country_notification_df |>
-    dplyr::inner_join(country_estimate_df, dplyr::join_by(country_code))
+  cc_can_compute_dxgap <-
+    cc_notification_df |>
+    dplyr::inner_join(cc_estimate_df, dplyr::join_by(country_code))
 
-  subset_df <-
-    to_nest_df(data_list) |>
-    dplyr::mutate( # get core set of consistently hbc countries across year
-      consistently_hbc = dplyr::if_else(
-        stringr::str_detect(name, "hbc"),
-        purrr::map(data, get_cc_always_given_acrs_yrs),
-        data
+  cc_consistent_hbc <-
+    data_list$who_hbc |>
+    dplyr::filter(dplyr::between(year, min(!!year), max(!!year))) |>
+    get_cc_always_given_acrs_yrs()
+
+  core_hbc_df <-
+    data_list$who_hbc |>
+    dplyr::semi_join(cc_consistent_hbc, by = dplyr::join_by(country_code)) |>
+    dplyr::semi_join(cc_can_compute_dxgap, by = dplyr::join_by(country_code)) |>
+    dplyr::filter(dplyr::between(year, min(!!year), max(!!year))) |>
+    dplyr::arrange(country_code, year) |>
+    dplyr::transmute(
+      year,
+      country_code,
+      is_hbc = 1
+    )
+
+  len_yr_range <-
+    core_hbc_df |>
+    dplyr::reframe(n_yr = dplyr::n_distinct(year), .by = country_code) |>
+    dplyr::distinct(n_yr) |>
+    dplyr::pull()
+
+  stopifnot(length(len_yr_range) == 1)
+  stopifnot(nrow(cc_consistent_hbc) * len_yr_range == nrow(core_hbc_df))
+
+  data_list$who_hbc <- NULL
+
+  # used to subset those cc for which dx_gap can always be computed *and*
+  # that are consistently hbc in the given year range
+  cc_core_df <-
+    cc_can_compute_dxgap |>
+    dplyr::bind_rows(cc_consistent_hbc) |>
+    dplyr::distinct()
+
+  core_df <-
+    data_list |>
+    to_nest_df() |>
+    dplyr::mutate(
+      data_range_yr = purrr::map(
+        data,
+        ~ dplyr::filter(.x, dplyr::between(year, min(!!year), max(!!year)))
       )
     ) |>
-    dplyr::mutate(in_common_dxgap = list(in_common_dxgap)) |> # those cc for which dxgap can always be computed
-    dplyr::mutate(can_compute_dx_gap = purrr::map2(
-      consistently_hbc,
-      in_common_dxgap,
-      dplyr::inner_join,
-      dplyr::join_by(country_code)
+    dplyr::mutate(
+      data_core = purrr::map(
+        data_range_yr,
+        ~ dplyr::semi_join(.x, cc_core_df, dplyr::join_by(country_code)),
       )
     ) |>
-    dplyr::select(name, can_compute_dx_gap)
+    dplyr::select(name, data_core)
 
-  final_list <- subset_df$can_compute_dx_gap
-  names(final_list) <- subset_df$name
-  tibble::lst(core_list = final_list, can_compute_dxgap = in_common_dxgap)
+  # create binary `is_hbc`
+  core_df_is_hbc <-
+    core_df |>
+    dplyr::mutate(
+      data_core_is_hbc = purrr::map(
+        data_core,
+        ~ dplyr::left_join(.x, core_hbc_df, dplyr::join_by(country_code, year))
+      )
+    ) |>
+    dplyr::mutate(
+      data_core_is_hbc = purrr::map(
+        data_core_is_hbc,
+        ~ dplyr::mutate(.x, is_hbc = dplyr::coalesce(is_hbc, 0))
+      )
+    ) |>
+    dplyr::select(name, data_core_is_hbc)
+
+  core_lst <- core_df_is_hbc$data_core_is_hbc
+  names(core_lst) <- core_df$name
+  core_lst
 }
 
 
 get_cc_always_given_acrs_yrs <- function(data) {
-  check_is_ts(data)
   data |>
     dplyr::select(country_code, year) |>
     dplyr::group_split(year, .keep = FALSE) |>
