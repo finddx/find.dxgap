@@ -91,9 +91,7 @@ get_core <- function(data_list, estimated, notified, year) {
   cc_core_df <-
     cc_can_compute_dxgap |>
     dplyr::bind_rows(cc_consistent_hbc) |>
-    tidyr::crossing(year = year) #|>
-    # dplyr::left_join(core_hbc_df, by = join_by(country_code, year)) |>
-    # dplyr::mutate(is_hbc = coalesce(is_hbc, 0))
+    tidyr::crossing(year = year)
 
   # create is_hbc table
   is_hbc <-
@@ -124,23 +122,6 @@ get_core <- function(data_list, estimated, notified, year) {
       )
     ) |>
     dplyr::select(name, data_core)
-
-  # # create binary `is_hbc`
-  # core_df_is_hbc <-
-  #   core_df |>
-  #   dplyr::mutate(
-  #     data_core_is_hbc = purrr::map(
-  #       data_core,
-  #       ~ dplyr::left_join(.x, core_hbc_df, dplyr::join_by(country_code, year))
-  #     )
-  #   ) |>
-  #   dplyr::mutate(
-  #     data_core_is_hbc = purrr::map(
-  #       data_core_is_hbc,
-  #       ~ dplyr::mutate(.x, is_hbc = dplyr::coalesce(is_hbc, 0))
-  #     )
-  #   ) |>
-  #   dplyr::select(name, data_core_is_hbc)
 
   core_lst <- core_df$data_core
   names(core_lst) <- core_df$name
