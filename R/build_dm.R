@@ -127,7 +127,7 @@ set_dm_pk <- function(dm) {
     dm::dm_add_pk(gf_procurement, c(year, country_code), check = TRUE)
 }
 
-set_dm_fk <- function(dm, parent_tbl) {
+set_dm_fk <- function(dm) {
   dm |>
     dm::dm_add_fk(country, c(year, country_code), wb_pop_total) |>
     dm::dm_add_fk(country, c(year, country_code), wb_pop_urban) |>
