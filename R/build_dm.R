@@ -71,6 +71,7 @@ set_dm_rels <- function(dm) {
 
 set_dm_pk <- function(dm) {
   dm |>
+    dm::dm_add_pk(hbc, country_code, check = TRUE) |>
     dm::dm_add_pk(wb_pop_total, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(wb_pop_urban, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(wb_pop_density, c(year, country_code), check = TRUE) |>
@@ -86,6 +87,7 @@ set_dm_pk <- function(dm) {
 
 set_dm_fk <- function(dm) {
   dm |>
+    dm::dm_add_fk(country, country_code, hbc) |>
     dm::dm_add_fk(country, c(year, country_code), wb_pop_total) |>
     dm::dm_add_fk(country, c(year, country_code), wb_pop_urban) |>
     dm::dm_add_fk(country, c(year, country_code), wb_pop_density) |>

@@ -91,16 +91,16 @@ get_core <- function(data_list, estimated, notified, year) {
   cc_core_df <-
     cc_can_compute_dxgap |>
     dplyr::bind_rows(cc_consistent_hbc) |>
-    tidyr::crossing(year = year) |>
-    dplyr::left_join(core_hbc_df, by = join_by(country_code, year)) |>
-    dplyr::mutate(is_hbc = coalesce(is_hbc, 0))
+    tidyr::crossing(year = year) #|>
+    # dplyr::left_join(core_hbc_df, by = join_by(country_code, year)) |>
+    # dplyr::mutate(is_hbc = coalesce(is_hbc, 0))
 
-  # # create is_hbc table
-  # is_hbc <-
-  #   cc_core_df |>
-  #   dplyr::left_join(core_hbc_df, by = join_by(country_code, year)) |>
-  #   dplyr::mutate(is_hbc = coalesce(is_hbc, 0)) |>
-  #   distinct(country_code, is_hbc)
+  # create is_hbc table
+  is_hbc <-
+    cc_core_df |>
+    dplyr::left_join(core_hbc_df, by = dplyr::join_by(country_code, year)) |>
+    dplyr::mutate(is_hbc = dplyr::coalesce(is_hbc, 0)) |>
+    dplyr::distinct(country_code, is_hbc)
 
   # used to subset those cc for which dx_gap can always be computed *and*
   # that are consistently hbc in the given year range
@@ -145,7 +145,7 @@ get_core <- function(data_list, estimated, notified, year) {
   core_lst <- core_df$data_core
   names(core_lst) <- core_df$name
   core_lst$country <- cc_core_df
-  # core_lst$is_hbc <- is_hbc
+  core_lst$hbc <- is_hbc
   core_lst
 }
 
