@@ -31,9 +31,6 @@
 build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) {
   disease <- attr(data_list, "disease")
   check_supported_year(year = year, disease = disease)
-  supported_year_range <- extract_supported_year(disease = disease)
-  max_year <- max(supported_year_range)
-  min_year <- min(supported_year_range)
 
   if (is.null(estimated)) {
     estimated <- extract_default_dxgap_tbl_field(
