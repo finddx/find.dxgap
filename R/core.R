@@ -34,8 +34,7 @@ get_core <- function(data_list, estimated, notified, year) {
   notified_tbl_name <- extract_tbl_name(dxgap_meta_df, "notified")
   notified_field_name <- extract_field_name(dxgap_meta_df, "notified")
 
-  # Subset of countries for which dx_gap can be computed in `year` range -------
-  country_notification_df <-
+  cc_notification_df <-
     data_list |>
     purrr::pluck(notified_tbl_name) |>
     get_cc_var_always_given_acrs_yrs(
@@ -43,9 +42,9 @@ get_core <- function(data_list, estimated, notified, year) {
       year_range = year
     )
 
-  check_valid_core_subset(country_notification_df, var = notified_field_name, year = year)
+  check_valid_core_subset(cc_notification_df, var = notified_field_name, year = year)
 
-  country_estimate_df <-
+  cc_estimate_df <-
     data_list |>
     purrr::pluck(estimated_tbl_name) |>
     dplyr::filter(!!rlang::ensym(estimated_field_name) != 0) |> # avoid dividing by zero
