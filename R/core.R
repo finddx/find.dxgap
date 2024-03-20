@@ -6,7 +6,19 @@
 #'   build_lst("tb"),
 #'   estimated = "who_estimates.e_inc_num",
 #'   notified = "who_notifications.c_newinc",
+#'   year = 2019
+#' )
+#' get_core(
+#'   build_lst("tb"),
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
 #'   year = NULL
+#' )
+#' get_core(
+#'   build_lst("tb"),
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
+#'   year = 2019:2021
 #' )
 #' }
 get_core <- function(data_list, estimated, notified, year) {
@@ -14,6 +26,7 @@ get_core <- function(data_list, estimated, notified, year) {
   if (is.null(year)) {
     year <- extract_supported_year(disease = disease)
   }
+
   dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
 
   estimated_tbl_name <- extract_tbl_name(dxgap_meta_df, "estimated")
