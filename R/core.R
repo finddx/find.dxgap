@@ -87,12 +87,26 @@ get_core <- function(data_list, estimated, notified, year) {
 
   data_list$who_hbc <- NULL
 
-  # used to subset those cc for which dx_gap can always be computed *and*
-  # that are consistently hbc in the given year range
+  # create base table "country"
   cc_core_df <-
     cc_can_compute_dxgap |>
     dplyr::bind_rows(cc_consistent_hbc) |>
-    dplyr::distinct()
+    tidyr::crossing(year = year) |>
+    dplyr::left_join(core_hbc_df, by = join_by(country_code, year)) |>
+    dplyr::mutate(is_hbc = coalesce(is_hbc, 0))
+
+  # # create is_hbc table
+  # is_hbc <-
+  #   cc_core_df |>
+  #   dplyr::left_join(core_hbc_df, by = join_by(country_code, year)) |>
+  #   dplyr::mutate(is_hbc = coalesce(is_hbc, 0)) |>
+  #   distinct(country_code, is_hbc)
+
+  # used to subset those cc for which dx_gap can always be computed *and*
+  # that are consistently hbc in the given year range
+  cc_core_df_filter <-
+    cc_core_df |>
+    dplyr::distinct(country_code)
 
   core_df <-
     data_list |>
@@ -106,30 +120,32 @@ get_core <- function(data_list, estimated, notified, year) {
     dplyr::mutate(
       data_core = purrr::map(
         data_range_yr,
-        ~ dplyr::semi_join(.x, cc_core_df, dplyr::join_by(country_code)),
+        ~ dplyr::semi_join(.x, cc_core_df_filter, dplyr::join_by(country_code)),
       )
     ) |>
     dplyr::select(name, data_core)
 
-  # create binary `is_hbc`
-  core_df_is_hbc <-
-    core_df |>
-    dplyr::mutate(
-      data_core_is_hbc = purrr::map(
-        data_core,
-        ~ dplyr::left_join(.x, core_hbc_df, dplyr::join_by(country_code, year))
-      )
-    ) |>
-    dplyr::mutate(
-      data_core_is_hbc = purrr::map(
-        data_core_is_hbc,
-        ~ dplyr::mutate(.x, is_hbc = dplyr::coalesce(is_hbc, 0))
-      )
-    ) |>
-    dplyr::select(name, data_core_is_hbc)
+  # # create binary `is_hbc`
+  # core_df_is_hbc <-
+  #   core_df |>
+  #   dplyr::mutate(
+  #     data_core_is_hbc = purrr::map(
+  #       data_core,
+  #       ~ dplyr::left_join(.x, core_hbc_df, dplyr::join_by(country_code, year))
+  #     )
+  #   ) |>
+  #   dplyr::mutate(
+  #     data_core_is_hbc = purrr::map(
+  #       data_core_is_hbc,
+  #       ~ dplyr::mutate(.x, is_hbc = dplyr::coalesce(is_hbc, 0))
+  #     )
+  #   ) |>
+  #   dplyr::select(name, data_core_is_hbc)
 
-  core_lst <- core_df_is_hbc$data_core_is_hbc
+  core_lst <- core_df$data_core
   names(core_lst) <- core_df$name
+  core_lst$country <- cc_core_df
+  # core_lst$is_hbc <- is_hbc
   core_lst
 }
 
