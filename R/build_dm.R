@@ -111,6 +111,7 @@ set_dm_colors <- function(dm) {
     dm::dm_set_colors(
       "#5986C4" = starts_with("who"),
       "#70AD47FF" = starts_with("wb"),
-      "#ED7D31FF" = contains("country")
+      "#ED7D31FF" = contains("country"),
+      "#E15759" = contains("hbc")
     )
 }
