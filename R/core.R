@@ -20,6 +20,12 @@
 #'   notified = "who_notifications.c_newinc",
 #'   year = 2019:2021
 #' )
+#' get_core(
+#'   build_lst("tb"),
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
+#'   year = 2014:2017
+#' )
 #' }
 get_core <- function(data_list, estimated, notified, year) {
   disease <- attr(data_list, "disease")
