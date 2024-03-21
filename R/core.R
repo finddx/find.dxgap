@@ -26,12 +26,20 @@
 #'   notified = "who_notifications.c_newinc",
 #'   year = 2014:2017
 #' )
+#' get_core(
+#'   build_lst("tb"),
+#'   estimated = "who_estimates.e_inc_num",
+#'   notified = "who_notifications.c_newinc",
+#'   year = 2013:2014
+#' )
 #' }
 get_core <- function(data_list, estimated, notified, year) {
+
   disease <- attr(data_list, "disease")
   if (is.null(year)) {
     year <- extract_supported_year(disease = disease)
   }
+  check_supported_year(year = year, disease = disease)
 
   dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
 
