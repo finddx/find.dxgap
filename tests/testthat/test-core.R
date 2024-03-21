@@ -86,10 +86,12 @@ test_that("get_cc_var_always_given_acrs_yrs() works", {
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
   data_list <- build_lst("tb")
   who_notifications <- data_list$who_notifications
+  year_range <- extract_supported_year("tb")
+
   core_df <-
     who_notifications |>
-    get_cc_var_always_given_acrs_yrs(c_newinc, year_range = extract_supported_year("tb"))
-  year_range <- extract_supported_year("tb")
+    get_cc_var_always_given_acrs_yrs(c_newinc, year_range = year_range)
+
   numb_na <-
     who_notifications |>
     dplyr::filter(dplyr::between(year, min(year_range), max(year_range))) |>
