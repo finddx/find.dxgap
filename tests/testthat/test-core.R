@@ -111,7 +111,7 @@ test_that("get_core() works", {
     data_list,
     estimated = "who_estimates.e_inc_num",
     notified = "who_notifications.c_newinc",
-    year = NULL
+    year = 2016:2021
   )
   expect_type(core_lst_hbc_falls_in_between_two_periods, "list")
   core_hbc_df <-
