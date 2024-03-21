@@ -34,12 +34,11 @@
 #' )
 #' }
 get_core <- function(data_list, estimated, notified, year) {
-
   disease <- attr(data_list, "disease")
   if (is.null(year)) {
     year <- extract_supported_year(disease = disease)
   }
-  check_supported_year(year = year, disease = disease)
+  year <- check_supported_year(year = year, disease = disease)
 
   dxgap_meta_df <- get_meta_dxgap(estimated = estimated, notified = notified)
 
