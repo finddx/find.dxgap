@@ -101,16 +101,18 @@ get_core <- function(data_list, estimated, notified, year) {
 
   data_list$who_hbc <- NULL
 
-  # create base table "country"
+  # create parent table "country"
   cc_core_df <-
     cc_can_compute_dxgap |>
     dplyr::bind_rows(cc_consistent_hbc) |>
     tidyr::crossing(year = year)
 
-  # create is_hbc table
   is_hbc <-
     cc_core_df |>
-    dplyr::left_join(core_hbc_df, by = dplyr::join_by(country_code, year)) |>
+    dplyr::left_join(
+      dplyr::distinct(core_hbc_df, country_code, is_hbc),
+      by = dplyr::join_by(country_code)
+    ) |>
     dplyr::mutate(is_hbc = dplyr::coalesce(is_hbc, 0)) |>
     dplyr::distinct(country_code, is_hbc)
 
