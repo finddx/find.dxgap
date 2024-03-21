@@ -106,13 +106,30 @@ test_that("get_core() works", {
   skip_on_ci()
   skip_if(Sys.getenv("DXGAP_DATADIR") == "")
   data_list <- build_lst("tb")
-  expect_type(
-    get_core(
-      data_list,
-      estimated = "who_estimates.e_inc_num",
-      notified = "who_notifications.c_newinc",
-      year = NULL
-    ),
-    "list"
+
+  core_lst_hbc_falls_in_between_two_periods <- get_core(
+    data_list,
+    estimated = "who_estimates.e_inc_num",
+    notified = "who_notifications.c_newinc",
+    year = NULL
   )
+  expect_type(core_lst_hbc_falls_in_between_two_periods, "list")
+  core_hbc_df <-
+    core_lst_hbc_falls_in_between_two_periods$hbc |>
+    dplyr::filter(is_hbc == 1)
+  expect_equal(nrow(core_hbc_df), 27)
+
+  core_lst_hbc_falls_in_one_period <- get_core(
+    data_list,
+    estimated = "who_estimates.e_inc_num",
+    notified = "who_notifications.c_newinc",
+    year = 2014:2017
+  )
+  expect_type(core_lst_hbc_falls_in_one_period, "list")
+
+  core_hbc_df <-
+    core_lst_hbc_falls_in_one_period$hbc |>
+    dplyr::filter(is_hbc == 1)
+  expect_equal(nrow(core_hbc_df), 30)
+
 })
