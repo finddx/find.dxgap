@@ -34,6 +34,11 @@
 #' )
 #' }
 get_core <- function(data_list, estimated, notified, year) {
+  # "core countries" satisfy the followings at the same time:
+  # * dx_gap can always be computed (we don't get NA, Inf)
+  # * the high-burden countries is the common subset in case the year range
+  # selected by the user spans across two 5-years period
+
   disease <- attr(data_list, "disease")
   if (is.null(year)) {
     year <- extract_supported_year(disease = disease)
@@ -46,6 +51,8 @@ get_core <- function(data_list, estimated, notified, year) {
   estimated_field_name <- extract_field_name(dxgap_meta_df, "estimated")
   notified_tbl_name <- extract_tbl_name(dxgap_meta_df, "notified")
   notified_field_name <- extract_field_name(dxgap_meta_df, "notified")
+
+  # Countries "can compute dx_gap" in given year range -------------------------
 
   cc_notification_df <-
     data_list |>
@@ -71,6 +78,8 @@ get_core <- function(data_list, estimated, notified, year) {
   cc_can_compute_dxgap <-
     cc_notification_df |>
     dplyr::inner_join(cc_estimate_df, dplyr::join_by(country_code))
+
+  # Countries consistently "HBC" in given year range ---------------------------
 
   cc_consistent_hbc <-
     data_list$who_hbc |>
@@ -115,8 +124,8 @@ get_core <- function(data_list, estimated, notified, year) {
     dplyr::mutate(is_hbc = dplyr::coalesce(is_hbc, 0)) |>
     dplyr::distinct(country_code, is_hbc)
 
-  # used to subset those cc for which dx_gap can always be computed *and*
-  # that are consistently hbc in the given year range
+  # Filter all tables to make them "core" --------------------------------------
+
   cc_core_df_filter <-
     cc_core_df |>
     dplyr::distinct(country_code)
@@ -137,6 +146,8 @@ get_core <- function(data_list, estimated, notified, year) {
       )
     ) |>
     dplyr::select(name, data_core)
+
+  # Return list of tables for dm -----------------------------------------------
 
   core_lst <- core_df$data_core
   names(core_lst) <- core_df$name
