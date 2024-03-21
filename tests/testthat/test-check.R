@@ -24,6 +24,8 @@ test_that("check_any_zero() works", {
 test_that("check_supported_year() works", {
   expect_snapshot(check_supported_year(2014:2015, "tb"), error = TRUE)
   expect_snapshot(check_supported_year(2014:2016, "tb"))
+  expect_invisible(check_supported_year(2014:2016, "tb"), 2016)
   expect_snapshot(check_supported_year(2020:2023, "tb"))
   expect_snapshot(check_supported_year(2016:2021, "tb"))
+  expect_invisible(check_supported_year(2016:2021, "tb"), 2016:2021)
 })
