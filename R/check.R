@@ -96,6 +96,7 @@ check_supported_year <- function(year, disease, .dxgap_diseases = dxgap_diseases
       ),
       class = "dxgap_year_supported_range"
     )
+    return(invisible(fall_back_range))
   } else {
     invisible(year)
   }
