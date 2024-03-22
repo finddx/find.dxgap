@@ -52,8 +52,8 @@ build_tbl(
   notified = "who_notifications.c_newinc"
 )
 
-# TODO: this should give a better error and we can fail earlier
-# started in: https://github.com/finddx/find.dxgap/pull/320
+# fails since since we don't find a valid subset of core countries for which
+# dx_gap can be computed if using `conf_rrmdr_tx`
 try(
   build_tbl(
     "tb",
