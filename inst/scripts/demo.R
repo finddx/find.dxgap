@@ -251,9 +251,12 @@ try(
 )
 
 # deprecated
-render_bulk(
-  "explain_lm.Rmd",
-  disease = "tb",
-  year = 2016:2021,
-  vars = extract_vars("tb")
+try(
+  render_bulk(
+    "explain_lm.Rmd",
+    disease = "tb",
+    year = 2016:2021,
+    vars = extract_vars("tb")
+  )
 )
+
