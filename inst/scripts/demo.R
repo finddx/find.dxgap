@@ -227,7 +227,7 @@ render_report(
   interactive = FALSE
 )
 
-# It falls-back on supported 2016
+# It falls-back on supported 2016 and render just that
 render_report(
   "explain_lm.Rmd",
   disease = "tb",
@@ -242,13 +242,23 @@ try(
   render_report(
     "explain_lm.Rmd",
     disease = "tb",
-    year = 2014:2016,
+    year = 2014:2017,
     vars = extract_vars("tb"),
     interactive = TRUE
   )
 )
 
-# deprecated
+# however, if the fallback year is of length one, it goes ahead and it renders
+# just that
+render_report(
+  "explain_lm.Rmd",
+  disease = "tb",
+  year = 2014:2016,
+  vars = extract_vars("tb"),
+  interactive = TRUE
+)
+
+# fails since deprecated
 try(
   render_bulk(
     "explain_lm.Rmd",
