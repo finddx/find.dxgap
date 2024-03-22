@@ -53,6 +53,7 @@ render_report <- function(template_name,
     disease = disease,
     template_name = template_nm
   )
+  year <- check_supported_year(year = year, disease = disease)
   multiple_years <- length(year) > 1
   does_not_accept_ts <- !accept_ts
   multi_cross_sectional <- multiple_years && does_not_accept_ts
@@ -98,7 +99,6 @@ render_report_impl <- function(template_name,
                                template_dir = "inst/template/",
                                data_dir = Sys.getenv("DXGAP_DATADIR")) {
   check_supported_disease(disease)
-  check_supported_year(year = year, disease = disease)
   check_supported_templates(template = template_name, disease = disease)
   if (!override_vars_check) {
     check_supported_vars(vars = vars, disease = disease)
