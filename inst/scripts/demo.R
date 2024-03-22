@@ -228,16 +228,15 @@ render_report(
   interactive = FALSE
 )
 
-# TODO: should fallback on 2016 and render just that
-try(
-  render_report(
-    "explain_lm.Rmd",
-    disease = "tb",
-    year = 2014:2016,
-    vars = extract_vars("tb"),
-    interactive = FALSE
-  )
+# It falls-back on supported 2016
+render_report(
+  "explain_lm.Rmd",
+  disease = "tb",
+  year = 2014:2016,
+  vars = extract_vars("tb"),
+  interactive = FALSE
 )
+
 
 # fails and needs `interactive = FALSE`
 try(
