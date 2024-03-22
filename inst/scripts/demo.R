@@ -138,8 +138,7 @@ try(
   )
 )
 
-# TODO: this should fail since we fall-back on a length one year and we need at
-# least two years
+# TODO: fails correctly, however we should not show the msg and just the error
 try(
   render_report(
     "eda_ts.Rmd",
