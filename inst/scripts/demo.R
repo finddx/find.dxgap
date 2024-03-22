@@ -93,7 +93,6 @@ render_report(
 )
 
 # fall-back on supported years only
-# TODO: fix-double message
 render_report(
   "missing.Rmd",
   disease = "tb",
