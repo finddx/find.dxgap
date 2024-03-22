@@ -171,6 +171,7 @@ try(
   )
 )
 
+# we can ignore the error with `override_vars_check`
 render_report(
   "eda.Rmd",
   disease = "tb",
