@@ -101,8 +101,6 @@ render_report(
   vars = NULL
 )
 
-# TODO? take default supported range for disease "tb" using meta-data in
-# dxgap_disease. But probably not needed since we inner_join on the year.
 render_report(
   "missing.Rmd",
   disease = "tb",
