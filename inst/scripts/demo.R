@@ -29,8 +29,6 @@ import_tbl("who_hbc_2023-07-28.csv")
 
 # Build disease-table ----------------------------------------------------------
 
-# TODO: should fall-back on supported year range from dxgap_diseases. Does this
-# happen already? Probably yes since we inner_join by year too.
 build_tbl("tb")
 build_tbl("tb", year = 2018)
 try(build_tbl("tb", year = 2014))
