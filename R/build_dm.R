@@ -30,10 +30,7 @@
 #' }
 build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) {
   disease <- attr(data_list, "disease")
-  check_supported_year(year = year, disease = disease)
-  supported_year_range <- extract_supported_year(disease = disease)
-  max_year <- max(supported_year_range)
-  min_year <- min(supported_year_range)
+  year <- check_supported_year(year = year, disease = disease)
 
   if (is.null(estimated)) {
     estimated <- extract_default_dxgap_tbl_field(
@@ -49,60 +46,20 @@ build_dm <- function(data_list, estimated = NULL, notified = NULL, year = NULL) 
       dxgap_field = "notified"
     )
   }
-  core_data <- get_core(
+
+  core_lst <- get_core(
     data_list,
     estimated = estimated,
     notified = notified,
     year = year
   )
-  core_list <- core_data$core_list
-  can_compute_dxgap <- core_data$can_compute_dxgap
 
-  hbc_df <-
-    data_list$who_hbc |>
-    dplyr::select(country_code, year) |>
-    forget_year_hbc(year_range = supported_year_range) |>
-    dplyr::mutate(is_hbc = 1)
-
-  non_hbc_df <-
-    get_non_hbc_country_code(hbc_df, start_year = min_year) |>
-    dplyr::semi_join(can_compute_dxgap, dplyr::join_by(country_code)) |>
-    dplyr::mutate(is_hbc = 0)
-
-  # estimates and notifications are available up to given year
-  country_df <-
-    hbc_df |>
-    dplyr::bind_rows(non_hbc_df) |>
-    dplyr::filter(year <= max_year)
-
-  core_list$who_hbc <- NULL
-  core_list$country <- country_df
-
-  dm_no_rel <- dm::dm(!!!core_list)
+  dm_no_rel <- dm::dm(!!!core_lst)
   dm_col <- set_dm_colors(dm_no_rel)
-  dm_ts <- set_dm_rels(dm_col)
+  dm_disease <- set_dm_rels(dm_col)
 
-  if (is.null(year)) {
-    return(dm_ts)
-  }
+  dm_disease
 
-  dm::dm_filter(dm_ts, country = (year %in% !!year))
-
-}
-
-forget_year_hbc <- function(hbc_data, year_range) {
-  hbc_data |>
-    dplyr::select(-year) |>
-    tidyr::crossing(year = year_range)
-}
-
-get_non_hbc_country_code <- function(hbc_df, start_year) {
-  countrycode::codelist |>
-    dplyr::select(country_code = iso3c) |>
-    dplyr::filter(!is.na(country_code)) |>
-    dplyr::anti_join(hbc_df, by = dplyr::join_by(country_code)) |>
-    dplyr::anti_join(country_exclude_df, by = dplyr::join_by(country_code)) |>
-    tidyr::crossing(year = start_year:2099) # start from the min year available in hbc list
 }
 
 set_dm_rels <- function(dm) {
@@ -114,6 +71,7 @@ set_dm_rels <- function(dm) {
 
 set_dm_pk <- function(dm) {
   dm |>
+    dm::dm_add_pk(hbc, country_code, check = TRUE) |>
     dm::dm_add_pk(wb_pop_total, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(wb_pop_urban, c(year, country_code), check = TRUE) |>
     dm::dm_add_pk(wb_pop_density, c(year, country_code), check = TRUE) |>
@@ -129,6 +87,7 @@ set_dm_pk <- function(dm) {
 
 set_dm_fk <- function(dm) {
   dm |>
+    dm::dm_add_fk(country, country_code, hbc) |>
     dm::dm_add_fk(country, c(year, country_code), wb_pop_total) |>
     dm::dm_add_fk(country, c(year, country_code), wb_pop_urban) |>
     dm::dm_add_fk(country, c(year, country_code), wb_pop_density) |>
@@ -152,6 +111,7 @@ set_dm_colors <- function(dm) {
     dm::dm_set_colors(
       "#5986C4" = starts_with("who"),
       "#70AD47FF" = starts_with("wb"),
-      "#ED7D31FF" = contains("country")
+      "#ED7D31FF" = contains("country"),
+      "#E15759" = contains("hbc")
     )
 }
