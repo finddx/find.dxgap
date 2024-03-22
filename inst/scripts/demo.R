@@ -201,11 +201,13 @@ try(
 )
 
 # deprecated: we only use render_report
-render_bulk(
-  "eda.Rmd",
-  disease = "tb",
-  year = 2016:2021,
-  vars = extract_vars("tb")
+try(
+  render_bulk(
+    "eda.Rmd",
+    disease = "tb",
+    year = 2016:2021,
+    vars = extract_vars("tb")
+  )
 )
 
 # Modeling ---------------------------------------------------------------------
