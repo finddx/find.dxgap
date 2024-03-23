@@ -113,7 +113,7 @@ get_core <- function(data_list, estimated, notified, year) {
   cc_core_df <-
     cc_can_compute_dxgap |>
     dplyr::bind_rows(cc_consistent_hbc) |>
-    tidyr::crossing(year = year)
+    tidyr::crossing(year = as.numeric(year))
 
   is_hbc <-
     cc_core_df |>
